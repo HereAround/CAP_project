@@ -111,3 +111,10 @@ DeclareOperation( "MinimalFreeResolution",
 #!
 DeclareOperation( "MinimalFreeResolution",
                   [ IsGradedLeftOrRightSubmoduleForCAP ] );
+
+## for my convenience a method that displays all information about a (co)complex
+DeclareOperation( "FullInformation",
+                  [ IsCapComplex ] );
+
+DeclareOperation( "FullInformation",
+                  [ IsCapCocomplex ] );

@@ -490,22 +490,10 @@ InstallMethod( MinimalFreeResolution,
       
     od;
     
-    # for my convenience display the information about the resolution "properly"
-    pos := Length( morphisms );
-    Print( String( DegreeList( Source( morphisms[ pos ] ) ) ) );
-    Print( "\n \n" );
-    for i in [ 1 .. Length( morphisms ) ] do
-
-      pos := Length( morphisms ) - i + 1;
-      Display( UnderlyingHomalgMatrix( morphisms[ pos ] ) );
-      Print( "\n" );
-      Print( String( DegreeList( Range( morphisms[ pos ] ) ) ) );
-      Print( "\n \n" );
-    
-    od;
-    
     # and return the collection of morphisms
-    return morphisms;
+    # FIX ME: Complex or cocomplex?
+    # return ComplexFromMorphismList( morphisms );
+    return CocomplexFromMorphismList( morphisms );
 
 end );
 
@@ -517,4 +505,45 @@ InstallMethod( MinimalFreeResolution,
 
     return MinimalFreeResolution( PresentationForCAP( submodule_for_CAP ) );
 
+end );
+
+
+
+####################################################################################
+##
+#! @Section Full information about (co)complex
+##
+####################################################################################
+
+# compute a minimal free resolution of a graded module presentation
+InstallMethod( FullInformation,
+               "for a complex",
+               [ IsCapCocomplex ],
+  function( cocomplex )
+    local differential_function, test_object, pos;
+    
+    # extract the differentials
+    differential_function := UnderlyingZFunctorCell( cocomplex )!.differential_func;
+
+    # start to print information
+    pos := 0;
+    #test_object := Source( differential_function( pos ) );
+    
+    while not IsZeroForObjects( Source( differential_function( pos ) ) ) do
+    
+      # print information
+      Print( String( DegreeList( Source( differential_function( pos ) ) ) ) );
+      Print( "\n \n" );
+      Display( UnderlyingHomalgMatrix( differential_function( pos ) ) );
+      Print( "\n" );
+      
+      # increment
+      pos := pos + 1;
+      #test_object := Source( differential_function( pos ) );
+    
+    od;
+    
+    Print( String( DegreeList( Range( differential_function( pos ) ) ) ) );
+    Print( "\n \n" );
+    
 end );

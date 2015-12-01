@@ -63,6 +63,7 @@ Dependencies := rec(
                            [ "CAP", ">=0" ],
                            [ "CAPCategoryOfProjectiveGradedModules", ">=0" ],
                            [ "CAPPresentationCategory", ">=0" ],
+                           [ "ComplexesAndFilteredObjectsForCAP", ">=0" ],
   ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
