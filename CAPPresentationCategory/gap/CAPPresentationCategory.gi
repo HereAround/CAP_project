@@ -20,13 +20,17 @@ InstallMethod( PresentationCategory,
   function( projective_category )
     local category;
     
+    
+    ## FIXME: Remove propery
     # check if the input is a Proj_Category and if not, react to it
     if not IsProjCategory( projective_category ) then
     
       Error( "The input of PresentationCategory has to be a Proj-category! \n" );
-      return false;
+      return;
     
     fi;
+    
+    ## FIXME: Check method preconditions
     
     # set up the category
     category := CreateCapCategory( Concatenation( "Presentation category over ", Name( projective_category ) ) );
@@ -116,15 +120,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         local lift;
         
         # we should first check that source, range and the mapping itself are well-defined...
-        if not IsWellDefinedForObjects( Source( morphism ) ) then
-        
-          return false;
-          
-        elif not IsWellDefinedForObjects( Range( morphism ) ) then
-        
-          return false;
-        
-        elif not IsWellDefinedForMorphisms( UnderlyingMorphism( morphism ) ) then
+        if not IsWellDefinedForMorphisms( UnderlyingMorphism( morphism ) ) then
         
           return false;
         
@@ -162,7 +158,9 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Section Implement the elementary operations for categories
     #
     ######################################################################
-
+    
+    ## FIXME: Recheck this
+    
     # @Description
     # This method checks if the underlying morphisms of <A>object1</A> and <A>object2</A> are equal
     # in the underlying Proj-category.
@@ -359,7 +357,10 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
                                                 object );
         
     end );
-
+    
+    
+    ## FIXME: Direct sum etc. Do you really want to use the with given methods from the underlying category.
+    
     # @Description
     # This method installs the direct sum of the list of objects <A>objects</A>. To this end the direct sum operation of the 
     # underlying Proj-category is used.
@@ -535,58 +536,58 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     #
     ######################################################################
     
-    # @Description
-    # This method implements the kernel object of a morphism <A>morphism</A> in the presentation category.
-    # Our strategy is as follows:
-    # Look at the following diagram (which displays the morphism of which we want to compute the kernel)
-    #
-    # R_B --\beta---> B
-    #                 ^
-    #                 |
-    #              \varphi
-    #                 |
-    # R_A --\alpha--> A
-    #
-    # Then take the pullback of \varphi and \beta. This gives us the following diagram
-    #
-    # R_B --\beta---> B
-    #                 ^
-    #                 |
-    #              \varphi
-    #                 |
-    # R_A --\alpha--> A
-    #                 ^
-    #                 |
-    #                \mu
-    #                 |
-    #                 |
-    #          Pullback( \varphi, \beta )
-    #
-    # Finally take the pullback of \alpha and \mu to obtain the following diagram
-    #
-    # R_B ----------\beta-------------------> B
-    #                                         ^
-    #                                         |
-    #                                      \varphi
-    #                                         |
-    # R_A -----------\alpha-----------------> A
-    #                                         ^
-    #                                         |
-    #                                        \mu
-    #                                         |
-    #                                         |
-    # Pullback( \mu, \alpha ) ---x--> Pullback( \varphi, \beta )
-    #
-    # The last line defines the kernel object of \varphi and \mu is the kernel embedding. This method return the object defined by
-    # the last line of the above diagram.
-    # @Returns an object
-    # @Arguments morphism
-    AddKernelObject( category,
-      function( morphism )
-      
-        return Source( KernelEmbedding( morphism ) );
-        
-    end );
+#     # @Description
+#     # This method implements the kernel object of a morphism <A>morphism</A> in the presentation category.
+#     # Our strategy is as follows:
+#     # Look at the following diagram (which displays the morphism of which we want to compute the kernel)
+#     #
+#     # R_B --\beta---> B
+#     #                 ^
+#     #                 |
+#     #              \varphi
+#     #                 |
+#     # R_A --\alpha--> A
+#     #
+#     # Then take the pullback of \varphi and \beta. This gives us the following diagram
+#     #
+#     # R_B --\beta---> B
+#     #                 ^
+#     #                 |
+#     #              \varphi
+#     #                 |
+#     # R_A --\alpha--> A
+#     #                 ^
+#     #                 |
+#     #                \mu
+#     #                 |
+#     #                 |
+#     #          Pullback( \varphi, \beta )
+#     #
+#     # Finally take the pullback of \alpha and \mu to obtain the following diagram
+#     #
+#     # R_B ----------\beta-------------------> B
+#     #                                         ^
+#     #                                         |
+#     #                                      \varphi
+#     #                                         |
+#     # R_A -----------\alpha-----------------> A
+#     #                                         ^
+#     #                                         |
+#     #                                        \mu
+#     #                                         |
+#     #                                         |
+#     # Pullback( \mu, \alpha ) ---x--> Pullback( \varphi, \beta )
+#     #
+#     # The last line defines the kernel object of \varphi and \mu is the kernel embedding. This method return the object defined by
+#     # the last line of the above diagram.
+#     # @Returns an object
+#     # @Arguments morphism
+#     AddKernelObject( category,
+#       function( morphism )
+#       
+#         return Source( KernelEmbedding( morphism ) );
+#         
+#     end );
     
     # @Description
     # This method implements the kernel object of a morphism <A>morphism</A> in the presentation category.
@@ -649,103 +650,103 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         
     end );
     
-    # @Description
-    # This method implements the kernel object of a morphism <A>morphism</A> in the presentation category.
-    # Our strategy is as follows:
-    # Look at the following diagram (which displays the morphism of which we want to compute the kernel)
-    #
-    # R_B --\beta---> B
-    #                 ^
-    #                 |
-    #              \varphi
-    #                 |
-    # R_A --\alpha--> A
-    #
-    # Then take the pullback of \varphi and \beta. This gives us the following diagram
-    #
-    # R_B --\beta---> B
-    #                 ^
-    #                 |
-    #              \varphi
-    #                 |
-    # R_A --\alpha--> A
-    #                 ^
-    #                 |
-    #                \mu
-    #                 |
-    #                 |
-    #          Pullback( \varphi, \beta )
-    #
-    # Finally take the pullback of \alpha and \mu to obtain the following diagram
-    #
-    # R_B ----------\beta-------------------> B
-    #                                         ^
-    #                                         |
-    #                                      \varphi
-    #                                         |
-    # R_A -----------\alpha-----------------> A
-    #                                         ^
-    #                                         |
-    #                                        \mu
-    #                                         |
-    #                                         |
-    # Pullback( \mu, \alpha ) --x---> Pullback( \varphi, \beta )
-    #
-    # The last line defines the kernel object of \varphi and \mu is the kernel embedding. 
-    #
-    # This method requires the kernel object as input and then return the embedding \mu.
-    # @Returns a morphism
-    # @Arguments morphism, kernel_object    
-    AddKernelEmbeddingWithGivenKernelObject( category,      
-      function( morphism, kernel_object )
-        local kernel_embedding, underlying_morphism_of_kernel;
+#     # @Description
+#     # This method implements the kernel object of a morphism <A>morphism</A> in the presentation category.
+#     # Our strategy is as follows:
+#     # Look at the following diagram (which displays the morphism of which we want to compute the kernel)
+#     #
+#     # R_B --\beta---> B
+#     #                 ^
+#     #                 |
+#     #              \varphi
+#     #                 |
+#     # R_A --\alpha--> A
+#     #
+#     # Then take the pullback of \varphi and \beta. This gives us the following diagram
+#     #
+#     # R_B --\beta---> B
+#     #                 ^
+#     #                 |
+#     #              \varphi
+#     #                 |
+#     # R_A --\alpha--> A
+#     #                 ^
+#     #                 |
+#     #                \mu
+#     #                 |
+#     #                 |
+#     #          Pullback( \varphi, \beta )
+#     #
+#     # Finally take the pullback of \alpha and \mu to obtain the following diagram
+#     #
+#     # R_B ----------\beta-------------------> B
+#     #                                         ^
+#     #                                         |
+#     #                                      \varphi
+#     #                                         |
+#     # R_A -----------\alpha-----------------> A
+#     #                                         ^
+#     #                                         |
+#     #                                        \mu
+#     #                                         |
+#     #                                         |
+#     # Pullback( \mu, \alpha ) --x---> Pullback( \varphi, \beta )
+#     #
+#     # The last line defines the kernel object of \varphi and \mu is the kernel embedding. 
+#     #
+#     # This method requires the kernel object as input and then return the embedding \mu.
+#     # @Returns a morphism
+#     # @Arguments morphism, kernel_object    
+#     AddKernelEmbeddingWithGivenKernelObject( category,      
+#       function( morphism, kernel_object )
+#         local kernel_embedding, underlying_morphism_of_kernel;
+#         
+#         kernel_embedding := ProjectionInFactorOfFiberProduct( [ UnderlyingMorphism( morphism ), 
+#                                                                 UnderlyingMorphism( Range( morphism ) ) ], 1 );
+#         
+#         return CAPPresentationCategoryMorphism( kernel_object, kernel_embedding, Source( morphism ) );
+#     
+#     end );
         
-        kernel_embedding := ProjectionInFactorOfFiberProduct( [ UnderlyingMorphism( morphism ), 
-                                                                UnderlyingMorphism( Range( morphism ) ) ], 1 );
-        
-        return CAPPresentationCategoryMorphism( kernel_object, kernel_embedding, Source( morphism ) );
-    
-    end );
-        
-    # @Description
-    # This method implements the cokernel object of a morphism <A>morphism</A> in the presentation category.
-    # Our strategy is as follows:
-    # Look at the following diagram, which represents the morphism
-    #
-    # R_A ---\alpha---> A
-    #                   ^
-    #                   |
-    #                  \mu
-    #                   |
-    #                   |
-    # R_B ---\beta ---> B
-    #
-    # Next we look at the following diagram
-    #
-    # R_A \oplus B -x-> A
-    #                   ^
-    #                   |
-    #                  id_A
-    #                   |
-    # R_A ---\alpha---> A
-    #                   ^
-    #                   |
-    #                  \mu
-    #                   |
-    #                   |
-    # R_B ---\beta ---> B
-    #
-    # The morphism x is induced as a universal morphism and the source-lift R_A -> R_A \oplus B is a canonical inclusion of the direct
-    # sum. The line R_A \oplus B -x-> A then defines the cokernel object of \mu and the corresponding morphism id_A is the cokernel
-    # projection. This method return the cokernel object, i.e. the line R_A \oplus B -x-> A.
-    # @Returns an object
-    # @Arguments morphism
-    AddCokernelObject( category,
-      function( morphism )
-      
-        return Range( CokernelProjection( morphism ) );
-        
-    end );
+#     # @Description
+#     # This method implements the cokernel object of a morphism <A>morphism</A> in the presentation category.
+#     # Our strategy is as follows:
+#     # Look at the following diagram, which represents the morphism
+#     #
+#     # R_A ---\alpha---> A
+#     #                   ^
+#     #                   |
+#     #                  \mu
+#     #                   |
+#     #                   |
+#     # R_B ---\beta ---> B
+#     #
+#     # Next we look at the following diagram
+#     #
+#     # R_A \oplus B -x-> A
+#     #                   ^
+#     #                   |
+#     #                  id_A
+#     #                   |
+#     # R_A ---\alpha---> A
+#     #                   ^
+#     #                   |
+#     #                  \mu
+#     #                   |
+#     #                   |
+#     # R_B ---\beta ---> B
+#     #
+#     # The morphism x is induced as a universal morphism and the source-lift R_A -> R_A \oplus B is a canonical inclusion of the direct
+#     # sum. The line R_A \oplus B -x-> A then defines the cokernel object of \mu and the corresponding morphism id_A is the cokernel
+#     # projection. This method return the cokernel object, i.e. the line R_A \oplus B -x-> A.
+#     # @Returns an object
+#     # @Arguments morphism
+#     AddCokernelObject( category,
+#       function( morphism )
+#       
+#         return Range( CokernelProjection( morphism ) );
+#         
+#     end );
 
     # @Description
     # This method implements the cokernel projection of a morphism <A>morphism</A> in the presentation category.
@@ -804,50 +805,50 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
                                                );
     end );
 
-    # @Description
-    # This method implements the cokernel object of a morphism <A>morphism</A> in the presentation category.
-    # Our strategy is as follows:
-    # Look at the following diagram, which represents the morphism
-    #
-    # R_A ---\alpha---> A
-    #                   ^
-    #                   |
-    #                  \mu
-    #                   |
-    #                   |
-    # R_B ---\beta ---> B
-    #
-    # Next we look at the following diagram
-    #
-    # R_A \oplus B -x-> A
-    #                   ^
-    #                   |
-    #                  id_A
-    #                   |
-    # R_A ---\alpha---> A
-    #                   ^
-    #                   |
-    #                  \mu
-    #                   |
-    #                   |
-    # R_B ---\beta ---> B
-    #
-    # The morphism x is induced as a universal morphism and the source-lift R_A -> R_A \oplus B is a canonical inclusion of the direct
-    # sum. The line R_A \oplus B -x-> A then defines the cokernel object of \mu and the corresponding morphism id_A is the cokernel
-    # projection. 
-    #
-    # This particular method expects the line R_A \oplus B -x-> A as input. It returns the cokernel projection.
-    # @Returns a morphism
-    # @Arguments morphism, cokernel_object
-    AddCokernelProjectionWithGivenCokernelObject( category,
-      function( morphism, cokernel_object )
-
-        # in this case we can immediately return the cokernel projection
-        return CAPPresentationCategoryMorphism( Range( morphism ), 
-                                                IdentityMorphism( Range( UnderlyingMorphism( Range( morphism ) ) ) ),
-                                                cokernel_object 
-                                               );            
-    end );
+#     # @Description
+#     # This method implements the cokernel object of a morphism <A>morphism</A> in the presentation category.
+#     # Our strategy is as follows:
+#     # Look at the following diagram, which represents the morphism
+#     #
+#     # R_A ---\alpha---> A
+#     #                   ^
+#     #                   |
+#     #                  \mu
+#     #                   |
+#     #                   |
+#     # R_B ---\beta ---> B
+#     #
+#     # Next we look at the following diagram
+#     #
+#     # R_A \oplus B -x-> A
+#     #                   ^
+#     #                   |
+#     #                  id_A
+#     #                   |
+#     # R_A ---\alpha---> A
+#     #                   ^
+#     #                   |
+#     #                  \mu
+#     #                   |
+#     #                   |
+#     # R_B ---\beta ---> B
+#     #
+#     # The morphism x is induced as a universal morphism and the source-lift R_A -> R_A \oplus B is a canonical inclusion of the direct
+#     # sum. The line R_A \oplus B -x-> A then defines the cokernel object of \mu and the corresponding morphism id_A is the cokernel
+#     # projection. 
+#     #
+#     # This particular method expects the line R_A \oplus B -x-> A as input. It returns the cokernel projection.
+#     # @Returns a morphism
+#     # @Arguments morphism, cokernel_object
+#     AddCokernelProjectionWithGivenCokernelObject( category,
+#       function( morphism, cokernel_object )
+# 
+#         # in this case we can immediately return the cokernel projection
+#         return CAPPresentationCategoryMorphism( Range( morphism ), 
+#                                                 IdentityMorphism( Range( UnderlyingMorphism( Range( morphism ) ) ) ),
+#                                                 cokernel_object 
+#                                                );            
+#     end );
 
 
 
