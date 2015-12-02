@@ -84,16 +84,17 @@ BindGlobal( "TheTypeOfGradedRightIdealForCAP",
 InstallGlobalFunction( GradedSubmoduleFromListListAndGradedRing,
   function( generator_list, homalg_graded_ring, left )
     local graded_submodule, matrix, range, alpha, pres, embedding, type;
-    
+
     if not IsFree( DegreeGroup( homalg_graded_ring ) ) then
-    
-      return Error( "Currently this operation is only defined for rings with a free degree_group. \n" );
-    
+
+      Error( "Currently this operation is only defined for rings with a free degree_group" );
+      return;
+
     fi;
 
     # construct the graded module morphism encoded by 'generator_list'
     matrix := HomalgMatrix( generator_list, homalg_graded_ring );
-    
+
     # construct the range and alpha
     if left then
       range := CAPCategoryOfProjectiveGradedLeftModulesObject(
@@ -523,20 +524,22 @@ InstallMethod( \*,
                [ IsGradedLeftOrRightSubmoduleForCAP, IsGradedLeftOrRightSubmoduleForCAP ],
   function( submodule1, submodule2 )
     local left1, left2, new_presentation, new_embedding, generators, range, new_graded_submodule, type;
-    
+
     # check that the homalg_graded_rings are identical
     left1 := IsGradedLeftSubmoduleForCAP( submodule1 );
     left2 := IsGradedLeftSubmoduleForCAP( submodule2 );    
     if not IsIdenticalObj( HomalgGradedRing( submodule1 ), HomalgGradedRing( submodule2 ) ) then
-    
-      return Error( "The submodules have to be defined over the same graded ring. \n" );
-    
+
+      Error( "The submodules have to be defined over the same graded ring" );
+      return;
+
     elif left1 <> left2 then
-    
-      return Error( "The submodules must be either both left submodules or both right submodules. \n" );
-    
+
+      Error( "The submodules must be either both left submodules or both right submodules" );
+      return;
+
     fi;
-    
+
     # compute the new_presentation and the new_embedding
     new_presentation := TensorProductOnObjects( PresentationForCAP( submodule1 ), 
                                                 PresentationForCAP( submodule2 ) 
@@ -587,13 +590,14 @@ InstallMethod( \^,
                [ IsGradedLeftOrRightSubmoduleForCAP, IsInt ],
   function( submodule, power )
     local submodule_power, presentation, generators, range, range_presentation, embedding, left, type, i;
-    
+
     if not ( power > 0 ) then
-    
-      return Error( "The power must be non-negative! \n" );
-    
+
+      Error( "The power must be non-negative" );
+      return;
+
     elif power = 0 then
-    
+
       # construct identity_submodule attributes
       range := Range( UnderlyingMorphism( Range( EmbeddingInSuperObjectForCAP( submodule ) ) ) );
       presentation := CAPPresentationCategoryObject( ZeroMorphism( ZeroObject( CapCategory( range ) ), range ) );

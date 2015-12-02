@@ -24,15 +24,18 @@ InstallGlobalFunction( FrobeniusPowerOfMatrix,
     # check the input
     if not IsHomalgMatrix( matrix ) then
     
-      return Error( "The first argument must be a homalg matrix! \n" );
+      Error( "The first argument must be a homalg matrix" );
+      return;
     
     elif not IsInt( power ) then
     
-      return Error( "The power must be a non-negative integer! \n" );
+      Error( "The power must be a non-negative integer" );
+      return;
       
     elif power < 0 then
     
-      return Error( "The power must be a non-negative integer! \n" );
+      Error( "The power must be a non-negative integer" );
+      return;
     
     fi;
     
@@ -63,7 +66,8 @@ InstallMethod( FrobeniusPower,
 
     if power < 0 then
 
-      return Error( "The power must be non-negative! \n" );
+      Error( "The power must be non-negative" );
+      return;
 
     elif power = 1 then
     
@@ -213,11 +217,13 @@ InstallMethod( Saturate,
     homalg_graded_ring := HomalgGradedRing( ideal );
     if not IsIdenticalObj( UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ), homalg_graded_ring ) then
     
-      return Error( "The module and ideal must be defined over the same homalg_graded_ring! \n" );
+      Error( "The module and ideal must be defined over the same homalg_graded_ring" );
+      return;
     
     elif not IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( UnderlyingMorphism( module ) ) then
     
-      return Error( "A left ideal can only be used to compute the saturation of a left presentation! \n" );
+      Error( "A left ideal can only be used to compute the saturation of a left presentation" );
+      return;
      
     fi;
     
@@ -257,11 +263,13 @@ InstallMethod( Saturate,
     homalg_graded_ring := HomalgGradedRing( ideal );
     if not IsIdenticalObj( UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ), homalg_graded_ring ) then
     
-      return Error( "The module and ideal must be defined over the same homalg_graded_ring! \n" );
+      Error( "The module and ideal must be defined over the same homalg_graded_ring" );
+      return;
     
     elif not IsCAPCategoryOfProjectiveGradedRightModulesMorphism( UnderlyingMorphism( module ) ) then
     
-      return Error( "A right ideal can only be used to compute the saturation of a right presentation! \n" );
+      Error( "A right ideal can only be used to compute the saturation of a right presentation" );
+      return;
      
     fi;
     
@@ -302,11 +310,13 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
     homalg_graded_ring := HomalgGradedRing( ideal );
     if not IsIdenticalObj( UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ), homalg_graded_ring ) then
     
-      return Error( "The module and ideal need to be defined over the same homalg_graded_ring! \n" );
+      Error( "The module and ideal need to be defined over the same homalg_graded_ring" );
+      return;
     
     elif not IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( UnderlyingMorphism( module ) ) then
 
-      return Error( "A left ideal can only be used to compute the saturation of a left presentation. \n" );
+      Error( "A left ideal can only be used to compute the saturation of a left presentation" );
+      return;
     
     fi;
     
@@ -352,11 +362,13 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
     homalg_graded_ring := UnderlyingHomalgGradedRing( UnderlyingMorphism( ideal ) );
     if not IsIdenticalObj( UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ), homalg_graded_ring ) then
     
-      return Error( "The module and ideal need to be defined over the same homalg_graded_ring! \n" );
+      Error( "The module and ideal need to be defined over the same homalg_graded_ring" );
+      return;
 
     elif not IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( UnderlyingMorphism( module ) ) then
 
-      return Error( "A right ideal can only be used to compute the saturation of a right presentation. \n" );
+      Error( "A right ideal can only be used to compute the saturation of a right presentation" );
+      return;
     
     fi;
 

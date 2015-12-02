@@ -115,6 +115,8 @@ InstallGlobalFunction( IsProjCategory,
     local installed_ops;
 
     ## FIXME: Check method preconditions
+    ## i.e. check if all method for "isadditive" are there and so on...
+    ## -> so create a list of all methods that I use!
     
     if not HasIsFinalized( category ) or not IsFinalized( category ) then
         

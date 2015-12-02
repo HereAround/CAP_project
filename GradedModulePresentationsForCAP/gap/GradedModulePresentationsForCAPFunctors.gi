@@ -247,27 +247,29 @@ InstallGlobalFunction( TruncationFunctor,
 
     # check if the degree_group of the underlying homalg_graded_ring is free
     if not IsFree( DegreeGroup( graded_ring ) ) then
-    
-      return Error( "Currently truncations are only supported for freely-graded rings. \n" );
-    
+
+      Error( "Currently truncations are only supported for freely-graded rings" );
+      return;
+
     fi;
-    
+
     # next check if the cone_h_list is valid
     rank := Rank( DegreeGroup( graded_ring ) );
     for i in [ 1 .. Length( cone_h_list ) ] do
-    
+
       if Length( cone_h_list[ i ] ) <> rank then
-      
-        return Error( "The cone is not contained in the degree_group of the graded ring. \n" );
-        
+
+        Error( "The cone is not contained in the degree_group of the graded ring" );
+        return;
+
       fi;
-    
+
     od;
-        
+
     # first compute the category under consideration
     if left = true then    
       category := SfpgrmodLeft( graded_ring );
-    else    
+    else
       category := SfpgrmodRight( graded_ring );
     fi;
 
@@ -277,12 +279,12 @@ InstallGlobalFunction( TruncationFunctor,
                       category,
                       category
                       );
-    
+
     # now define the functor operation on the objects
     AddObjectFunction( functor,
       function( object )
         local underlying_morphism;
-          
+
         underlying_morphism := ProjectionInFactorOfFiberProduct( [ 
                                        EmbeddingOfTruncationOfProjectiveGradedModule( Range( UnderlyingMorphism( object ) ), 
                                                                                       cone_h_list 
@@ -302,18 +304,18 @@ InstallGlobalFunction( TruncationFunctor,
     AddMorphismFunction( functor,
       function( new_source, morphism, new_range )
         local underlying_morphism;
-        
+
         underlying_morphism := PreCompose( 
          [ EmbeddingOfTruncationOfProjectiveGradedModule( Range( UnderlyingMorphism( Source( morphism ) ) ), cone_h_list ),
            UnderlyingMorphism( morphism ),
            ProjectionOntoTruncationOfProjectiveGradedModule( Range( UnderlyingMorphism( Range( morphism ) ) ), cone_h_list ),
          ]
         );
-        
+
         return CAPPresentationCategoryMorphism( new_source, underlying_morphism, new_range );
 
     end );
-    
+
     # finally return the functor
     return functor;
 
@@ -323,7 +325,7 @@ end );
 InstallMethod( TruncationFunctorLeft,
                [ IsHomalgGradedRing, IsList ],
       function( graded_ring, cone_h_list )
-      
+
         return TruncationFunctor( graded_ring, cone_h_list, true );
 
 end );
@@ -332,7 +334,7 @@ end );
 InstallMethod( TruncationFunctorRight,
                [ IsHomalgGradedRing, IsList ],
       function( graded_ring, cone_h_list )
-      
+
         return TruncationFunctor( graded_ring, cone_h_list, false );
 
 end );
@@ -352,15 +354,16 @@ InstallGlobalFunction( FrobeniusPowerFunctor,
 
     # check if the degree_group of the underlying homalg_graded_ring is free
     if power < 0  then
-    
-      return Error( "Power must be non-negative! \n" );
-    
+
+      Error( "Power must be non-negative" );
+      return;
+
     fi;
-            
+
     # next compute the category under consideration
     if left = true then    
       category := SfpgrmodLeft( graded_ring );
-    else    
+    else
       category := SfpgrmodRight( graded_ring );
     fi;
 
