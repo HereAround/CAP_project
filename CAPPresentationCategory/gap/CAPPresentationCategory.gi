@@ -381,11 +381,10 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         # directSum1 -> directSum2 as the universal morphism into directSum2)
         list_of_projections := List( [ 1 .. Length( objects ) ], i ->  ProjectionInFactorOfDirectSum( source_objects, i ) );
         list_of_projections := List( [ 1 .. Length( objects ) ], 
-                                           i -> PreCompose( list_of_projections[ i ], UnderlyingMorphism( objects[ i ] ) ) );        
+                                         i -> PreCompose( list_of_projections[ i ], UnderlyingMorphism( objects[ i ] ) ) );        
         diagram := range_objects;
-        morphism := UniversalMorphismIntoDirectSumWithGivenDirectSum( diagram, list_of_projections, 
-                                                                                                directSum_of_range_objects );
-        
+        morphism := UniversalMorphismIntoDirectSum( diagram, list_of_projections );
+
         # then return the corresponding object in the presentation category
         return CAPPresentationCategoryObject( morphism );
         
@@ -406,8 +405,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         range_direct_sum_object := Range( UnderlyingMorphism( direct_sum_object ) );
         
         # now compute the projection of these objects in the underlying category
-        projection := ProjectionInFactorOfDirectSumWithGivenDirectSum( range_objects, component_number, 
-                                                                                                   range_direct_sum_object );
+        projection := ProjectionInFactorOfDirectSum( range_objects, component_number );
         
         # and construct the projection the presentation category
         return CAPPresentationCategoryMorphism( direct_sum_object, projection, objects[ component_number ] );
@@ -428,9 +426,8 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         # construct the morphism of the test_object_range into direct_sum_range via universal property
         underlying_sink := List( [ 1 .. Length( sink ) ], i -> UnderlyingMorphism( sink[ i ] ) );
         diagram_ranges := List( [ 1 .. Length( sink ) ], i -> Range( UnderlyingMorphism( sink[ i ] ) ) );
-        underlying_morphism := UniversalMorphismIntoDirectSumWithGivenDirectSum( diagram_ranges, underlying_sink,
-                                                                                 Range( UnderlyingMorphism( direct_sum ) ) );
-        
+        underlying_morphism := UniversalMorphismIntoDirectSum( diagram_ranges, underlying_sink);
+
         # and construct the morphism in the presentation category
         return CAPPresentationCategoryMorphism( Source( sink[ 1 ] ), underlying_morphism, direct_sum ); 
         
@@ -452,9 +449,8 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         range_direct_sum_object := Range( UnderlyingMorphism( coproduct_object ) );
         
         # now compute the projection of these objects in the underlying category
-        injection := InjectionOfCofactorOfDirectSumWithGivenDirectSum( range_objects, component_number, 
-                                                                                                   range_direct_sum_object );
-        
+        injection := InjectionOfCofactorOfDirectSum( range_objects, component_number );
+
         # and construct the projection the presentation category
         return CAPPresentationCategoryMorphism( objects[ component_number ], injection, coproduct_object );
         
@@ -474,9 +470,8 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         # construct the morphism of the test_object_range into direct_sum_range via universal property
         underlying_sink := List( [ 1 .. Length( sink ) ], i -> UnderlyingMorphism( sink[ i ] ) );
         diagram_sources := List( [ 1 .. Length( sink ) ], i -> Source( UnderlyingMorphism( sink[ i ] ) ) );
-        underlying_morphism := UniversalMorphismFromDirectSumWithGivenDirectSum( diagram_sources, underlying_sink,
-                                                                                 Range( UnderlyingMorphism( coproduct ) ) );
-        
+        underlying_morphism := UniversalMorphismFromDirectSum( diagram_sources, underlying_sink );
+
         # and construct the morphism in the presentation category
          return CAPPresentationCategoryMorphism( coproduct, underlying_morphism, Range( sink[ 1 ] ) ); 
               
@@ -791,8 +786,8 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         diagram := [ Range( UnderlyingMorphism( Source( morphism ) ) ), 
                                                                        Source( UnderlyingMorphism( Range( morphism ) ) ) ];        
         # and compute the universal morphism of the coproduct
-        universal_morphism := UniversalMorphismFromDirectSumWithGivenDirectSum( diagram, sink, coproduct );
-        
+        universal_morphism := UniversalMorphismFromDirectSum( diagram, sink );
+
         # and then  turn this morphism into an object of the presentation category - the cokernel
         cokernel_object := CAPPresentationCategoryObject( universal_morphism );
         
@@ -894,8 +889,8 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         sink := [ mor1, mor2 ];
     
         # construct the information necessary to product the universal morphism
-        uni := UniversalMorphismFromDirectSumWithGivenDirectSum( diagram, sink, DirectSum( factor1, factor2 ) );
-    
+        uni := UniversalMorphismFromDirectSum( diagram, sink );
+
         # now return the object corresponding to this universal morphism
         return CAPPresentationCategoryObject( uni );
     
@@ -951,11 +946,13 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         
         # return the morphism as derived from the Proj-category
         return CAPPresentationCategoryMorphism( source, 
-        AssociatorLeftToRightWithGivenTensorProducts( Range( UnderlyingMorphism( source ) ), Range( UnderlyingMorphism( range ) ) ), 
-                                                          range );
+                      AssociatorLeftToRight( Range( UnderlyingMorphism( source ) ), Range( UnderlyingMorphism( range ) ) ), 
+                      range 
+                      );
+
+        # FIXME
         # always well-defined?
-        # FIX ME FIX ME FIX ME
-    
+
     end );
 
     # @Description
@@ -971,11 +968,12 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         
         # return the morphism as derived from the Proj-category
         return CAPPresentationCategoryMorphism( source, 
-        AssociatorRightToLeftWithGivenTensorProducts( Range( UnderlyingMorphism( source ) ), Range( UnderlyingMorphism( range ) ) ), 
-                                                          range );
-        # in principle one would have to test if this is well-defined - needed or captured by CAP already? 
-        # fix me fix me fix me!
-    
+                      AssociatorRightToLeft( Range( UnderlyingMorphism( source ) ), Range( UnderlyingMorphism( range ) ) ),
+                      range 
+                      );
+        # FIXME
+        # well-defined?
+
     end );
 
     # @Description
@@ -985,14 +983,14 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Arguments a, s (= 1 \otimes a)
     AddLeftUnitorWithGivenTensorProduct( category,
       function( a, s )
-    
+
         return CAPPresentationCategoryMorphism( s,
-                                                LeftUnitorWithGivenTensorProduct( Range( UnderlyingMorphism( a ) ), 
-                                                                                  Range( UnderlyingMorphism( s ) ) ),
-                                                a );
-        
+                                                LeftUnitor( Range( UnderlyingMorphism( a ) ) ),
+                                                a 
+                                               );
+
     end );
-    
+
     # @Description
     # Given an object a, this method returns the left unitor inverse, i.e. a -> 1 \otimes a, which we derive from the
     # underlying proj-category.
@@ -1000,12 +998,12 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Arguments a, r (= 1 \otimes a)
     AddLeftUnitorInverseWithGivenTensorProduct( category,
       function( a, r )
-        
+
         return CAPPresentationCategoryMorphism( a,
-                                                LeftUnitorInverseWithGivenTensorProduct( Range( UnderlyingMorphism( a ) ), 
-                                                                                         Range( UnderlyingMorphism( r ) ) ),
-                                                r );
-    
+                                                LeftUnitorInverse( Range( UnderlyingMorphism( a ) ) ),
+                                                r 
+                                               );
+
     end );
 
     # @Description
@@ -1017,10 +1015,10 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
       function( a, s )
     
         return CAPPresentationCategoryMorphism( s,
-                                                RightUnitorWithGivenTensorProduct( Range( UnderlyingMorphism( a ) ), 
-                                                                                   Range( UnderlyingMorphism( s ) ) ),
-                                                a );
-    
+                                                RightUnitor( Range( UnderlyingMorphism( a ) ) ),
+                                                a 
+                                               );
+
     end );
     
     # @Description
@@ -1032,14 +1030,14 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
       function( a, r )
         
         return CAPPresentationCategoryMorphism( a,
-                                                RightUnitorInverseWithGivenTensorProduct( Range( UnderlyingMorphism( a ) ), 
-                                                                                          Range( UnderlyingMorphism( r ) ) ),
-                                                r );
-    
+                                                RightUnitorInverse( Range( UnderlyingMorphism( a ) ) ),
+                                                r 
+                                               );
+
     end );
 
-    
-    
+
+
     ######################################################################
     #
     # @Section Add Symmetric Monoidal Structure 
@@ -1056,8 +1054,8 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     function( s, a, b, r)
     
       return CAPPresentationCategoryMorphism( s,
-                                              Braiding( Range( UnderlyingMorphism( s ) ), Range( UnderlyingMorphism( r ) ) ),
-                                              r );
+                                             Braiding( Range( UnderlyingMorphism( s ) ), Range( UnderlyingMorphism( r ) ) ),
+                                             r );
     
     end );
     
@@ -1116,7 +1114,8 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
       # (2) construct the bridge_mapping A^vee \otimes B -> A'^\vee \otimes b'
       bridge_mapping := CAPPresentationCategoryMorphism( 
                                  Range( kernel1 ),
-                                 TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( alpha ) ), UnderlyingMorphism( beta ) ),
+                                 TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( alpha ) ), 
+                                                           UnderlyingMorphism( beta ) ),
                                  Range( kernel2 )
                                  );
       
