@@ -112,39 +112,77 @@ end );
 
 InstallGlobalFunction( IsProjCategory,
   function( category )
-    local installed_ops;
+    local installed_ops, required_ops, i;
 
-    ## FIXME: Check method preconditions
-    ## i.e. check if all method for "isadditive" are there and so on...
-    ## -> so create a list of all methods that I use!
-    
+    # first check if the category has been finalized (i.e. no methods are to be added...)
     if not HasIsFinalized( category ) or not IsFinalized( category ) then
-        
+
         Error( "Proj-categories must be finalized" );
         return;
 
     fi;
-    
+
+    # the following are required for a Proj-category
+    required_ops := [ "IsWellDefinedForMorphisms",
+                      "IsEqualForMorphismsOnMor",
+                      "PreCompose",
+                      "IdentityMorphism",
+                      "AdditionForMorphisms",
+                      "AdditiveInverseForMorphisms",
+                      "AdditionForMorphisms",
+                      "ZeroMorphism",
+                      "ZeroObject",
+                      "UniversalMorphismIntoZeroObject",
+                      "UniversalMorphismFromZeroObject",
+                      "DirectSum",
+                      "ProjectionInFactorOfDirectSum",
+                      "UniversalMorphismIntoDirectSum",
+                      "InjectionOfCofactorOfDirectSum",
+                      "UniversalMorphismFromDirectSum",
+                      "Lift",
+                      "Colift",
+                      "ProjectionInFactorOfFiberProduct",
+                      "TensorProductOnObjects",
+                      "TensorProductOnMorphisms",
+                      "TensorUnit",
+                      "AssociatorLeftToRight",
+                      "AssociatorRightToLeft",
+                      "LeftUnitor",
+                      "LeftUnitorInverse",
+                      "RightUnitor",
+                      "RightUnitorInverse",
+                      "Braiding",
+                      "DualOnObjects",
+                      "DualOnMorphisms",
+                      "EvaluationForDual",
+                      "CoevaluationForDual" ]
+
+    # whilst the following methods are installed
     installed_ops := ListInstalledOperationsOfCategory( category );
-    
+
+    # check that all required methods are indeed installed
+    for i in required_ops do
+
+      if not i in installed_ops then
+
+        return false;
+
+      fi;
+
+    od;
+
+    # if all required methods are installed, check if the category also has the right properties set
     if not IsAdditiveCategory( category ) then
-        
+
         return false;
-        
+
     elif not IsRigidSymmetricClosedMonoidalCategory( category ) then
-        
+
         return false;
-        
-    elif not "Lift" in installed_ops then
-        
-        return false;
-        
-    elif not "KernelEmbedding" in installed_ops then
-      
-      return false;
-      
+
     fi;
-    
+
+    # if all tests have been passed, return true
     return true;
     
 end );

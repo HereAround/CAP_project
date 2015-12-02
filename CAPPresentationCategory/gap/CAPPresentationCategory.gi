@@ -117,7 +117,6 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
       function( morphism )
         local lift;
         
-        # we should first check that source, range and the mapping itself are well-defined...
         if not IsWellDefinedForMorphisms( UnderlyingMorphism( morphism ) ) then
         
           return false;
@@ -139,7 +138,8 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         
         elif SourceLiftMorphism( morphism ) = fail then
         
-          # it has been tried to compute a SourceLiftMorphism, but this operation failed, so the morphism is not well-defined
+          # it has been tried to compute a SourceLiftMorphism, but this operation failed, so the morphism is 
+          # not well-defined
           return false;
         
         fi;
@@ -156,9 +156,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Section Implement the elementary operations for categories
     #
     ######################################################################
-    
-    ## FIXME: Recheck this
-    
+
     # @Description
     # This method checks if the underlying morphisms of <A>object1</A> and <A>object2</A> are equal
     # in the underlying Proj-category.
@@ -355,10 +353,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
                                                 object );
         
     end );
-    
-    
-    ## FIXME: Direct sum etc. Do you really want to use the with given methods from the underlying category.
-    
+
     # @Description
     # This method installs the direct sum of the list of objects <A>objects</A>. To this end the direct sum operation of the 
     # underlying Proj-category is used.
@@ -978,11 +973,11 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         # (3) associator_left_to_right
         associator := AssociatorLeftToRight( b, Adual, a );
         
-        # (4) coevaluation
+        # (4) evaluation
         evaluation := CAPPresentationCategoryMorphism( 
-                                TensorUnit( category ),
-                                CoevaluationForDual( Range( UnderlyingMorphism( a ) ) ),
-                                TensorProductOnObjects( Adual, a )
+                                TensorProductOnObjects( Adual, a ),
+                                EvaluationForDual( Range( UnderlyingMorphism( a ) ) ),
+                                TensorUnit( category )
                         );
         evaluation := TensorProductOnMorphisms( IdentityMorphism( b ), evaluation );
         
@@ -1040,11 +1035,4 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         
     end );
         
-    ## THEN GO ABOUT ORGANISING THE METHOD INSTALLATIONS BETTER, i.e. make section which install pre_additive, additive, pre_Abelian...
-    ## things, so that one can more easily read this
-    ## do this also for the Proj-Category
-    ## maybe even add these method installations to the manual and comment on what they do, what they don't do etc.
-    
-    ## proper argument why 0 \otimes 0 is isomorphic to the zero object - same for A \otimes 0?
-    ## works for modules - alright, but more generally? do we have to demand this?
 end );
