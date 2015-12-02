@@ -9,10 +9,12 @@
 #############################################################################
 
 InstallMethod( EmbeddingOfProjCategory,
-               [ IsProjCategory ],
+               [ IsCapCategory ],
 
   function( projective_category )
     local pres_category, functor;
+        
+        # FIXME: check that input is proj-category!
         
         # define the presentation category
         pres_category := PresentationCategory( projective_category );

@@ -101,3 +101,48 @@ InstallMethod( \^,
       fi;
 
 end );
+
+
+
+####################################################################################
+##
+##  Section Method to check if a category is a proj-category
+##
+####################################################################################
+
+InstallGlobalFunction( IsProjCategory,
+  function( category )
+    local installed_ops;
+
+    ## FIXME: Check method preconditions
+    
+    if not HasIsFinalized( category ) or not IsFinalized( category ) then
+        
+        Error( "Proj-categories must be finalized" );
+        return;
+
+    fi;
+    
+    installed_ops := ListInstalledOperationsOfCategory( category );
+    
+    if not IsAdditiveCategory( category ) then
+        
+        return false;
+        
+    elif not IsRigidSymmetricClosedMonoidalCategory( category ) then
+        
+        return false;
+        
+    elif not "Lift" in installed_ops then
+        
+        return false;
+        
+    elif not "KernelEmbedding" in installed_ops then
+      
+      return false;
+      
+    fi;
+    
+    return true;
+    
+end );

@@ -46,61 +46,6 @@ presentation2l := CAPPresentationCategoryObject( m3 );
 #! <An object of the presentation category over the CAP category of projective 
 #! graded left modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
-embl := EmbeddingInProjectiveObject( presentation2l );
-#! <A morphism of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
-FullInformation( embl );
-#! 
-#! ================================================================================= 
-#! 
-#! Source: 
-#! ------- 
-#! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
-#! [ [ ( 1, 0 ), 2 ] ]
-#! 
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
-#! with matrix: 
-#! x_1,x_2,
-#! x_1,x_2 
-#! (over a graded ring)
-#! 
-#! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
-#! [ [ 0, 2 ] ]
-#! 
-#! --------------------------------------------------------------------------------- 
-#!  
-#! Mapping matrix: 
-#! --------------- 
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
-#! with matrix: 
-#! -x_2,
-#! x_1  
-#! (over a graded ring)
-#! 
-#! --------------------------------------------------------------------------------- 
-#!  
-#! Range: 
-#! ------ 
-#! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 0 and degrees: 
-#! [  ]
-#! 
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
-#! with matrix: 
-#! (an empty 0 x 1 matrix)
-#! 
-#! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees: 
-#! [ [ ( -1, 0 ), 1 ] ]
-#!
-#! ================================================================================= 
-#!
 
 #! @EndExample
 
@@ -139,58 +84,6 @@ presentation2r := CAPPresentationCategoryObject( n3 );
 #! <An object of the presentation category over the CAP category of projective
 #! graded right modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
-embr := EmbeddingInProjectiveObject( presentation2r );
-#! <A morphism of the presentation category over the CAP category of projective
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
-FullInformation( embr );
-#! ================================================================================= 
-#! 
-#! Source: 
-#! ------- 
-#! A projective graded right module over Q[x_1,x_2,x_3,x_4] (with weights
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
-#! [ [ ( 1, 0 ), 2 ] ]
-#!
-#! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix: 
-#! x_1,x_1,
-#! x_2,x_2 
-#! (over a graded ring)
-#!
-#! A projective graded right module over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
-#! [ [ 0, 2 ] ]
-#! 
-#! --------------------------------------------------------------------------------- 
-#!
-#! Mapping matrix: 
-#! --------------- 
-#! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix: 
-#! -x_2,x_1
-#! (over a graded ring)
-#! 
-#! --------------------------------------------------------------------------------- 
-#!  
-#! Range: 
-#! ------ 
-#! A projective graded right module over Q[x_1,x_2,x_3,x_4] (with weights
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 0 and degrees: 
-#! [  ]
-#! 
-#! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix: 
-#! (an empty 1 x 0 matrix)
-#! 
-#! A projective graded right module over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees:
-#! [ [ ( -1, 0 ), 1 ] ]
-#! 
-#! ================================================================================= 
 
 #! @EndExample
 

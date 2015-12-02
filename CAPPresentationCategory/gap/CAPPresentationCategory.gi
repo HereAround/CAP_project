@@ -20,18 +20,14 @@ InstallMethod( PresentationCategory,
   function( projective_category )
     local category;
     
-    
-    ## FIXME: Remove propery
-    # check if the input is a Proj_Category and if not, react to it
+    # check if the input is a proj-category
     if not IsProjCategory( projective_category ) then
     
-      Error( "The input of PresentationCategory has to be a Proj-category! \n" );
+      Error( "The input must be a proj-category" );
       return;
-    
+      
     fi;
-    
-    ## FIXME: Check method preconditions
-    
+
     # set up the category
     category := CreateCapCategory( Concatenation( "Presentation category over ", Name( projective_category ) ) );
     category!.underlying_projective_category := projective_category;
@@ -43,6 +39,8 @@ InstallMethod( PresentationCategory,
     # I do not require anything more from the proj category. Thus it need not even be strict.
     # Therefore, in general, proj will not be strict either. Thus we do not set the following property:
     #SetIsStrictMonoidalCategory( category, true );
+    
+    # FIXME: think about simplifications given that proj has certain properties
     
     # now add basic functionality for the category
     ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY( category );

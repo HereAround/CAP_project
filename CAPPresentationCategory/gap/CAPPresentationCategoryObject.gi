@@ -37,8 +37,8 @@ InstallMethod( CAPPresentationCategoryObject,
     # check that the input is valid
     if not IsProjCategory( projective_category ) then
     
-      Error( "The argument must be an object in a Proj-category! \n" );
-      return false;
+      Error( "The argument must be an object in a Proj-category" );
+      return;
     
     fi;
     

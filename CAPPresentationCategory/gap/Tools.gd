@@ -30,3 +30,13 @@ DeclareOperation( "\*",
 #!
 DeclareOperation( "\^",
                [ IsCAPPresentationCategoryMorphism, IsInt ] );
+
+
+
+####################################################################################
+##
+#! @Section Determine if a category is a proj-category
+##
+####################################################################################
+
+DeclareGlobalFunction( "IsProjCategory" );

@@ -21,4 +21,4 @@
 #! @Returns a functor
 #! @Arguments category
 DeclareAttribute( "EmbeddingOfProjCategory",
-                  IsProjCategory );
+                  IsCapCategory );
