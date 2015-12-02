@@ -106,7 +106,7 @@ end );
 
 ####################################################################################
 ##
-##  Section Method to check if a category is a proj-category
+##  Section Determine if a category is a Proj-category
 ##
 ####################################################################################
 

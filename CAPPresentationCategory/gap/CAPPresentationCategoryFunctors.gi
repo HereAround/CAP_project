@@ -14,8 +14,13 @@ InstallMethod( EmbeddingOfProjCategory,
   function( projective_category )
     local pres_category, functor;
         
-        # FIXME: check that input is proj-category!
+        if not IsProjCategory( projective_category ) then
         
+          Error( "The input must be a Proj-category" );
+          return;
+
+        fi
+
         # define the presentation category
         pres_category := PresentationCategory( projective_category );
         
