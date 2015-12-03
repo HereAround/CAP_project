@@ -143,19 +143,19 @@ InstallGlobalFunction( IsProjCategory,
                       "Colift",
                       "ProjectionInFactorOfFiberProduct",
                       "TensorProductOnObjects",
-                      "TensorProductOnMorphisms",
+                      "TensorProductOnMorphismsWithGivenTensorProducts",
                       "TensorUnit",
-                      "AssociatorLeftToRight",
-                      "AssociatorRightToLeft",
-                      "LeftUnitor",
-                      "LeftUnitorInverse",
-                      "RightUnitor",
-                      "RightUnitorInverse",
-                      "Braiding",
+                      "AssociatorLeftToRightWithGivenTensorProducts",
+                      "AssociatorRightToLeftWithGivenTensorProducts",
+                      "LeftUnitorWithGivenTensorProduct",
+                      "LeftUnitorInverseWithGivenTensorProduct",
+                      "RightUnitorWithGivenTensorProduct",
+                      "RightUnitorInverseWithGivenTensorProduct",
+                      "BraidingWithGivenTensorProducts",
                       "DualOnObjects",
-                      "DualOnMorphisms",
-                      "EvaluationForDual",
-                      "CoevaluationForDual" ]
+                      "DualOnMorphismsWithGivenDuals",
+                      "EvaluationForDualWithGivenTensorProduct",
+                      "CoevaluationForDualWithGivenTensorProduct" ];
 
     # whilst the following methods are installed
     installed_ops := ListInstalledOperationsOfCategory( category );
@@ -165,6 +165,7 @@ InstallGlobalFunction( IsProjCategory,
 
       if not i in installed_ops then
 
+        Error( Concatenation( i, " is not installed, but needed for a Proj-category" ) );
         return false;
 
       fi;
@@ -174,15 +175,18 @@ InstallGlobalFunction( IsProjCategory,
     # if all required methods are installed, check if the category also has the right properties set
     if not IsAdditiveCategory( category ) then
 
-        return false;
+      Error( "a Proj-category must be additive, but the attribute is not set for the category in question" );
+      return false;
 
     elif not IsRigidSymmetricClosedMonoidalCategory( category ) then
 
-        return false;
+      Error( Concatenation( "a Proj-category must be a rigid symmetric and closed monoidal category, ",
+                            "but the attribute is not set for the category in question" ) );
+      return false;
 
     fi;
 
     # if all tests have been passed, return true
     return true;
-    
+
 end );
