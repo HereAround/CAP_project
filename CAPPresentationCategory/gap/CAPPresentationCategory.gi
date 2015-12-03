@@ -18,18 +18,38 @@ InstallMethod( PresentationCategory,
                [ IsCapCategory ],
                
   function( projective_category )
-    local category;
-    
+    local category, underlying_graded_ring;
+
     # check if the input is a proj-category
     if not IsProjCategory( projective_category ) then
-    
+
       Error( "The input must be a proj-category" );
       return;
-      
+
     fi;
 
-    # set up the category
-    category := CreateCapCategory( Concatenation( "Presentation category over ", Name( projective_category ) ) );
+    # set up the category by name - for special input categories we produce a special name
+    if IsCAPCategoryOfProjectiveGradedLeftModulesObject( ZeroObject( projective_category ) ) then
+
+      # this is the category of graded left module presentations
+      underlying_graded_ring := UnderlyingHomalgGradedRing( ZeroObject( projective_category ) );
+      category := CreateCapCategory( Concatenation( "Category of graded left module presentations over ",
+                                                    RingName( underlying_graded_ring ) ) );
+
+    elif IsCAPCategoryOfProjectiveGradedRightModulesObject( ZeroObject( projective_category ) ) then
+
+      # this is the category of graded right module presentations
+      underlying_graded_ring := UnderlyingHomalgGradedRing( ZeroObject( projective_category ) );
+      category := CreateCapCategory( Concatenation( "Category of graded right module presentations over ",
+                                                    RingName( underlying_graded_ring ) ) );
+
+    else
+
+      category := CreateCapCategory( Concatenation( "Presentation category over ", Name( projective_category ) ) );
+
+    fi;
+    
+    # set the underlying projective category
     category!.underlying_projective_category := projective_category;
 
     # tell the category that it is an Abelian category

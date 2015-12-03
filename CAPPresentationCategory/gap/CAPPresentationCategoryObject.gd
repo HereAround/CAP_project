@@ -20,6 +20,18 @@
 DeclareCategory( "IsCAPPresentationCategoryObject",
                  IsCapCategoryObject );
 
+#! @Description
+#! The GAP category of objects in the presentation category over the category of projective graded left modules.
+#! @Arguments object
+DeclareCategory( "IsGradedLeftModulePresentationForCAP",
+                 IsCAPPresentationCategoryObject );
+
+#! @Description
+#! The GAP category of objects in the presentation category over the category of projective graded right modules.
+#! @Arguments object
+DeclareCategory( "IsGradedRightModulePresentationForCAP",
+                 IsCAPPresentationCategoryObject );
+
 #############################
 ##
 #! @Section Constructors

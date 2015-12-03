@@ -20,6 +20,18 @@
 DeclareCategory( "IsCAPPresentationCategoryMorphism",
                  IsCapCategoryMorphism );
 
+#! @Description
+#! The GAP category of morphisms in the presentation category over the category of projective graded left modules.
+#! @Arguments object
+DeclareCategory( "IsGradedLeftModulePresentationMorphismForCAP",
+                 IsCAPPresentationCategoryMorphism );
+
+#! @Description
+#! The GAP category of morphisms in the presentation category over the category of projective graded right modules.
+#! @Arguments object
+DeclareCategory( "IsGradedRightModulePresentationMorphismForCAP",
+                 IsCAPPresentationCategoryMorphism );
+
 #############################
 ##
 #! @Section Constructors

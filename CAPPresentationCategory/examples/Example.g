@@ -39,12 +39,10 @@ left_category := CapCategory( Q1 );
 #! CAP category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 presentation1l := CAPPresentationCategoryObject( m1 );
-#! <An object of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 presentation2l := CAPPresentationCategoryObject( m3 );
-#! <An object of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 
 #! @EndExample
@@ -77,12 +75,10 @@ right_category := CapCategory( P1 );
 #! CAP category of projective graded right modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 presentation1r := CAPPresentationCategoryObject( n1 );
-#! <An object of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 presentation2r := CAPPresentationCategoryObject( n3 );
-#! <An object of the presentation category over the CAP category of projective
-#! graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 
 #! @EndExample
@@ -131,8 +127,7 @@ FullInformation( presentation1l );
 
 presentation_morphisml := CAPPresentationCategoryMorphism( 
                           presentation1l, m2, presentation2l );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 IsWellDefinedForMorphisms( presentation_morphisml );
 #! true
@@ -200,8 +195,7 @@ Display( SourceLiftMorphism( presentation_morphisml ) );
 #! (over a graded ring)
 presentation_morphismr := CAPPresentationCategoryMorphism( 
                           presentation1r, n2, presentation2r );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4]
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 IsWellDefinedForMorphisms( presentation_morphismr );
 #! true
@@ -276,29 +270,24 @@ Display( SourceLiftMorphism( presentation_morphismr ) );
 
 #! @Example
 dSl := DirectSum( [ presentation1l, presentation2l ] );
-#! <An object of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 IdentityMorphism( dSl );
-#! <A morphism of the presentation category over the CAP category of
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 ZeroMorphism( ZeroObject( CapCategory( presentation1l ) ), dSl );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 p1l := ProjectionInFactorOfDirectSumWithGivenDirectSum( 
        [ presentation1l, presentation2l ], 1, dSl );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( p1l );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
-#! with matrix: 
+#! A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
+#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
 #! 1,0,
 #! 0,1,
 #! 0,0,
@@ -306,16 +295,14 @@ Display( p1l );
 #! (over a graded ring)
 p2l := ProjectionInFactorOfDirectSumWithGivenDirectSum( 
        [ presentation1l, presentation2l ], 2, dSl );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( p2l );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix: 
+#! A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
+#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
 #! 0,0,
 #! 0,0,
 #! 1,0,
@@ -323,31 +310,27 @@ Display( p2l );
 #! (over a graded ring)
 i1l := InjectionOfCofactorOfDirectSumWithGivenDirectSum( 
        [ presentation1l, presentation2l ], 1, dSl );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( i1l );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix: 
+#! A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
+#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
 #! 1,0,0,0,
 #! 0,1,0,0 
 #! (over a graded ring)
 i2l := InjectionOfCofactorOfDirectSumWithGivenDirectSum( 
        [ presentation1l, presentation2l ], 2, dSl );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( i2l );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1,0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix: 
+#! A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
+#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
 #! 0,0,1,0,
 #! 0,0,0,1 
 #! (over a graded ring)
@@ -381,15 +364,14 @@ Display( test_morphism_l );
 #! x_1,x_2 
 #! (over a graded ring)
 test_object_l := CAPPresentationCategoryObject( test_morphism_l );
-#! <An object of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( test_object_l );
-#! An object of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] (with weights
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
 #! x_1,x_2,
 #! x_1,x_2,
@@ -408,16 +390,14 @@ Display( mor1_l );
 #! (over a graded ring)
 mor1_l_presentation := CAPPresentationCategoryMorphism( 
                        test_object_l, mor1_l, presentation1l );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor1_l_presentation );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix: 
+#! A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
+#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
 #! 1,0,
 #! 0,1 
 #! (over a graded ring)
@@ -434,25 +414,22 @@ Display( mor2_l );
 #! (over a graded ring)
 mor2_l_presentation := CAPPresentationCategoryMorphism( 
                        test_object_l, mor2_l, presentation2l );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor2_l_presentation );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix: 
+#! A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
+#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
 #! 1,0,
 #! 0,1 
 #! (over a graded ring)
 sink_l := [ mor1_l_presentation, mor2_l_presentation ];
-#! [ <A morphism of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>, <A morphism of the presentation 
-#! category over the CAP category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])> ]
+#! [ <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>, 
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])> ]
 diagram_l := [ Range( UnderlyingMorphism( presentation1l ) ), 
                Range( UnderlyingMorphism( presentation2l ) ) ];
 #! [ <A projective graded left module of rank 2>, 
@@ -460,13 +437,12 @@ diagram_l := [ Range( UnderlyingMorphism( presentation1l ) ),
 uni_l := UniversalMorphismIntoDirectSumWithGivenDirectSum( diagram_l, 
                                                            sink_l, 
                                                            dSl );
-#! <A morphism of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( uni_l );
-#! A morphism of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the
+#! following morphism: 
 #! A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
@@ -487,13 +463,12 @@ Display( mor21_l );
 mor21_l_presentation := CAPPresentationCategoryMorphism( presentation1l, 
                                                          mor21_l, 
                                                          test_object_l );
-#! <A morphism of the presentation category over the CAP category of projective
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor21_l_presentation );
-#! A morphism of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
@@ -513,13 +488,12 @@ Display( mor22_l );
 #! (over a graded ring)
 mor22_l_presentation := CAPPresentationCategoryMorphism( 
                         presentation2l, mor22_l, test_object_l );
-#! <A morphism of the presentation category over the CAP category of projective
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor22_l_presentation );
-#! A morphism of the presentation category over the CAP category of projective
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
@@ -527,50 +501,46 @@ Display( mor22_l_presentation );
 #! 0,1 
 #! (over a graded ring)
 sink2_l := [ mor21_l_presentation , mor22_l_presentation ];
-#! [ <A morphism of the presentation category over the CAP category of projective
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>, <A morphism of the presentation 
-#! category over the CAP category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])> ]
+#! [ <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>, 
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])> ]
 inj_l := UniversalMorphismFromDirectSumWithGivenDirectSum( diagram_l, 
                                                            sink2_l, 
                                                            dSl );
-#! <A morphism of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( inj_l );
-#! A morphism of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the
+#! following morphism: 
 #! A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix: 
+#! with matrix:
 #! 1,0,
 #! 0,1,
 #! 1,0,
 #! 0,1 
 #! (over a graded ring)
 kernel_l := KernelEmbedding( presentation_morphisml );
-#! <A morphism of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( kernel_l );
-#! A morphism of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
 #! x_1,x_2
 #! (over a graded ring)
 cokernel_l := CokernelProjection( presentation_morphisml );
-#! <A morphism of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( cokernel_l );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
@@ -596,10 +566,9 @@ comparer_l := CAPPresentationCategoryMorphism(
                            HomalgMatrix( [[ 0,1,0,0],[0,0,1,0]], S ),
                            Range( UnderlyingMorphism( Range( i1l ) ) )
                    )                                             
-                   , Range( i1l ) 
+                   , Range( i1l )
               );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 IsEqualForMorphisms( i1l, comparer_l );
 #! false
@@ -613,59 +582,53 @@ IsEqualForMorphisms( i1l, comparer_l );
 
 #! @Example
 dSr := DirectSum( [ presentation1r, presentation2r ] );
-#! <An object of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 IdentityMorphism( dSr );
-#! <A morphism of the presentation category over the CAP category of
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 ZeroMorphism( ZeroObject( CapCategory( presentation1r ) ), dSr );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 p1r := ProjectionInFactorOfDirectSumWithGivenDirectSum( 
                        [ presentation1r, presentation2r ], 1, dSr );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( p1r );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
-#! with matrix: 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
+#! with matrix:
 #! 1,0,0,0,
 #! 0,1,0,0
 #! (over a graded ring)
 p2r := ProjectionInFactorOfDirectSumWithGivenDirectSum( 
                        [ presentation1r, presentation2r ], 2, dSr );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( p2r );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix: 
+#! with matrix:
 #! 0,0,1,0,
 #! 0,0,0,1
 #! (over a graded ring)
 i1r := InjectionOfCofactorOfDirectSumWithGivenDirectSum( 
                        [ presentation1r, presentation2r ], 1, dSr );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( i1r );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix: 
+#! with matrix:
 #! 1,0,
 #! 0,1,
 #! 0,0,
@@ -673,16 +636,15 @@ Display( i1r );
 #! (over a graded ring)
 i2r := InjectionOfCofactorOfDirectSumWithGivenDirectSum( 
                        [ presentation1r, presentation2r ], 2, dSr );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( i2r );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1,0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix: 
+#! with matrix:
 #! 0,0,
 #! 0,0,
 #! 1,0,
@@ -694,7 +656,7 @@ source_r := CAPCategoryOfProjectiveGradedRightModulesObject(
 Display( source_r );
 #! A projective graded right module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! of rank 3 and degrees: 
+#! of rank 3 and degrees:
 #! [ [ ( 1, 0 ), 3 ] ]
 range_r := CAPCategoryOfProjectiveGradedRightModulesObject( 
                                                [ [[0,0], 2 ] ], S );
@@ -709,7 +671,7 @@ test_morphism_r := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism(
           HomalgMatrix( [[ "x_1", "x_1", "x_1"], [ "x_2", "x_2", "x_2"]], S), 
           range_r );
 #! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 Display( test_morphism_r );
 #! A morphism in the category of projective graded right modules over
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
@@ -718,18 +680,17 @@ Display( test_morphism_r );
 #! x_2,x_2,x_2
 #! (over a graded ring)
 test_object_r := CAPPresentationCategoryObject( test_morphism_r );
-#! <An object of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( test_object_r );
-#! An object of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] (with weights
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
 #! x_1,x_1,x_1,
-#! x_2,x_2,x_2
+#! x_2,x_2,x_2 
 #! (over a graded ring)
 mor1_r := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
           range_r, HomalgMatrix( [[1,0],[0,1]] , S ), P3 );
@@ -744,13 +705,12 @@ Display( mor1_r );
 #! (over a graded ring)
 mor1_r_presentation := CAPPresentationCategoryMorphism( 
                        test_object_r, mor1_r, presentation1r );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor1_r_presentation );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
@@ -770,13 +730,12 @@ Display( mor2_r );
 #! (over a graded ring)
 mor2_r_presentation := CAPPresentationCategoryMorphism( 
                        test_object_r, mor2_r, presentation2r );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor2_r_presentation );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
@@ -784,11 +743,10 @@ Display( mor2_r_presentation );
 #! 0,1 
 #! (over a graded ring)
 sink_r := [ mor1_r_presentation, mor2_r_presentation ];
-#! [ <A morphism of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>, <A morphism of the presentation 
-#! category over the CAP category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])> ]
+#! [ <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>, 
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])> ]
 diagram_r := [ Range( UnderlyingMorphism( presentation1r ) ), 
                Range( UnderlyingMorphism( presentation2r ) ) ];
 #! [ <A projective graded right module of rank 2>, 
@@ -797,13 +755,12 @@ uni_r := UniversalMorphismIntoDirectSumWithGivenDirectSum(
                                                            diagram_r, 
                                                            sink_r, 
                                                            dSr );
-#! <A morphism of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( uni_r );
-#! A morphism of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
@@ -827,13 +784,12 @@ mor21_r_presentation := CAPPresentationCategoryMorphism(
                                                       presentation1r, 
                                                       mor21_r, 
                                                       test_object_r );
-#! <A morphism of the presentation category over the CAP category of projective
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor21_r_presentation );
-#! A morphism of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
@@ -853,13 +809,12 @@ Display( mor22_r );
 #! (over a graded ring)
 mor22_r_presentation := CAPPresentationCategoryMorphism( 
                         presentation2r, mor22_r, test_object_r );
-#! <A morphism of the presentation category over the CAP category of projective
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor22_r_presentation );
-#! A morphism of the presentation category over the CAP category of projective
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
@@ -867,21 +822,19 @@ Display( mor22_r_presentation );
 #! 0,1 
 #! (over a graded ring)
 sink2_r := [ mor21_r_presentation , mor22_r_presentation ];
-#! [ <A morphism of the presentation category over the CAP category of projective
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>, <A morphism of the presentation 
-#! category over the CAP category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])> ]
+#! [ <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>, 
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])> ]
 inj_r := UniversalMorphismFromDirectSumWithGivenDirectSum( diagram_r, 
                                                            sink2_r, 
                                                            dSr );
-#! <A morphism of the presentation category over the CAP category of projective
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( inj_r );
-#! A morphism of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
@@ -889,26 +842,24 @@ Display( inj_r );
 #! 0,1,0,1
 #! (over a graded ring)
 kernel_r := KernelEmbedding( presentation_morphismr );
-#! <A morphism of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( kernel_r );
-#! A morphism of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
 #! x_1,x_2
 #! (over a graded ring)
 cokernel_r := CokernelProjection( presentation_morphismr );
-#! <A morphism of the presentation category over the CAP category of projective
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( cokernel_r );
-#! A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]). Presentation: 
+#! A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
+#! following morphism: 
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
@@ -936,8 +887,7 @@ comparer_r := CAPPresentationCategoryMorphism(
                       ),
                       Range( i1r ) 
                    );
-#! <A morphism of the presentation category over the CAP category of 
-#! projective graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 IsEqualForMorphisms( i1r, comparer_r );
 #! false

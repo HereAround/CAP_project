@@ -19,6 +19,29 @@ BindGlobal( "TheTypeOfCAPPresentationCategoryMorphism",
             NewType( TheFamilyOfCAPPresentationCategoryMorphisms,
                      IsCAPPresentationCategoryMorphismRep ) );
 
+DeclareRepresentation( "IsGradedLeftModulePresentationMorphismForCAPRep",
+                       IsGradedLeftModulePresentationMorphismForCAP and IsAttributeStoringRep,
+                       [ ] );
+
+
+BindGlobal( "TheFamilyOfGradedLeftModulePresentationMorphismsForCAP",
+            NewFamily( "TheFamilyOfGradedLeftModulePresentationMorphismsForCAP" ) );
+
+BindGlobal( "TheTypeOfGradedLeftModulePresentationMorphismForCAP",
+            NewType( TheFamilyOfGradedLeftModulePresentationMorphismsForCAP,
+                     IsGradedLeftModulePresentationMorphismForCAPRep ) );
+
+
+DeclareRepresentation( "IsGradedRightModulePresentationMorphismForCAPRep",
+                       IsGradedRightModulePresentationMorphismForCAP and IsAttributeStoringRep,
+                       [ ] );
+
+BindGlobal( "TheFamilyOfGradedRightModulePresentationMorphismsForCAP",
+            NewFamily( "TheFamilyOfGradedRightModulePresentationMorphismsForCAP" ) );
+
+BindGlobal( "TheTypeOfGradedRightModulePresentationMorphismForCAP",
+            NewType( TheFamilyOfGradedRightModulePresentationMorphismsForCAP,
+                     IsGradedRightModulePresentationMorphismForCAPRep ) );
 #############################
 ##
 ## Constructors
@@ -31,31 +54,33 @@ InstallMethod( CAPPresentationCategoryMorphism,
                
   function( source, morphism, range )
     #local category, presentation_morphism;
-    local presentation_morphism, category; 
-    
-    # check fi the input data is valid
+    local projective_category, presentation_morphism, category, type;
+
+    projective_category := CapCategory( UnderlyingMorphism( source ) );
+
+    # check if the input data is valid
     if not IsIdenticalObj( CapCategory( UnderlyingMorphism( source ) ), CapCategory( morphism ) ) then
-    
+
       Error( "The morphism and the source do not belong to the same category" );
       return;
-    
+
     elif not IsIdenticalObj( CapCategory( UnderlyingMorphism( range ) ), CapCategory( morphism ) ) then
-    
+
       Error( "The morphism and the range do not belong to the same category" );
       return;
-    
+
     elif not IsEqualForObjects( Range( UnderlyingMorphism( source ) ), Source( morphism ) ) then
-    
+
       Error( "The source of the morphism and the range of the presentation morphism of the source do not match" );
       return;
-    
+
     elif not IsEqualForObjects( Range( UnderlyingMorphism( range ) ), Range( morphism ) ) then
-    
+
       Error( "The range of the morphism and the range of the presentation morphism of the range do not match" );
       return;
-    
+
     fi;
-    
+
     # we found that the input is valid - although we have not yet checked that it is well-defined as well, i.e.
     # that there is a morphism of the sources that makes the following diagram commute
     # source: A --> B
@@ -67,8 +92,19 @@ InstallMethod( CAPPresentationCategoryMorphism,
     # this is to be checked in the IsWellDefined methods
     
     # that said, let us construct the morphism
-    presentation_morphism := rec( );       
-    ObjectifyWithAttributes( presentation_morphism, TheTypeOfCAPPresentationCategoryMorphism,
+    presentation_morphism := rec( );
+    
+    # set the type
+    if IsCAPCategoryOfProjectiveGradedLeftModulesObject( ZeroObject( projective_category ) ) then
+      type := TheTypeOfGradedLeftModulePresentationMorphismForCAP;
+    elif IsCAPCategoryOfProjectiveGradedRightModulesObject( ZeroObject( projective_category ) ) then
+      type := TheTypeOfGradedRightModulePresentationMorphismForCAP;
+    else
+      type := TheTypeOfCAPPresentationCategoryMorphism;
+    fi;
+
+    # objectify the presentation_morphism
+    ObjectifyWithAttributes( presentation_morphism, type,
                              Source, source,
                              Range, range,
                              UnderlyingMorphism, morphism );
@@ -91,15 +127,38 @@ end );
 
 InstallMethod( String,
               [ IsCAPPresentationCategoryMorphism ], 999, # FIX ME FIX ME FIX ME
-              
+
   function( presentation_category_morphism )
     
      return Concatenation( "A morphism of the presentation category over the ", 
                            Name( CapCategory( UnderlyingMorphism( presentation_category_morphism ) ) )
                            );
-                    
+
 end );
 
+InstallMethod( String,
+              [ IsGradedLeftModulePresentationMorphismForCAP ], 999, # FIX ME FIX ME FIX ME
+
+  function( graded_left_module_presentation_morphism )
+
+     return Concatenation( "A morphism of graded left module presentations over ",
+                            RingName( UnderlyingHomalgGradedRing( 
+                                     ZeroObject( UnderlyingMorphism( graded_left_module_presentation_morphism ) ) ) )
+                           );
+
+end );
+
+InstallMethod( String,
+              [ IsGradedRightModulePresentationMorphismForCAP ], 999, # FIX ME FIX ME FIX ME
+
+  function( graded_right_module_presentation_morphism )
+    
+     return Concatenation( "A morphism of graded right module presentations over ", 
+                            RingName( UnderlyingHomalgGradedRing( 
+                                     ZeroObject( UnderlyingMorphism( graded_right_module_presentation_morphism ) ) ) )
+                           );
+
+end );
 
 ####################################
 ##
@@ -109,7 +168,7 @@ end );
 
 InstallMethod( Display,
                [ IsCAPPresentationCategoryMorphism ], 999, # FIX ME FIX ME FIX ME
-               
+
   function( presentation_category_morphism )
 
      Print( Concatenation( "A morphism of the presentation category over the ", 
@@ -118,9 +177,38 @@ InstallMethod( Display,
                             ) );
   
      Display( UnderlyingMorphism( presentation_category_morphism ) );
-     
+
 end );
 
+InstallMethod( Display,
+               [ IsGradedLeftModulePresentationMorphismForCAP ], 999, # FIX ME FIX ME FIX ME
+
+  function( graded_left_module_presentation_morphism )
+
+     Print( Concatenation( "A morphism of graded left module presentations over ",
+                            RingName( UnderlyingHomalgGradedRing( 
+                                     ZeroObject( UnderlyingMorphism( graded_left_module_presentation_morphism ) ) ) ),
+                            " given by the following morphism: \n"
+                            ) );
+
+     Display( UnderlyingMorphism( graded_left_module_presentation_morphism ) );
+
+end );
+
+InstallMethod( Display,
+               [ IsGradedRightModulePresentationMorphismForCAP ], 999, # FIX ME FIX ME FIX ME
+
+  function( graded_right_module_presentation_morphism )
+
+     Print( Concatenation( "A morphism of graded right module presentations over ",
+                            RingName( UnderlyingHomalgGradedRing( 
+                                     ZeroObject( UnderlyingMorphism( graded_right_module_presentation_morphism ) ) ) ),
+                            " given by the following morphism: \n"
+                            ) );
+
+     Display( UnderlyingMorphism( graded_right_module_presentation_morphism ) );
+
+end );
 
 ####################################
 ##
@@ -136,6 +224,21 @@ InstallMethod( ViewObj,
 
 end );
 
+InstallMethod( ViewObj,
+               [ IsGradedLeftModulePresentationMorphismForCAP ], 999, # FIX ME FIX ME FIX ME
+  function( graded_left_module_presentation_morphism )
+
+    Print( Concatenation( "<", String( graded_left_module_presentation_morphism ), ">" ) );
+
+end );
+
+InstallMethod( ViewObj,
+               [ IsGradedRightModulePresentationMorphismForCAP ], 999, # FIX ME FIX ME FIX ME
+  function( graded_right_module_presentation_morphism )
+
+    Print( Concatenation( "<", String( graded_right_module_presentation_morphism ), ">" ) );
+
+end );
 
 #######################################
 ##

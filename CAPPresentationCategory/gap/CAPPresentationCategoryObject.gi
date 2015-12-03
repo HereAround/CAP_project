@@ -19,6 +19,32 @@ BindGlobal( "TheTypeOfCAPPresentationCategoryObject",
             NewType( TheFamilyOfCAPPresentationCategoryObjects,
                      IsCAPPresentationCategoryObjectRep ) );
 
+
+DeclareRepresentation( "IsGradedLeftModulePresentationForCAPRep",
+                       IsGradedLeftModulePresentationForCAP and IsAttributeStoringRep,
+                       [ ] );
+
+BindGlobal( "TheFamilyOfGradedLeftModulePresentationsForCAP",
+            NewFamily( "TheFamilyOfGradedLeftModulePresentationsForCAP" ) );
+
+BindGlobal( "TheTypeOfGradedLeftModulePresentationForCAP",
+            NewType( TheFamilyOfGradedLeftModulePresentationsForCAP,
+                     IsGradedLeftModulePresentationForCAPRep ) );
+
+
+DeclareRepresentation( "IsGradedRightModulePresentationForCAPRep",
+                       IsGradedRightModulePresentationForCAP and IsAttributeStoringRep,
+                       [ ] );
+
+BindGlobal( "TheFamilyOfGradedRightModulePresentationsForCAP",
+            NewFamily( "TheFamilyOfGradedRightModulePresentationsForCAP" ) );
+
+BindGlobal( "TheTypeOfGradedRightModulePresentationForCAP",
+            NewType( TheFamilyOfGradedRightModulePresentationsForCAP,
+                     IsGradedRightModulePresentationForCAPRep ) );
+
+
+
 #############################
 ##
 ## Constructors
@@ -29,22 +55,33 @@ BindGlobal( "TheTypeOfCAPPresentationCategoryObject",
 InstallMethod( CAPPresentationCategoryObject,
                [ IsCapCategoryMorphism ],
   function( presentation_morphism )
-    local projective_category, category, presentation_category_object;
-    
+    local projective_category, category, presentation_category_object, type;
+
     # capture the CapCategory of the presentation morphism
     projective_category := CapCategory( presentation_morphism );
-  
+
     # check that the input is valid
     if not IsProjCategory( projective_category ) then
-    
+
       Error( "The argument must be an object in a Proj-category" );
       return;
-    
+
     fi;
-    
+
     # then construct the object
-    presentation_category_object := rec( );    
-    ObjectifyWithAttributes( presentation_category_object, TheTypeOfCAPPresentationCategoryObject,
+    presentation_category_object := rec( );
+
+    # set the type
+    if IsCAPCategoryOfProjectiveGradedLeftModulesObject( ZeroObject( projective_category ) ) then
+      type := TheTypeOfGradedLeftModulePresentationForCAP;
+    elif IsCAPCategoryOfProjectiveGradedRightModulesObject( ZeroObject( projective_category ) ) then
+      type := TheTypeOfGradedRightModulePresentationForCAP;
+    else
+      type := TheTypeOfCAPPresentationCategoryObject;
+    fi;
+
+    # objective the presentation_category_object
+    ObjectifyWithAttributes( presentation_category_object, type,
                              UnderlyingMorphism, presentation_morphism
     );
 
@@ -65,15 +102,38 @@ end );
 
 InstallMethod( String,
               [ IsCAPPresentationCategoryObject ], 999, # FIX ME FIX ME FIX ME
-              
+
   function( presentation_category_object )
     
      return Concatenation( "An object of the presentation category over the ", 
                            Name( CapCategory( UnderlyingMorphism( presentation_category_object ) ) )
                            );
-                    
+
 end );
 
+InstallMethod( String,
+              [ IsGradedLeftModulePresentationForCAP ], 999, # FIX ME FIX ME FIX ME
+
+  function( graded_left_module_presentation )
+    
+     return Concatenation( "A graded left module presentation over the ring ", 
+                           RingName( UnderlyingHomalgGradedRing( 
+                                     ZeroObject( UnderlyingMorphism( graded_left_module_presentation ) ) ) )
+                           );
+
+end );
+
+InstallMethod( String,
+              [ IsGradedRightModulePresentationForCAP ], 999, # FIX ME FIX ME FIX ME
+
+  function( graded_right_module_presentation )
+
+     return Concatenation( "A graded right module presentation over the ring ", 
+                           RingName( UnderlyingHomalgGradedRing( 
+                                     ZeroObject( UnderlyingMorphism( graded_right_module_presentation ) ) ) )
+                           );
+
+end );
 
 ####################################
 ##
@@ -83,7 +143,7 @@ end );
 
 InstallMethod( Display,
                [ IsCAPPresentationCategoryObject ], 999, # FIX ME FIX ME FIX ME
-               
+
   function( presentation_category_object )
 
      Print( Concatenation( "An object of the presentation category over the ", 
@@ -92,9 +152,30 @@ InstallMethod( Display,
                             ) );
   
      Display( UnderlyingMorphism( presentation_category_object ) );
-     
+
 end );
 
+InstallMethod( Display,
+               [ IsGradedLeftModulePresentationForCAP ], 999, # FIX ME FIX ME FIX ME
+
+  function( graded_left_module_presentation )
+
+     Print( Concatenation( String( graded_left_module_presentation ), " given by the following morphism: \n" ) );
+  
+     Display( UnderlyingMorphism( graded_left_module_presentation ) );
+
+end );
+
+InstallMethod( Display,
+               [ IsGradedRightModulePresentationForCAP ], 999, # FIX ME FIX ME FIX ME
+
+  function( graded_right_module_presentation )
+
+     Print( Concatenation( String( graded_right_module_presentation ), " given by the following morphism: \n" ) );
+  
+     Display( UnderlyingMorphism( graded_right_module_presentation ) );
+
+end );
 
 ####################################
 ##
@@ -111,6 +192,23 @@ InstallMethod( ViewObj,
 
 end );
 
+InstallMethod( ViewObj,
+               [ IsGradedLeftModulePresentationForCAP ], 999, # FIX ME FIX ME FIX ME
+
+  function( graded_left_module_presentation )
+
+    Print( Concatenation( "<", String( graded_left_module_presentation ), ">" ) );
+
+end );
+
+InstallMethod( ViewObj,
+               [ IsGradedRightModulePresentationForCAP ], 999, # FIX ME FIX ME FIX ME
+
+  function( graded_right_module_presentation )
+
+    Print( Concatenation( "<", String( graded_right_module_presentation ), ">" ) );
+
+end );
 
 #######################################
 ##

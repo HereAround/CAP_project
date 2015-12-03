@@ -11,6 +11,7 @@ AutoDoc( "CAPPresentationCategory" : scaffold := true, autodoc :=
                          "gap/CAPPresentationCategoryMorphism.gd",
                          "gap/CAPPresentationCategoryFunctors.gd",
                          "gap/Tools.gd",
+                         #"gap/GradedModulePresentationsGAPCategories.gd",
                          "examples/Example.g"
                          ],
              scan_dirs := []
