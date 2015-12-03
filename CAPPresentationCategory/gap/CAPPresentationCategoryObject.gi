@@ -60,18 +60,14 @@ InstallMethod( CAPPresentationCategoryObject,
     # capture the CapCategory of the presentation morphism
     projective_category := CapCategory( presentation_morphism );
 
-    # check that the input is valid
-    if not IsProjCategory( projective_category ) then
+    # and "try" to compute its presentation category
+    # should the given category not be a proj-category, then this command will cause an error
+    category := PresentationCategory( projective_category );
 
-      Error( "The argument must be an object in a Proj-category" );
-      return;
-
-    fi;
-
-    # then construct the object
+    # now initialise the object
     presentation_category_object := rec( );
 
-    # set the type
+    # set its type
     if IsCAPCategoryOfProjectiveGradedLeftModulesObject( ZeroObject( projective_category ) ) then
       type := TheTypeOfGradedLeftModulePresentationForCAP;
     elif IsCAPCategoryOfProjectiveGradedRightModulesObject( ZeroObject( projective_category ) ) then
@@ -86,10 +82,9 @@ InstallMethod( CAPPresentationCategoryObject,
     );
 
     # add it to the presentation category
-    category := PresentationCategory( projective_category );
     Add( category, presentation_category_object );
     
-    # and return the result
+    # and return it
     return presentation_category_object;    
 
 end );    
