@@ -28,4 +28,4 @@ DeclareAttribute( "SfpgrmodLeft",
 #! @Returns a CapCategory
 #! @Arguments S
 DeclareAttribute( "SfpgrmodRight",
-                 IsHomalgGradedRing );
+                 IsHomalgGradedRing ); 
