@@ -14,42 +14,44 @@ S := GradedRing( Q * "x_1, x_2, x_3, x_4" );
 SetWeightsOfIndeterminates( S, [[1,0],[1,0],[0,1],[0,1]] );
 #!
 category_left := SfpgrmodLeft( S );
-#! Presentation category over CAP category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+#! Category of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 functor1_left := FunctorLessGradedGeneratorsLeft( S );
-#! Less generators for Presentation category over CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights
+#! Less generators for Category of graded left module presentations over
+#! Q[x_1,x_2,x_3,x_4] (with weights 
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 functor2_left := FunctorGradedStandardModuleLeft( S );
-#! Standard module for Presentation category over CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights
+#! Standard module for Category of graded left module presentations over
+#! Q[x_1,x_2,x_3,x_4] (with weights 
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 natural_transformation_left := 
 NaturalIsomorphismFromIdentityToGradedStandardModuleLeft( S );
-#! Natural isomorphism from Id to Standard module for Presentation category over 
-#! CAP category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! Natural isomorphism from Id to Standard module for Category of graded
+#! left module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+
 #! @EndExample
 
 #! @Section The category SfpgrmodRight
 
 #! @Example
 category_right := SfpgrmodRight( S );
-#! Presentation category over CAP category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+#! Category of graded right module presentations over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 functor1_right := FunctorLessGradedGeneratorsRight( S );
-#! Less generators for Presentation category over CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights
+#! Less generators for Category of graded right module presentations over
+#! Q[x_1,x_2,x_3,x_4] (with weights 
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 functor2_right := FunctorGradedStandardModuleRight( S );
-#! Standard module for Presentation category over CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights
+#! Standard module for Category of graded right module presentations over
+#! Q[x_1,x_2,x_3,x_4] (with weights 
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 natural_transformation_right := 
 NaturalIsomorphismFromIdentityToGradedStandardModuleRight( S );
-#! Natural isomorphism from Id to Standard module for Presentation category over 
-#! CAP category of projective graded right modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+#! Natural isomorphism from Id to Standard module for Category of graded
+#! right module presentations over Q[x_1,x_2,x_3,x_4] (with weights 
+#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+
 #! @EndExample
 
 
@@ -80,25 +82,21 @@ left_category := CapCategory( Q1 );
 #! CAP category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 left_presentation1 := CAPPresentationCategoryObject( m1l );
-#! <An object of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 left_presentation2 := CAPPresentationCategoryObject( m2l );
-#! <An object of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 left_presentation3 := CAPPresentationCategoryObject( m3l );
-#! <An object of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 truncation_functor_left := TruncationFunctorLeft( S, [[1,0],[0,1]] );
-#! Truncation functor for Presentation category over CAP category of projective
-#! graded left modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! to the cone [ [ 1, 0 ], [ 0, 1 ] ]
+#! Truncation functor for Category of graded left module presentations 
+#! over Q[x_1,x_2,x_3,x_4] (with weights 
+#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) to the cone 
+#! [ [ 1, 0 ], [ 0, 1 ] ]
 truncation1l := ApplyFunctor( truncation_functor_left, left_presentation1 );
-#! <An object of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 FullInformation( truncation1l );
 #! ================================================================================= 
@@ -119,8 +117,7 @@ FullInformation( truncation1l );
 #!
 #! ================================================================================= 
 truncation2l := ApplyFunctor( truncation_functor_left, left_presentation2 );
-#! <An object of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 FullInformation( truncation2l );
 #! ================================================================================= 
@@ -142,13 +139,11 @@ FullInformation( truncation2l );
 #!
 #! ================================================================================= 
 morl := CAPPresentationCategoryMorphism( left_presentation1, m2l, left_presentation3 );
-#! <A morphism of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 trmorl := ApplyFunctor( truncation_functor_left, morl );
-#! <A morphism of the presentation category over the CAP category of projective 
-#! graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 FullInformation( trmorl );
 #! ================================================================================= 
 #!  
@@ -227,25 +222,20 @@ right_category := CapCategory( P1 );
 #! CAP category of projective graded right modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 right_presentation1 := CAPPresentationCategoryObject( m1r );
-#! <An object of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 right_presentation2 := CAPPresentationCategoryObject( m2r );
-#! <An object of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 right_presentation3 := CAPPresentationCategoryObject( m3r );
-#! <An object of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 truncation_functor_right := TruncationFunctorRight( S, [[1,0],[0,1]] );
-#! Truncation functor for Presentation category over CAP category of projective
-#! graded right modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
+#! Truncation functor for Category of graded right module presentations 
+#! over Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
 #! to the cone [ [ 1, 0 ], [ 0, 1 ] ]
 truncation1r := ApplyFunctor( truncation_functor_right, right_presentation1 );
-#! <An object of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 FullInformation( truncation1r );
 #! =================================================================================
@@ -265,8 +255,7 @@ FullInformation( truncation1r );
 #! 
 #! =================================================================================
 truncation2r := ApplyFunctor( truncation_functor_right, right_presentation2 );
-#! <An object of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] 
+#! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 FullInformation( truncation2r );
 #! ================================================================================= 
@@ -288,13 +277,11 @@ FullInformation( truncation2r );
 #!
 #! ================================================================================= 
 morr := CAPPresentationCategoryMorphism( right_presentation1, m2r, right_presentation3 );
-#! <A morphism of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 trmorr := ApplyFunctor( truncation_functor_right, morr );
-#! <A morphism of the presentation category over the CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+#! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 FullInformation( trmorr );
 #! ================================================================================= 
 #!
@@ -863,9 +850,9 @@ FullInformation( EmbeddingInSuperObjectForCAP( SubmoduleRight3 ) );
 
 #! @Example
 frob_functor_left := FrobeniusPowerFunctorLeft( S, 2 );
-#! Frobenius functor for Presentation category over CAP category of 
-#! projective graded left modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) to the power 2
+#! Frobenius functor for Category of graded left module presentations over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
+#! to the power 2
 FullInformation( ApplyFunctor( frob_functor_left, 
                                EmbeddingInSuperObjectForCAP( IdealLeft ) ) );
 #!
@@ -921,9 +908,9 @@ FullInformation( ApplyFunctor( frob_functor_left,
 #!
 #! ================================================================================= 
 frob_functor_right := FrobeniusPowerFunctorRight( S, 2 );
-#! Frobenius functor for Presentation category over CAP category of projective 
-#! graded right modules over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) to the power 2
+#! Frobenius functor for Category of graded right module presentations over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
+#! to the power 2
 FullInformation( ApplyFunctor( frob_functor_right, 
                                EmbeddingInSuperObjectForCAP( IdealRight ) ) );
 #! 

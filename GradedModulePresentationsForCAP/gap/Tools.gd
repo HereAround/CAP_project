@@ -24,7 +24,7 @@ DeclareGlobalFunction( "FrobeniusPowerOfMatrix" );
 #! @Returns a presentation category object
 #! @Arguments M, p
 DeclareOperation( "FrobeniusPower",
-                  [ IsCAPPresentationCategoryObject, IsInt ] );
+                  [ IsGradedLeftOrRightModulePresentationForCAP, IsInt ] );
 
 #! @Description
 #! The arguments are a CAPPresentationCategoryMorphism $M$ and a non-negative integer $p$. This method
@@ -32,7 +32,7 @@ DeclareOperation( "FrobeniusPower",
 #! @Returns a presentation category morphism
 #! @Arguments M, p
 DeclareOperation( "FrobeniusPower",
-                  [ IsCAPPresentationCategoryMorphism, IsInt ] );
+                  [ IsGradedLeftOrRightModulePresentationMorphismForCAP, IsInt ] );
 
 
 ####################################################################################
@@ -47,7 +47,7 @@ DeclareOperation( "FrobeniusPower",
 #! @Returns a presentation category object
 #! @Arguments M, I
 DeclareOperation( "Saturate",
-                  [ IsCAPPresentationCategoryObject, IsGradedLeftIdealForCAP ] );
+                  [ IsGradedLeftModulePresentationForCAP, IsGradedLeftIdealForCAP ] );
 
 #! @Description
 #! The arguments are two CAPPresentationCategoryObject $M$ and a graded right ideal $I$. 
@@ -55,7 +55,7 @@ DeclareOperation( "Saturate",
 #! @Returns a presentation category object
 #! @Arguments M, I
 DeclareOperation( "Saturate",
-                  [ IsCAPPresentationCategoryObject, IsGradedRightIdealForCAP ] );
+                  [ IsGradedRightModulePresentationForCAP, IsGradedRightIdealForCAP ] );
 
 #! @Description
 #! The arguments are two CAPPresentationCategoryObject $M$ and a graded left idea l$I$. 
@@ -63,7 +63,7 @@ DeclareOperation( "Saturate",
 #! @Returns a presentation category morphism
 #! @Arguments M, I
 DeclareOperation( "EmbeddingInSaturationOfGradedModulePresentation",
-                  [ IsCAPPresentationCategoryObject, IsGradedLeftIdealForCAP ] );
+                  [ IsGradedLeftModulePresentationForCAP, IsGradedLeftIdealForCAP ] );
 
 #! @Description
 #! The arguments are two CAPPresentationCategoryObject $M$ and a graded right ideal $I$. 
@@ -71,7 +71,7 @@ DeclareOperation( "EmbeddingInSaturationOfGradedModulePresentation",
 #! @Returns a presentation category morphism
 #! @Arguments M, I
 DeclareOperation( "EmbeddingInSaturationOfGradedModulePresentation",
-                  [ IsCAPPresentationCategoryObject, IsGradedRightIdealForCAP ] );
+                  [ IsGradedRightModulePresentationForCAP, IsGradedRightIdealForCAP ] );
 
 
 
@@ -90,7 +90,7 @@ DeclareOperation( "EmbeddingInSaturationOfGradedModulePresentation",
 #! @Returns a presentation category morphism
 #! @Arguments M
 DeclareOperation( "EmbeddingInProjectiveObject",
-                  [ IsCAPPresentationCategoryObject ] );
+                  [ IsGradedLeftOrRightModulePresentationForCAP ] );
 
 
 
@@ -106,11 +106,7 @@ DeclareOperation( "EmbeddingInProjectiveObject",
 #! @Returns a list of CAPPresentationCategoryMorphisms
 #! @Arguments M
 DeclareOperation( "MinimalFreeResolution",
-                  [ IsCAPPresentationCategoryObject ] );
-
-#!
-DeclareOperation( "MinimalFreeResolution",
-                  [ IsGradedLeftOrRightSubmoduleForCAP ] );
+                  [ IsGradedLeftOrRightModulePresentationForCAP ] );
 
 ## for my convenience a method that displays all information about a (co)complex
 DeclareOperation( "FullInformation",

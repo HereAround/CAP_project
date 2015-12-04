@@ -19,10 +19,24 @@ BindGlobal( "TheTypeOfCAPPresentationCategoryMorphism",
             NewType( TheFamilyOfCAPPresentationCategoryMorphisms,
                      IsCAPPresentationCategoryMorphismRep ) );
 
+
+
+DeclareRepresentation( "IsGradedLeftOrRightModulePresentationMorphismForCAPRep",
+                       IsGradedLeftOrRightModulePresentationMorphismForCAP and IsAttributeStoringRep,
+                       [ ] );
+
+BindGlobal( "TheFamilyOfGradedLeftOrRightModulePresentationMorphismsForCAP",
+            NewFamily( "TheFamilyOfGradedLeftOrRightModulePresentationMorphismsForCAP" ) );
+
+BindGlobal( "TheTypeOfGradedLeftOrRightModulePresentationMorphismForCAP",
+            NewType( TheFamilyOfGradedLeftOrRightModulePresentationMorphismsForCAP,
+                     IsGradedLeftOrRightModulePresentationMorphismForCAPRep ) );
+
+
+
 DeclareRepresentation( "IsGradedLeftModulePresentationMorphismForCAPRep",
                        IsGradedLeftModulePresentationMorphismForCAP and IsAttributeStoringRep,
                        [ ] );
-
 
 BindGlobal( "TheFamilyOfGradedLeftModulePresentationMorphismsForCAP",
             NewFamily( "TheFamilyOfGradedLeftModulePresentationMorphismsForCAP" ) );
@@ -30,6 +44,7 @@ BindGlobal( "TheFamilyOfGradedLeftModulePresentationMorphismsForCAP",
 BindGlobal( "TheTypeOfGradedLeftModulePresentationMorphismForCAP",
             NewType( TheFamilyOfGradedLeftModulePresentationMorphismsForCAP,
                      IsGradedLeftModulePresentationMorphismForCAPRep ) );
+
 
 
 DeclareRepresentation( "IsGradedRightModulePresentationMorphismForCAPRep",
@@ -42,6 +57,9 @@ BindGlobal( "TheFamilyOfGradedRightModulePresentationMorphismsForCAP",
 BindGlobal( "TheTypeOfGradedRightModulePresentationMorphismForCAP",
             NewType( TheFamilyOfGradedRightModulePresentationMorphismsForCAP,
                      IsGradedRightModulePresentationMorphismForCAPRep ) );
+
+
+
 #############################
 ##
 ## Constructors

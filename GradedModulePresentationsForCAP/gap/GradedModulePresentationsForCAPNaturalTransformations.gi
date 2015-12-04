@@ -31,10 +31,12 @@ InstallGlobalFunction( NaturalIsomorphismFromIdentityToGradedStandardModule,
     fi;
     
     # initialise the natural_transformation
-    natural_transformation := NaturalTransformation( Concatenation( "Natural isomorphism from Id to ", Name( standard_module_functor ) ),
+    natural_transformation := NaturalTransformation( Concatenation( "Natural isomorphism from Id to ", 
+                                                     Name( standard_module_functor ) ),
                                                      IdentityMorphism( AsCatObject( category ) ), 
                                                      standard_module_functor 
                                                     );
+
     # add component of natural_transformation over object
     AddNaturalTransformationFunction( natural_transformation,                                          
       function( id_object, object, standard_object )

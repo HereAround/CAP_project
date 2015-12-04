@@ -60,7 +60,7 @@ end );
 # install Frobenius power of a module presentation
 InstallMethod( FrobeniusPower,
                "Frobenius powers of presentation",
-               [ IsCAPPresentationCategoryObject, IsInt ],
+               [ IsGradedLeftOrRightModulePresentationForCAP, IsInt ],
   function( presentation_object, power )
     local left, embedding, range, matrix, new_mapping_matrix, i, j, alpha;
 
@@ -124,7 +124,7 @@ end );
 # install Frobenius power of a module presentation morphism
 InstallMethod( FrobeniusPower,
                "Frobenius powers of presentation morphism",
-               [ IsCAPPresentationCategoryMorphism, IsInt ],
+               [ IsGradedLeftOrRightModulePresentationMorphismForCAP, IsInt ],
   function( presentation_morphism, power )
     local left, i1, i1_matrix, i1_matrix_frob_power, frob_power_i1, i2, i2_matrix ,i2_matrix_frob_power, frob_power_i2,
          mu_prime, mu_prime_prime, new_source, new_range;
@@ -208,7 +208,7 @@ end );
 # Saturate the first object with respect to the second object (if the second can be viewed as ideal)
 InstallMethod( Saturate,
                "Saturate the first object with respect to the second",
-               [ IsCAPPresentationCategoryObject, IsGradedLeftIdealForCAP ],
+               [ IsGradedLeftModulePresentationForCAP, IsGradedLeftIdealForCAP ],
   function( module, ideal )
     local ideal_embedding, homalg_graded_ring, homalg_graded_ring_module, module_saturated, buffer_mapping;
 
@@ -219,14 +219,9 @@ InstallMethod( Saturate,
     
       Error( "The module and ideal must be defined over the same homalg_graded_ring" );
       return;
-    
-    elif not IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( UnderlyingMorphism( module ) ) then
-    
-      Error( "A left ideal can only be used to compute the saturation of a left presentation" );
-      return;
-     
+
     fi;
-    
+
     # save the image of the ideal_embedding
     homalg_graded_ring_module := Range( ideal_embedding );
     
@@ -254,7 +249,7 @@ end );
 # Saturate the first object with respect to the second object (if the second can be viewed as ideal)
 InstallMethod( Saturate,
                "Saturate the first object with respect to the second",
-               [ IsCAPPresentationCategoryObject, IsGradedRightIdealForCAP ],
+               [ IsGradedRightModulePresentationForCAP, IsGradedRightIdealForCAP ],
   function( module, ideal )
     local ideal_embedding, homalg_graded_ring, homalg_graded_ring_module, module_saturated, buffer_mapping;
 
@@ -262,17 +257,12 @@ InstallMethod( Saturate,
     ideal_embedding := EmbeddingInSuperObjectForCAP( ideal );
     homalg_graded_ring := HomalgGradedRing( ideal );
     if not IsIdenticalObj( UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ), homalg_graded_ring ) then
-    
+
       Error( "The module and ideal must be defined over the same homalg_graded_ring" );
       return;
-    
-    elif not IsCAPCategoryOfProjectiveGradedRightModulesMorphism( UnderlyingMorphism( module ) ) then
-    
-      Error( "A right ideal can only be used to compute the saturation of a right presentation" );
-      return;
-     
+
     fi;
-    
+
     # save the image of the ideal_embedding
     homalg_graded_ring_module := Range( ideal_embedding );
     
@@ -300,7 +290,7 @@ end );
 # Compute the embedding of the first object into its saturation with respect to the given ideal
 InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
                "Compute embedding of first object into its saturation with respect to the second object",
-               [ IsCAPPresentationCategoryObject, IsGradedLeftIdealForCAP ],
+               [ IsGradedLeftModulePresentationForCAP, IsGradedLeftIdealForCAP ],
   function( module, ideal )
 
     local ideal_embedding, homalg_graded_ring, homalg_graded_ring_module, module_saturated, embedding, buffer_mapping;
@@ -309,17 +299,12 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
     ideal_embedding := EmbeddingInSuperObjectForCAP( ideal );
     homalg_graded_ring := HomalgGradedRing( ideal );
     if not IsIdenticalObj( UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ), homalg_graded_ring ) then
-    
+
       Error( "The module and ideal need to be defined over the same homalg_graded_ring" );
       return;
-    
-    elif not IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( UnderlyingMorphism( module ) ) then
 
-      Error( "A left ideal can only be used to compute the saturation of a left presentation" );
-      return;
-    
     fi;
-    
+
     # save the image of the ideal_embedding
     homalg_graded_ring_module := Range( ideal_embedding );
     
@@ -352,7 +337,7 @@ end );
 # Compute the embedding of the first object into its saturation with respect to the given ideal
 InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
                "Compute embedding of first object into its saturation with respect to the second object",
-               [ IsCAPPresentationCategoryObject, IsGradedRightIdealForCAP ],
+               [ IsGradedRightModulePresentationForCAP, IsGradedRightIdealForCAP ],
   function( module, ideal )
 
     local ideal_embedding, homalg_graded_ring, homalg_graded_ring_module, module_saturated, embedding, buffer_mapping;
@@ -361,20 +346,15 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
     ideal_embedding := EmbeddingInProjectiveObject( ideal );
     homalg_graded_ring := UnderlyingHomalgGradedRing( UnderlyingMorphism( ideal ) );
     if not IsIdenticalObj( UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ), homalg_graded_ring ) then
-    
+
       Error( "The module and ideal need to be defined over the same homalg_graded_ring" );
       return;
 
-    elif not IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( UnderlyingMorphism( module ) ) then
-
-      Error( "A right ideal can only be used to compute the saturation of a right presentation" );
-      return;
-    
     fi;
 
     # save the image of the ideal_embedding
     homalg_graded_ring_module := Range( ideal_embedding );
-    
+
     # now compute the saturation    
     embedding := IdentityMorphism( module );
     module_saturated := Range( embedding );
@@ -382,7 +362,7 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
     buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
     #buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsLeft( homalg_graded_ring ), buffer_mapping );
     buffer_mapping := ApplyFunctor( FunctorGradedStandardModuleLeft( homalg_graded_ring ), buffer_mapping );
-    
+
     while not IsIsomorphism( buffer_mapping ) do
     
       embedding := PreCompose( embedding, 
@@ -411,8 +391,8 @@ end );
 
 # represent ideal of graded ring as graded left-presentation
 InstallMethod( EmbeddingInProjectiveObject,
-               "for a CAPPresentationCategoryObject",
-               [ IsCAPPresentationCategoryObject ],
+               "for a graded module presentation",
+               [ IsGradedLeftOrRightModulePresentationForCAP ],
   function( presentation_object )
     local cokernel_projection, range_object;
 
@@ -448,7 +428,7 @@ end );
 # compute a minimal free resolution of a graded module presentation
 InstallMethod( MinimalFreeResolution,
                "for a CAPPresentationCategoryObject",
-               [ IsCAPPresentationCategoryObject ],
+               [ IsGradedLeftOrRightModulePresentationForCAP ],
   function( presentation_object )
     local proj_category, left, morphisms, new_mapping_matrix, buffer_mapping, kernel_matrix, i, pos;
     
@@ -484,10 +464,10 @@ InstallMethod( MinimalFreeResolution,
       kernel_matrix := ReducedSyzygiesOfColumns( UnderlyingHomalgMatrix( morphisms[ 1 ] ) );
       buffer_mapping := DeduceMapFromMatrixAndRangeRight( kernel_matrix, Source( morphisms[ 1 ] ) );
     fi;
-    
+
     # as long as the kernel is non-zero
     while not IsZeroForMorphisms( buffer_mapping ) do
-    
+
       # add the corresponding kernel embedding
       Add( morphisms, buffer_mapping );
 
@@ -499,9 +479,9 @@ InstallMethod( MinimalFreeResolution,
         kernel_matrix := ReducedSyzygiesOfColumns( UnderlyingHomalgMatrix( buffer_mapping ) );
         buffer_mapping := DeduceMapFromMatrixAndRangeRight( kernel_matrix, Source( buffer_mapping ) );
       fi;
-      
+
     od;
-    
+
     # and return the collection of morphisms
     # FIX ME: Complex or cocomplex?
     # return ComplexFromMorphismList( morphisms );
@@ -512,7 +492,7 @@ end );
 # compute a minimal free resolution of a graded module presentation
 InstallMethod( MinimalFreeResolution,
                "for a CAPPresentationCategoryObject",
-               [ IsGradedLeftOrRightSubmoduleForCAP ],
+               [ IsGradedLeftOrRightSubmoduleForCAP and IsGradedLeftOrRightModulePresentationForCAP ],
   function( submodule_for_CAP )
 
     return MinimalFreeResolution( PresentationForCAP( submodule_for_CAP ) );
@@ -528,34 +508,34 @@ end );
 ####################################################################################
 
 # compute a minimal free resolution of a graded module presentation
-InstallMethod( FullInformation,
-               "for a complex",
-               [ IsCapCocomplex ],
-  function( cocomplex )
-    local differential_function, test_object, pos;
-    
-    # extract the differentials
-    differential_function := UnderlyingZFunctorCell( cocomplex )!.differential_func;
-
+#InstallMethod( FullInformation,
+#               "for a complex",
+#               [ IsCapCocomplex ],
+#  function( cocomplex )
+#    local differential_function, test_object, pos;
+#    
+#    # extract the differentials
+#    differential_function := UnderlyingZFunctorCell( cocomplex )!.differential_func;
+#
     # start to print information
-    pos := 0;
+#    pos := 0;
     #test_object := Source( differential_function( pos ) );
     
-    while not IsZeroForObjects( Source( differential_function( pos ) ) ) do
+#    while not IsZeroForObjects( Source( differential_function( pos ) ) ) do
     
       # print information
-      Print( String( DegreeList( Source( differential_function( pos ) ) ) ) );
-      Print( "\n \n" );
-      Display( UnderlyingHomalgMatrix( differential_function( pos ) ) );
-      Print( "\n" );
+#      Print( String( DegreeList( Source( differential_function( pos ) ) ) ) );
+#      Print( "\n \n" );
+#      Display( UnderlyingHomalgMatrix( differential_function( pos ) ) );
+#      Print( "\n" );
       
       # increment
-      pos := pos + 1;
+#      pos := pos + 1;
       #test_object := Source( differential_function( pos ) );
     
-    od;
+#    od;
     
-    Print( String( DegreeList( Range( differential_function( pos ) ) ) ) );
-    Print( "\n \n" );
+#    Print( String( DegreeList( Range( differential_function( pos ) ) ) ) );
+#    Print( "\n \n" );
     
-end );
+#end );

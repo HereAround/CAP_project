@@ -20,6 +20,20 @@ BindGlobal( "TheTypeOfCAPPresentationCategoryObject",
                      IsCAPPresentationCategoryObjectRep ) );
 
 
+
+DeclareRepresentation( "IsGradedLeftOrRightModulePresentationForCAPRep",
+                       IsGradedLeftOrRightModulePresentationForCAP and IsAttributeStoringRep,
+                       [ ] );
+
+BindGlobal( "TheFamilyOfGradedLeftOrRightModulePresentationsForCAP",
+            NewFamily( "TheFamilyOfGradedLeftOrRightModulePresentationsForCAP" ) );
+
+BindGlobal( "TheTypeOfGradedLeftOrRightModulePresentationForCAP",
+            NewType( TheFamilyOfGradedLeftOrRightModulePresentationsForCAP,
+                     IsGradedLeftOrRightModulePresentationForCAPRep ) );
+
+
+
 DeclareRepresentation( "IsGradedLeftModulePresentationForCAPRep",
                        IsGradedLeftModulePresentationForCAP and IsAttributeStoringRep,
                        [ ] );
@@ -30,6 +44,7 @@ BindGlobal( "TheFamilyOfGradedLeftModulePresentationsForCAP",
 BindGlobal( "TheTypeOfGradedLeftModulePresentationForCAP",
             NewType( TheFamilyOfGradedLeftModulePresentationsForCAP,
                      IsGradedLeftModulePresentationForCAPRep ) );
+
 
 
 DeclareRepresentation( "IsGradedRightModulePresentationForCAPRep",
@@ -95,9 +110,15 @@ end );
 ##
 ####################################
 
-InstallMethod( String,
-              [ IsCAPPresentationCategoryObject ], 999, # FIX ME FIX ME FIX ME
+# FIX ME: These were all set with 999, which caused them to be triggered always
+# i.e. syntax was
+#InstallMethod( String,
+#               [ IsCAPPresentationCategoryObject ], 999, # FIX ME FIX ME FIX ME
+# ...
+# I will now remove this to test things
 
+InstallMethod( String,
+              [ IsCAPPresentationCategoryObject ],
   function( presentation_category_object )
     
      return Concatenation( "An object of the presentation category over the ", 
@@ -107,8 +128,7 @@ InstallMethod( String,
 end );
 
 InstallMethod( String,
-              [ IsGradedLeftModulePresentationForCAP ], 999, # FIX ME FIX ME FIX ME
-
+              [ IsGradedLeftModulePresentationForCAP and IsCAPPresentationCategoryObject ],
   function( graded_left_module_presentation )
     
      return Concatenation( "A graded left module presentation over the ring ", 
@@ -119,8 +139,7 @@ InstallMethod( String,
 end );
 
 InstallMethod( String,
-              [ IsGradedRightModulePresentationForCAP ], 999, # FIX ME FIX ME FIX ME
-
+              [ IsGradedRightModulePresentationForCAP and IsCAPPresentationCategoryObject ],
   function( graded_right_module_presentation )
 
      return Concatenation( "A graded right module presentation over the ring ", 
@@ -136,9 +155,15 @@ end );
 ##
 ####################################
 
-InstallMethod( Display,
-               [ IsCAPPresentationCategoryObject ], 999, # FIX ME FIX ME FIX ME
+# FIX ME: These were all set with 999, which caused them to be triggered always
+# i.e. syntax was
+#InstallMethod( Display,
+#               [ IsCAPPresentationCategoryObject ], 999, # FIX ME FIX ME FIX ME
+# ...
+# I will now remove this to test things
 
+InstallMethod( Display,
+               [ IsCAPPresentationCategoryObject ],
   function( presentation_category_object )
 
      Print( Concatenation( "An object of the presentation category over the ", 
@@ -151,8 +176,7 @@ InstallMethod( Display,
 end );
 
 InstallMethod( Display,
-               [ IsGradedLeftModulePresentationForCAP ], 999, # FIX ME FIX ME FIX ME
-
+               [ IsGradedLeftModulePresentationForCAP and IsCAPPresentationCategoryObject ],
   function( graded_left_module_presentation )
 
      Print( Concatenation( String( graded_left_module_presentation ), " given by the following morphism: \n" ) );
@@ -162,8 +186,7 @@ InstallMethod( Display,
 end );
 
 InstallMethod( Display,
-               [ IsGradedRightModulePresentationForCAP ], 999, # FIX ME FIX ME FIX ME
-
+               [ IsGradedRightModulePresentationForCAP and IsCAPPresentationCategoryObject ],
   function( graded_right_module_presentation )
 
      Print( Concatenation( String( graded_right_module_presentation ), " given by the following morphism: \n" ) );
@@ -178,9 +201,15 @@ end );
 ##
 ####################################
 
-InstallMethod( ViewObj,
-               [ IsCAPPresentationCategoryObject ], 999, # FIX ME FIX ME FIX ME
+# FIX ME: These were all set with 999, which caused them to be triggered always
+# i.e. syntax was
+#InstallMethod( ViewObj,
+#               [ IsCAPPresentationCategoryObject ], 999, # FIX ME FIX ME FIX ME
+# ...
+# I will now remove this to test things
 
+InstallMethod( ViewObj,
+               [ IsCAPPresentationCategoryObject ],
   function( presentation_category_object )
 
     Print( Concatenation( "<", String( presentation_category_object ), ">" ) );
@@ -188,8 +217,7 @@ InstallMethod( ViewObj,
 end );
 
 InstallMethod( ViewObj,
-               [ IsGradedLeftModulePresentationForCAP ], 999, # FIX ME FIX ME FIX ME
-
+               [ IsGradedLeftModulePresentationForCAP and IsCAPPresentationCategoryObject ],
   function( graded_left_module_presentation )
 
     Print( Concatenation( "<", String( graded_left_module_presentation ), ">" ) );
@@ -197,8 +225,7 @@ InstallMethod( ViewObj,
 end );
 
 InstallMethod( ViewObj,
-               [ IsGradedRightModulePresentationForCAP ], 999, # FIX ME FIX ME FIX ME
-
+               [ IsGradedRightModulePresentationForCAP and IsCAPPresentationCategoryObject ],
   function( graded_right_module_presentation )
 
     Print( Concatenation( "<", String( graded_right_module_presentation ), ">" ) );

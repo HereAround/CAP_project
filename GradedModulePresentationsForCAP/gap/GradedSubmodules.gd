@@ -17,25 +17,29 @@
 ##############################################################################################
 
 #! @Description
-#! The GAP category of graded left or right submodules for CAP.
-#! @Returns true or false
-#! @Arguments object
-DeclareCategory( "IsGradedLeftOrRightSubmoduleForCAP",
-                 IsCapCategoryObject );
-
-#! @Description
 #! The GAP category of graded left submodules for CAP.
 #! @Returns true or false
 #! @Arguments object
 DeclareCategory( "IsGradedLeftSubmoduleForCAP",
-                 IsGradedLeftOrRightSubmoduleForCAP );
+                 IsGradedLeftModulePresentationForCAP );
 
 #! @Description
 #! The GAP category of graded right submodules for CAP.
 #! @Returns true or false
 #! @Arguments object
 DeclareCategory( "IsGradedRightSubmoduleForCAP",
-                 IsGradedLeftOrRightSubmoduleForCAP );
+                 IsGradedRightModulePresentationForCAP );
+
+#! @Description
+#! The GAP category of graded left or right submodules for CAP.
+#! @Returns true or false
+#! @Arguments object
+DeclareCategory( "IsGradedLeftOrRightSubmoduleForCAP",
+                 IsGradedLeftOrRightModulePresentationForCAP );
+
+InstallTrueMethod( IsGradedLeftOrRightSubmoduleForCAP, IsGradedLeftSubmoduleForCAP );
+InstallTrueMethod( IsGradedLeftOrRightSubmoduleForCAP, IsGradedRightSubmoduleForCAP );
+InstallTrueMethod( IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightSubmoduleForCAP );
 
 
 
@@ -50,7 +54,7 @@ DeclareCategory( "IsGradedRightSubmoduleForCAP",
 #! @Returns true or false
 #! @Arguments object
 DeclareCategory( "IsGradedLeftIdealForCAP",
-                 IsGradedLeftSubmoduleForCAP );
+                 IsGradedLeftSubmoduleForCAP  );
 
 #! @Description
 #! The GAP category of graded right ideals for CAP.
@@ -58,6 +62,17 @@ DeclareCategory( "IsGradedLeftIdealForCAP",
 #! @Arguments object
 DeclareCategory( "IsGradedRightIdealForCAP",
                  IsGradedRightSubmoduleForCAP );
+
+#! @Description
+#! The GAP category of graded left or right ideals for CAP.
+#! @Returns true or false
+#! @Arguments object
+DeclareCategory( "IsGradedLeftOrRightIdealForCAP",
+                 IsGradedLeftOrRightSubmoduleForCAP );
+
+InstallTrueMethod( IsGradedLeftOrRightIdealForCAP, IsGradedLeftIdealForCAP );
+InstallTrueMethod( IsGradedLeftOrRightIdealForCAP, IsGradedRightIdealForCAP );
+InstallTrueMethod( IsGradedLeftOrRightSubmoduleForCAP, IsGradedLeftOrRightIdealForCAP );
 
 
 
@@ -169,7 +184,8 @@ DeclareAttribute( "Generators",
                   IsGradedLeftOrRightSubmoduleForCAP );
 
 #! @Description
-#! The argument is a graded left or right submodule <A>M</A> over a graded ring. We then return this graded ring.
+#! The argument is a graded left or right submodule <A>M</A> over a graded ring. 
+#! We then return this graded ring.
 #! @Returns a graded homalg ring
 #! @Arguments M
 DeclareAttribute( "HomalgGradedRing",
@@ -198,12 +214,7 @@ DeclareAttribute( "SuperObjectForCAP",
 ##
 ##############################################################################################
 
-#! @Description
-#! The argument is a graded left or right submodule $M$. This method displays $M$ in great detail.
-#! @Returns detailed information about M
-#! @Arguments M
-DeclareOperation( "FullInformation",
-                 [ IsGradedLeftOrRightSubmoduleForCAP ] );
+#! The method 'FullInformation' is also avaiable to produce specialised output for IsGradedLeftOrRightSubmoduleForCAP.
 
 
 
@@ -215,11 +226,19 @@ DeclareOperation( "FullInformation",
 
 #!
 DeclareOperation( "\*",
-                  [ IsGradedLeftOrRightSubmoduleForCAP, IsGradedLeftOrRightSubmoduleForCAP ] );
+                  [ IsGradedLeftSubmoduleForCAP, IsGradedLeftSubmoduleForCAP ] );
+
+#!
+DeclareOperation( "\*",
+                  [ IsGradedRightSubmoduleForCAP, IsGradedRightSubmoduleForCAP ] );
 
 #!
 DeclareOperation( "\^",
-                  [ IsGradedLeftOrRightSubmoduleForCAP, IsInt ] );
+                  [ IsGradedLeftSubmoduleForCAP and IsGradedLeftModulePresentationForCAP, IsInt ] );
+
+#!
+DeclareOperation( "\^",
+                  [ IsGradedRightSubmoduleForCAP and IsGradedRightModulePresentationForCAP, IsInt ] );
 
 
 
@@ -229,6 +248,4 @@ DeclareOperation( "\^",
 ##
 ##############################################################################################
 
-#!
-DeclareOperation( "FrobeniusPower",
-                  [ IsGradedLeftOrRightSubmoduleForCAP, IsInt ] );
+#! A specialised method for Frobenius powers of IsGradedLeftOrRightSubmoduleForCAP is available.

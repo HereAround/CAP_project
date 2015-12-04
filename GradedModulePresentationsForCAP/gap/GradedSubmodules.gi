@@ -40,6 +40,18 @@ BindGlobal( "TheTypeOfGradedRightSubmoduleForCAP",
             NewType( TheFamilyOfGradedRightSubmodulesForCAP,
                      IsGradedRightSubmoduleForCAPRep ) );
 
+# install graded left or right submodules for CAP
+DeclareRepresentation( "IsGradedLeftOrRightSubmoduleForCAPRep",
+                       IsGradedLeftOrRightSubmoduleForCAP and IsAttributeStoringRep,
+                       [ ] );
+
+BindGlobal( "TheFamilyOfGradedLeftOrRightSubmodulesForCAP",
+            NewFamily( "TheFamilyOfGradedLeftOrRightSubmodulesForCAP" ) );
+
+BindGlobal( "TheTypeOfGradedLeftOrRightSubmoduleForCAP",
+            NewType( TheFamilyOfGradedLeftOrRightSubmodulesForCAP,
+                     IsGradedLeftOrRightSubmoduleForCAPRep ) );
+
 
 
 ##############################################################################################
@@ -71,6 +83,18 @@ BindGlobal( "TheFamilyOfGradedRightIdealsForCAP",
 BindGlobal( "TheTypeOfGradedRightIdealForCAP",
             NewType( TheFamilyOfGradedRightIdealsForCAP,
                      IsGradedRightIdealForCAPRep ) );
+
+# install graded left ideals for CAP
+DeclareRepresentation( "IsGradedLeftOrRightIdealForCAPRep",
+                       IsGradedLeftOrRightIdealForCAP and IsAttributeStoringRep,
+                       [ ] );
+
+BindGlobal( "TheFamilyOfGradedLeftOrRightIdealsForCAP",
+            NewFamily( "TheFamilyOfGradedLeftOrRightIdealsForCAP" ) );
+
+BindGlobal( "TheTypeOfGradedLeftOrRightIdealForCAP",
+            NewType( TheFamilyOfGradedLeftOrRightIdealsForCAP,
+                     IsGradedLeftOrRightIdealForCAPRep ) );
 
 
 
@@ -162,7 +186,7 @@ end );
 InstallMethod( GradedLeftSubmoduleForCAP,
                " a list of generators and a homalg graded ring",
                [ IsList, IsHomalgGradedRing ],
-  function( generator_list, homalg_graded_ring )               
+  function( generator_list, homalg_graded_ring )
   
     return GradedSubmoduleFromListListAndGradedRing( generator_list, homalg_graded_ring, true );
 
@@ -361,7 +385,7 @@ end );
 ################################################
 
 InstallMethod( String,
-              [ IsGradedLeftSubmoduleForCAP ],
+              [ IsGradedLeftSubmoduleForCAP and IsGradedLeftModulePresentationForCAP ],
   function( graded_left_submodule )
     
      return Concatenation( "A graded left submodule over ", RingName( HomalgGradedRing( graded_left_submodule ) ) );
@@ -369,7 +393,7 @@ InstallMethod( String,
 end );
 
 InstallMethod( String,
-              [ IsGradedLeftIdealForCAP ],
+              [ IsGradedLeftIdealForCAP and IsGradedLeftSubmoduleForCAP and IsGradedLeftModulePresentationForCAP ],
   function( graded_left_ideal )
     
      return Concatenation( "A graded left ideal of ", RingName( HomalgGradedRing( graded_left_ideal ) ) );
@@ -377,7 +401,7 @@ InstallMethod( String,
 end );
 
 InstallMethod( String,
-              [ IsGradedRightSubmoduleForCAP ],
+              [ IsGradedRightSubmoduleForCAP and IsGradedRightModulePresentationForCAP ],
   function( graded_right_submodule )
     
      return Concatenation( "A graded right submodule over ", RingName( HomalgGradedRing( graded_right_submodule ) ) );
@@ -385,7 +409,7 @@ InstallMethod( String,
 end );
 
 InstallMethod( String,
-              [ IsGradedRightIdealForCAP ],
+              [ IsGradedRightIdealForCAP and IsGradedRightSubmoduleForCAP and IsGradedRightModulePresentationForCAP ],
   function( graded_right_ideal )
     
      return Concatenation( "A graded right ideal of ", RingName( HomalgGradedRing( graded_right_ideal ) ) );
@@ -401,7 +425,7 @@ end );
 #################################################
 
 InstallMethod( Display,
-              [ IsGradedLeftSubmoduleForCAP ],
+              [ IsGradedLeftSubmoduleForCAP and IsGradedLeftModulePresentationForCAP ],
   function( graded_left_submodule )
     
      Print( Concatenation( "A graded left submodule over ", 
@@ -414,7 +438,7 @@ InstallMethod( Display,
 end );
 
 InstallMethod( Display,
-              [ IsGradedLeftIdealForCAP ],
+              [ IsGradedLeftIdealForCAP and IsGradedLeftSubmoduleForCAP and IsGradedLeftModulePresentationForCAP ],
   function( graded_left_ideal )
     
      Print( Concatenation( "A graded left ideal of ", 
@@ -427,7 +451,7 @@ InstallMethod( Display,
 end );
 
 InstallMethod( Display,
-              [ IsGradedRightSubmoduleForCAP ],
+              [ IsGradedRightSubmoduleForCAP and IsGradedRightModulePresentationForCAP ],
   function( graded_right_submodule )
     
      Print( Concatenation( "A graded right submodule over ", 
@@ -440,7 +464,7 @@ InstallMethod( Display,
 end );
 
 InstallMethod( Display,
-              [ IsGradedRightIdealForCAP ],
+              [ IsGradedRightIdealForCAP and IsGradedRightSubmoduleForCAP and IsGradedRightModulePresentationForCAP ],
   function( graded_right_ideal )
     
      Print( Concatenation( "A graded right ideal of ", 
@@ -461,7 +485,7 @@ end );
 #################################################
 
 InstallMethod( ViewObj,
-              [ IsGradedLeftSubmoduleForCAP ],
+              [ IsGradedLeftSubmoduleForCAP and IsGradedLeftModulePresentationForCAP ],
   function( graded_left_submdule )
 
     Print( Concatenation( "<", String( graded_left_submdule ), ">" ) );
@@ -469,7 +493,7 @@ InstallMethod( ViewObj,
 end );
 
 InstallMethod( ViewObj,
-              [ IsGradedLeftIdealForCAP ],
+              [ IsGradedLeftIdealForCAP and IsGradedLeftSubmoduleForCAP and IsGradedLeftModulePresentationForCAP ],
   function( graded_left_ideal )
 
     Print( Concatenation( "<", String( graded_left_ideal ), ">" ) );
@@ -477,7 +501,7 @@ InstallMethod( ViewObj,
 end );
 
 InstallMethod( ViewObj,
-              [ IsGradedRightSubmoduleForCAP ],
+              [ IsGradedRightSubmoduleForCAP and IsGradedRightModulePresentationForCAP ],
   function( graded_right_submodule )
 
     Print( Concatenation( "<", String( graded_right_submodule ), ">" ) );
@@ -485,7 +509,7 @@ InstallMethod( ViewObj,
 end );
 
 InstallMethod( ViewObj,
-              [ IsGradedRightIdealForCAP ],
+              [ IsGradedRightIdealForCAP and IsGradedRightSubmoduleForCAP and IsGradedRightModulePresentationForCAP ],
   function( graded_right_ideal )
 
     Print( Concatenation( "<", String( graded_right_ideal ), ">" ) );
@@ -501,12 +525,12 @@ end );
 ##############################################################################################
 
 InstallMethod( FullInformation,
-               " for an ideal ",
-               [ IsGradedLeftOrRightSubmoduleForCAP ],
+               " for a submodule ",
+               [ IsGradedLeftOrRightSubmoduleForCAP and IsGradedLeftOrRightModulePresentationForCAP ],
   function( submodule )
-  
+
     FullInformation( PresentationForCAP( submodule ) );
-  
+
 end );
 
 
@@ -521,13 +545,14 @@ end );
 # for convenience allow "*" to indicate the (tensor) product on left submodules
 InstallMethod( \*,
                "powers of submodules",
-               [ IsGradedLeftOrRightSubmoduleForCAP, IsGradedLeftOrRightSubmoduleForCAP ],
+               [ IsGradedLeftOrRightSubmoduleForCAP and IsGradedLeftOrRightModulePresentationForCAP, 
+                 IsGradedLeftOrRightSubmoduleForCAP and IsGradedLeftOrRightModulePresentationForCAP ],
   function( submodule1, submodule2 )
     local left1, left2, new_presentation, new_embedding, generators, range, new_graded_submodule, type;
 
     # check that the homalg_graded_rings are identical
     left1 := IsGradedLeftSubmoduleForCAP( submodule1 );
-    left2 := IsGradedLeftSubmoduleForCAP( submodule2 );    
+    left2 := IsGradedLeftSubmoduleForCAP( submodule2 );
     if not IsIdenticalObj( HomalgGradedRing( submodule1 ), HomalgGradedRing( submodule2 ) ) then
 
       Error( "The submodules have to be defined over the same graded ring" );
@@ -535,7 +560,7 @@ InstallMethod( \*,
 
     elif left1 <> left2 then
 
-      Error( "The submodules must be either both left submodules or both right submodules" );
+      Error( "The submodule must both be left submodules or both be right submodules " );
       return;
 
     fi;
@@ -548,7 +573,7 @@ InstallMethod( \*,
 
     # extract the entries of the embedding matrix to identify the generators
     generators := EntriesOfHomalgMatrixAsListList( UnderlyingHomalgMatrix( new_embedding ) );
-    
+
     # compute the range and thereby compute the embedding properly
     range := CAPPresentationCategoryObject(
                          ZeroMorphism( ZeroObject( CapCategory( Range( new_embedding ) ) ), Range( new_embedding ) ) );
@@ -568,7 +593,7 @@ InstallMethod( \*,
         type := TheTypeOfGradedRightSubmoduleForCAP;
       fi;
     fi;
-        
+
     # now compute the new submodule
     new_graded_submodule := rec( );
     ObjectifyWithAttributes( new_graded_submodule, type,
@@ -583,11 +608,10 @@ InstallMethod( \*,
 
 end );
 
-
 # for convenience allow "^" to indicate the n-th (tensor) power of left ideals
 InstallMethod( \^,
                "powers of submodules",
-               [ IsGradedLeftOrRightSubmoduleForCAP, IsInt ],
+               [ IsGradedLeftOrRightSubmoduleForCAP and IsGradedLeftOrRightModulePresentationForCAP, IsInt ],
   function( submodule, power )
     local submodule_power, presentation, generators, range, range_presentation, embedding, left, type, i;
 
@@ -620,30 +644,30 @@ InstallMethod( \^,
           type := TheTypeOfGradedRightSubmoduleForCAP;
         fi;
       fi;
-      
+
       # objectify the submodule_power
       submodule_power := rec();
       ObjectifyWithAttributes( submodule_power, type,
-                             PresentationForCAP, presentation,
-                             Generators, generators,
-                             HomalgGradedRing, HomalgGradedRing( submodule ),
-                             EmbeddingInSuperObjectForCAP, embedding 
+                               PresentationForCAP, presentation,
+                               Generators, generators,
+                               HomalgGradedRing, HomalgGradedRing( submodule ),
+                               EmbeddingInSuperObjectForCAP, embedding 
                              );
-      
+
       # and return it
       return submodule_power;
 
     else
-    
+
       submodule_power := submodule;
       for i in [ 2 .. power ] do
-      
+
         submodule_power := submodule_power * submodule;
-      
+
       od;
 
       return submodule_power;
-    
+
     fi;
 
 end );
@@ -659,14 +683,14 @@ end );
 # Frobenius power of left ideals
 InstallMethod( FrobeniusPower,
                "n-th Frobenius powers of ideals",
-               [ IsGradedLeftOrRightSubmoduleForCAP, IsInt ],
+               [ IsGradedLeftOrRightSubmoduleForCAP and IsGradedLeftOrRightModulePresentationForCAP, IsInt ],
   function( submodule, power )
     local generator_matrix;
-    
+
     # extract the generators and take their individual powers via "FrobeniusPowerOfMatrix"
     generator_matrix := HomalgMatrix( Generators( submodule ), HomalgGradedRing( submodule ) );
     generator_matrix := FrobeniusPowerOfMatrix( generator_matrix, power );
-    
+
     # then return the associated ideal
     if IsGradedLeftSubmoduleForCAP( submodule ) then
       return GradedLeftSubmoduleForCAP( 
