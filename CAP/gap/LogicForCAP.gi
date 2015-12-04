@@ -221,47 +221,11 @@ end );
 
 InstallGlobalFunction( INSTALL_TODO_FOR_LOGICAL_THEOREMS,
                        
-  function( arg )
-    local method_name, arguments, result_object,
-          current_argument, crisp_category, deductive_category, theorem_list,
+  function( method_name, arguments, result_object, category )
+    local current_argument, crisp_category, deductive_category, theorem_list,
           current_theorem, todo_list_source, range, is_valid_theorem, sanitized_source,
-          entry, current_source, sanitized_source_list, category;
+          entry, current_source, sanitized_source_list, current_argument_type, i;
     
-    method_name := arg[ 1 ];
-    
-    arguments := arg[ 2 ];
-    
-    result_object := arg[ 3 ];
-    
-    Info( CapLogicInfo, 1, Concatenation( "Creating todo list for operation ", method_name ) );
-    
-    if Length( arg ) = 4 then
-        
-        category := arg[ 4 ];
-        
-    else
-        
-        current_argument := arguments[ 1 ];
-        
-        if IsCapCategory( current_argument ) then
-           
-            category := current_argument;
-            
-        elif IsCapCategoryCell( current_argument ) then
-            
-            category := CapCategory( current_argument );
-            
-        elif IsList( current_argument ) then
-            
-            category := CapCategory( current_argument[ 1 ] );
-            
-        else
-            
-            Error( "Cannot figure out which category to use here" );
-            
-        fi;
-        
-    fi;
     
     if not IsBound( TheoremRecord( category ).( method_name ) ) then
         
@@ -269,11 +233,38 @@ InstallGlobalFunction( INSTALL_TODO_FOR_LOGICAL_THEOREMS,
         
     fi;
     
+    Info( CapLogicInfo, 1, Concatenation( "Creating todo list for operation ", method_name ) );
+    
     theorem_list := TheoremRecord( category ).( method_name );
     
     Info( CapLogicInfo, 1, Concatenation( "Trying to create ", String( Length( theorem_list ) ), " theorems" ) );
     
     for current_theorem in theorem_list do
+        
+        ## check wether argument list matches here
+        current_argument_type := current_theorem!.Variable_list;
+        
+        is_valid_theorem := true;
+        
+        for i in [ 1 .. Length( current_argument_type ) ] do
+            
+            if current_argument_type[ i ] = 0 then
+                continue;
+            fi;
+            
+            if not IsList( arguments[ i ] ) or not Length( arguments[ i ] ) = current_argument_type[ i ] then
+                
+                is_valid_theorem := false;
+                
+                break;
+                
+            fi;
+            
+        od;
+        
+        if not is_valid_theorem then
+            continue;
+        fi;
         
         todo_list_source := [ ];
         
@@ -351,9 +342,9 @@ InstallImmediateMethod( CAP_CATEGORY_SOURCE_RANGE_THEOREM_INSTALL_HELPER,
                         
   function( morphism )
     
-    INSTALL_TODO_FOR_LOGICAL_THEOREMS( "Source", [ morphism ], Source( morphism ) );
+    INSTALL_TODO_FOR_LOGICAL_THEOREMS( "Source", [ morphism ], Source( morphism ), CapCategory( morphism ) );
     
-    INSTALL_TODO_FOR_LOGICAL_THEOREMS( "Range", [ morphism ], Range( morphism ) );
+    INSTALL_TODO_FOR_LOGICAL_THEOREMS( "Range", [ morphism ], Range( morphism ), CapCategory( morphism ) );
     
     TryNextMethod();
     

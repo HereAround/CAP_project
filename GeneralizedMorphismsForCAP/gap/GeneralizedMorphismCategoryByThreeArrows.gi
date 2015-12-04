@@ -607,21 +607,6 @@ InstallMethod( DomainAssociatedMorphismCodomainTriple,
     
 end );
 
-InstallMethod( CommonRestriction,
-               [ IsList ],
-               
-  function( morphism_list )
-    
-    if morphism_list = [ ] then
-        
-        return morphism_list;
-        
-    fi;
-    
-    return CommonRestrictionOp( morphism_list, morphism_list[ 1 ] );
-    
-end );
-
 InstallMethodWithCacheFromObject( CommonRestrictionOp,
                                   [ IsList, IsGeneralizedMorphismByThreeArrows ],
                                   
@@ -729,7 +714,7 @@ InstallMethodWithCacheFromObject( CommonCoastrictionOp,
     
     test_range := Range( morphism_list[ 1 ] );
     
-    if not ForAll( [ 2 .. Length( morphism_list ) ], i -> IsEqualForObjects( Source( morphism_list[ i ] ), test_range ) = true ) then
+    if not ForAll( [ 2 .. Length( morphism_list ) ], i -> IsEqualForObjects( Range( morphism_list[ i ] ), test_range ) = true ) then
         
         Error( "no common coastriction" );
         
@@ -741,9 +726,9 @@ InstallMethodWithCacheFromObject( CommonCoastrictionOp,
     
     for i in [ 2 .. Length( morphism_list ) ] do
         
-        current_pushout_left := ProjectionInFactorOfFiberProduct( [ codomain_list[ i - 1 ], codomain_list[ i ] ], 1 );
+        current_pushout_left := InjectionOfCofactorOfPushout( [ codomain_list[ i - 1 ], codomain_list[ i ] ], 1 );
         
-        current_pushout_right := ProjectionInFactorOfFiberProduct( [ codomain_list[ i - 1 ], codomain_list[ i ] ], 2 );
+        current_pushout_right := InjectionOfCofactorOfPushout( [ codomain_list[ i - 1 ], codomain_list[ i ] ], 2 );
         
         for j in [ 1 .. i - 1 ] do
             

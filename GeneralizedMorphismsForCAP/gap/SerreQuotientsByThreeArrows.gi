@@ -174,8 +174,11 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_THREE_ARROWS"
     AddZeroObject( category,
       
       function( )
+        local generalized_zero;
         
-        return AsSerreQuotientByThreeArrowsObject( category, ZeroObject( UnderlyingHonestCategory( category ) ) );
+        generalized_zero := ZeroObject( UnderlyingHonestCategory( category ) );
+        
+        return AsSerreQuotientCategoryByThreeArrowsObject( category, generalized_zero );
         
     end );
     
@@ -184,11 +187,13 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_THREE_ARROWS"
     AddDirectSum( category,
       
       function( obj_list )
-        local honest_list;
+        local honest_list, honest_sum;
         
-        honest_list := List( obj_list, UnderlyingHonestObject );
+        honest_list := List( obj_list, UnderlyingGeneralizedObject );
         
-        return CallFuncList( DirectSum, honest_list );
+        honest_sum := CallFuncList( DirectSum, honest_list );
+        
+        return AsSerreQuotientCategoryByThreeArrowsObject( category, UnderlyingHonestObject( honest_sum ) );
         
     end );
     
@@ -334,11 +339,6 @@ end );
 ##
 #############################################
 
-InstallMethod( \/,
-               [ IsCapCategory, IsFunction ],
-               
-  SerreQuotientCategory );
-
 InstallMethod( SerreQuotientCategoryByThreeArrows,
                [ IsCapCategory, IsFunction ],
                
@@ -401,7 +401,7 @@ InstallMethodWithCacheFromObject( SerreQuotientCategoryByThreeArrows,
     
     SetUnderlyingHonestCategory( serre_category, category );
     
-    SetUnderlyingGeneralizedMorphismCategory( serre_category, GeneralizedMorphismCategory( category ) );
+    SetUnderlyingGeneralizedMorphismCategory( serre_category, GeneralizedMorphismCategoryByThreeArrows( category ) );
     
     SetSubcategoryMembershipTestFunctionForSerreQuotient( serre_category, test_function );
     
@@ -415,7 +415,7 @@ InstallMethodWithCacheFromObject( SerreQuotientCategoryByThreeArrows,
     
 end );
 
-InstallMethodWithCacheFromObject( AsSerreQuotientByThreeArrowsObject,
+InstallMethodWithCacheFromObject( AsSerreQuotientCategoryByThreeArrowsObject,
                                   [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByThreeArrows, IsCapCategoryObject ],
                                   
   function( serre_category, object )
@@ -460,8 +460,8 @@ InstallMethodWithCacheFromObject( SerreQuotientCategoryByThreeArrowsMorphism,
     serre_morphism := rec( );
     
     ObjectifyWithAttributes( serre_morphism, TheTypeOfSerreQuotientCategoryByThreeArrowsMorphism,
-                             Source, AsSerreQuotientByThreeArrowsObject( serre_category, UnderlyingHonestObject( Source( gen_morphism ) ) ),
-                             Range, AsSerreQuotientByThreeArrowsObject( serre_category, UnderlyingHonestObject( Range( gen_morphism ) ) ) );
+                             Source, AsSerreQuotientCategoryByThreeArrowsObject( serre_category, UnderlyingHonestObject( Source( gen_morphism ) ) ),
+                             Range, AsSerreQuotientCategoryByThreeArrowsObject( serre_category, UnderlyingHonestObject( Range( gen_morphism ) ) ) );
     
     SetUnderlyingGeneralizedMorphism( serre_morphism, gen_morphism );
     
@@ -470,6 +470,11 @@ InstallMethodWithCacheFromObject( SerreQuotientCategoryByThreeArrowsMorphism,
     return serre_morphism;
     
 end );
+
+InstallMethod( SerreQuotientCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByThreeArrows, IsGeneralizedMorphismByThreeArrows ],
+               
+  SerreQuotientCategoryByThreeArrowsMorphism );
 
 InstallMethod( SerreQuotientCategoryByThreeArrowsMorphism,
                [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByThreeArrows, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
@@ -504,5 +509,73 @@ InstallMethodWithCacheFromObject( AsSerreQuotientCategoryByThreeArrowsMorphism,
   function( serre_category, associated )
     
     return SerreQuotientCategoryByThreeArrowsMorphism( serre_category, AsGeneralizedMorphismByThreeArrows( associated ) );
+    
+end );
+
+#############################################
+##
+## Compatibility layer
+##
+#############################################
+
+InstallMethod( AsSerreQuotientCategoryObject,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByThreeArrows, IsCapCategoryObject ],
+               
+  AsSerreQuotientCategoryByThreeArrowsObject );
+
+InstallMethod( AsSerreQuotientCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByThreeArrows, IsCapCategoryMorphism ],
+                                  
+  AsSerreQuotientCategoryByThreeArrowsMorphism );
+
+InstallMethod( SerreQuotientCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByThreeArrows, IsGeneralizedMorphismByThreeArrows ],
+               
+  SerreQuotientCategoryByThreeArrowsMorphism );
+
+InstallMethod( SerreQuotientCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByThreeArrows, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+                                  
+  SerreQuotientCategoryByThreeArrowsMorphism );
+
+InstallMethod( SerreQuotientCategoryMorphismWithRangeAid,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByThreeArrows, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+                                  
+  SerreQuotientCategoryByThreeArrowsMorphismWithRangeAid );
+
+InstallMethod( SerreQuotientCategoryMorphismWithSourceAid,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByThreeArrows, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+                                  
+  SerreQuotientCategoryByThreeArrowsMorphismWithSourceAid );
+
+#############################################
+##
+## Functor
+##
+#############################################
+
+InstallMethod( CanonicalProjection,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByThreeArrows ],
+               
+  function( category )
+    local underlying_honest, functor;
+    
+    underlying_honest := UnderlyingHonestCategory( category );
+    
+    functor := CapFunctor( Concatenation( "Embedding in ", Name( category ) ), underlying_honest, category );
+    
+    AddObjectFunction( functor,
+        
+        i -> AsSerreQuotientCategoryByThreeArrowsObject( category, i ) );
+    
+    AddMorphismFunction( functor,
+      
+      function( new_source, morphism, new_range )
+        
+        return AsSerreQuotientCategoryByThreeArrowsMorphism( category, morphism );
+        
+    end );
+    
+    return functor;
     
 end );

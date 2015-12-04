@@ -130,8 +130,6 @@ function( d, weight, C )
 #                                                 current_implementation[ 1 ] );
 #       od;
 #       
-#       ValueGlobal( Concatenation( "SetCanCompute", method_name ) )( C, true );
-#       
 #       if nr_arguments > 1 then
 #           PopOptions( );
 #       fi;
@@ -171,13 +169,32 @@ function( operations )
   ObjectifyWithAttributes
     ( G,
       NewType( TheFamilyOfDerivationGraphs,
-               IsDerivedMethodGraphRep ),
-      Operations, operations );
+               IsDerivedMethodGraphRep ) );
+  
+  SetOperations( G, operations );
+  
   for op_name in operations do
     G!.derivations_by_target.( op_name ) := [];
     G!.derivations_by_used_ops.( op_name ) := [];
   od;
   return G;
+end );
+
+InstallMethod( AddOperationsToDerivationGraph,
+               [ IsDerivedMethodGraph, IsDenseList ],
+               
+  function( graph, operations )
+    local op_name;
+    
+    Append( Operations( graph ), operations );
+    
+    for op_name in operations do
+        
+        graph!.derivations_by_target.( op_name ) := [];
+        graph!.derivations_by_used_ops.( op_name ) := [];
+        
+    od;
+    
 end );
 
 InstallMethod( String,
@@ -500,7 +517,10 @@ end );
 InstallMethod( CurrentOperationWeight,
                [ IsOperationWeightListRep, IsString ],
 function( owl, op_name )
-  return owl!.operation_weights.( op_name );
+  if IsBound( owl!.operation_weights.( op_name ) ) then
+      return owl!.operation_weights.( op_name );
+  fi;
+  return infinity;
 end );
 
 InstallMethod( OperationWeightUsingDerivation,

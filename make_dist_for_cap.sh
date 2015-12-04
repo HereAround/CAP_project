@@ -2,10 +2,22 @@
 
 packages="CAP GeneralizedMorphismsForCAP LinearAlgebraForCAP ModulePresentationsForCAP"
 
+function jsonval {
+    temp=`echo $release_response | sed 's/\\\\\//\//g' | sed 's/[{}]//g' | awk -v k="text" '{n=split($0,a,","); for (i=1; i<=n; i++) print a[i]}' | sed 's/\"\:\"/\|/g' | sed 's/[\,]/ /g' | sed 's/\"//g' | grep -w id`
+    echo ${temp##*|}
+}
+
 current_dir=$(pwd)
 
+## get current_release_data
+curl -X GET https://api.github.com/repos/homalg-project/CAP_project/releases > json_data
+
 for i in $packages; do
-  cd $i
+  mkdir -p tmp
+  git archive --format=tar --output=tmp/${i}.tar --prefix=${i}/ HEAD:${i}
+  cd tmp
+  tar xf ${i}.tar
+  cd ${i}
 gap -A -q -b <<EOF
 # HACK
 MakeReadWriteGlobal("SetPackageInfo");
@@ -18,14 +30,72 @@ EOF
 
   version=$(cat VERSION)
   rm VERSION
+  gap -A <<GAPInput
+SetPackagePath("${i}", ".");
+Read("makedoc.g");
+GAPInput
+  rm -rf .git*
+  rm -f doc/*.{aux,bbl,blg,brf,idx,ilg,ind,lab,log,out,pnr,tex,toc,tst}
+  rm -rf bin/
+  rm -rf public_html
   cd ..
-  tar czvf ${i}-${version}.tar.gz ${i}
-  rm gh-pages/${i}/*tar.gz
-  mv ${i}-${version}.tar.gz gh-pages/${i}
+  
+  oauth_token=$(cat ~/.github_shell_token)
+  
+  echo "Creating release for ${i}"
+  ## check wether release is already there
+  
+  tag_response=$(curl -X GET https://api.github.com/repos/homalg-project/CAP_project/releases/tags/${i}-${version}?access_token=${oauth_token} | grep "Not Found")
+  echo "Tag response: ${tag_response}"
+  if [ -n "$tag_response" ]; then
+      
+      ##delete all old releases, just leave three of them
+      delete_releases=$(python ${current_dir}/delete_old_releases.py ${i} ${current_dir}/json_data)
+      for rel_id in $delete_releases; do
+          curl -X DELETE https:///repos/homalg-project/CAP_project/releases/${rel_id}?access_token=${oauth_token}
+      done
+      
+      release_response=$(curl -H "Content-Type: application/json" -X POST --data \
+      '{ "tag_name": "'${i}-${version}'", "target_commitish": "master", "name": "'${i}-${version}'", "body": "Release for '${i}'", "draft": false, "prerelease": false }' \
+      https://api.github.com/repos/homalg-project/CAP_project/releases?access_token=${oauth_token})
+      
+      echo "Release response: ${release_response}"
+      
+      release_id=$(jsonval | sed "s/id:/\n/g" | sed -n 2p | sed "s| ||g")
+      
+      tar czvf ${i}-${version}.tar.gz ${i}
+      curl --fail -s -S -X POST https://uploads.github.com/repos/homalg-project/CAP_project/releases/${release_id}/assets?name=${i}-${version}.tar.gz \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${oauth_token}" \
+          -H "Content-Type: application/tgz" \
+          --data-binary @"${i}-${version}.tar.gz"
+      
+      rm ${i}-${version}.tar.gz
+      
+      zip -r ${i}-${version}.zip ${i}
+      curl --fail -s -S -X POST https://uploads.github.com/repos/homalg-project/CAP_project/releases/${release_id}/assets?name=${i}-${version}.zip \
+          -H "Accept: application/vnd.github.v3+json" \
+          -H "Authorization: token ${oauth_token}" \
+          -H "Content-Type: application/zip" \
+          --data-binary @"${i}-${version}.zip"
+      
+      rm ${i}-${version}.zip
+      
+  fi
+  
+  mkdir -p ../gh-pages/${i}
+  cd ..
+  rm -rf tmp
   cd $current_dir
+  
+
 done
 
+rm json_data
+
 cd gh-pages
+
+git pull homalg gh-pages:gh-pages
 
 for i in $packages; do
   cd ${i}
@@ -34,8 +104,8 @@ for i in $packages; do
 done
 
 for i in $packages; do
-  mkdir ${i}
-  mkdir ${i}/doc
+  mkdir -p ${i}
+  mkdir -p ${i}/doc
   cp -f ../${i}/PackageInfo.g ${i}
   cp -f ../${i}/README ${i}
   cp -r ../${i}/doc/*.{css,html,js,txt} ${i}/doc
@@ -45,7 +115,7 @@ current_dir=$(pwd)
 
 for i in $packages; do
   cd ${i}
-  mkdir _data
+  mkdir -p _data
   cp ../_data/package.yml _data
   gap ../update.g
   cd $current_dir
@@ -66,9 +136,11 @@ cd $current_dir
 
 for i in $packages; do
   cp ${i}/_data/package.yml _data/package${i}.yml
-  sed "s|@@package@@|package${i}|g" < index_default.md > ${i}/index.md
+  sed "s|@@package@@|package${i}|g" < index_default.template > ${i}/index.md
 done
 
+log_output=$(git log -n 1 --oneline | grep "New version of homepage from dist script")
+
 git add *
-git commit -a -m "New version of homepage"
+git commit -a -m "New version of homepage from dist script"
 git push homalg gh-pages:gh-pages

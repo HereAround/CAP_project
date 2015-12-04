@@ -61,8 +61,6 @@ DeclareOperation( "InverseOp",
 
 DeclareGlobalFunction( "CAP_INTERNAL_CREATE_MORPHISM_PRINT" );
 
-DeclareGlobalFunction( "INSTALL_TODO_LIST_ENTRIES_FOR_MORPHISM" );
-
 DeclareGlobalFunction( "INSTALL_TODO_LIST_FOR_EQUAL_MORPHISMS" );
 
 DeclareGlobalVariable( "PROPAGATION_LIST_FOR_EQUAL_MORPHISMS" );
@@ -735,26 +733,26 @@ DeclareOperation( "AddIsEqualAsFactorobjects",
 #! otherwise the output is <C>false</C>.
 #! @Returns a boolean
 #! @Arguments alpha, beta
-DeclareOperation( "Dominates",
+DeclareOperation( "IsDominating",
                   [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments are a category $C$ and a function $F$.
 #! This operations adds the given function $F$
-#! to the category for the basic operation <C>Dominates</C>.
-#! $F: (\alpha, \beta) \mapsto \mathtt{Dominates}(\alpha,\beta)$.
+#! to the category for the basic operation <C>IsDominating</C>.
+#! $F: (\alpha, \beta) \mapsto \mathtt{IsDominating}(\alpha,\beta)$.
 #! @Returns nothing
 #! @Arguments C, F
-DeclareOperation( "AddDominates",
+DeclareOperation( "AddIsDominating",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddDominates",
+DeclareOperation( "AddIsDominating",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddDominates",
+DeclareOperation( "AddIsDominating",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddDominates",
+DeclareOperation( "AddIsDominating",
                   [ IsCapCategory, IsList ] );
 
 
@@ -768,26 +766,26 @@ DeclareOperation( "AddDominates",
 #! otherwise the output is <C>false</C>.
 #! @Returns a boolean
 #! @Arguments alpha, beta
-DeclareOperation( "Codominates",
+DeclareOperation( "IsCodominating",
                   [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments are a category $C$ and a function $F$.
 #! This operations adds the given function $F$
-#! to the category for the basic operation <C>Codominates</C>.
-#! $F: (\alpha, \beta) \mapsto \mathtt{Codominates}(\alpha,\beta)$.
+#! to the category for the basic operation <C>IsCodominating</C>.
+#! $F: (\alpha, \beta) \mapsto \mathtt{IsCodominating}(\alpha,\beta)$.
 #! @Returns nothing
 #! @Arguments C, F
-DeclareOperation( "AddCodominates",
+DeclareOperation( "AddIsCodominating",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddCodominates",
+DeclareOperation( "AddIsCodominating",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddCodominates",
+DeclareOperation( "AddIsCodominating",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddCodominates",
+DeclareOperation( "AddIsCodominating",
                   [ IsCapCategory, IsList ] );
 
 
@@ -1027,8 +1025,8 @@ DeclareOperation( "AddColiftAlongEpimorphism",
 #! The arguments are two morphisms $\alpha: a \rightarrow c$, $\beta: b \rightarrow c$
 #! such that there is a lift $\alpha / \beta: a \rightarrow b$ of $\alpha$ along $\beta$, i.e.,
 #! a morphism such that $\beta \circ (\alpha / \beta) \sim_{a,c} \alpha$.
-#! The output is such a lift.
-#! @Returns a morphism in $\mathrm{Hom}(a,b)$
+#! The output is such a lift or $\mathtt{fail}$ if it doesn't exist.
+#! @Returns a morphism in $\mathrm{Hom}(a,b) + \{ \mathtt{fail} \}$
 #! @Arguments alpha, beta
 DeclareOperation( "Lift",
                   [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
@@ -1058,8 +1056,8 @@ DeclareOperation( "AddLift",
 #! The arguments are two morphisms $\alpha: a \rightarrow c$, $\beta: a \rightarrow b$
 #! such that there is a colift $\alpha \backslash \beta: c \rightarrow b$ of $\beta$ along $\alpha$., i.e.,
 #! a morphism such that $(\alpha \backslash \beta) \circ \alpha \sim_{a,b} \beta$.
-#! The output is such a colift.
-#! @Returns a morphism in $\mathrm{Hom}(c,b)$
+#! The output is such a colift or $\mathtt{fail}$ if it doesn't exist.
+#! @Returns a morphism in $\mathrm{Hom}(c,b) + \{ \mathtt{fail} \}$
 #! @Arguments alpha, beta
 DeclareOperation( "Colift",
                   [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );

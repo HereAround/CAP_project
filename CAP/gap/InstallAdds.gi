@@ -31,10 +31,22 @@ BindGlobal( "CAP_INTERNAL_CREATE_OTHER_PAIR_FUNC",
     
 end );
 
+BindGlobal( "CAP_INTERNAL_ADD_MORPHISM_OR_FAIL",
+  
+  function( category, morphism_or_fail )
+    
+    if morphism_or_fail = fail then
+        return;
+    fi;
+    
+    AddMorphism( category, morphism_or_fail );
+    
+end );
+
 InstallGlobalFunction( CapInternalInstallAdd,
   
   function( record )
-    local function_name, install_name, add_name, can_compute_name, pre_function,
+    local function_name, install_name, add_name, pre_function,
           redirect_function, post_function, filter_list, caching,
           cache_name, nr_arguments, argument_list, add_function;
     
@@ -51,8 +63,6 @@ InstallGlobalFunction( CapInternalInstallAdd,
     fi;
     
     add_name := Concatenation( "Add", function_name );
-    
-    can_compute_name := Concatenation( "CanCompute", function_name );
     
     if IsBound( record.pre_function ) then
         pre_function := record.pre_function;
@@ -94,6 +104,8 @@ InstallGlobalFunction( CapInternalInstallAdd,
         add_function := AddMorphism;
     elif record.return_type = "twocell" then
         add_function := AddTwoCell;
+    elif record.return_type = "morphism_or_fail" then
+        add_function := CAP_INTERNAL_ADD_MORPHISM_OR_FAIL;
     else
         add_function := ReturnTrue;
     fi;
@@ -132,6 +144,10 @@ InstallGlobalFunction( CapInternalInstallAdd,
         local install_func, replaced_filter_list, install_method, popper, i, set_primitive, install_remaining_pair, is_derivation,
               install_pair_func, pair_name, pair_func, is_pair_func, pair_func_push, number_of_proposed_arguments, current_function_number,
               current_function_argument_number;
+        
+        if HasIsFinalized( category ) and IsFinalized( category ) then
+            Error( "cannot add methods anymore, category is finalized" );
+        fi;
         
         ## If there already is a faster method, do nothing!
         if weight > CurrentOperationWeight( category!.derivations_weight_list, function_name ) then
@@ -184,8 +200,6 @@ InstallGlobalFunction( CapInternalInstallAdd,
         
         replaced_filter_list := CAP_INTERNAL_REPLACE_STRINGS_WITH_FILTERS( filter_list, category );
         
-        Setter( ValueGlobal( can_compute_name ) )( category, true );
-        
         if caching = true then
             install_method := InstallMethodWithCache;
             PushOptions( rec( Cache := GET_METHOD_CACHE( category, cache_name, nr_arguments )  ) );
@@ -228,7 +242,9 @@ InstallGlobalFunction( CapInternalInstallAdd,
                 if not IsBound( category!.redirects.( function_name ) ) or category!.redirects.( function_name ) <> false then
                     redirect_return := CallFuncList( redirect_function, Concatenation( [ category ], arg ) );
                     if redirect_return[ 1 ] = true then
-                        INSTALL_TODO_FOR_LOGICAL_THEOREMS( record.function_name, arg{ argument_list }, redirect_return[ 2 ] );
+                        if category!.predicate_logic then
+                            INSTALL_TODO_FOR_LOGICAL_THEOREMS( record.function_name, arg{ argument_list }, redirect_return[ 2 ], category );
+                        fi;
                         return redirect_return[ 2 ];
                     fi;
                 fi;
@@ -246,7 +262,9 @@ InstallGlobalFunction( CapInternalInstallAdd,
                 
                 result := CallFuncList( func_to_install, arg{ argument_list } );
                 
-                INSTALL_TODO_FOR_LOGICAL_THEOREMS( record.function_name, arg{ argument_list }, result );
+                if category!.predicate_logic then
+                    INSTALL_TODO_FOR_LOGICAL_THEOREMS( record.function_name, arg{ argument_list }, result, category );
+                fi;
                 
                 ## Those three commands do not commute
                 add_function( category, result );
@@ -457,17 +475,22 @@ BindGlobal( "CAP_INTERNAL_CREATE_NEW_FUNC_WITH_ONE_MORE_ARGUMENT_WITHOUT_RETURN"
     
 end );
 
-InstallGlobalFunction( CAP_INTERNAL_INSTALL_ALL_ADDS,
+InstallGlobalFunction( CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD,
     
-  function( )
+  function( record )
     local recnames, current_recname, current_rec, arg_list, i, with_given_name, with_given_name_length,
           object_name, object_func;
     
-    recnames := RecNames( CAP_INTERNAL_METHOD_NAME_RECORD );
+    recnames := RecNames( record );
+    
+    AddOperationsToDerivationGraph( CAP_INTERNAL_DERIVATION_GRAPH, recnames );
     
     for current_recname in recnames do
         
-        current_rec := CAP_INTERNAL_METHOD_NAME_RECORD.( current_recname );
+        current_rec := record.( current_recname );
+        
+        ## keep track of it in method name rec
+        CAP_INTERNAL_METHOD_NAME_RECORD.( current_recname ) := current_rec;
         
         if IsBound( current_rec.no_install ) and current_rec.no_install = true then
             
@@ -578,7 +601,7 @@ InstallGlobalFunction( CAP_INTERNAL_INSTALL_ALL_ADDS,
             
             object_name := with_given_name{[ with_given_name_length + 1 .. Length( with_given_name ) ]};
             
-            object_func := CAP_INTERNAL_METHOD_NAME_RECORD.( object_name ).installation_name;
+            object_func := record.( object_name ).installation_name;
             
             if not IsBound( current_rec.redirect_function ) then
               current_rec.redirect_function := CAP_INTERNAL_CREATE_REDIRECTION( with_given_name, object_func, arg_list, current_rec.argument_list, object_func );
@@ -598,7 +621,7 @@ InstallGlobalFunction( CAP_INTERNAL_INSTALL_ALL_ADDS,
     
 end );
 
-CAP_INTERNAL_INSTALL_ALL_ADDS();
+CAP_INTERNAL_INSTALL_ADDS_FROM_RECORD( CAP_INTERNAL_METHOD_NAME_RECORD );
 
 ## These methods overwrite the automatically generated methods.
 ## The users do not have to give the category as an argument
@@ -640,18 +663,5 @@ InstallMethod( AddTerminalObject,
     wrapped_func := function( cat ) return func(); end;
     
     AddTerminalObject( category, [ [ wrapped_func, [ ] ] ], weight );
-    
-end );
-
-##
-InstallMethod( AddTensorUnit,
-               [ IsCapCategory, IsFunction, IsInt ],
-               
-  function( category, func, weight )
-    local wrapped_func;
-    
-    wrapped_func := function( cat ) return func(); end;
-    
-    AddTensorUnit( category, [ [ wrapped_func, [ ] ] ], weight );
     
 end );

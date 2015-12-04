@@ -4,9 +4,9 @@ PackageName := "GeneralizedMorphismsForCAP",
 Subtitle := "Implementations of generalized morphisms for the CAP project",
 
 Version := Maximum( [
-  "2015.10.06", ## Sebas' version
+  "2015.12.04", ## Sebas' version
 ## this line prevents merge conflicts
-  "2015.10.06", ## Sepp's version
+  "2015.11.19", ## Sepp's version
 ## this line prevents merge conflicts
    ] ),
 
@@ -49,11 +49,11 @@ Persons := [
 
 PackageWWWHome := "http://homalg-project.github.io/CAP_project/GeneralizedMorphismsForCAP/",
 
-ArchiveURL     := Concatenation( ~.PackageWWWHome, "GeneralizedMorphismsForCAP-", ~.Version ),
+ArchiveURL     := Concatenation( "https://github.com/homalg-project/CAP_project/releases/download/GeneralizedMorphismsForCAP-", ~.Version, "/GeneralizedMorphismsForCAP-", ~.Version ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
-ArchiveFormats := ".tar.gz",
+ArchiveFormats := ".tar.gz .zip",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages
@@ -63,7 +63,7 @@ ArchiveFormats := ".tar.gz",
 ##    "dev"           for development versions of packages
 ##    "other"         for all other packages
 ##
-Status := "dev",
+Status := "deposited",
 
 AbstractHTML   :=  "",
 
@@ -88,7 +88,6 @@ AvailabilityTest := function()
         return true;
     end,
 
-TestFile := "tst/testall.g",
 
 #Keywords := [ "TODO" ],
 

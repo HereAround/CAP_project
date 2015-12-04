@@ -140,6 +140,19 @@ DeclareAttribute( "UnderlyingHonestCategory",
 DeclareOperation( "GeneralizedMorphismFromFactorToSubobject",
                   [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
+#! @Description
+#! The argument is a list $L$ of generalized morphisms by three arrows
+#! having the same source.
+#! The output is a list of generalized morphisms by three arrows
+#! which is the comman restriction of $L$.
+#! @Returns a list of generalized morphisms
+#! @Arguments L
+DeclareOperation( "CommonRestriction",
+                  [ IsList ] );
+
+DeclareOperation( "CommonRestrictionOp",
+                  [ IsList, IsCapCategoryMorphism ] );
+
 ####################################
 ##
 #! @Section Properties
@@ -190,3 +203,62 @@ DeclareProperty( "IsSingleValued",
 #! @Arguments alpha
 DeclareProperty( "IsTotal",
                  IsGeneralizedMorphism );
+
+####################################
+##
+#! @Section Convenience methods
+##
+####################################
+
+#! This section contains operations which, depending on the current generalized morphism
+#! standard of the system and the category, might point to other Operations. Please use them
+#! only as convenience and never in serious code.
+
+#! @Description
+#!  Creates a new category of generalized morphisms. Might point to
+#!  GeneralizedMorphismCategoryByThreeArrows, GeneralizedMorphismCategoryByCospans, or
+#!  GeneralizedMorphismCategoryBySpans
+#! @Returns a category
+#! @Arguments C
+DeclareOperation( "GeneralizedMorphismCategory",
+                  [ IsCapCategory ] );
+
+#! @Description
+#!  Creates an object in the current generalized morphism category, depending on the standard
+#! @Returns an object in the generalized morphism category
+#! @Arguments A
+DeclareOperation( "GeneralizedMorphismObject",
+                  [ IsCapCategoryObject ] );
+
+#! @Description
+#!  Returns the corresponding morphism to phi in the current generalized morphism category.
+#! @Returns a generalized morphism
+#! @Arguments phi
+DeclareOperation( "AsGeneralizedMorphism",
+                  [ IsCapCategoryMorphism ] );
+
+#! @Description
+#!  Returns the corresponding morphism to phi and psi in the current generalized morphism category.
+#! @Returns a generalized morphism
+#! @Arguments phi, psi
+DeclareOperation( "GeneralizedMorphism",
+                  [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+#! @Description
+#!  Returns the corresponding morphism to iota, phi and psi in the current generalized morphism category.
+#! @Returns a generalized morphism
+#! @Arguments iota, phi, pi
+DeclareOperation( "GeneralizedMorphism",
+                  [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+#! @Description
+#!  Returns a generalized morphism with range aid by three arrows or by span, or a generalized morphism
+#!  by cospan, depending on the standard.
+DeclareOperation( "GeneralizedMorphismWithRangeAid",
+                  [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );
+
+#! @Description
+#!  Returns a generalized morphism with source aid by three arrows or by cospan, or a generalized morphism
+#!  by span, depending on the standard.
+DeclareOperation( "GeneralizedMorphismWithSourceAid",
+                  [ IsCapCategoryMorphism, IsCapCategoryMorphism ] );

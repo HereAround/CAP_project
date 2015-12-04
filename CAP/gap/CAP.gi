@@ -123,7 +123,7 @@ end );
 
 InstallValue( CAP_INTERNAL_DERIVATION_GRAPH,
     
-    MakeDerivationGraph( RecNames( CAP_INTERNAL_METHOD_NAME_RECORD ) ) );
+    MakeDerivationGraph( [ ] ) );
 
 
 ######################################
@@ -238,6 +238,8 @@ InstallGlobalFunction( "CREATE_CAP_CATEGORY_OBJECT",
     obj_rec!.default_cache_type := "weak";
     
     obj_rec!.prefunction_check := true;
+    
+    obj_rec!.predicate_logic := true;
     
     return obj_rec;
     
@@ -549,6 +551,28 @@ end );
 
 #######################################
 ##
+## Logic
+##
+#######################################
+
+InstallGlobalFunction( CapCategorySwitchLogicOn,
+  
+  function( category )
+    
+    category!.predicate_logic := true;
+    
+end );
+
+InstallGlobalFunction( CapCategorySwitchLogicOff,
+  
+  function( category )
+    
+    category!.predicate_logic := false;
+    
+end );
+
+#######################################
+##
 ## ViewObj
 ##
 #######################################
@@ -577,11 +601,7 @@ InstallGlobalFunction( CAP_INTERNAL_INSTALL_PRINT_FUNCTION,
     
     print_graph := CreatePrintingGraph( IsCapCategory, category_function );
     
-    internal_list := Concatenation( 
-                       CAP_INTERNAL_CAN_COMPUTE_FILTER_LIST.CanComputeForAllCategories,
-                       CAP_INTERNAL_CAN_COMPUTE_FILTER_LIST.CanComputeForSpecialCategories,
-                       CAP_INTERNAL_CAN_COMPUTE_FILTER_LIST.MathematicalPropertiesOfCategories
-                     );
+    internal_list := CAP_INTERNAL_CAN_COMPUTE_FILTER_LIST.MathematicalPropertiesOfCategories;
     
     for i in internal_list do
         

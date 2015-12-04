@@ -13,7 +13,7 @@ PackageName := "LinearAlgebraForCAP",
 Subtitle := "Category of Matrices over a Field for CAP",
 
 Version := Maximum( [
-  "2015.08.17", ## Sebas' version
+  "2015.12.03", ## Sebas' version
   ## this line prevents merge conflicts
   "2015.10.06", ## Sepp's version
 ] ),
@@ -52,11 +52,11 @@ Persons := [
 
 PackageWWWHome := "http://homalg-project.github.io/CAP_project/LinearAlgebraForCAP/",
 
-ArchiveURL     := Concatenation( ~.PackageWWWHome, "LinearAlgebraForCAP-", ~.Version ),
+ArchiveURL     := Concatenation( "https://github.com/homalg-project/CAP_project/releases/download/LinearAlgebraForCAP-", ~.Version, "/LinearAlgebraForCAP-", ~.Version ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
-ArchiveFormats := ".tar.gz",
+ArchiveFormats := ".tar.gz .zip",
 
 ##  Status information. Currently the following cases are recognized:
 ##    "accepted"      for successfully refereed packages
@@ -66,7 +66,7 @@ ArchiveFormats := ".tar.gz",
 ##    "dev"           for development versions of packages
 ##    "other"         for all other packages
 ##
-Status := "dev",
+Status := "deposited",
 
 AbstractHTML   :=  "",
 
@@ -94,7 +94,6 @@ AvailabilityTest := function()
         return true;
     end,
 
-TestFile := "tst/testall.g",
 
 #Keywords := [ "TODO" ],
 

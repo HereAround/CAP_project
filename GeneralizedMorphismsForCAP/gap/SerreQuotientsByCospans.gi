@@ -29,7 +29,7 @@ BindGlobal( "TheTypeOfSerreQuotientCategoryByCospansMorphism",
 ##
 #############################################
 
-BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_THREE_ARROWS",
+BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_COSPANS",
   
   function( category )
     local membership_function;
@@ -44,11 +44,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_THREE_ARROWS"
         local underlying_general, new_morphism_aid, new_general, sum_general,
               sum_associated, sum_image;
         
-        underlying_general := UnderlyingGeneralizedMorphism( morphism2 );
-        
-        new_morphism_aid := AdditiveInverse( Arrow( underlying_general ) );
-        
-        new_general := GeneralizedMorphismByCospans( SourceAid( underlying_general ), new_morphism_aid, RangeAid( underlying_general ) );
+        new_general := AdditiveInverse( underlying_general );
         
         sum_general := AdditionForMorphisms( UnderlyingGeneralizedMorphism( morphism1 ), new_general );
         
@@ -117,32 +113,28 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_THREE_ARROWS"
     end );
     
     ## IsZeroForMorphisms
-    
-    AddIsZeroForMorphisms( category,
-      
-      function( morphism )
-        local associated, image;
-        
-        associated := AssociatedMorphism( UnderlyingGeneralizedMorphism( morphism ) );
-        
-        image := ImageObject( associated );
-        
-        return membership_function( image );
-        
-    end );
+    ## Can be derived, but there might be a faster solution
+#     AddIsZeroForMorphisms( category,
+#       
+#       function( morphism )
+#         local associated, image;
+#         
+#         associated := AssociatedMorphism( UnderlyingGeneralizedMorphism( morphism ) );
+#         
+#         image := ImageObject( associated );
+#         
+#         return membership_function( image );
+#         
+#     end );
     
     ## Additive inverse for morphisms (works without normalization)
     
     AddAdditiveInverseForMorphisms( category,
       
       function( morphism )
-        local underlying_general, new_morphism_aid, new_general;
+        local new_general;
         
-        underlying_general := UnderlyingGeneralizedMorphism( morphism );
-        
-        new_morphism_aid := AdditiveInverse( Arrow( underlying_general ) );
-        
-        new_general := GeneralizedMorphismByCospans( SourceAid( underlying_general ), new_morphism_aid, RangeAid( underlying_general ) );
+        new_general := AdditiveInverseForMorphisms( UnderlyingGeneralizedMorphism( morphism ) );
         
         return SerreQuotientCategoryByCospansMorphism( category, new_general );
         
@@ -153,19 +145,11 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_THREE_ARROWS"
     AddZeroMorphism( category,
       
       function( source, range )
-        local source_aid, range_aid, morphism_aid;
+        local new_general;
         
-        source := UnderlyingHonestObject( source );
+        new_general := ZeroMorphism( UnderlyingGeneralizedObject( source ), UnderlyingGeneralizedObject( range ) );
         
-        range := UnderlyingHonestObject( range );
-        
-        source_aid := IdentityMorphism( source );
-        
-        range_aid := IdentityMorphism( range );
-        
-        morphism_aid := ZeroMorphism( source, range );
-        
-        return SerreQuotientCategoryByCospansMorphism( category, source_aid, morphism_aid, range_aid );
+        return SerreQuotientCategoryByCospansMorphism( category, new_general );
         
     end );
     
@@ -174,8 +158,11 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_THREE_ARROWS"
     AddZeroObject( category,
       
       function( )
+        local generalized_zero;
         
-        return AsSerreQuotientByCospansObject( category, ZeroObject( UnderlyingHonestCategory( category ) ) );
+        generalized_zero := ZeroObject( UnderlyingHonestCategory( category ) );
+        
+        return AsSerreQuotientCategoryByCospansObject( category, generalized_zero );
         
     end );
     
@@ -184,11 +171,13 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_THREE_ARROWS"
     AddDirectSum( category,
       
       function( obj_list )
-        local honest_list;
+        local honest_list, honest_sum;
         
         honest_list := List( obj_list, UnderlyingHonestObject );
         
-        return CallFuncList( DirectSum, honest_list );
+        honest_sum := CallFuncList( DirectSum, honest_list );
+        
+        return AsSerreQuotientCategoryByCospansObject( category, honest_sum );
         
     end );
     
@@ -225,44 +214,39 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_THREE_ARROWS"
     AddUniversalMorphismIntoDirectSum( category,
       
       function( diagram, morphism_list )
-        local generalized_morphisms, source_aid, associated, range_aid, associated_list;
+        local generalized_list, arrow_list, reversedarrow_list, new_arrow, new_reversed_arrow, object_list;
         
-        generalized_morphisms := List( morphism_list, UnderlyingGeneralizedMorphism );
+        generalized_list := List( morphism_list, UnderlyingGeneralizedMorphism );
         
-        generalized_morphisms := CommonRestriction( generalized_morphisms );
+        arrow_list := List( generalized_list, Arrow );
         
-        generalized_morphisms := List( generalized_morphisms, DomainAssociatedMorphismCodomainTriple );
+        new_arrow := UniversalMorphismIntoDirectSum( List( arrow_list, Range ), arrow_list );
         
-        source_aid := generalized_morphisms[ 1 ][ 1 ];
+        reversedarrow_list := List( generalized_list, ReversedArrow );
         
-        associated_list := List( generalized_morphisms, i -> i[ 2 ] );
+        new_reversed_arrow := DirectSumFunctorial( reversedarrow_list );
         
-        associated := UniversalMorphismIntoDirectSum( associated_list );
-        
-        range_aid := DirectSumFunctorial( List( generalized_morphisms, i -> i[ 3 ] ) );
-        
-        return SerreQuotientCategoryByCospansMorphism( category, source_aid, associated, range_aid );
+        return SerreQuotientCategoryByCospansMorphism( category, new_arrow, new_reversed_arrow );
         
     end );
     
+    ## Needs work
     AddUniversalMorphismFromDirectSum( category,
       
       function( diagram, morphism_list )
-        local generalized_morphisms, source_aid, associated, range_aid;
+        local generalized_list, arrow_list, reversedarrow_list, new_arrow, new_reversed_arrow, object_list;
         
-        generalized_morphisms := List( morphism_list, UnderlyingGeneralizedMorphism );
+        generalized_list := List( morphism_list, UnderlyingGeneralizedMorphism );
         
-        generalized_morphisms := CommonCoastriction( generalized_morphisms );
+        generalized_list := CommonCoastriction( generalized_list );
         
-        generalized_morphisms := List( generalized_morphisms, DomainAssociatedMorphismCodomainTriple );
+        arrow_list := List( generalized_list, Arrow );
         
-        range_aid := generalized_morphisms[ 1 ][ 3 ];
+        new_arrow := UniversalMorphismFromDirectSum( List( diagram, UnderlyingHonestObject ), arrow_list );
         
-        associated := UniversalMorphismFromDirectSum( List( generalized_morphisms, i -> i[ 2 ] ) );
+        new_reversed_arrow := ReversedArrow( generalized_list[ 1 ] );
         
-        source_aid := DirectSumFunctorial( List( generalized_morphisms, i -> i[ 1 ] ) );
-        
-        return SerreQuotientCategoryByCospansMorphism( category, source_aid, associated, range_aid );
+        return SerreQuotientCategoryByCospansMorphism( category, new_arrow, new_reversed_arrow );
         
     end );
     
@@ -275,9 +259,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_THREE_ARROWS"
         
         underlying_general := UnderlyingGeneralizedMorphism( morphism );
         
-        kernel_mor := KernelEmbedding( AssociatedMorphism( underlying_general ) );
-        
-        kernel_mor := PreCompose( kernel_mor, DomainOfGeneralizedMorphism( underlying_general ) );
+        kernel_mor := KernelEmbedding( Arrow( underlying_general ) );
         
         return AsSerreQuotientCategoryByCospansMorphism( category, kernel_mor );
         
@@ -301,15 +283,15 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_THREE_ARROWS"
     AddCokernelProjection( category,
       
       function( morphism )
-        local underlying_general, cokernel_mor;
+        local underlying_general, cokernel_mor, triple;
         
         underlying_general := UnderlyingGeneralizedMorphism( morphism );
         
-        cokernel_mor := CokernelProjection( AssociatedMorphism( underlying_general ) );
+        triple := DomainAssociatedMorphismCodomainTriple( underlying_general );
         
-        cokernel_mor := PreCompose( Codomain( underlying_general ), cokernel_mor );
+        cokernel_mor := CokernelProjection( triple[ 2 ] );
         
-        return AsSerreQuotientCategoryByCospansMorphism( category, cokernel_mor );
+        return AsSerreQuotientCategoryByCospansMorphism( category, PreCompose( triple[ 3 ], cokernel_mor ) );
         
     end );
     
@@ -333,11 +315,6 @@ end );
 ## Constructor
 ##
 #############################################
-
-InstallMethod( \/,
-               [ IsCapCategory, IsFunction ],
-               
-  SerreQuotientCategory );
 
 InstallMethod( SerreQuotientCategoryByCospans,
                [ IsCapCategory, IsFunction ],
@@ -401,13 +378,13 @@ InstallMethodWithCacheFromObject( SerreQuotientCategoryByCospans,
     
     SetUnderlyingHonestCategory( serre_category, category );
     
-    SetUnderlyingGeneralizedMorphismCategory( serre_category, GeneralizedMorphismCategory( category ) );
+    SetUnderlyingGeneralizedMorphismCategory( serre_category, GeneralizedMorphismCategoryByCospans( category ) );
     
     SetSubcategoryMembershipTestFunctionForSerreQuotient( serre_category, test_function );
     
     SetIsAbelianCategory( serre_category, true );
     
-    CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_THREE_ARROWS( serre_category );
+    CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_COSPANS( serre_category );
     
     Finalize( serre_category );
     
@@ -415,7 +392,7 @@ InstallMethodWithCacheFromObject( SerreQuotientCategoryByCospans,
     
 end );
 
-InstallMethodWithCacheFromObject( AsSerreQuotientByCospansObject,
+InstallMethodWithCacheFromObject( AsSerreQuotientCategoryByCospansObject,
                                   [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByCospans, IsCapCategoryObject ],
                                   
   function( serre_category, object )
@@ -446,7 +423,7 @@ InstallMethodWithCacheFromObject( AsSerreQuotientByCospansObject,
 end );
 
 InstallMethodWithCacheFromObject( SerreQuotientCategoryByCospansMorphism,
-                                  [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByCospans, IsGeneralizedMorphismByCospans ],
+                                  [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByCospans, IsGeneralizedMorphismByCospan ],
                                   
   function( serre_category, gen_morphism )
     local honest_category, serre_morphism;
@@ -460,8 +437,8 @@ InstallMethodWithCacheFromObject( SerreQuotientCategoryByCospansMorphism,
     serre_morphism := rec( );
     
     ObjectifyWithAttributes( serre_morphism, TheTypeOfSerreQuotientCategoryByCospansMorphism,
-                             Source, AsSerreQuotientByCospansObject( serre_category, UnderlyingHonestObject( Source( gen_morphism ) ) ),
-                             Range, AsSerreQuotientByCospansObject( serre_category, UnderlyingHonestObject( Range( gen_morphism ) ) ) );
+                             Source, AsSerreQuotientCategoryByCospansObject( serre_category, UnderlyingHonestObject( Source( gen_morphism ) ) ),
+                             Range, AsSerreQuotientCategoryByCospansObject( serre_category, UnderlyingHonestObject( Range( gen_morphism ) ) ) );
     
     SetUnderlyingGeneralizedMorphism( serre_morphism, gen_morphism );
     
@@ -476,7 +453,7 @@ InstallMethod( SerreQuotientCategoryByCospansMorphism,
                                   
   function( serre_category, source_aid, associated, range_aid )
     
-    return SerreQuotientCategoryByCospansMorphism( serre_category, GeneralizedMorphismByCospans( source_aid, associated, range_aid ) );
+    return SerreQuotientCategoryByCospansMorphism( serre_category, GeneralizedMorphismByCospan( source_aid, associated, range_aid ) );
     
 end );
 
@@ -485,16 +462,16 @@ InstallMethod( SerreQuotientCategoryByCospansMorphismWithSourceAid,
                                   
   function( serre_category, source_aid, associated )
     
-    return SerreQuotientCategoryByCospansMorphism( serre_category, GeneralizedMorphismByCospansWithSourceAid( source_aid, associated ) );
+    return SerreQuotientCategoryByCospansMorphism( serre_category, GeneralizedMorphismByCospanWithSourceAid( source_aid, associated ) );
     
 end );
 
-InstallMethod( SerreQuotientCategoryByCospansMorphismWithRangeAid,
+InstallMethod( SerreQuotientCategoryByCospansMorphism,
                [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByCospans, IsCapCategoryMorphism, IsCapCategoryMorphism ],
                                   
-  function( serre_category, associated, range_aid )
+  function( serre_category, reversed_arrow, arrow )
     
-    return SerreQuotientCategoryByCospansMorphism( serre_category, GeneralizedMorphismByCospansWithRangeAid( associated, range_aid ) );
+    return SerreQuotientCategoryByCospansMorphism( serre_category, GeneralizedMorphismByCospan( reversed_arrow, arrow ) );
     
 end );
 
@@ -503,6 +480,79 @@ InstallMethodWithCacheFromObject( AsSerreQuotientCategoryByCospansMorphism,
                                   
   function( serre_category, associated )
     
-    return SerreQuotientCategoryByCospansMorphism( serre_category, AsGeneralizedMorphismByCospans( associated ) );
+    return SerreQuotientCategoryByCospansMorphism( serre_category, AsGeneralizedMorphismByCospan( associated ) );
+    
+end );
+
+#############################################
+##
+## Compatibility layer
+##
+#############################################
+
+InstallMethod( AsSerreQuotientCategoryObject,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByCospans, IsCapCategoryObject ],
+               
+  AsSerreQuotientCategoryByCospansObject );
+
+InstallMethod( AsSerreQuotientCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByCospans, IsCapCategoryMorphism ],
+                                  
+  AsSerreQuotientCategoryByCospansMorphism );
+
+InstallMethod( SerreQuotientCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByCospans, IsGeneralizedMorphismByCospan ],
+               
+  SerreQuotientCategoryByCospansMorphism );
+
+InstallMethod( SerreQuotientCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByCospans, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+                                  
+  SerreQuotientCategoryByCospansMorphism );
+
+InstallMethod( SerreQuotientCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByCospans, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+                                  
+  SerreQuotientCategoryByCospansMorphism );
+
+InstallMethod( SerreQuotientCategoryMorphismWithRangeAid,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByCospans, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+                                  
+  SerreQuotientCategoryByCospansMorphism );
+
+InstallMethod( SerreQuotientCategoryMorphismWithSourceAid,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByCospans, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+                                  
+  SerreQuotientCategoryByCospansMorphismWithSourceAid );
+
+#############################################
+##
+## Functor
+##
+#############################################
+
+InstallMethod( CanonicalProjection,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryByCospans ],
+               
+  function( category )
+    local underlying_honest, functor;
+    
+    underlying_honest := UnderlyingHonestCategory( category );
+    
+    functor := CapFunctor( Concatenation( "Embedding in ", Name( category ) ), underlying_honest, category );
+    
+    AddObjectFunction( functor,
+        
+        i -> AsSerreQuotientCategoryByCospansObject( category, i ) );
+    
+    AddMorphismFunction( functor,
+      
+      function( new_source, morphism, new_range )
+        
+        return AsSerreQuotientCategoryByCospansMorphism( category, morphism );
+        
+    end );
+    
+    return functor;
     
 end );
