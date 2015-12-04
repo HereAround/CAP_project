@@ -101,8 +101,8 @@ DeclareOperation( "EmbeddingInProjectiveObject",
 ####################################################################################
 
 #! @Description
-#! The argument is a CAPPresentationCategoryObject <A>M</A>, which is represented by a morphism $m$ in the underlying
-#! category of projective modules. we then compute a minimal free resolution of <A>M</A>.
+#! The argument is a graded left or right module presentation <A>M</A>. We then compute a minimal
+#! free resolution of <A>M</A>.
 #! @Returns a list of CAPPresentationCategoryMorphisms
 #! @Arguments M
 DeclareOperation( "MinimalFreeResolution",

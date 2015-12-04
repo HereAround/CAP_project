@@ -214,7 +214,8 @@ DeclareAttribute( "SuperObjectForCAP",
 ##
 ##############################################################################################
 
-#! The method 'FullInformation' is also avaiable to produce specialised output for IsGradedLeftOrRightSubmoduleForCAP.
+#! The method 'FullInformation' is also avaiable to produce specialised output for 
+#! IsGradedLeftOrRightSubmoduleForCAP.
 
 
 
@@ -234,11 +235,11 @@ DeclareOperation( "\*",
 
 #!
 DeclareOperation( "\^",
-                  [ IsGradedLeftSubmoduleForCAP and IsGradedLeftModulePresentationForCAP, IsInt ] );
+                  [ IsGradedLeftSubmoduleForCAP, IsInt ] );
 
 #!
 DeclareOperation( "\^",
-                  [ IsGradedRightSubmoduleForCAP and IsGradedRightModulePresentationForCAP, IsInt ] );
+                  [ IsGradedRightSubmoduleForCAP, IsInt ] );
 
 
 
