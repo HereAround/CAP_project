@@ -76,26 +76,47 @@ DeclareAttribute( "FunctorGradedStandardModuleRight",
 ###############################################
 
 # a function that computes the truncation functor for both left and right presentations
-DeclareGlobalFunction( "TruncationFunctor" );
+DeclareGlobalFunction( "TruncationFunctorToSemigroups" );
+
+# a function that computes the truncation functor for both left and right presentations
+DeclareGlobalFunction( "TruncationFunctorToCones" );
 
 #! @Description
-#! The argument is a homalg graded ring $R$ and a subsemigroup $H$ (given by a list of generators) in the
+#! The argument is a homalg graded ring $R$ and a semigroup $H$ (given by a list of generators) in the
 #! degree group of the ring $R$. The output is the functor which truncates left-presentations
 #! over $R$ to this subsemigroup.
 #! @Returns a functor
 #! @Arguments R, C
 DeclareOperation( "TruncationFunctorLeft",
-                  [ IsHomalgGradedRing, IsList ] );
+                  [ IsHomalgGradedRing, IsSemigroupGeneratorList ] );
 
 #! @Description
-#! The argument is a homalg graded ring $R$ and a subsemigroup $H$ (given by a list of generators) in the
+#! The argument is a homalg graded ring $R$ and a semigroup $H$ of a cone (given by a list of generators) in the
+#! degree group of the ring $R$. The output is the functor which truncates left-presentations
+#! over $R$ to this subsemigroup.
+#! @Returns a functor
+#! @Arguments R, C
+DeclareOperation( "TruncationFunctorLeft",
+                  [ IsHomalgGradedRing, IsConeHPresentationList ] );
+
+#! @Description
+#! The argument is a homalg graded ring $R$ and a semigroup $H$ (given by a list of generators) in the
 #! degree group of the ring $R$. The output is the functor which truncates right-presentations
 #! over $R$ to this subsemigroup.
 #! @Returns a functor
 #! @Arguments R, C
 DeclareOperation( "TruncationFunctorRight",
-                  [ IsHomalgGradedRing, IsList ] );
-                  
+                  [ IsHomalgGradedRing, IsSemigroupGeneratorList ] );
+
+#! @Description
+#! The argument is a homalg graded ring $R$ and a semigroup $H$ of a cone (given by a list of generators) in the
+#! degree group of the ring $R$. The output is the functor which truncates right-presentations
+#! over $R$ to this subsemigroup.
+#! @Returns a functor
+#! @Arguments R, C
+DeclareOperation( "TruncationFunctorRight",
+                  [ IsHomalgGradedRing, IsConeHPresentationList ] );
+
 ###############################################
 ##
 #! @Section The Frobenius-power functor

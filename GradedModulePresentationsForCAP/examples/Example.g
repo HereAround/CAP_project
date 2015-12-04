@@ -90,11 +90,11 @@ left_presentation2 := CAPPresentationCategoryObject( m2l );
 left_presentation3 := CAPPresentationCategoryObject( m3l );
 #! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
-truncation_functor_left := TruncationFunctorLeft( S, [[1,0],[0,1]] );
+truncation_functor_left := TruncationFunctorLeft( 
+                           S, SemigroupGeneratorList( [[1,0],[0,1]] ) );
 #! Truncation functor for Category of graded left module presentations 
-#! over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) to the cone 
-#! [ [ 1, 0 ], [ 0, 1 ] ]
+#! over Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
+#! to the cone given by the h-constraints [ [ 1, 0 ], [ 0, 1 ] ]
 truncation1l := ApplyFunctor( truncation_functor_left, left_presentation1 );
 #! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
@@ -230,10 +230,11 @@ right_presentation2 := CAPPresentationCategoryObject( m2r );
 right_presentation3 := CAPPresentationCategoryObject( m3r );
 #! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
-truncation_functor_right := TruncationFunctorRight( S, [[1,0],[0,1]] );
+truncation_functor_right := TruncationFunctorRight( 
+                            S, SemigroupGeneratorList( [[1,0],[0,1]] ) );
 #! Truncation functor for Category of graded right module presentations 
-#! over Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
-#! to the cone [ [ 1, 0 ], [ 0, 1 ] ]
+#! over Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
+#! to the cone given by the h-constraints [ [ 1, 0 ], [ 0, 1 ] ]
 truncation1r := ApplyFunctor( truncation_functor_right, right_presentation1 );
 #! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
