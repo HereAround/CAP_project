@@ -164,7 +164,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_SPANS",
         
         generalized_zero := ZeroObject( UnderlyingHonestCategory( category ) );
         
-        return AsSerreQuotientBySpansObject( category, generalized_zero );
+        return AsSerreQuotientCategoryBySpansObject( category, generalized_zero );
         
     end );
     
@@ -179,7 +179,7 @@ BindGlobal( "CAP_INTERNAL_INSTALL_OPERATIONS_FOR_SERRE_QUOTIENT_BY_SPANS",
         
         honest_sum := CallFuncList( DirectSum, honest_list );
         
-        return AsSerreQuotientBySpansObject( category, UnderlyingHonestObject( honest_sum ) );
+        return AsSerreQuotientCategoryBySpansObject( category, UnderlyingHonestObject( honest_sum ) );
         
     end );
     
@@ -391,7 +391,7 @@ InstallMethodWithCacheFromObject( SerreQuotientCategoryBySpans,
     
 end );
 
-InstallMethodWithCacheFromObject( AsSerreQuotientBySpansObject,
+InstallMethodWithCacheFromObject( AsSerreQuotientCategoryBySpansObject,
                                   [ IsCapCategory and WasCreatedAsSerreQuotientCategoryBySpans, IsCapCategoryObject ],
                                   
   function( serre_category, object )
@@ -436,8 +436,8 @@ InstallMethodWithCacheFromObject( SerreQuotientCategoryBySpansMorphism,
     serre_morphism := rec( );
     
     ObjectifyWithAttributes( serre_morphism, TheTypeOfSerreQuotientCategoryBySpansMorphism,
-                             Source, AsSerreQuotientBySpansObject( serre_category, UnderlyingHonestObject( Source( gen_morphism ) ) ),
-                             Range, AsSerreQuotientBySpansObject( serre_category, UnderlyingHonestObject( Range( gen_morphism ) ) ) );
+                             Source, AsSerreQuotientCategoryBySpansObject( serre_category, UnderlyingHonestObject( Source( gen_morphism ) ) ),
+                             Range, AsSerreQuotientCategoryBySpansObject( serre_category, UnderlyingHonestObject( Range( gen_morphism ) ) ) );
     
     SetUnderlyingGeneralizedMorphism( serre_morphism, gen_morphism );
     
@@ -446,6 +446,11 @@ InstallMethodWithCacheFromObject( SerreQuotientCategoryBySpansMorphism,
     return serre_morphism;
     
 end );
+
+InstallMethod( SerreQuotientCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryBySpans, IsGeneralizedMorphismBySpan ],
+               
+  SerreQuotientCategoryBySpansMorphism );
 
 InstallMethod( SerreQuotientCategoryBySpansMorphism,
                [ IsCapCategory and WasCreatedAsSerreQuotientCategoryBySpans, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
@@ -485,6 +490,47 @@ end );
 
 #############################################
 ##
+## Compatibility layer
+##
+#############################################
+
+InstallMethod( AsSerreQuotientCategoryObject,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryBySpans, IsCapCategoryObject ],
+               
+  AsSerreQuotientCategoryBySpansObject );
+
+InstallMethod( AsSerreQuotientCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryBySpans, IsCapCategoryMorphism ],
+                                  
+  AsSerreQuotientCategoryBySpansMorphism );
+
+InstallMethod( SerreQuotientCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryBySpans, IsGeneralizedMorphismBySpan ],
+               
+  SerreQuotientCategoryBySpansMorphism );
+
+InstallMethod( SerreQuotientCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryBySpans, IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+                                  
+  SerreQuotientCategoryBySpansMorphism );
+
+InstallMethod( SerreQuotientCategoryMorphism,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryBySpans, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+                                  
+  SerreQuotientCategoryBySpansMorphism );
+
+InstallMethod( SerreQuotientCategoryMorphismWithRangeAid,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryBySpans, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+                                  
+  SerreQuotientCategoryBySpansMorphismWithRangeAid );
+
+InstallMethod( SerreQuotientCategoryMorphismWithSourceAid,
+               [ IsCapCategory and WasCreatedAsSerreQuotientCategoryBySpans, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+                                  
+  SerreQuotientCategoryBySpansMorphism );
+
+#############################################
+##
 ## Functor
 ##
 #############################################
@@ -501,7 +547,7 @@ InstallMethod( CanonicalProjection,
     
     AddObjectFunction( functor,
         
-        i -> AsSerreQuotientBySpansObject( category, i ) );
+        i -> AsSerreQuotientCategoryBySpansObject( category, i ) );
     
     AddMorphismFunction( functor,
       
