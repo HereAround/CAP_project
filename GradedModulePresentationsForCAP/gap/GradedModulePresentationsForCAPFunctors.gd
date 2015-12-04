@@ -79,18 +79,18 @@ DeclareAttribute( "FunctorGradedStandardModuleRight",
 DeclareGlobalFunction( "TruncationFunctor" );
 
 #! @Description
-#! The argument is a homalg graded ring $R$ and a cone $C$ (given by an H-presentation) in the
+#! The argument is a homalg graded ring $R$ and a subsemigroup $H$ (given by a list of generators) in the
 #! degree group of the ring $R$. The output is the functor which truncates left-presentations
-#! over $R$ to the cone $C$.
+#! over $R$ to this subsemigroup.
 #! @Returns a functor
 #! @Arguments R, C
 DeclareOperation( "TruncationFunctorLeft",
                   [ IsHomalgGradedRing, IsList ] );
 
 #! @Description
-#! The argument is a homalg graded ring $R$ and a cone $C$ (given by an H-presentation) in the
+#! The argument is a homalg graded ring $R$ and a subsemigroup $H$ (given by a list of generators) in the
 #! degree group of the ring $R$. The output is the functor which truncates right-presentations
-#! over $R$ to the cone $C$.
+#! over $R$ to this subsemigroup.
 #! @Returns a functor
 #! @Arguments R, C
 DeclareOperation( "TruncationFunctorRight",
