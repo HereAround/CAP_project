@@ -120,7 +120,7 @@ end );
 InstallMethod( String,
               [ IsCAPPresentationCategoryObject ],
   function( presentation_category_object )
-    
+
      return Concatenation( "An object of the presentation category over the ", 
                            Name( CapCategory( UnderlyingMorphism( presentation_category_object ) ) )
                            );

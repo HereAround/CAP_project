@@ -144,7 +144,8 @@ end );
 ####################################
 
 InstallMethod( String,
-              [ IsCAPPresentationCategoryMorphism ], 999, # FIX ME FIX ME FIX ME
+              [ IsCAPPresentationCategoryMorphism ], 
+              #999, # FIX ME FIX ME FIX ME
 
   function( presentation_category_morphism )
     
@@ -155,7 +156,8 @@ InstallMethod( String,
 end );
 
 InstallMethod( String,
-              [ IsGradedLeftModulePresentationMorphismForCAP ], 999, # FIX ME FIX ME FIX ME
+              [ IsGradedLeftModulePresentationMorphismForCAP ], 
+              #999, # FIX ME FIX ME FIX ME
 
   function( graded_left_module_presentation_morphism )
 
@@ -167,7 +169,8 @@ InstallMethod( String,
 end );
 
 InstallMethod( String,
-              [ IsGradedRightModulePresentationMorphismForCAP ], 999, # FIX ME FIX ME FIX ME
+              [ IsGradedRightModulePresentationMorphismForCAP ], 
+              #999, # FIX ME FIX ME FIX ME
 
   function( graded_right_module_presentation_morphism )
     
@@ -185,7 +188,8 @@ end );
 ####################################
 
 InstallMethod( Display,
-               [ IsCAPPresentationCategoryMorphism ], 999, # FIX ME FIX ME FIX ME
+               [ IsCAPPresentationCategoryMorphism ], 
+               #999, # FIX ME FIX ME FIX ME
 
   function( presentation_category_morphism )
 
@@ -199,7 +203,8 @@ InstallMethod( Display,
 end );
 
 InstallMethod( Display,
-               [ IsGradedLeftModulePresentationMorphismForCAP ], 999, # FIX ME FIX ME FIX ME
+               [ IsGradedLeftModulePresentationMorphismForCAP ], 
+               #999, # FIX ME FIX ME FIX ME
 
   function( graded_left_module_presentation_morphism )
 
@@ -214,7 +219,8 @@ InstallMethod( Display,
 end );
 
 InstallMethod( Display,
-               [ IsGradedRightModulePresentationMorphismForCAP ], 999, # FIX ME FIX ME FIX ME
+               [ IsGradedRightModulePresentationMorphismForCAP ], 
+               #999, # FIX ME FIX ME FIX ME
 
   function( graded_right_module_presentation_morphism )
 
@@ -235,7 +241,8 @@ end );
 ####################################
 
 InstallMethod( ViewObj,
-               [ IsCAPPresentationCategoryMorphism ], 999, # FIX ME FIX ME FIX ME
+               [ IsCAPPresentationCategoryMorphism ], 
+               #999, # FIX ME FIX ME FIX ME
   function( presentation_category_morphism )
 
     Print( Concatenation( "<", String( presentation_category_morphism ), ">" ) );
@@ -243,7 +250,8 @@ InstallMethod( ViewObj,
 end );
 
 InstallMethod( ViewObj,
-               [ IsGradedLeftModulePresentationMorphismForCAP ], 999, # FIX ME FIX ME FIX ME
+               [ IsGradedLeftModulePresentationMorphismForCAP ], 
+               #999, # FIX ME FIX ME FIX ME
   function( graded_left_module_presentation_morphism )
 
     Print( Concatenation( "<", String( graded_left_module_presentation_morphism ), ">" ) );
@@ -251,7 +259,8 @@ InstallMethod( ViewObj,
 end );
 
 InstallMethod( ViewObj,
-               [ IsGradedRightModulePresentationMorphismForCAP ], 999, # FIX ME FIX ME FIX ME
+               [ IsGradedRightModulePresentationMorphismForCAP ], 
+               #999, # FIX ME FIX ME FIX ME
   function( graded_right_module_presentation_morphism )
 
     Print( Concatenation( "<", String( graded_right_module_presentation_morphism ), ">" ) );
