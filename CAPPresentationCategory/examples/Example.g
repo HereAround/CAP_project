@@ -25,16 +25,16 @@ Q4 := CAPCategoryOfProjectiveGradedLeftModulesObject( [ [[1,0],2] ], S );
 #! <A projective graded left module of rank 2>
 m1 := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
       Q1, HomalgMatrix( [["x_1","x_2"]], S ) ,Q2 );
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])
+#! <A morphism in the category of projective graded left modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 m2 := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
       Q2, HomalgMatrix( [[1,0],[0,1]], S ) ,Q3 );
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])
+#! <A morphism in the category of projective graded left modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 m3 := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
       Q4, HomalgMatrix( [["x_1","x_2"], ["x_1","x_2"]], S ) ,Q3 );
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])
+#! <A morphism in the category of projective graded left modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 left_category := CapCategory( Q1 ); 
 #! CAP category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
@@ -61,16 +61,16 @@ P4 := CAPCategoryOfProjectiveGradedRightModulesObject( [ [[1,0],2] ], S );
 #! <A projective graded right module of rank 2>
 n1 := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
       P1, HomalgMatrix( [["x_1"],["x_2"]], S ) ,P2 );
-#! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])
+#! <A morphism in the category of projective graded right modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 n2 := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
       P2, HomalgMatrix( [[1,0],[0,1]], S ) ,P3 );
-#! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])
+#! <A morphism in the category of projective graded right modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 n3 := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
       P4, HomalgMatrix( [["x_1","x_1"], ["x_2","x_2"]], S ) ,P3 );
-#! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])
+#! <A morphism in the category of projective graded right modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 right_category := CapCategory( P1 ); 
 #! CAP category of projective graded right modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
@@ -354,8 +354,8 @@ test_morphism_l := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism(
     source_l, 
     HomalgMatrix( [[ "x_1", "x_2"], [ "x_1", "x_2"], [ "x_1", "x_2"]], S), 
     range_l );
-#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])
+#! <A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 Display( test_morphism_l );
 #! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) with matrix: 
@@ -379,8 +379,8 @@ Display( test_object_l );
 #! (over a graded ring)
 mor1_l := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
           range_l, HomalgMatrix( [[1,0],[0,1]] , S ), Q3 );
-#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+#! <A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor1_l );
 #! A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
@@ -403,8 +403,8 @@ Display( mor1_l_presentation );
 #! (over a graded ring)
 mor2_l := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
           range_l, HomalgMatrix( [[1,0],[0,1]] , S ), Q2 );
-#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+#! <A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor2_l );
 #! A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
@@ -451,8 +451,8 @@ Display( uni_l );
 #! (over a graded ring)
 mor21_l := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
            Q3, HomalgMatrix( [[1,0],[0,1]] , S ), range_l );
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+#! <A morphism in the category of projective graded left modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor21_l );
 #! A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
@@ -477,8 +477,8 @@ Display( mor21_l_presentation );
 #! (over a graded ring)
 mor22_l := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
            Q2, HomalgMatrix( [[1,0],[0,1]] , S ), range_l );
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+#! <A morphism in the category of projective graded left modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor22_l );
 #! A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
@@ -670,8 +670,8 @@ test_morphism_r := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism(
           source_r, 
           HomalgMatrix( [[ "x_1", "x_1", "x_1"], [ "x_2", "x_2", "x_2"]], S), 
           range_r );
-#! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+#! <A morphism in the category of projective graded right modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( test_morphism_r );
 #! A morphism in the category of projective graded right modules over
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
@@ -694,8 +694,8 @@ Display( test_object_r );
 #! (over a graded ring)
 mor1_r := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
           range_r, HomalgMatrix( [[1,0],[0,1]] , S ), P3 );
-#! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+#! <A morphism in the category of projective graded right modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor1_r );
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
@@ -719,8 +719,8 @@ Display( mor1_r_presentation );
 #! (over a graded ring)
 mor2_r := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
           range_r, HomalgMatrix( [[1,0],[0,1]] , S ), P2 );
-#! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+#! <A morphism in the category of projective graded right modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor2_r );
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
@@ -771,8 +771,8 @@ Display( uni_r );
 #! (over a graded ring)
 mor21_r := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
            P3, HomalgMatrix( [[1,0],[0,1]] , S ), range_r );
-#! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+#! <A morphism in the category of projective graded right modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor21_r );
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
@@ -798,8 +798,8 @@ Display( mor21_r_presentation );
 #! (over a graded ring)
 mor22_r := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
            P2, HomalgMatrix( [[1,0],[0,1]] , S ), range_r );
-#! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+#! <A morphism in the category of projective graded right modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( mor22_r );
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
