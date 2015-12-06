@@ -41,16 +41,15 @@ InstallGlobalFunction( NaturalIsomorphismFromIdentityToGradedStandardModule,
     AddNaturalTransformationFunction( natural_transformation,                                          
       function( id_object, object, standard_object )
         local matrix, underlying_morphism;
-            
+
         matrix := HomalgIdentityMatrix( Rank( Range( UnderlyingMorphism( id_object ) ) ), graded_ring );
-                
+
         underlying_morphism := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism(
                                                                                 Range( UnderlyingMorphism( id_object ) ),
                                                                                 matrix,
                                                                                 Range( UnderlyingMorphism( standard_object ) )
                                                                                 );
-          
-        
+
         return CAPPresentationCategoryMorphism( id_object, underlying_morphism, standard_object );
 
     end );

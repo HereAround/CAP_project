@@ -20,38 +20,38 @@
 InstallGlobalFunction( FrobeniusPowerOfMatrix,
   function( matrix, power )
     local new_mapping_matrix, i, j;
-    
+
     # check the input
     if not IsHomalgMatrix( matrix ) then
-    
+
       Error( "The first argument must be a homalg matrix" );
       return;
-    
+
     elif not IsInt( power ) then
-    
+
       Error( "The power must be a non-negative integer" );
       return;
-      
+
     elif power < 0 then
-    
+
       Error( "The power must be a non-negative integer" );
       return;
-    
+
     fi;
-    
+
     # now compute the Frobenius power
     new_mapping_matrix := EntriesOfHomalgMatrixAsListList( matrix );
-    
+
     for i in [ 1 .. Length( new_mapping_matrix ) ] do
-      
+
       for j in [ 1 .. Length( new_mapping_matrix[ i ] ) ] do
-      
+
         new_mapping_matrix[ i ][ j ] := new_mapping_matrix[ i ][ j ]^power;
-      
+
       od;
-      
+
     od;
-    
+
     # and return the result
     return HomalgMatrix( new_mapping_matrix, HomalgRing( matrix ) );
 
@@ -70,14 +70,14 @@ InstallMethod( FrobeniusPower,
       return;
 
     elif power = 1 then
-    
+
       return presentation_object;
-      
+
     else
-    
+
       # determine if we are dealing with left or right presentation
       left :=  IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( UnderlyingMorphism( presentation_object ) );
-    
+
       # look at the following diagram
       # R_A                    0
       #  |                     |
@@ -104,22 +104,21 @@ InstallMethod( FrobeniusPower,
 
       # compute alpha
       if left then
-    
+
         alpha := KernelEmbedding( DeduceMapFromMatrixAndRangeLeft( new_mapping_matrix, range ) );
-    
+
       else
-    
+
         alpha := KernelEmbedding( DeduceMapFromMatrixAndRangeRight( new_mapping_matrix, range ) );
-    
+
       fi;
-            
+
       # and return the corresponding object in the presentation category
       return CAPPresentationCategoryObject( alpha );
 
     fi;
-      
-end );
 
+end );
 
 # install Frobenius power of a module presentation morphism
 InstallMethod( FrobeniusPower,
@@ -128,7 +127,7 @@ InstallMethod( FrobeniusPower,
   function( presentation_morphism, power )
     local left, i1, i1_matrix, i1_matrix_frob_power, frob_power_i1, i2, i2_matrix ,i2_matrix_frob_power, frob_power_i2,
          mu_prime, mu_prime_prime, new_source, new_range;
-    
+
     # look at the following diagram:
     # R_A                              R_B
     #  |                    		|
@@ -157,23 +156,23 @@ InstallMethod( FrobeniusPower,
     # In this diagram i1 and i2 are the respective 'EmbeddingInProjectiveModule', which happen to be the cokernel mappings
     # of alpha and beta. Therefore we can compute the induced mapping mu' between the cokernel modules.
     #
-    # The lower half of the diagram then describes the probenius powers of source and range of mu. We then compute mu''
+    # The lower half of the diagram then describes the Frobenius powers of source and range of mu. We then compute mu''
     # from FrobPower( i1), mu' and FrobPower( i2 ) via a (co)lift.
-    
+
     # are we working with left or right presentations?
     left := IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( UnderlyingMorphism( presentation_morphism ) );
-    
+
     # compute i1, FrobPower( i1 ), i2, FrobPower( i2 )
     i1 := CokernelProjection( UnderlyingMorphism( Source( presentation_morphism ) ) );
     i1_matrix := UnderlyingHomalgMatrix( i1 );
     i1_matrix_frob_power := FrobeniusPowerOfMatrix( i1_matrix, power );
-    
+
     if left then
       frob_power_i1 := DeduceMapFromMatrixAndRangeLeft( i1_matrix_frob_power, Range( i1 ) );
     else
       frob_power_i1 := DeduceMapFromMatrixAndRangeRight( i1_matrix_frob_power, Range( i1 ) );
     fi;
-    
+
     i2 := CokernelProjection( UnderlyingMorphism( Range( presentation_morphism ) ) );
     i2_matrix := UnderlyingHomalgMatrix( i2 );
     i2_matrix_frob_power := FrobeniusPowerOfMatrix( i2_matrix, power );
@@ -183,17 +182,84 @@ InstallMethod( FrobeniusPower,
     else
       frob_power_i2 := DeduceMapFromMatrixAndRangeRight( i2_matrix_frob_power, Range( i2 ) );
     fi;
-    
+
     # compute mu' and mu''
     mu_prime := Colift( i1, PreCompose( UnderlyingMorphism( presentation_morphism ), i2 ) );
     mu_prime_prime := Lift( PreCompose( frob_power_i1, mu_prime ), frob_power_i2 );
-    
+
     # compute kernel embeddings and corresponding objects
     new_source := CAPPresentationCategoryObject( KernelEmbedding( frob_power_i1 ) );
     new_range := CAPPresentationCategoryObject( KernelEmbedding( frob_power_i2 ) );
-    
+
     # and return the final morphism
     return CAPPresentationCategoryMorphism( new_source, mu_prime_prime, new_range );
+
+end );
+
+# install Frobenius power of a module presentation morphism
+InstallMethod( FrobeniusPowerWithGivenSourceAndRangePowers,
+               "Frobenius powers of presentation morphism",
+               [ IsGradedLeftOrRightModulePresentationMorphismForCAP, IsInt,
+                 IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP ],
+  function( presentation_morphism, power, source_power, range_power )
+    local left, i1, frob_power_i1, i2, frob_power_i2, mu_prime, mu_prime_prime;
+
+    # look at the following diagram:
+    # R_A                              R_B
+    #  |                    		|
+    # alpha                	       beta
+    #  |                    		|
+    #  v                    		v
+    #  A -------------- mu -----------> B
+    #  |                    		|
+    #  i1                   	        i2
+    #  |                    		|
+    #  V                    		v
+    # X_A ------------ mu' ----------> X_B
+    #  ^                    		^
+    #  |                    		|
+    # FrobPower( i1 )     	   FrobPower( i2 )
+    #  |                    		|
+    #  A'------------  mu'' ----------> B'
+    #  ^                    		^
+    #  |                    		|
+    # Ker( FrobPower( i1 )) 	Ker( FrobPower( i2 ) )
+    #  |                    		|
+    # R_A'                 		R_B'
+    #
+    # The presentation morphism mu is the input and has alpha, beta as source and range respectively.
+    #
+    # In this diagram i1 and i2 are the respective 'EmbeddingInProjectiveModule', which happen to be the cokernel mappings
+    # of alpha and beta. Therefore we can compute the induced mapping mu' between the cokernel modules.
+    #
+    # The lower half of the diagram then describes the Frobenius powers of source and range of mu. We then compute mu''
+    # from FrobPower( i1), mu' and FrobPower( i2 ) via a (co)lift.
+
+    # are we working with left or right presentations?
+    left := IsGradedLeftModulePresentationMorphismForCAP( presentation_morphism );
+
+    # check for valid input
+    if left <> IsGradedLeftModulePresentationForCAP( source_power ) then
+      Error( "Source power, range power and the given presentation morphism must all be left or all be right" );
+      return;
+    elif left <> IsGradedLeftModulePresentationForCAP( range_power ) then
+      Error( "Source power, range power and the given presentation morphism must all be left or all be right" );
+      return;
+    fi;
+
+    # compute i1, FrobPower( i1 ), i2, FrobPower( i2 )
+    i1 := CokernelProjection( UnderlyingMorphism( Source( presentation_morphism ) ) );
+    frob_power_i1 := CokernelProjection( UnderlyingMorphism( source_power ) );
+
+    i2 := CokernelProjection( UnderlyingMorphism( Range( presentation_morphism ) ) );
+    frob_power_i2 := CokernelProjection( UnderlyingMorphism( range_power ) );
+
+    # compute mu' and mu''
+    mu_prime := Colift( i1, PreCompose( UnderlyingMorphism( presentation_morphism ), i2 ) );
+    mu_prime_prime := Lift( PreCompose( frob_power_i1, mu_prime ), frob_power_i2 );
+
+    # and return the final morphism
+    return CAPPresentationCategoryMorphism( source_power, mu_prime_prime, range_power );
 
 end );
 

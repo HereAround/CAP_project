@@ -34,6 +34,17 @@ DeclareOperation( "FrobeniusPower",
 DeclareOperation( "FrobeniusPower",
                   [ IsGradedLeftOrRightModulePresentationMorphismForCAP, IsInt ] );
 
+#! @Description
+#! The arguments are a CAPPresentationCategoryMorphism $m$, a non-negative integer $p$, the p-th Frobenius power of
+#! the source of $m$, $s^\prime$, and the p-th Frobenius power of the range of $m$, $r^\prime$. This method
+#! then computes the $p$-th Frobenius power of $m$ by use of $s^\prime$ and $r^\prime$.
+#! @Returns a presentation category morphism
+#! @Arguments m, p, s', r'
+DeclareOperation( "FrobeniusPowerWithGivenSourceAndRangePowers",
+                  [ IsGradedLeftOrRightModulePresentationMorphismForCAP, IsInt,
+                    IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP ] );
+
+
 
 ####################################################################################
 ##
