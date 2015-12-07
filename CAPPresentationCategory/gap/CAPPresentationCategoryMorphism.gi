@@ -94,9 +94,13 @@ end );
 ##
 ####################################
 
+# FIXME: The following methods for view, display and string are generic overwritten by CAP 
+# however, as I derive GAP categories thereof (for GradedModulePresentations) and want to have specialised display methods for
+# say GradedIdeals I have no option by to leave out these ranks and "suffer" from this bug thus far.
+
 InstallMethod( String,
               [ IsCAPPresentationCategoryMorphism ], 
-              999, # FIXME FIXME FIXME
+              #999, # FIXME FIXME FIXME
   function( presentation_category_morphism )
     
      return Concatenation( "A morphism of the presentation category over the ", 
@@ -107,7 +111,6 @@ end );
 
 InstallMethod( String,
               [ IsGradedLeftModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
-              999, # FIX ME FIX ME FIX ME
   function( graded_left_module_presentation_morphism )
 
      return Concatenation( "A morphism of graded left module presentations over ",
@@ -119,7 +122,6 @@ end );
 
 InstallMethod( String,
               [ IsGradedRightModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
-              999, # FIXME FIXME FIXME
   function( graded_right_module_presentation_morphism )
 
      return Concatenation( "A morphism of graded right module presentations over ", 
@@ -139,7 +141,7 @@ end );
 
 InstallMethod( Display,
                [ IsCAPPresentationCategoryMorphism ], 
-               999, # FIXME FIXME FIXME
+               #999, # FIXME FIXME FIXME
   function( presentation_category_morphism )
 
      Print( Concatenation( "A morphism of the presentation category over the ", 
@@ -153,7 +155,6 @@ end );
 
 InstallMethod( Display,
                [ IsGradedLeftModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
-               999, # FIXME FIXME FIXME
   function( graded_left_module_presentation_morphism )
 
      Print( Concatenation( "A morphism of graded left module presentations over ",
@@ -168,7 +169,6 @@ end );
 
 InstallMethod( Display,
                [ IsGradedRightModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
-               999, # FIXME FIXME FIXME
   function( graded_right_module_presentation_morphism )
 
      Print( Concatenation( "A morphism of graded right module presentations over ",
@@ -191,7 +191,7 @@ end );
 
 InstallMethod( ViewObj,
                [ IsCAPPresentationCategoryMorphism ], 
-               999, # FIXME FIXME FIXME
+               #999, # FIXME FIXME FIXME
   function( presentation_category_morphism )
 
     Print( Concatenation( "<", String( presentation_category_morphism ), ">" ) );
@@ -200,7 +200,6 @@ end );
 
 InstallMethod( ViewObj,
                [ IsGradedLeftModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
-               999, # FIXME FIXME FIXME
   function( graded_left_module_presentation_morphism )
 
     Print( Concatenation( "<", String( graded_left_module_presentation_morphism ), ">" ) );
@@ -209,7 +208,6 @@ end );
 
 InstallMethod( ViewObj,
                [ IsGradedRightModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
-               999, # FIXME FIXME FIXME
   function( graded_right_module_presentation_morphism )
 
     Print( Concatenation( "<", String( graded_right_module_presentation_morphism ), ">" ) );

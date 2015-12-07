@@ -64,7 +64,7 @@ end );
 
 InstallMethod( String,
               [ IsCAPPresentationCategoryObject ],
-              999, # FIXME FIXME
+              #999, # FIXME FIXME
   function( presentation_category_object )
 
      return Concatenation( "An object of the presentation category over the ", 
@@ -75,9 +75,9 @@ end );
 
 InstallMethod( String,
               [ IsGradedLeftModulePresentationForCAP and IsCAPPresentationCategoryObject ],
-              999, # FIXME FIXME
+              #999, # FIXME FIXME
   function( graded_left_module_presentation )
-    
+
      return Concatenation( "A graded left module presentation over the ring ", 
                            RingName( UnderlyingHomalgGradedRing( 
                                      ZeroObject( UnderlyingMorphism( graded_left_module_presentation ) ) ) )
@@ -87,7 +87,7 @@ end );
 
 InstallMethod( String,
               [ IsGradedRightModulePresentationForCAP and IsCAPPresentationCategoryObject ],
-              999, # FIXME FIXME
+              #999, # FIXME FIXME
   function( graded_right_module_presentation )
 
      return Concatenation( "A graded right module presentation over the ring ", 
@@ -107,7 +107,7 @@ end );
 
 InstallMethod( Display,
                [ IsCAPPresentationCategoryObject ],
-               999, # FIXME FIXME
+               #999, # FIXME FIXME
   function( presentation_category_object )
 
      Print( Concatenation( "An object of the presentation category over the ", 
@@ -121,7 +121,7 @@ end );
 
 InstallMethod( Display,
                [ IsGradedLeftModulePresentationForCAP and IsCAPPresentationCategoryObject ],
-               999, # FIXME FIXME
+               #999, # FIXME FIXME
   function( graded_left_module_presentation )
 
      Print( Concatenation( String( graded_left_module_presentation ), " given by the following morphism: \n" ) );
@@ -132,7 +132,7 @@ end );
 
 InstallMethod( Display,
                [ IsGradedRightModulePresentationForCAP and IsCAPPresentationCategoryObject ],
-               999, # FIXME FIXME
+               #999, # FIXME FIXME
   function( graded_right_module_presentation )
 
      Print( Concatenation( String( graded_right_module_presentation ), " given by the following morphism: \n" ) );
@@ -151,7 +151,7 @@ end );
 
 InstallMethod( ViewObj,
                [ IsCAPPresentationCategoryObject ],
-               999, # FIXME FIXME
+               #999, # FIXME FIXME
   function( presentation_category_object )
 
     Print( Concatenation( "<", String( presentation_category_object ), ">" ) );
@@ -160,7 +160,7 @@ end );
 
 InstallMethod( ViewObj,
                [ IsGradedLeftModulePresentationForCAP and IsCAPPresentationCategoryObject ],
-               999, # FIXME FIXME
+               #999, # FIXME FIXME
   function( graded_left_module_presentation )
 
     Print( Concatenation( "<", String( graded_left_module_presentation ), ">" ) );
@@ -169,7 +169,7 @@ end );
 
 InstallMethod( ViewObj,
                [ IsGradedRightModulePresentationForCAP and IsCAPPresentationCategoryObject ],
-               999, # FIXME FIXME
+               #999, # FIXME FIXME
   function( graded_right_module_presentation )
 
     Print( Concatenation( "<", String( graded_right_module_presentation ), ">" ) );
