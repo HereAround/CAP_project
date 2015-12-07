@@ -37,9 +37,9 @@ DeclareCategory( "IsGradedRightSubmoduleForCAP",
 DeclareCategory( "IsGradedLeftOrRightSubmoduleForCAP",
                  IsGradedLeftOrRightModulePresentationForCAP );
 
+InstallTrueMethod( IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightSubmoduleForCAP );
 InstallTrueMethod( IsGradedLeftOrRightSubmoduleForCAP, IsGradedLeftSubmoduleForCAP );
 InstallTrueMethod( IsGradedLeftOrRightSubmoduleForCAP, IsGradedRightSubmoduleForCAP );
-InstallTrueMethod( IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightSubmoduleForCAP );
 
 
 
@@ -70,9 +70,9 @@ DeclareCategory( "IsGradedRightIdealForCAP",
 DeclareCategory( "IsGradedLeftOrRightIdealForCAP",
                  IsGradedLeftOrRightSubmoduleForCAP );
 
+InstallTrueMethod( IsGradedLeftOrRightSubmoduleForCAP, IsGradedLeftOrRightIdealForCAP );
 InstallTrueMethod( IsGradedLeftOrRightIdealForCAP, IsGradedLeftIdealForCAP );
 InstallTrueMethod( IsGradedLeftOrRightIdealForCAP, IsGradedRightIdealForCAP );
-InstallTrueMethod( IsGradedLeftOrRightSubmoduleForCAP, IsGradedLeftOrRightIdealForCAP );
 
 
 
