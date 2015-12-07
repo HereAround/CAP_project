@@ -8,56 +8,6 @@
 ##
 #############################################################################
 
-DeclareRepresentation( "IsCAPPresentationCategoryObjectRep",
-                       IsCAPPresentationCategoryObject and IsAttributeStoringRep,
-                       [ ] );
-
-BindGlobal( "TheFamilyOfCAPPresentationCategoryObjects",
-            NewFamily( "TheFamilyOfCAPPresentationCategoryObjects" ) );
-
-BindGlobal( "TheTypeOfCAPPresentationCategoryObject",
-            NewType( TheFamilyOfCAPPresentationCategoryObjects,
-                     IsCAPPresentationCategoryObjectRep ) );
-
-
-
-DeclareRepresentation( "IsGradedLeftOrRightModulePresentationForCAPRep",
-                       IsGradedLeftOrRightModulePresentationForCAP and IsAttributeStoringRep,
-                       [ ] );
-
-BindGlobal( "TheFamilyOfGradedLeftOrRightModulePresentationsForCAP",
-            NewFamily( "TheFamilyOfGradedLeftOrRightModulePresentationsForCAP" ) );
-
-BindGlobal( "TheTypeOfGradedLeftOrRightModulePresentationForCAP",
-            NewType( TheFamilyOfGradedLeftOrRightModulePresentationsForCAP,
-                     IsGradedLeftOrRightModulePresentationForCAPRep ) );
-
-
-
-DeclareRepresentation( "IsGradedLeftModulePresentationForCAPRep",
-                       IsGradedLeftModulePresentationForCAP and IsAttributeStoringRep,
-                       [ ] );
-
-BindGlobal( "TheFamilyOfGradedLeftModulePresentationsForCAP",
-            NewFamily( "TheFamilyOfGradedLeftModulePresentationsForCAP" ) );
-
-BindGlobal( "TheTypeOfGradedLeftModulePresentationForCAP",
-            NewType( TheFamilyOfGradedLeftModulePresentationsForCAP,
-                     IsGradedLeftModulePresentationForCAPRep ) );
-
-
-
-DeclareRepresentation( "IsGradedRightModulePresentationForCAPRep",
-                       IsGradedRightModulePresentationForCAP and IsAttributeStoringRep,
-                       [ ] );
-
-BindGlobal( "TheFamilyOfGradedRightModulePresentationsForCAP",
-            NewFamily( "TheFamilyOfGradedRightModulePresentationsForCAP" ) );
-
-BindGlobal( "TheTypeOfGradedRightModulePresentationForCAP",
-            NewType( TheFamilyOfGradedRightModulePresentationsForCAP,
-                     IsGradedRightModulePresentationForCAPRep ) );
-
 
 
 #############################
@@ -82,7 +32,7 @@ InstallMethod( CAPPresentationCategoryObject,
     # now initialise the object
     presentation_category_object := rec( );
 
-    # set its type
+    # set its type (differing special cases, as defined in SpecialGAPCategories.gd)
     if IsCAPCategoryOfProjectiveGradedLeftModulesObject( ZeroObject( projective_category ) ) then
       type := TheTypeOfGradedLeftModulePresentationForCAP;
     elif IsCAPCategoryOfProjectiveGradedRightModulesObject( ZeroObject( projective_category ) ) then
@@ -102,7 +52,9 @@ InstallMethod( CAPPresentationCategoryObject,
     # and return it
     return presentation_category_object;    
 
-end );    
+end );
+
+
 
 ####################################
 ##
@@ -110,15 +62,9 @@ end );
 ##
 ####################################
 
-# FIX ME: These were all set with 999, which caused them to be triggered always
-# i.e. syntax was
-#InstallMethod( String,
-#               [ IsCAPPresentationCategoryObject ], 999, # FIX ME FIX ME FIX ME
-# ...
-# I will now remove this to test things
-
 InstallMethod( String,
               [ IsCAPPresentationCategoryObject ],
+              999, # FIXME FIXME
   function( presentation_category_object )
 
      return Concatenation( "An object of the presentation category over the ", 
@@ -129,6 +75,7 @@ end );
 
 InstallMethod( String,
               [ IsGradedLeftModulePresentationForCAP and IsCAPPresentationCategoryObject ],
+              999, # FIXME FIXME
   function( graded_left_module_presentation )
     
      return Concatenation( "A graded left module presentation over the ring ", 
@@ -140,6 +87,7 @@ end );
 
 InstallMethod( String,
               [ IsGradedRightModulePresentationForCAP and IsCAPPresentationCategoryObject ],
+              999, # FIXME FIXME
   function( graded_right_module_presentation )
 
      return Concatenation( "A graded right module presentation over the ring ", 
@@ -149,21 +97,17 @@ InstallMethod( String,
 
 end );
 
+
+
 ####################################
 ##
 ## Display
 ##
 ####################################
 
-# FIX ME: These were all set with 999, which caused them to be triggered always
-# i.e. syntax was
-#InstallMethod( Display,
-#               [ IsCAPPresentationCategoryObject ], 999, # FIX ME FIX ME FIX ME
-# ...
-# I will now remove this to test things
-
 InstallMethod( Display,
                [ IsCAPPresentationCategoryObject ],
+               999, # FIXME FIXME
   function( presentation_category_object )
 
      Print( Concatenation( "An object of the presentation category over the ", 
@@ -177,6 +121,7 @@ end );
 
 InstallMethod( Display,
                [ IsGradedLeftModulePresentationForCAP and IsCAPPresentationCategoryObject ],
+               999, # FIXME FIXME
   function( graded_left_module_presentation )
 
      Print( Concatenation( String( graded_left_module_presentation ), " given by the following morphism: \n" ) );
@@ -187,6 +132,7 @@ end );
 
 InstallMethod( Display,
                [ IsGradedRightModulePresentationForCAP and IsCAPPresentationCategoryObject ],
+               999, # FIXME FIXME
   function( graded_right_module_presentation )
 
      Print( Concatenation( String( graded_right_module_presentation ), " given by the following morphism: \n" ) );
@@ -195,21 +141,17 @@ InstallMethod( Display,
 
 end );
 
+
+
 ####################################
 ##
 ## ViewObj
 ##
 ####################################
 
-# FIX ME: These were all set with 999, which caused them to be triggered always
-# i.e. syntax was
-#InstallMethod( ViewObj,
-#               [ IsCAPPresentationCategoryObject ], 999, # FIX ME FIX ME FIX ME
-# ...
-# I will now remove this to test things
-
 InstallMethod( ViewObj,
                [ IsCAPPresentationCategoryObject ],
+               999, # FIXME FIXME
   function( presentation_category_object )
 
     Print( Concatenation( "<", String( presentation_category_object ), ">" ) );
@@ -218,6 +160,7 @@ end );
 
 InstallMethod( ViewObj,
                [ IsGradedLeftModulePresentationForCAP and IsCAPPresentationCategoryObject ],
+               999, # FIXME FIXME
   function( graded_left_module_presentation )
 
     Print( Concatenation( "<", String( graded_left_module_presentation ), ">" ) );
@@ -226,11 +169,14 @@ end );
 
 InstallMethod( ViewObj,
                [ IsGradedRightModulePresentationForCAP and IsCAPPresentationCategoryObject ],
+               999, # FIXME FIXME
   function( graded_right_module_presentation )
 
     Print( Concatenation( "<", String( graded_right_module_presentation ), ">" ) );
 
 end );
+
+
 
 #######################################
 ##
@@ -269,13 +215,13 @@ InstallMethodWithCacheFromObject( INTERNAL_HOM_EMBEDDING_IN_TENSOR_PRODUCT,
                            [ IsCAPPresentationCategoryObject, IsCAPPresentationCategoryObject ],     
     function( a, b )
       local projective_category, adual_as_map_source, adual_as_map_range, adual_as_map, final_mapping;
-    
+
       # (1) turn the underlying morphism of adual into a morphism in PresentationCategory
       projective_category := CapCategory( a )!.underlying_projective_category;
-      
+
       adual_as_map_source := CAPPresentationCategoryObject( 
                      ZeroMorphism( ZeroObject( projective_category ), DualOnObjects( Range( UnderlyingMorphism( a ) ) ) ) );
-                                    
+
       adual_as_map_range := CAPPresentationCategoryObject( 
                     ZeroMorphism( ZeroObject( projective_category ), DualOnObjects( Source( UnderlyingMorphism( a ) ) ) ) );
 
@@ -283,11 +229,11 @@ InstallMethodWithCacheFromObject( INTERNAL_HOM_EMBEDDING_IN_TENSOR_PRODUCT,
                                                        DualOnMorphisms( UnderlyingMorphism( a ) ),
                                                        adual_as_map_range
                                                       );
-      
+
       # (2) tensor adual_as_map with the identity morphism of b
       final_mapping := TensorProductOnMorphisms( adual_as_map, IdentityMorphism( b ) );
-      
+
       # (3) return the kernel embedding
       return KernelEmbedding( final_mapping );
-          
+
 end );

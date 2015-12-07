@@ -6,12 +6,12 @@ LoadPackage( "AutoDoc" );
 
 AutoDoc( "CAPPresentationCategory" : scaffold := true, autodoc :=
          rec( files := [ "doc/Intros.autodoc", 
-                         "gap/CAPPresentationCategory.gd", 
+                         "gap/CAPPresentationCategory.gd",
+                         "gap/SpecialGAPCategories.gd",
                          "gap/CAPPresentationCategoryObject.gd",
                          "gap/CAPPresentationCategoryMorphism.gd",
                          "gap/CAPPresentationCategoryFunctors.gd",
                          "gap/Tools.gd",
-                         #"gap/GradedModulePresentationsGAPCategories.gd",
                          "examples/Example.g"
                          ],
              scan_dirs := []

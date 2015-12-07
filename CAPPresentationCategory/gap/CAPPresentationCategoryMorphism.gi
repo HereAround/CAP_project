@@ -8,56 +8,6 @@
 ##
 #############################################################################
 
-DeclareRepresentation( "IsCAPPresentationCategoryMorphismRep",
-                       IsCAPPresentationCategoryMorphism and IsAttributeStoringRep,
-                       [ ] );
-
-BindGlobal( "TheFamilyOfCAPPresentationCategoryMorphisms",
-            NewFamily( "TheFamilyOfCAPPresentationCategoryMorphisms" ) );
-
-BindGlobal( "TheTypeOfCAPPresentationCategoryMorphism",
-            NewType( TheFamilyOfCAPPresentationCategoryMorphisms,
-                     IsCAPPresentationCategoryMorphismRep ) );
-
-
-
-DeclareRepresentation( "IsGradedLeftOrRightModulePresentationMorphismForCAPRep",
-                       IsGradedLeftOrRightModulePresentationMorphismForCAP and IsAttributeStoringRep,
-                       [ ] );
-
-BindGlobal( "TheFamilyOfGradedLeftOrRightModulePresentationMorphismsForCAP",
-            NewFamily( "TheFamilyOfGradedLeftOrRightModulePresentationMorphismsForCAP" ) );
-
-BindGlobal( "TheTypeOfGradedLeftOrRightModulePresentationMorphismForCAP",
-            NewType( TheFamilyOfGradedLeftOrRightModulePresentationMorphismsForCAP,
-                     IsGradedLeftOrRightModulePresentationMorphismForCAPRep ) );
-
-
-
-DeclareRepresentation( "IsGradedLeftModulePresentationMorphismForCAPRep",
-                       IsGradedLeftModulePresentationMorphismForCAP and IsAttributeStoringRep,
-                       [ ] );
-
-BindGlobal( "TheFamilyOfGradedLeftModulePresentationMorphismsForCAP",
-            NewFamily( "TheFamilyOfGradedLeftModulePresentationMorphismsForCAP" ) );
-
-BindGlobal( "TheTypeOfGradedLeftModulePresentationMorphismForCAP",
-            NewType( TheFamilyOfGradedLeftModulePresentationMorphismsForCAP,
-                     IsGradedLeftModulePresentationMorphismForCAPRep ) );
-
-
-
-DeclareRepresentation( "IsGradedRightModulePresentationMorphismForCAPRep",
-                       IsGradedRightModulePresentationMorphismForCAP and IsAttributeStoringRep,
-                       [ ] );
-
-BindGlobal( "TheFamilyOfGradedRightModulePresentationMorphismsForCAP",
-            NewFamily( "TheFamilyOfGradedRightModulePresentationMorphismsForCAP" ) );
-
-BindGlobal( "TheTypeOfGradedRightModulePresentationMorphismForCAP",
-            NewType( TheFamilyOfGradedRightModulePresentationMorphismsForCAP,
-                     IsGradedRightModulePresentationMorphismForCAPRep ) );
-
 
 
 #############################
@@ -69,7 +19,7 @@ BindGlobal( "TheTypeOfGradedRightModulePresentationMorphismForCAP",
 ##
 InstallMethod( CAPPresentationCategoryMorphism,
                [ IsCAPPresentationCategoryObject, IsCapCategoryMorphism, IsCAPPresentationCategoryObject ],
-               
+
   function( source, morphism, range )
     #local category, presentation_morphism;
     local projective_category, presentation_morphism, category, type;
@@ -130,11 +80,12 @@ InstallMethod( CAPPresentationCategoryMorphism,
     # then add it to the corresponding category
     category := CapCategory( source );
     Add( category, presentation_morphism );
-    
+
     # and return the object
     return presentation_morphism;
-    
+
 end );
+
 
 
 ####################################
@@ -145,8 +96,7 @@ end );
 
 InstallMethod( String,
               [ IsCAPPresentationCategoryMorphism ], 
-              #999, # FIX ME FIX ME FIX ME
-
+              999, # FIXME FIXME FIXME
   function( presentation_category_morphism )
     
      return Concatenation( "A morphism of the presentation category over the ", 
@@ -156,9 +106,8 @@ InstallMethod( String,
 end );
 
 InstallMethod( String,
-              [ IsGradedLeftModulePresentationMorphismForCAP ], 
-              #999, # FIX ME FIX ME FIX ME
-
+              [ IsGradedLeftModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
+              999, # FIX ME FIX ME FIX ME
   function( graded_left_module_presentation_morphism )
 
      return Concatenation( "A morphism of graded left module presentations over ",
@@ -169,17 +118,18 @@ InstallMethod( String,
 end );
 
 InstallMethod( String,
-              [ IsGradedRightModulePresentationMorphismForCAP ], 
-              #999, # FIX ME FIX ME FIX ME
-
+              [ IsGradedRightModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
+              999, # FIXME FIXME FIXME
   function( graded_right_module_presentation_morphism )
-    
+
      return Concatenation( "A morphism of graded right module presentations over ", 
                             RingName( UnderlyingHomalgGradedRing( 
                                      ZeroObject( UnderlyingMorphism( graded_right_module_presentation_morphism ) ) ) )
                            );
 
 end );
+
+
 
 ####################################
 ##
@@ -189,23 +139,21 @@ end );
 
 InstallMethod( Display,
                [ IsCAPPresentationCategoryMorphism ], 
-               #999, # FIX ME FIX ME FIX ME
-
+               999, # FIXME FIXME FIXME
   function( presentation_category_morphism )
 
      Print( Concatenation( "A morphism of the presentation category over the ", 
                             Name( CapCategory( UnderlyingMorphism( presentation_category_morphism ) ) ),
                             ". Presentation: \n"
                             ) );
-  
+
      Display( UnderlyingMorphism( presentation_category_morphism ) );
 
 end );
 
 InstallMethod( Display,
-               [ IsGradedLeftModulePresentationMorphismForCAP ], 
-               #999, # FIX ME FIX ME FIX ME
-
+               [ IsGradedLeftModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
+               999, # FIXME FIXME FIXME
   function( graded_left_module_presentation_morphism )
 
      Print( Concatenation( "A morphism of graded left module presentations over ",
@@ -219,9 +167,8 @@ InstallMethod( Display,
 end );
 
 InstallMethod( Display,
-               [ IsGradedRightModulePresentationMorphismForCAP ], 
-               #999, # FIX ME FIX ME FIX ME
-
+               [ IsGradedRightModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
+               999, # FIXME FIXME FIXME
   function( graded_right_module_presentation_morphism )
 
      Print( Concatenation( "A morphism of graded right module presentations over ",
@@ -234,6 +181,8 @@ InstallMethod( Display,
 
 end );
 
+
+
 ####################################
 ##
 ## ViewObj
@@ -242,7 +191,7 @@ end );
 
 InstallMethod( ViewObj,
                [ IsCAPPresentationCategoryMorphism ], 
-               #999, # FIX ME FIX ME FIX ME
+               999, # FIXME FIXME FIXME
   function( presentation_category_morphism )
 
     Print( Concatenation( "<", String( presentation_category_morphism ), ">" ) );
@@ -250,8 +199,8 @@ InstallMethod( ViewObj,
 end );
 
 InstallMethod( ViewObj,
-               [ IsGradedLeftModulePresentationMorphismForCAP ], 
-               #999, # FIX ME FIX ME FIX ME
+               [ IsGradedLeftModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
+               999, # FIXME FIXME FIXME
   function( graded_left_module_presentation_morphism )
 
     Print( Concatenation( "<", String( graded_left_module_presentation_morphism ), ">" ) );
@@ -259,13 +208,15 @@ InstallMethod( ViewObj,
 end );
 
 InstallMethod( ViewObj,
-               [ IsGradedRightModulePresentationMorphismForCAP ], 
-               #999, # FIX ME FIX ME FIX ME
+               [ IsGradedRightModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
+               999, # FIXME FIXME FIXME
   function( graded_right_module_presentation_morphism )
 
     Print( Concatenation( "<", String( graded_right_module_presentation_morphism ), ">" ) );
 
 end );
+
+
 
 #######################################
 ##
@@ -290,15 +241,15 @@ InstallMethod( FullInformation,
     Display( Range( UnderlyingMorphism( Source( presentation_category_morphism ) ) ) );
     Print( "\n" );
     Print( "--------------------------------------------------------------------------------- \n \n" );
-    
+
     # Display the mapping matrix
     Print( "Mapping matrix: \n" );
     Print( "--------------- \n" );
     Display( UnderlyingMorphism( presentation_category_morphism ) );
     Print( "\n" );
-    
+
     Print( "--------------------------------------------------------------------------------- \n \n" );
-    
+
     # Display the range"
     Print( "Range: \n" );
     Print( "------ \n" );
@@ -309,8 +260,9 @@ InstallMethod( FullInformation,
     Display( Range( UnderlyingMorphism( Range( presentation_category_morphism ) ) ) );
     Print( "\n" );
     Print( "================================================================================= \n \n" );
-    
+
 end );
+
 
 
 #######################################################################################################
