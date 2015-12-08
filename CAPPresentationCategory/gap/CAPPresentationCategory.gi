@@ -218,27 +218,27 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Returns true or false
     # @Arguments morphism1, morphism2
     AddIsCongruentForMorphisms( category,
-                            
+
       function( morphism1, morphism2 )
         local lift, difference;
-        
+
         difference := AdditionForMorphisms( AdditiveInverseForMorphisms( UnderlyingMorphism( morphism2 ) ), 
                                                                                          UnderlyingMorphism( morphism1 ) );
         lift := Lift( difference, UnderlyingMorphism( Range( morphism1 ) ) );
-        
+
         # if the lift exists, then the morphisms are congruent, so
         if lift = fail then
-        
+
           return false;
-          
+
         else
-        
+
           return true;
-          
+
         fi;
-        
+
     end );
-    
+
     # @Description
     # This method precomposes the morphims <A>left_morphism</A>: $s \to a$ and <A>right_morphism</A> $a \to r$ to a morphism $s \to r$.
     # To this end the precompose-method of the underlying Proj-category is used.
@@ -478,10 +478,10 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Returns a morphism
     # @Arguments diagram, sink, coproduct
     AddUniversalMorphismFromDirectSumWithGivenDirectSum( category,
-      function( diagram, sink, coproduct )                                                         
+      function( diagram, sink, coproduct )
 
         local underlying_sink, diagram_sources, underlying_morphism;
-        
+
         # construct the morphism of the test_object_range into direct_sum_range via universal property
         underlying_sink := List( [ 1 .. Length( sink ) ], i -> UnderlyingMorphism( sink[ i ] ) );
         diagram_sources := List( [ 1 .. Length( sink ) ], i -> Source( UnderlyingMorphism( sink[ i ] ) ) );
@@ -489,11 +489,11 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
 
         # and construct the morphism in the presentation category
          return CAPPresentationCategoryMorphism( coproduct, underlying_morphism, Range( sink[ 1 ] ) ); 
-              
+
     end );
 
 
-    
+
     ######################################################################
     #
     # @Section Add lift and colift
@@ -513,11 +513,11 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         local lift;
 
         lift := Lift( UnderlyingMorphism( morphism1 ), UnderlyingMorphism( morphism2 ) );
-        
+
         return CAPPresentationCategoryMorphism( Source( morphism1 ), lift, Source( morphism2 ) );
-        
+
     end );
-    
+
     # @Description
     # This method requires a morphism <A>morphism1</A> $a \to c$ and a morphism <A>morphism2</A> $a \to b$. The result of 
     # Colift( morphism1, morphism2 ) is then the colift morphism $c \to b$.
@@ -595,14 +595,14 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         
         kernel_embedding := ProjectionInFactorOfFiberProduct( [ UnderlyingMorphism( morphism ), 
                                                                 UnderlyingMorphism( Range( morphism ) ) ], 1 );
-        
+
         underlying_morphism_of_kernel := ProjectionInFactorOfFiberProduct( [ kernel_embedding, 
                                                                            UnderlyingMorphism( Source( morphism ) ) ], 1 );
-            
+
         kernel_object := CAPPresentationCategoryObject( underlying_morphism_of_kernel );
-        
+
         return CAPPresentationCategoryMorphism( kernel_object, kernel_embedding, Source( morphism ) );
-        
+
     end );
 
     # @Description
@@ -648,13 +648,13 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         # fix sink and diagram
         sink := [ UnderlyingMorphism( morphism ), UnderlyingMorphism( Range( morphism ) ) ];
         diagram := [ Range( UnderlyingMorphism( Source( morphism ) ) ), 
-                                                                       Source( UnderlyingMorphism( Range( morphism ) ) ) ];        
+                                                                       Source( UnderlyingMorphism( Range( morphism ) ) ) ]; 
         # and compute the universal morphism of the coproduct
         universal_morphism := UniversalMorphismFromDirectSum( diagram, sink );
 
         # and then  turn this morphism into an object of the presentation category - the cokernel
         cokernel_object := CAPPresentationCategoryObject( universal_morphism );
-        
+
         # now return the cokernel projection
         return CAPPresentationCategoryMorphism( Range( morphism ), 
                                                 IdentityMorphism( Range( UnderlyingMorphism( Range( morphism ) ) ) ),
