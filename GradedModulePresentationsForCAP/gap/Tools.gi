@@ -282,7 +282,7 @@ InstallMethod( Saturate,
     ideal_embedding := EmbeddingInSuperObjectForCAP( ideal );
     homalg_graded_ring := HomalgGradedRing( ideal );
     if not IsIdenticalObj( UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ), homalg_graded_ring ) then
-    
+
       Error( "The module and ideal must be defined over the same homalg_graded_ring" );
       return;
 
@@ -295,7 +295,7 @@ InstallMethod( Saturate,
     module_saturated := module;
     buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
     buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsLeft( homalg_graded_ring ), buffer_mapping );
-    
+
     while not IsIsomorphism( buffer_mapping ) do
 
       module_saturated := InternalHomOnObjects( homalg_graded_ring_module ,
@@ -309,6 +309,15 @@ InstallMethod( Saturate,
     
     # finally return the satured module
     return module_saturated;
+
+end );
+
+InstallMethod( Saturate,
+               "Saturate the first object with respect to the second",
+               [ IsGradedLeftSubmoduleForCAP, IsGradedLeftIdealForCAP ],
+  function( submodule, ideal )
+
+    return Saturate( PresentationForCAP( submodule ), ideal );
 
 end );
 
@@ -331,12 +340,12 @@ InstallMethod( Saturate,
 
     # save the image of the ideal_embedding
     homalg_graded_ring_module := Range( ideal_embedding );
-    
+
     # now compute the saturation
     module_saturated := module;
     buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
     buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsRight( homalg_graded_ring ), buffer_mapping );
-    
+
     while not IsIsomorphism( buffer_mapping ) do
 
       module_saturated := InternalHomOnObjects( homalg_graded_ring_module ,
@@ -347,9 +356,18 @@ InstallMethod( Saturate,
       buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsRight( homalg_graded_ring ), buffer_mapping );
 
     od;
-    
+
     # finally return the satured module
     return module_saturated;
+
+end );
+
+InstallMethod( Saturate,
+               "Saturate the first object with respect to the second",
+               [ IsGradedRightSubmoduleForCAP, IsGradedRightIdealForCAP ],
+  function( submodule, ideal )
+
+    return Saturate( PresentationForCAP( submodule ), ideal );
 
 end );
 
@@ -373,17 +391,17 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
 
     # save the image of the ideal_embedding
     homalg_graded_ring_module := Range( ideal_embedding );
-    
+
     # now compute the saturation    
     embedding := IdentityMorphism( module );
     module_saturated := Range( embedding );
-    
+
     buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
     #buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsLeft( homalg_graded_ring ), buffer_mapping );
     buffer_mapping := ApplyFunctor( FunctorGradedStandardModuleLeft( homalg_graded_ring ), buffer_mapping );
-    
+
     while not IsIsomorphism( buffer_mapping ) do
-    
+
       embedding := PreCompose( embedding, 
                                InternalHomOnMorphisms( IdentityMorphism( homalg_graded_ring_module ), buffer_mapping ) );
 
@@ -392,11 +410,20 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
       buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
       #buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsLeft( homalg_graded_ring ), buffer_mapping );
       buffer_mapping := ApplyFunctor( FunctorGradedStandardModuleLeft( homalg_graded_ring ), buffer_mapping );        
-    
+
     od;
-    
+
     # finally return the satured module
     return embedding;
+
+end );
+
+InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
+               "Compute embedding of first object into its saturation with respect to the second object",
+               [ IsGradedLeftSubmoduleForCAP, IsGradedLeftIdealForCAP ],
+  function( submodule, ideal )
+
+    return EmbeddingInSaturationOfGradedModulePresentation( PresentationForCAP( submodule ), ideal );
 
 end );
 
@@ -430,7 +457,7 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
     buffer_mapping := ApplyFunctor( FunctorGradedStandardModuleLeft( homalg_graded_ring ), buffer_mapping );
 
     while not IsIsomorphism( buffer_mapping ) do
-    
+
       embedding := PreCompose( embedding, 
                                InternalHomOnMorphisms( IdentityMorphism( homalg_graded_ring_module ), buffer_mapping ) );
 
@@ -439,11 +466,20 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
       buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
       #buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsLeft( homalg_graded_ring ), buffer_mapping );
       buffer_mapping := ApplyFunctor( FunctorGradedStandardModuleLeft( homalg_graded_ring ), buffer_mapping );        
-    
+
     od;
-    
+
     # finally return the satured module
     return embedding;
+
+end );
+
+InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
+               "Compute embedding of first object into its saturation with respect to the second object",
+               [ IsGradedRightSubmoduleForCAP, IsGradedRightIdealForCAP ],
+  function( submodule, ideal )
+
+    return EmbeddingInSaturationOfGradedModulePresentation( PresentationForCAP( submodule ), ideal );
 
 end );
 
@@ -547,11 +583,8 @@ InstallMethod( MinimalFreeResolutionForCAP,
 
     od;
 
-    #return morphisms;
-    # and return the collection of morphisms
-    # FIX ME: Complex or cocomplex?
+    # and return the corresponding complex
     return ComplexFromMorphismList( morphisms );
-    #return CocomplexFromMorphismList( morphisms );
 
 end );
 
@@ -569,7 +602,7 @@ end );
 
 ####################################################################################
 ##
-#! @Section Full information about (co)complex
+#! @Section Full information about complex
 ##
 ####################################################################################
 
@@ -644,6 +677,13 @@ InstallMethod( BettiTableForCAP,
 
     # and use this mapping as the first morphisms is the minimal free resolution
     Add( betti_table, - UnzipDegreeList( Range( buffer_mapping ) ) );
+    
+    # check if we are already done
+    if IsZeroForObjects( Source( buffer_mapping ) ) then
+      return betti_table;
+    fi;
+    
+    # otherwise add the source and compute the next mapping
     Add( betti_table, - UnzipDegreeList( Source( buffer_mapping ) ) );
 
     # now compute "reduced" kernels
