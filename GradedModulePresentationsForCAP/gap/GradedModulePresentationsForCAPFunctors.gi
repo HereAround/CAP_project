@@ -27,24 +27,22 @@
 # module1' --- M' ---> module2'
 # U,T are ment to be invertible. Then the following method computes [ M', T, T^-1 ]
 
-# FIX ME FIX ME: Why is T homogeneous? Because it is invertible?
-
+# FIXME FIXME: Why is T homogeneous?
 InstallMethod( LessGradedGeneratorsTransformationTriple,
                [ IsHomalgMatrix ],
-               
   function( matrix )
     local transformation, transformation_inverse, smaller_matrix;
-    
+
     # initialise the transformation matrices T, T^{-1}
     transformation := HomalgVoidMatrix( HomalgRing( matrix ) );    
     transformation_inverse := HomalgVoidMatrix( HomalgRing( matrix ) );
-    
+
     # compute M' and thereby set values for T and T^{-1}
     smaller_matrix := SimplerEquivalentMatrix( matrix, transformation, transformation_inverse, "", "" );
-    
+
     # return the triple of desired information
     return [ smaller_matrix, transformation, transformation_inverse ];
-    
+
 end );
 
 # this function computes the functor 'lessGenerators' for both left and right presentations
@@ -65,12 +63,13 @@ InstallGlobalFunction( FunctorLessGradedGenerators,
     # and add the functor operation on objects
     AddObjectFunction( functor,
       function( object )
-        local transformation, T, Mprime, range_prime, underlying_map;
+        local transformation, TI, range_prime, Mprime, underlying_map;
+             #Mprime, range_prime, underlying_map;
 
         # compute the transformation
         transformation := LessGradedGeneratorsTransformationTriple( UnderlyingHomalgMatrix( UnderlyingMorphism( object ) ) );
-        T := transformation[ 2 ];
-        Mprime := transformation[ 1 ];
+        TI := transformation[ 3 ];
+        #Mprime := transformation[ 1 ];
 
         # recall that we look at the following diagram
         # Source( object) --- MappingMatrix( object ) ---> Range( object )
@@ -82,11 +81,17 @@ InstallGlobalFunction( FunctorLessGradedGenerators,
 
         # now deduce the bottom line
         if left = true then
-          range_prime := Range( DeduceMapFromMatrixAndSourceLeft( T, Range( UnderlyingMorphism( object ) ) ) );
-          underlying_map := DeduceMapFromMatrixAndRangeLeft( Mprime, range_prime );
+          range_prime := Source( DeduceMapFromMatrixAndRangeLeft( TI, Range( UnderlyingMorphism( object ) ) ) );
+          Mprime := ReducedSyzygiesOfRows( TI, UnderlyingHomalgMatrix( UnderlyingMorphism( object ) ) );
+          underlying_map := DeduceMapFromMatrixAndRangeLeft( Mprime, range_prime );           
+          #range_prime := Range( DeduceMapFromMatrixAndSourceLeft( T, Range( UnderlyingMorphism( object ) ) ) );
+          #underlying_map := DeduceMapFromMatrixAndRangeLeft( Mprime, range_prime );
         else
-          range_prime := Range( DeduceMapFromMatrixAndSourceRight( T, Range( UnderlyingMorphism( object ) ) ) );
-          underlying_map := DeduceMapFromMatrixAndRangeRight( Mprime, range_prime );
+          range_prime := Source( DeduceMapFromMatrixAndRangeRight( TI, Range( UnderlyingMorphism( object ) ) ) );
+          Mprime := ReducedSyzygiesOfColumns( TI, UnderlyingHomalgMatrix( UnderlyingMorphism( object ) ) );
+          underlying_map := DeduceMapFromMatrixAndRangeRight( Mprime, range_prime ); 
+          #range_prime := Range( DeduceMapFromMatrixAndSourceRight( T, Range( UnderlyingMorphism( object ) ) ) );
+          #underlying_map := DeduceMapFromMatrixAndRangeRight( Mprime, range_prime );
         fi;
 
         # and return the new object
@@ -306,7 +311,7 @@ InstallGlobalFunction( TruncationFunctorToSemigroups,
            EmbeddingOfTruncationOfProjectiveGradedModuleWithGivenTruncationObject(
                                  Range( UnderlyingMorphism( Source( morphism ) ) ), Range( UnderlyingMorphism( new_source ) ) ),
            UnderlyingMorphism( morphism ),
-           ProjectionOntoTruncationOfProjectiveGradedModuleWithGivenTruncationObject( 
+           ProjectionOntoTruncationOfProjectiveGradedModuleWithGivenTruncationObject(
                                    Range( UnderlyingMorphism( Range( morphism ) ) ), Range( UnderlyingMorphism( new_range ) ) )
            ] );
 
@@ -377,7 +382,7 @@ InstallGlobalFunction( TruncationFunctorToCones,
 
     # now define the functor operation on the morphisms
     # FIXME:
-    # why is the returned morhpism always well-defined
+    # why is the returned morphism always well-defined
     AddMorphismFunction( functor,
       function( new_source, morphism, new_range )
         local underlying_morphism;
