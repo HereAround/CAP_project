@@ -133,7 +133,6 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Returns true or false
     # @Arguments morphism
     AddIsWellDefinedForMorphisms( category,
-      
       function( morphism )
         local lift;
         
@@ -164,7 +163,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         
         fi;
         
-        # otherwise all checks have been passed, so return true        
+        # otherwise all checks have been passed, so return true
         return true;
         
     end );
@@ -505,16 +504,41 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # Lift( morphism1, morphism2 ) is then the lift morphism $a \to b$.
     # @Returns a morphism
     # @Arguments morphism1, morphism2
-    
-    # FIX ME FIX ME FIX ME: What if the lift found by Proj does not allow for a source-lift? Does this imply that every lift that
-    # Proj could come up with, cannot be lifted? I don't know yet.
     AddLift( category,
       function( morphism1, morphism2 )
-        local lift;
+        local A, R_C, psi, rho_C, psi_tilde, projection, lift;
 
-        lift := Lift( UnderlyingMorphism( morphism1 ), UnderlyingMorphism( morphism2 ) );
+        # look at the following diagram for morphism 2:
+        # R_A                R_C
+        #  |                  |
+        #  |                  |rho_C
+        #  v                  v
+        #  A ----- psi -----> C
+        #
+        # from this we induce the following map
+        #
+        # R_A \oplus R_C                            R_C
+        #       |                                    |
+        #       |                                    |rho_C
+        #       v                                    v
+        #  A \oplus R_C ------- \tilde{\psi} ------> C
+        #
+        # then we compute the lift by use of \underlying_morphism( morphism1 ) and \tilde{psi}
+        
+        # (1) construction of \tilde{\psi}
+        A := Range( UnderlyingMorphism( Source( morphism2 ) ) );
+        R_C := Source( UnderlyingMorphism( Range( morphism2 ) ) );
+        psi := UnderlyingMorphism( morphism2 );
+        rho_C := UnderlyingMorphism( Range( morphism2 ) );
+        psi_tilde := UniversalMorphismFromDirectSum( [ psi, rho_C ] );
+        lift := Lift( UnderlyingMorphism( morphism1 ), psi_tilde );
+        projection := ProjectionInFactorOfDirectSum( [ A, R_C ], 1 );
 
-        return CAPPresentationCategoryMorphism( Source( morphism1 ), lift, Source( morphism2 ) );
+        # (2) construction of the lift
+        return CAPPresentationCategoryMorphism( Source( morphism1 ), 
+                                                PreCompose( lift, projection ), 
+                                                Source( morphism2 ) 
+                                               );
 
     end );
 
