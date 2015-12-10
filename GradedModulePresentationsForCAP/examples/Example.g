@@ -966,3 +966,63 @@ FullInformation( ApplyFunctor( frob_functor_right,
 #! =================================================================================
 
 #! @EndExample
+
+
+
+
+#! @Section Minimal free resolutions and Betti tables
+
+#! @Example
+res1 := MinimalFreeResolutionForCAP( IdealLeft );
+#! <An object in Complex category of CAP category of projective graded left modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+FullInformation( res1 );
+#! [ [ [ 1, 1 ], 4 ] ]
+#!  ^ 
+#!  | 
+#! -x_4,x_3, 0,   0,  
+#! 0,   0,   -x_4,x_3,
+#! -x_2,0,   x_1, 0,  
+#! 0,   -x_2,0,   x_1 
+#! (over a graded ring)
+#!  | 
+#! [ [ [ 1, 2 ], 2 ], [ [ 2, 1 ], 2 ] ]
+#!  ^ 
+#!  | 
+#! -x_2,x_1,x_4,-x_3
+#! (over a graded ring)
+#!  | 
+#! [ [ [ 2, 2 ], 1 ] ]
+#! 
+betti1 := BettiTableForCAP( IdealLeft );
+#! [ [ ( -1, -1 ), ( -1, -1 ), ( -1, -1 ), ( -1, -1 ) ], [ ( -1, -2 ), ( -1, -2 ), 
+#! ( -2, -1 ), ( -2, -1 ) ], [ ( -2, -2 ) ] ]
+res2 := MinimalFreeResolutionForCAP( IdealRight );
+#! <An object in Complex category of CAP category of projective graded right modules over 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
+FullInformation( res2 );
+#! [ [ [ 1, 1 ], 4 ] ]
+#!  ^ 
+#!  | 
+#! -x_4,0,   -x_2,0,   
+#! x_3, 0,   0,   -x_2,
+#! 0,   -x_4,x_1, 0,   
+#! 0,   x_3, 0,   x_1  
+#! (over a graded ring)
+#!  | 
+#! [ [ [ 1, 2 ], 2 ], [ [ 2, 1 ], 2 ] ]
+#!  ^ 
+#!  | 
+#! -x_2,
+#! x_1, 
+#! x_4, 
+#! -x_3 
+#! (over a graded ring)
+#!  | 
+#! [ [ [ 2, 2 ], 1 ] ]
+#! 
+betti2 := BettiTableForCAP( IdealRight );
+#! [ [ ( -1, -1 ), ( -1, -1 ), ( -1, -1 ), ( -1, -1 ) ], [ ( -1, -2 ), ( -1, -2 ), 
+#! ( -2, -1 ), ( -2, -1 ) ], [ ( -2, -2 ) ] ]
+
+#! @EndExample

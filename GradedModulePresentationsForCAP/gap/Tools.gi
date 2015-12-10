@@ -492,33 +492,32 @@ end );
 ####################################################################################
 
 # compute a minimal free resolution of a graded module presentation
-InstallMethod( MinimalFreeResolution,
+InstallMethod( MinimalFreeResolutionForCAP,
                "for a CAPPresentationCategoryObject",
                [ IsGradedLeftOrRightModulePresentationForCAP ],
   function( presentation_object )
     local proj_category, left, morphisms, new_mapping_matrix, buffer_mapping, kernel_matrix, i, pos;
-    
+
     # gather necessary information
     proj_category := CapCategory( UnderlyingMorphism( presentation_object ) );
     left := IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( UnderlyingMorphism( presentation_object ) );
-    
+
     # initialise morphisms
     morphisms := [];
-    
-    # use a presentation that does not contain units -> minimal (!) resolution          
 
+    # use a presentation that does not contain units -> minimal (!) resolution
     if left then
       new_mapping_matrix := ReducedBasisOfRowModule( UnderlyingHomalgMatrix( 
                                                                           UnderlyingMorphism( presentation_object ) ) );
       buffer_mapping := DeduceMapFromMatrixAndRangeLeft( new_mapping_matrix, 
                                                                     Range( UnderlyingMorphism( presentation_object ) ) );
     else
-      new_mapping_matrix := ReducedBasisOfColumnModule( UnderlyingHomalgMatrix( 
-                                                                           UnderlyingMorphism( presentation_object ) ) );      
+      new_mapping_matrix := ReducedBasisOfColumnModule( UnderlyingHomalgMatrix(
+                                                                           UnderlyingMorphism( presentation_object ) ) );
       buffer_mapping := DeduceMapFromMatrixAndRangeRight( new_mapping_matrix, 
                                                                     Range( UnderlyingMorphism( presentation_object ) ) );
     fi;
-          
+
     # and use this mapping as the first morphisms is the minimal free resolution
     Add( morphisms, buffer_mapping );
 
@@ -548,20 +547,21 @@ InstallMethod( MinimalFreeResolution,
 
     od;
 
+    #return morphisms;
     # and return the collection of morphisms
     # FIX ME: Complex or cocomplex?
-    # return ComplexFromMorphismList( morphisms );
-    return CocomplexFromMorphismList( morphisms );
+    return ComplexFromMorphismList( morphisms );
+    #return CocomplexFromMorphismList( morphisms );
 
 end );
 
 # compute a minimal free resolution of a graded module presentation
-InstallMethod( MinimalFreeResolution,
+InstallMethod( MinimalFreeResolutionForCAP,
                "for a CAPPresentationCategoryObject",
                [ IsGradedLeftOrRightSubmoduleForCAP and IsGradedLeftOrRightModulePresentationForCAP ],
   function( submodule_for_CAP )
 
-    return MinimalFreeResolution( PresentationForCAP( submodule_for_CAP ) );
+    return MinimalFreeResolutionForCAP( PresentationForCAP( submodule_for_CAP ) );
 
 end );
 
@@ -574,34 +574,114 @@ end );
 ####################################################################################
 
 # compute a minimal free resolution of a graded module presentation
-#InstallMethod( FullInformation,
-#               "for a complex",
-#               [ IsCapCocomplex ],
-#  function( cocomplex )
-#    local differential_function, test_object, pos;
-#    
-#    # extract the differentials
-#    differential_function := UnderlyingZFunctorCell( cocomplex )!.differential_func;
-#
+InstallMethod( FullInformation,
+               "for a complex",
+               [ IsCapComplex ],
+  function( cocomplex )
+    local differential_function, pos;
+
+    # extract the differentials
+    differential_function := UnderlyingZFunctorCell( cocomplex )!.differential_func;
+
     # start to print information
-#    pos := 0;
-    #test_object := Source( differential_function( pos ) );
+    pos := -1;
     
-#    while not IsZeroForObjects( Source( differential_function( pos ) ) ) do
+    while not IsZeroForObjects( Source( differential_function( pos ) ) ) do
     
       # print information
-#      Print( String( DegreeList( Source( differential_function( pos ) ) ) ) );
-#      Print( "\n \n" );
-#      Display( UnderlyingHomalgMatrix( differential_function( pos ) ) );
-#      Print( "\n" );
+      Print( String( DegreeList( Range( differential_function( pos ) ) ) ) );
+      Print( "\n" );
+      Print( " ^ \n" );
+      Print( " | \n" );
+      Display( UnderlyingHomalgMatrix( differential_function( pos ) ) );
+      Print( " | \n" );
       
       # increment
-#      pos := pos + 1;
-      #test_object := Source( differential_function( pos ) );
+      pos := pos - 1;
     
-#    od;
+    od;
     
-#    Print( String( DegreeList( Range( differential_function( pos ) ) ) ) );
-#    Print( "\n \n" );
-    
-#end );
+    Print( String( DegreeList( Range( differential_function( pos ) ) ) ) );
+    Print( "\n \n" );
+
+end );
+
+
+
+####################################################################################
+##
+#! @Section Betti tables
+##
+####################################################################################
+
+# compute a minimal free resolution of a graded module presentation
+InstallMethod( BettiTableForCAP,
+               "for a CAPPresentationCategoryObject",
+               [ IsGradedLeftOrRightModulePresentationForCAP ],
+  function( presentation_object )
+    local proj_category, left, betti_table, new_mapping_matrix, buffer_mapping, kernel_matrix, i, pos;
+
+    # gather necessary information
+    proj_category := CapCategory( UnderlyingMorphism( presentation_object ) );
+    left := IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( UnderlyingMorphism( presentation_object ) );
+
+    # initialise morphisms
+    betti_table := [];
+
+    # use a presentation that does not contain units -> minimal (!) resolution          
+
+    if left then
+      new_mapping_matrix := ReducedBasisOfRowModule( UnderlyingHomalgMatrix( 
+                                                                          UnderlyingMorphism( presentation_object ) ) );
+      buffer_mapping := DeduceMapFromMatrixAndRangeLeft( new_mapping_matrix, 
+                                                                    Range( UnderlyingMorphism( presentation_object ) ) );
+    else
+      new_mapping_matrix := ReducedBasisOfColumnModule( UnderlyingHomalgMatrix( 
+                                                                           UnderlyingMorphism( presentation_object ) ) );      
+      buffer_mapping := DeduceMapFromMatrixAndRangeRight( new_mapping_matrix, 
+                                                                    Range( UnderlyingMorphism( presentation_object ) ) );
+    fi;
+
+    # and use this mapping as the first morphisms is the minimal free resolution
+    Add( betti_table, - UnzipDegreeList( Range( buffer_mapping ) ) );
+    Add( betti_table, - UnzipDegreeList( Source( buffer_mapping ) ) );
+
+    # now compute "reduced" kernels
+    if left then
+      kernel_matrix := ReducedSyzygiesOfRows( UnderlyingHomalgMatrix( buffer_mapping ) );
+      buffer_mapping := DeduceMapFromMatrixAndRangeLeft( kernel_matrix, Source( buffer_mapping ) );
+    else
+      kernel_matrix := ReducedSyzygiesOfColumns( UnderlyingHomalgMatrix( buffer_mapping ) );
+      buffer_mapping := DeduceMapFromMatrixAndRangeRight( kernel_matrix, Source( buffer_mapping ) );
+    fi;
+
+    # as long as the kernel is non-zero
+    while not IsZeroForObjects( Source( buffer_mapping ) ) do
+
+      # add the corresponding kernel embedding
+      Add( betti_table, - UnzipDegreeList( Source( buffer_mapping ) ) );
+
+      # and compute the next kernel_embedding
+      if left then
+        kernel_matrix := ReducedSyzygiesOfRows( UnderlyingHomalgMatrix( buffer_mapping ) );
+        buffer_mapping := DeduceMapFromMatrixAndRangeLeft( kernel_matrix, Source( buffer_mapping ) );
+      else
+        kernel_matrix := ReducedSyzygiesOfColumns( UnderlyingHomalgMatrix( buffer_mapping ) );
+        buffer_mapping := DeduceMapFromMatrixAndRangeRight( kernel_matrix, Source( buffer_mapping ) );
+      fi;
+
+    od;
+
+    # and return the Betti table
+    return betti_table;
+
+end );
+
+InstallMethod( BettiTableForCAP,
+               "for a graded submodule",
+               [ IsGradedLeftOrRightSubmoduleForCAP ],
+  function( submodule )
+  
+    return BettiTableForCAP( PresentationForCAP( submodule ) );
+
+end );
