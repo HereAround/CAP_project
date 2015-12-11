@@ -496,17 +496,17 @@ InstallGlobalFunction( INSTALL_FUNCTIONS_FOR_MATRIX_CATEGORY,
       function( mor1, mor2 )
         local left_divide;
         
-        left_divide := LeftDivide( UnderlyingMatrix( mor2 ), UnderlyingMatrix( mor1 ) );
+        left_divide := LeftDivide( UnderlyingMatrix( mor1 ), UnderlyingMatrix( mor2 ) );
         
         if left_divide = fail then
-          
+        
           return fail;
-          
+        
         fi;
         
-        return VectorSpaceMorphism( Range( mor2 ),
+        return VectorSpaceMorphism( Range( mor1 ),
                                     left_divide,
-                                    Range( mor1 ) );
+                                    Range( mor2 ) );
         
     end );
         

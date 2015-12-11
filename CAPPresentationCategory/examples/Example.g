@@ -193,6 +193,57 @@ Display( SourceLiftMorphism( presentation_morphisml ) );
 #! with matrix: 
 #! 1,0
 #! (over a graded ring)
+FullInformation( ColiftAlongEpimorphism( presentation_morphisml,
+                                         presentation_morphisml ) );
+#!
+#! ================================================================================= 
+#!
+#! Source: 
+#! ------- 
+#! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
+#! [ [ ( 1, 0 ), 2 ] ]
+#!
+#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
+#! x_1,x_2,
+#! x_1,x_2 
+#! (over a graded ring)
+#!
+#! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
+#! [ [ 0, 2 ] ]
+#!
+#! --------------------------------------------------------------------------------- 
+#!
+#! Mapping matrix: 
+#! --------------- 
+#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
+#! 1,0,
+#! 0,1 
+#! (over a graded ring)
+#!
+#! --------------------------------------------------------------------------------- 
+#!
+#! Range: 
+#! ------ 
+#! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
+#! [ [ ( 1, 0 ), 2 ] ]
+#!
+#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
+#! x_1,x_2,
+#! x_1,x_2 
+#! (over a graded ring)
+#!
+#! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
+#! [ [ 0, 2 ] ]
+#!
+#! ================================================================================= 
+#!
 presentation_morphismr := CAPPresentationCategoryMorphism( 
                           presentation1r, n2, presentation2r );
 #! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
@@ -259,7 +310,57 @@ Display( SourceLiftMorphism( presentation_morphismr ) );
 #! 1,
 #! 0 
 #! (over a graded ring)
-
+FullInformation( ColiftAlongEpimorphism( presentation_morphismr,
+                                         presentation_morphismr ) );
+#!
+#! ================================================================================= 
+#!
+#! Source: 
+#! ------- 
+#! A projective graded right module over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
+#! [ [ ( 1, 0 ), 2 ] ]
+#!
+#! A morphism in the category of projective graded right modules over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
+#! x_1,x_1,
+#! x_2,x_2 
+#! (over a graded ring)
+#!
+#! A projective graded right module over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
+#! [ [ 0, 2 ] ]
+#!
+#! --------------------------------------------------------------------------------- 
+#!
+#! Mapping matrix: 
+#! --------------- 
+#! A morphism in the category of projective graded right modules over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
+#! 1,0,
+#! 0,1
+#! (over a graded ring)
+#!
+#! --------------------------------------------------------------------------------- 
+#!
+#! Range:
+#! ------ 
+#! A projective graded right module over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
+#! [ [ ( 1, 0 ), 2 ] ]
+#!
+#! A morphism in the category of projective graded right modules over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
+#! x_1,x_1,
+#! x_2,x_2
+#! (over a graded ring)
+#!
+#! A projective graded right module over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
+#! [ [ 0, 2 ] ]
+#!
+#! ================================================================================= 
+#!
 #! @EndExample
 
 
@@ -834,7 +935,7 @@ inj_r := UniversalMorphismFromDirectSumWithGivenDirectSum( diagram_r,
 Display( inj_r );
 #! A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) given by the 
-#! following morphism: 
+#! following morphism:
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 

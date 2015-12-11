@@ -221,7 +221,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
       function( morphism1, morphism2 )
         local lift, difference;
 
-        difference := AdditionForMorphisms( AdditiveInverseForMorphisms( UnderlyingMorphism( morphism2 ) ), 
+        difference := AdditionForMorphisms( AdditiveInverseForMorphisms( UnderlyingMorphism( morphism2 ) ),
                                                                                          UnderlyingMorphism( morphism1 ) );
         lift := Lift( difference, UnderlyingMorphism( Range( morphism1 ) ) );
 
@@ -244,7 +244,6 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Returns a morphism
     # @Arguments lef_morphism, right_morphism
     AddPreCompose( category,
-                   
       function( left_morphism, right_morphism )
         
         return CAPPresentationCategoryMorphism( 
@@ -260,7 +259,6 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Returns a morphism
     # @Arguments object
     AddIdentityMorphism( category,
-                         
       function( object )
         
         return CAPPresentationCategoryMorphism( object, IdentityMorphism( Range( UnderlyingMorphism( object ) ) ), object );
@@ -543,21 +541,44 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     end );
 
     # @Description
-    # This method requires a morphism <A>morphism1</A> $a \to c$ and a morphism <A>morphism2</A> $a \to b$. The result of 
-    # Colift( morphism1, morphism2 ) is then the colift morphism $c \to b$.
-    # @Returns a morphism
+    # This method requires an epimorphism <A>morphism1</A> $a \to c$ and a morphism <A>morphism2</A> $a \to b$. The result of 
+    # ColiftAlongEpimorphism( morphism1, morphism2 ) is then the colift morphism $c \to b$. Note that we do not use colift of 
+    # the underlying Proj-category in this construction.
     # @Arguments morphism1, morphism2
     
     # FIX ME FIX ME FIX ME: What if the colift found by Proj does not allow for a source-lift? Does this imply that every colift that
     # Proj could come up with, cannot be lifted? I don't know yet.
-    AddColift( category,
+    AddColiftAlongEpimorphism( category,
       function( morphism1, morphism2 )
-        local colift;
+        local A, R_C, C, psi, rho_C, rho_C_prime, sigma, projection, colift;
         
-        colift := Colift( UnderlyingMorphism( morphism1 ), UnderlyingMorphism( morphism2 ) );
+        # lookg at the following diagram (psi = morphism1 ) and recall that morphism1 is required epi
+        # R_A            R_C         A \oplus R_C
+        #  |              |               |
+        #  |              |rho_C          |rho_C_prime
+        #  v              v               v
+        #  A ----psi----> C ---- id ----> C
+        #
+        # Since morphism1 is an epimorphism, there exists a section \sigma: C ---> A \oplus R_C such that 
+        # \rho_C \circ \sigma = id_C. We can then use the projection onto A, to form a map
+        # \mu: C ---> A \oplus R_C ----> A.
+        # Now suppose that we have morphism2: ( R_A --> A ) --varphi--> ( R_B ---> B ). Then composing \mu and
+        # \varphi gives the desired ColiftAlongEpimorphism( morphis1, morphism2 )
         
+        # (1) collect the necessary information
+        A := Range( UnderlyingMorphism( Source( morphism1 ) ) );
+        R_C := Source( UnderlyingMorphism( Range( morphism1 ) ) );
+        C := Range( UnderlyingMorphism( Range( morphism1 ) ) );
+        psi := UnderlyingMorphism( morphism1 );
+        rho_C := UnderlyingMorphism( Range( morphism1 ) );
+        rho_C_prime := UniversalMorphismFromDirectSum( [ psi, rho_C ] );
+        sigma := Lift( IdentityMorphism( C ), rho_C_prime );
+        projection := ProjectionInFactorOfDirectSum( [ A, R_C ], 1 );
+        
+        # (2) construct the colift
+        colift := PreCompose( [ sigma, projection, UnderlyingMorphism( morphism2 ) ] );
         return CAPPresentationCategoryMorphism( Range( morphism1 ), colift, Range( morphism2 ) );
-        
+
     end );
 
 
