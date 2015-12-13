@@ -214,8 +214,8 @@ DeclareAttribute( "SuperObjectForCAP",
 ##
 ##############################################################################################
 
-#! The method 'FullInformation' is also avaiable to produce specialised output for 
-#! IsGradedLeftOrRightSubmoduleForCAP.
+#! The method 'FullInformation' is also avaiable to display all information about a graded 
+#! submodule.
 
 
 
@@ -249,4 +249,4 @@ DeclareOperation( "\^",
 ##
 ##############################################################################################
 
-#! A specialised method for Frobenius powers of IsGradedLeftOrRightSubmoduleForCAP is available.
+#! A specialised method for Frobenius powers of graded submodules is available.
