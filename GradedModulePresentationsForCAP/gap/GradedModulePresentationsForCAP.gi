@@ -20,7 +20,6 @@ InstallMethod( SfpgrmodLeft,
                 [ IsHomalgGradedRing ],
   function( graded_ring )
 
-    # finally construct the presentation category
     return PresentationCategory( CAPCategoryOfProjectiveGradedLeftModules( graded_ring ) );
 
 end );
@@ -31,7 +30,6 @@ InstallMethod( SfpgrmodRight,
                 [ IsHomalgGradedRing ],
   function( graded_ring )
 
-    # finally construct the presentation category
     return PresentationCategory( CAPCategoryOfProjectiveGradedRightModules( graded_ring ) );
 
 end );
