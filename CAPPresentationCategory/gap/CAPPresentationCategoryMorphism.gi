@@ -21,7 +21,6 @@ InstallMethod( CAPPresentationCategoryMorphism,
                [ IsCAPPresentationCategoryObject, IsCapCategoryMorphism, IsCAPPresentationCategoryObject ],
 
   function( source, morphism, range )
-    #local category, presentation_morphism;
     local projective_category, presentation_morphism, category, type;
 
     projective_category := CapCategory( UnderlyingMorphism( source ) );
@@ -86,6 +85,55 @@ InstallMethod( CAPPresentationCategoryMorphism,
 
 end );
 
+InstallMethod( CAPPresentationCategoryMorphism,
+               [ IsCAPPresentationCategoryObject, IsCapCategoryMorphism, IsCAPPresentationCategoryObject, IsBool ],
+  function( source, morphism, range, checks_wished )
+    local projective_category, presentation_morphism, category, type;
+
+    # if checks are wished, relegate this to the corresponding method
+    if checks_wished then
+      return CAPPresentationCategoryMorphism( source, morphism, range );
+    fi;
+
+    projective_category := CapCategory( UnderlyingMorphism( source ) );
+
+    # we found that the input is valid - although we have not yet checked that it is well-defined as well, i.e.
+    # that there is a morphism of the sources that makes the following diagram commute
+    # source: A --> B
+    #               ^
+    # mapping:      morphism
+    #               |
+    # range:  C --> D
+    
+    # this is to be checked in the IsWellDefined methods
+    
+    # that said, let us construct the morphism
+    presentation_morphism := rec( );
+    
+    # set the type
+    if IsCAPCategoryOfProjectiveGradedLeftModulesObject( ZeroObject( projective_category ) ) then
+      type := TheTypeOfGradedLeftModulePresentationMorphismForCAP;
+    elif IsCAPCategoryOfProjectiveGradedRightModulesObject( ZeroObject( projective_category ) ) then
+      type := TheTypeOfGradedRightModulePresentationMorphismForCAP;
+    else
+      type := TheTypeOfCAPPresentationCategoryMorphism;
+    fi;
+
+    # objectify the presentation_morphism
+    ObjectifyWithAttributes( presentation_morphism, type,
+                             Source, source,
+                             Range, range,
+                             UnderlyingMorphism, morphism );
+
+    # then add it to the corresponding category
+    category := CapCategory( source );
+    Add( category, presentation_morphism );
+
+    # and return the object
+    return presentation_morphism;
+
+end );
+
 
 
 ####################################
@@ -94,15 +142,11 @@ end );
 ##
 ####################################
 
-# FIXME: The following methods for view, display and string are generic overwritten by CAP 
-# however, as I derive GAP categories thereof (for GradedModulePresentations) and want to have specialised display methods for
-# say GradedIdeals I have no option by to leave out these ranks and "suffer" from this bug thus far.
-
 InstallMethod( String,
               [ IsCAPPresentationCategoryMorphism ], 
               #999, # FIXME FIXME FIXME
   function( presentation_category_morphism )
-    
+
      return Concatenation( "A morphism of the presentation category over the ", 
                            Name( CapCategory( UnderlyingMorphism( presentation_category_morphism ) ) )
                            );

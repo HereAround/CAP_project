@@ -15,12 +15,19 @@
 #############################
 
 #! @Description
-#! The arguments is a CAPCategoryMorphism $m$ in a proj-category. This morphism is then considered as an
+#! The argument is a CAPCategoryMorphism $m$ in a Proj-category. This morphism is then considered as an
 #! object in the presentation category.
 #! @Returns a CAPCategoryObject
 #! @Arguments m
 DeclareOperation( "CAPPresentationCategoryObject",
                   [ IsCapCategoryMorphism ] );
+
+#! For morphisms we support the possibility to turn off consistency checks on the input data. For the constructor of objects
+#! this is not possible. This is because the only check is if the morphism is a morphism in a Proj-category. This in turn
+#! is checked by constructing the presentation category of the category in which the morphism is defined. The latter in turn is
+#! an attribute of a CapCategory and thus is constructed only once. In this sense the given constructor is already optimal.
+
+
 
 #############################
 ##
@@ -36,6 +43,8 @@ DeclareOperation( "CAPPresentationCategoryObject",
 DeclareAttribute( "UnderlyingMorphism",
                   IsCAPPresentationCategoryObject );
 
+
+
 ####################################################
 ##
 #! @Section Printing all information about an object
@@ -50,7 +59,9 @@ DeclareAttribute( "UnderlyingMorphism",
 #! @Arguments A
 DeclareOperation( "FullInformation",
                  [ IsCAPPresentationCategoryObject ] );
-                 
+
+
+
 ##############################################
 ##
 #! @Section Hom-Embedding

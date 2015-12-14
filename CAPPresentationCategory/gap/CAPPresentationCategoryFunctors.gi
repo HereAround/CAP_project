@@ -40,12 +40,12 @@ InstallMethod( EmbeddingOfProjCategory,
 
         end );
 
-        # and the operation on the morphisms        
+        # and the operation on the morphisms
         AddMorphismFunction( functor,
 
           function( new_source, morphism, new_range )
 
-            return CAPPresentationCategoryMorphism( new_source, morphism, new_range );
+            return CAPPresentationCategoryMorphism( new_source, morphism, new_range, pres_category!.constructor_checks_wished );
 
         end );
 

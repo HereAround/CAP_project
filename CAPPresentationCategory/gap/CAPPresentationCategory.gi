@@ -16,7 +16,6 @@
 
 InstallMethod( PresentationCategory,
                [ IsCapCategory ],
-               
   function( projective_category )
     local category, underlying_graded_ring;
 
@@ -48,50 +47,51 @@ InstallMethod( PresentationCategory,
       category := CreateCapCategory( Concatenation( "Presentation category over ", Name( projective_category ) ) );
 
     fi;
-    
+
     # set the underlying projective category
     category!.underlying_projective_category := projective_category;
+    category!.constructor_checks_wished := true;
 
     # tell the category that it is an Abelian category
     SetIsAbelianCategory( category, true );
     SetIsSymmetricClosedMonoidalCategory( category, true );
-    
+
     # I do not require anything more from the proj category. Thus it need not even be strict.
     # Therefore, in general, proj will not be strict either. Thus we do not set the following property:
     #SetIsStrictMonoidalCategory( category, true );
-    
+
     # FIXME: think about simplifications given that proj has certain properties
-    
+
     # now add basic functionality for the category
-    ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY( category );
-    
+    ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY( category, category!.constructor_checks_wished );
+
     # add theorem file
     AddTheoremFileToCategory( category,
       Filename(
         DirectoriesPackageLibrary( "CAPPresentationCategory", "Logic" ),
         "Propositions.tex" )
     );
-    
+
     # add predicate-implication file
     AddPredicateImplicationFileToCategory( category,
       Filename(
         DirectoriesPackageLibrary( "CAPPresentationCategory", "Logic" ),
         "PredicateImplications.tex" )
     );
-    
+
     # add relations file
     AddEvalRuleFileToCategory( category,
       Filename(
         DirectoriesPackageLibrary( "CAPPresentationCategory", "Logic" ),
         "Relations.tex" )
     );
-    
+
     # now finalise this category
     Finalize( category );
-    
+
     # and return it
     return category;
-    
+
 end );
 
 
@@ -104,8 +104,7 @@ end );
 
 ##
 InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
-                       
-  function( category )
+  function( category, checks_wished )
 
   
   
@@ -120,7 +119,6 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Returns true or false
     # @Arguments object
     AddIsWellDefinedForObjects( category,
-      
       function( object )
         
         return IsWellDefinedForMorphisms( UnderlyingMorphism( object ) );
@@ -247,9 +245,11 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
       function( left_morphism, right_morphism )
         
         return CAPPresentationCategoryMorphism( 
-                                     Source( left_morphism ), 
+                                     Source( left_morphism ),
                                      PreCompose( UnderlyingMorphism( left_morphism ), UnderlyingMorphism( right_morphism ) ),
-                                     Range( right_morphism ) );
+                                     Range( right_morphism ),
+                                     checks_wished
+                                    );
         
     end );
 
@@ -261,12 +261,16 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     AddIdentityMorphism( category,
       function( object )
         
-        return CAPPresentationCategoryMorphism( object, IdentityMorphism( Range( UnderlyingMorphism( object ) ) ), object );
+        return CAPPresentationCategoryMorphism( object,
+                                                IdentityMorphism( Range( UnderlyingMorphism( object ) ) ),
+                                                object,
+                                                checks_wished 
+                                               );
         
     end );
 
-    
-    
+
+
     ######################################################################
     #
     # @Section Enrich the category with an additive structure
@@ -279,15 +283,15 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Returns a morphism
     # @Arguments morphism1, morphism2
     AddAdditionForMorphisms( category,
-                             
       function( morphism1, morphism2 )
         
         return CAPPresentationCategoryMorphism( 
-                                    Source( morphism1 ), 
+                                    Source( morphism1 ),
                                     AdditionForMorphisms( UnderlyingMorphism( morphism1 ), UnderlyingMorphism( morphism2 ) ),
-                                    Range( morphism2 ) 
-                                    );
-                                     
+                                    Range( morphism2 ),
+                                    checks_wished
+                                   );
+
     end );
 
     # @Description
@@ -296,14 +300,14 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Returns a morphism
     # @Arguments morphism
     AddAdditiveInverseForMorphisms( category,
-                                    
       function( morphism )
         
         return CAPPresentationCategoryMorphism( 
                                            Source( morphism ),
                                            AdditiveInverseForMorphisms( UnderlyingMorphism( morphism ) ),
-                                           Range( morphism )
-                                           );
+                                           Range( morphism ),
+                                           checks_wished
+                                          );
         
     end );
     
@@ -313,13 +317,13 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Returns a morphism
     # @Arguments source_object, range_object
     AddZeroMorphism( category,
-                     
       function( source_object, range_object )
         
-        return CAPPresentationCategoryMorphism( source_object, 
-                              ZeroMorphism( Range( UnderlyingMorphism( source_object ) ), Range( UnderlyingMorphism( range_object ) ) ), 
-                              range_object
-                              );
+        return CAPPresentationCategoryMorphism( source_object,
+                      ZeroMorphism( Range( UnderlyingMorphism( source_object ) ), Range( UnderlyingMorphism( range_object ) ) ),
+                      range_object,
+                      checks_wished
+                     );
         
     end );
 
@@ -329,7 +333,6 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Returns an object
     # @Arguments 
     AddZeroObject( category,
-                   
       function( )
         local projective_category;
 
@@ -351,7 +354,9 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
 
         return CAPPresentationCategoryMorphism( object,
                                                 UniversalMorphismIntoZeroObject( Range( UnderlyingMorphism( object ) ) ),
-                                                terminal_object );
+                                                terminal_object,
+                                                checks_wished 
+                                               );
         
     end );
 
@@ -362,12 +367,13 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Returns a morphism
     # @Arguments object, initial_object
     AddUniversalMorphismFromZeroObjectWithGivenZeroObject( category,
-                                                                 
       function( object, initial_object )
         
         return CAPPresentationCategoryMorphism( initial_object,
                                                 UniversalMorphismFromZeroObject( Range( UnderlyingMorphism( object ) ) ),
-                                                object );
+                                                object,
+                                                checks_wished
+                                               );
         
     end );
 
@@ -420,7 +426,11 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         projection := ProjectionInFactorOfDirectSum( range_objects, component_number );
         
         # and construct the projection the presentation category
-        return CAPPresentationCategoryMorphism( direct_sum_object, projection, objects[ component_number ] );
+        return CAPPresentationCategoryMorphism( direct_sum_object, 
+                                                projection, 
+                                                objects[ component_number ],
+                                                checks_wished
+                                               );
         
     end );
 
@@ -431,7 +441,6 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Returns a morphism
     # @Arguments diagram, sink, direct_sum
     AddUniversalMorphismIntoDirectSumWithGivenDirectSum( category,
-                                                                 
       function( diagram, sink, direct_sum )
         local underlying_sink, diagram_ranges, underlying_morphism;
         
@@ -441,7 +450,11 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         underlying_morphism := UniversalMorphismIntoDirectSum( diagram_ranges, underlying_sink);
 
         # and construct the morphism in the presentation category
-        return CAPPresentationCategoryMorphism( Source( sink[ 1 ] ), underlying_morphism, direct_sum ); 
+        return CAPPresentationCategoryMorphism( Source( sink[ 1 ] ),
+                                                underlying_morphism,
+                                                direct_sum,
+                                                checks_wished
+                                               );
         
     end );
 
@@ -450,10 +463,9 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # <A>coproduct_object</A> formed from the list of objects <A>objects</A>. It is based on the corresonding method of the 
     # Proj-category.
     # @Returns a morphism
-    # @Arguments objects, component_number, coproduct_object   
+    # @Arguments objects, component_number, coproduct_object
     AddInjectionOfCofactorOfDirectSumWithGivenDirectSum( category,
-           
-      function( objects, component_number, coproduct_object )      
+      function( objects, component_number, coproduct_object )
         local range_objects, range_direct_sum_object, injection;
 
         # extract the range objects in the underlying projective category
@@ -464,7 +476,11 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         injection := InjectionOfCofactorOfDirectSum( range_objects, component_number );
 
         # and construct the projection the presentation category
-        return CAPPresentationCategoryMorphism( objects[ component_number ], injection, coproduct_object );
+        return CAPPresentationCategoryMorphism( objects[ component_number ],
+                                                injection,
+                                                coproduct_object,
+                                                checks_wished
+                                               );
         
     end );
 
@@ -485,7 +501,11 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         underlying_morphism := UniversalMorphismFromDirectSum( diagram_sources, underlying_sink );
 
         # and construct the morphism in the presentation category
-         return CAPPresentationCategoryMorphism( coproduct, underlying_morphism, Range( sink[ 1 ] ) ); 
+         return CAPPresentationCategoryMorphism( coproduct,
+                                                 underlying_morphism,
+                                                 Range( sink[ 1 ] ),
+                                                 checks_wished
+                                                );
 
     end );
 
@@ -533,9 +553,10 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         projection := ProjectionInFactorOfDirectSum( [ A, R_C ], 1 );
 
         # (2) construction of the lift
-        return CAPPresentationCategoryMorphism( Source( morphism1 ), 
-                                                PreCompose( lift, projection ), 
-                                                Source( morphism2 ) 
+        return CAPPresentationCategoryMorphism( Source( morphism1 ),
+                                                PreCompose( lift, projection ),
+                                                Source( morphism2 ),
+                                                checks_wished
                                                );
 
     end );
@@ -577,7 +598,11 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         
         # (2) construct the colift
         colift := PreCompose( [ sigma, projection, UnderlyingMorphism( morphism2 ) ] );
-        return CAPPresentationCategoryMorphism( Range( morphism1 ), colift, Range( morphism2 ) );
+        return CAPPresentationCategoryMorphism( Range( morphism1 ),
+                                                colift,
+                                                Range( morphism2 ),
+                                                checks_wished
+                                               );
 
     end );
 
@@ -646,7 +671,11 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
 
         kernel_object := CAPPresentationCategoryObject( underlying_morphism_of_kernel );
 
-        return CAPPresentationCategoryMorphism( kernel_object, kernel_embedding, Source( morphism ) );
+        return CAPPresentationCategoryMorphism( kernel_object,
+                                                kernel_embedding,
+                                                Source( morphism ),
+                                                checks_wished
+                                               );
 
     end );
 
@@ -701,9 +730,10 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         cokernel_object := CAPPresentationCategoryObject( universal_morphism );
 
         # now return the cokernel projection
-        return CAPPresentationCategoryMorphism( Range( morphism ), 
+        return CAPPresentationCategoryMorphism( Range( morphism ),
                                                 IdentityMorphism( Range( UnderlyingMorphism( Range( morphism ) ) ) ),
-                                                cokernel_object 
+                                                cokernel_object,
+                                                checks_wished
                                                );
     end );
 
@@ -772,11 +802,12 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     AddTensorProductOnMorphismsWithGivenTensorProducts( category,
       function( source, morphism1, morphism2, range )
                 
-        return CAPPresentationCategoryMorphism( 
-                                         source, 
-                                         TensorProductOnMorphisms( UnderlyingMorphism( morphism1 ), UnderlyingMorphism( morphism2 ) ),
-                                         range 
-                                         );
+        return CAPPresentationCategoryMorphism(
+                                    source,
+                                    TensorProductOnMorphisms( UnderlyingMorphism( morphism1 ), UnderlyingMorphism( morphism2 ) ),
+                                    range,
+                                    checks_wished
+                                   );
 
     end );
 
@@ -809,10 +840,11 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
       function( source, a, b, c, range )
         
         # return the morphism as derived from the Proj-category
-        return CAPPresentationCategoryMorphism( source, 
-                      AssociatorLeftToRight( Range( UnderlyingMorphism( source ) ), Range( UnderlyingMorphism( range ) ) ), 
-                      range 
-                      );
+        return CAPPresentationCategoryMorphism( source,
+                      AssociatorLeftToRight( Range( UnderlyingMorphism( source ) ), Range( UnderlyingMorphism( range ) ) ),
+                      range,
+                      checks_wished
+                     );
 
         # FIXME
         # always well-defined?
@@ -831,10 +863,11 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
       function( source, a, b, c, range )
         
         # return the morphism as derived from the Proj-category
-        return CAPPresentationCategoryMorphism( source, 
+        return CAPPresentationCategoryMorphism( source,
                       AssociatorRightToLeft( Range( UnderlyingMorphism( source ) ), Range( UnderlyingMorphism( range ) ) ),
-                      range 
-                      );
+                      range,
+                      checks_wished
+                     );
         # FIXME
         # well-defined?
 
@@ -850,7 +883,8 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
 
         return CAPPresentationCategoryMorphism( s,
                                                 LeftUnitor( Range( UnderlyingMorphism( a ) ) ),
-                                                a 
+                                                a,
+                                                checks_wished
                                                );
 
     end );
@@ -865,7 +899,8 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
 
         return CAPPresentationCategoryMorphism( a,
                                                 LeftUnitorInverse( Range( UnderlyingMorphism( a ) ) ),
-                                                r 
+                                                r,
+                                                checks_wished
                                                );
 
     end );
@@ -880,7 +915,8 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     
         return CAPPresentationCategoryMorphism( s,
                                                 RightUnitor( Range( UnderlyingMorphism( a ) ) ),
-                                                a 
+                                                a,
+                                                checks_wished
                                                );
 
     end );
@@ -895,7 +931,8 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         
         return CAPPresentationCategoryMorphism( a,
                                                 RightUnitorInverse( Range( UnderlyingMorphism( a ) ) ),
-                                                r 
+                                                r,
+                                                checks_wished
                                                );
 
     end );
@@ -918,9 +955,11 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     function( s, a, b, r)
     
       return CAPPresentationCategoryMorphism( s,
-                                             Braiding( Range( UnderlyingMorphism( s ) ), Range( UnderlyingMorphism( r ) ) ),
-                                             r );
-    
+                                              Braiding( Range( UnderlyingMorphism( s ) ), Range( UnderlyingMorphism( r ) ) ),
+                                              r,
+                                              checks_wished
+                                             );
+
     end );
     
     ######################################################################
@@ -976,20 +1015,21 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
       kernel2 := INTERNAL_HOM_EMBEDDING_IN_TENSOR_PRODUCT( Source( alpha ), Range( beta ) );
       
       # (2) construct the bridge_mapping A^vee \otimes B -> A'^\vee \otimes b'
-      bridge_mapping := CAPPresentationCategoryMorphism( 
+      bridge_mapping := CAPPresentationCategoryMorphism(
                                  Range( kernel1 ),
-                                 TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( alpha ) ), 
+                                 TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( alpha ) ),
                                                            UnderlyingMorphism( beta ) ),
-                                 Range( kernel2 )
-                                 );
-      
+                                 Range( kernel2 ),
+                                 checks_wished
+                                );
+
       # (3) finally return the lift of the corresponding diagram
       return Lift( PreCompose( kernel1, bridge_mapping ), kernel2 );
-            
+
     end );
-    
-    
-    
+
+
+
     ######################################################################
     #
     # @Section Add (Co-)evaluation
@@ -1029,7 +1069,7 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         Hom_embedding_tensored := TensorProductOnMorphisms( Hom_embedding, IdentityMorphism( a ) );
         
         # (2) the braiding
-        Adual := CAPPresentationCategoryObject( 
+        Adual := CAPPresentationCategoryObject(
                     ZeroMorphism( ZeroObject( projective_category ), DualOnObjects( Range( UnderlyingMorphism( a ) ) ) ) );
 
         braiding := Braiding( Adual, b );
@@ -1039,18 +1079,18 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         associator := AssociatorLeftToRight( b, Adual, a );
         
         # (4) evaluation
-        evaluation := CAPPresentationCategoryMorphism( 
-                                TensorProductOnObjects( Adual, a ),
-                                EvaluationForDual( Range( UnderlyingMorphism( a ) ) ),
-                                TensorUnit( category )
-                        );
+        evaluation := CAPPresentationCategoryMorphism( TensorProductOnObjects( Adual, a ),
+                                                       EvaluationForDual( Range( UnderlyingMorphism( a ) ) ),
+                                                       TensorUnit( category ),
+                                                       checks_wished
+                                                      );
         evaluation := TensorProductOnMorphisms( IdentityMorphism( b ), evaluation );
-        
+
         # (5) now compute the coevaluation morphism by a lift
         return PreCompose( Hom_embedding_tensored, braiding, associator, evaluation );
-        
-    end );        
-    
+
+    end );
+
     # @Description
     # Given objects a,b we can construct the coevaluation morphism a -> Hom( b, a \otimes b ).
     # To end let us assume that a: R_A --alpha--> A and b: R_B --beta--> B. Then consider the following diagram:
@@ -1081,23 +1121,24 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         # (2) the braiding
         Bdual := CAPPresentationCategoryObject( 
                    ZeroMorphism( ZeroObject( projective_category ), DualOnObjects( Range( UnderlyingMorphism( b ) ) ) ) );
-                        
+
         braiding := Braiding( Bdual, TensorProductOnObjects( a,b ) );
-        
+
         # (3) associator_left_to_right
         associator := AssociatorLeftToRight( a, b, Bdual );
-        
+
         # (4) coevaluation
-        coevaluation := CAPPresentationCategoryMorphism( 
+        coevaluation := CAPPresentationCategoryMorphism(
                                 TensorUnit( category ),
                                 CoevaluationForDual( Range( UnderlyingMorphism( b ) ) ),
-                                TensorProductOnObjects( b, Bdual )
+                                TensorProductOnObjects( b, Bdual ),
+                                checks_wished
                         );
         coevaluation := TensorProductOnMorphisms( IdentityMorphism( a ), coevaluation );
-        
+
         # (5) now compute the coevaluation morphism by a lift
         return Lift( coevaluation, PreCompose( Hom_embedding, braiding, associator ) );
-        
+
     end );
-        
+
 end );

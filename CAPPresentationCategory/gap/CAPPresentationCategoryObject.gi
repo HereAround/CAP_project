@@ -48,7 +48,7 @@ InstallMethod( CAPPresentationCategoryObject,
 
     # add it to the presentation category
     Add( category, presentation_category_object );
-    
+
     # and return it
     return presentation_category_object;    
 
@@ -212,7 +212,7 @@ end );
 
 ##
 InstallMethodWithCacheFromObject( INTERNAL_HOM_EMBEDDING_IN_TENSOR_PRODUCT,
-                           [ IsCAPPresentationCategoryObject, IsCAPPresentationCategoryObject ],     
+                           [ IsCAPPresentationCategoryObject, IsCAPPresentationCategoryObject ],
     function( a, b )
       local projective_category, adual_as_map_source, adual_as_map_range, adual_as_map, final_mapping;
 
@@ -227,7 +227,8 @@ InstallMethodWithCacheFromObject( INTERNAL_HOM_EMBEDDING_IN_TENSOR_PRODUCT,
 
       adual_as_map := CAPPresentationCategoryMorphism( adual_as_map_source,
                                                        DualOnMorphisms( UnderlyingMorphism( a ) ),
-                                                       adual_as_map_range
+                                                       adual_as_map_range,
+                                                       CapCategory( a )!.constructor_checks_wished
                                                       );
 
       # (2) tensor adual_as_map with the identity morphism of b

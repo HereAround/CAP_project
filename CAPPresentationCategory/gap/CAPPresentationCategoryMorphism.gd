@@ -27,6 +27,19 @@
 DeclareOperation( "CAPPresentationCategoryMorphism",
                   [ IsCAPPresentationCategoryObject, IsCapCategoryMorphism, IsCAPPresentationCategoryObject ] );
 
+#! @Description
+#! The arguments are an object $m_1$ in the presentation category, a morphism $a$ in the Underlying
+#! proj-category, a second object $m_2$ in the presentation category and a boolean <A>checks_wished</A>.
+#! If <A>checks_wished = true</A>, this constructor behaves just like the one above, if <A>checks_wished = false</A>,
+#! not consistency checks on the given input is performed. Therefore this latter option could be useful for
+#! high-performance-applications.
+#! @Returns a CAPCategoryMorphism
+#! @Arguments m1, a, m2
+DeclareOperation( "CAPPresentationCategoryMorphism",
+                  [ IsCAPPresentationCategoryObject, IsCapCategoryMorphism, IsCAPPresentationCategoryObject, IsBool ] );
+
+
+
 #############################
 ##
 #! @Section Attributes
