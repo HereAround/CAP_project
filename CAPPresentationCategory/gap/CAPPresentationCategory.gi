@@ -19,15 +19,15 @@ InstallMethod( PresentationCategory,
   function( projective_category )
     local category, underlying_graded_ring;
 
-    # check if the input is a proj-category
+    # (1) check if the input is a proj-category
     if not IsProjCategory( projective_category ) then
 
-      Error( "The input must be a proj-category" );
+      Error( "The input must be a Proj-category" );
       return;
 
     fi;
 
-    # set up the category by name - for special input categories we produce a special name
+    # (2) set the name of the category
     if IsCAPCategoryOfProjectiveGradedLeftModulesObject( ZeroObject( projective_category ) ) then
 
       # this is the category of graded left module presentations
@@ -48,48 +48,47 @@ InstallMethod( PresentationCategory,
 
     fi;
 
-    # set the underlying projective category
-    category!.underlying_projective_category := projective_category;
-    category!.constructor_checks_wished := true;
-
-    # tell the category that it is an Abelian category
+    # (3) set properties of the category
+    category!.underlying_projective_category := projective_category; # <- underlying Proj-category
+    category!.constructor_checks_wished := true; # <- false means that no consistency checks are performed in construtors
     SetIsAbelianCategory( category, true );
-    SetIsSymmetricClosedMonoidalCategory( category, true );
 
-    # I do not require anything more from the proj category. Thus it need not even be strict.
-    # Therefore, in general, proj will not be strict either. Thus we do not set the following property:
-    #SetIsStrictMonoidalCategory( category, true );
+    # (4) add basic functionality for the category
+    ADD_BASIC_FUNCTIONS_FOR_PRESENTATION_CATEGORY( category, category!.constructor_checks_wished );
 
-    # FIXME: think about simplifications given that proj has certain properties
+    # (5) check if the Proj-category also has a monoidal structure
+    if IsMonoidalStructurePresent( projective_category ) then
 
-    # now add basic functionality for the category
-    ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY( category, category!.constructor_checks_wished );
+      # install more functionality and more properties
+      ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY( category, category!.constructor_checks_wished );
+      SetIsSymmetricClosedMonoidalCategory( category, true );
 
-    # add theorem file
+      # check for strict monoidal structure
+      if IsStrictMonoidalCategory( projective_category ) then
+        SetIsStrictMonoidalCategory( category, true );
+      fi;
+
+    fi;
+
+    # (6) add logic (FIXME: add more stuff to these files)
     AddTheoremFileToCategory( category,
       Filename(
         DirectoriesPackageLibrary( "CAPPresentationCategory", "Logic" ),
         "Propositions.tex" )
     );
-
-    # add predicate-implication file
     AddPredicateImplicationFileToCategory( category,
       Filename(
         DirectoriesPackageLibrary( "CAPPresentationCategory", "Logic" ),
         "PredicateImplications.tex" )
     );
-
-    # add relations file
     AddEvalRuleFileToCategory( category,
       Filename(
         DirectoriesPackageLibrary( "CAPPresentationCategory", "Logic" ),
         "Relations.tex" )
     );
 
-    # now finalise this category
+    # (7) finalise and return
     Finalize( category );
-
-    # and return it
     return category;
 
 end );
@@ -103,7 +102,7 @@ end );
 ##############################################
 
 ##
-InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
+InstallGlobalFunction( ADD_BASIC_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
   function( category, checks_wished )
 
   
@@ -736,6 +735,15 @@ InstallGlobalFunction( ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
                                                 checks_wished
                                                );
     end );
+
+
+end );
+
+
+
+##
+InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
+  function( category, checks_wished )
 
 
 

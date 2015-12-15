@@ -31,4 +31,6 @@ DeclareAttribute( "PresentationCategory",
 ##
 ###################################################
 
-DeclareGlobalFunction( "ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY" );
+DeclareGlobalFunction( "ADD_BASIC_FUNCTIONS_FOR_PRESENTATION_CATEGORY" );
+
+DeclareGlobalFunction( "ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY" );

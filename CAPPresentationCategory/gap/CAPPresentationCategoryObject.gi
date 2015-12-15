@@ -214,27 +214,27 @@ end );
 InstallMethodWithCacheFromObject( INTERNAL_HOM_EMBEDDING_IN_TENSOR_PRODUCT,
                            [ IsCAPPresentationCategoryObject, IsCAPPresentationCategoryObject ],
     function( a, b )
-      local projective_category, adual_as_map_source, adual_as_map_range, adual_as_map, final_mapping;
+      local source, range, underlying_map, final_mapping;
 
-      # (1) turn the underlying morphism of adual into a morphism in PresentationCategory
-      projective_category := CapCategory( a )!.underlying_projective_category;
-
-      adual_as_map_source := CAPPresentationCategoryObject( 
-                     ZeroMorphism( ZeroObject( projective_category ), DualOnObjects( Range( UnderlyingMorphism( a ) ) ) ) );
-
-      adual_as_map_range := CAPPresentationCategoryObject( 
-                    ZeroMorphism( ZeroObject( projective_category ), DualOnObjects( Source( UnderlyingMorphism( a ) ) ) ) );
-
-      adual_as_map := CAPPresentationCategoryMorphism( adual_as_map_source,
-                                                       DualOnMorphisms( UnderlyingMorphism( a ) ),
-                                                       adual_as_map_range,
-                                                       CapCategory( a )!.constructor_checks_wished
+      # (1) construct the map
+      source := CAPPresentationCategoryObject( TensorProductOnMorphisms(
+                                                      IdentityMorphism( DualOnObjects( Range( UnderlyingMorphism( a ) ) ) ),
+                                                      UnderlyingMorphism( b ) )
                                                       );
+      range := CAPPresentationCategoryObject( TensorProductOnMorphisms( 
+                                                      IdentityMorphism( DualOnObjects( Source( UnderlyingMorphism( a ) ) ) ),
+                                                      UnderlyingMorphism( b ) )
+                                                      );
+      underlying_map := TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( a ) ), 
+                                                 IdentityMorphism( Range( UnderlyingMorphism( b ) ) )
+                                                );
+      final_mapping := CAPPresentationCategoryMorphism( source, 
+                                                        underlying_map, 
+                                                        range, 
+                                                        CapCategory( a )!.constructor_checks_wished 
+                                                       );
 
-      # (2) tensor adual_as_map with the identity morphism of b
-      final_mapping := TensorProductOnMorphisms( adual_as_map, IdentityMorphism( b ) );
-
-      # (3) return the kernel embedding
+      # (2) and return its kernel embedding
       return KernelEmbedding( final_mapping );
 
 end );

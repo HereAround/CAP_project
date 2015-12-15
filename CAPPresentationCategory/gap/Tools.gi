@@ -140,21 +140,7 @@ InstallGlobalFunction( IsProjCategory,
                       "InjectionOfCofactorOfDirectSum",
                       "UniversalMorphismFromDirectSum",
                       "Lift",
-                      "ProjectionInFactorOfFiberProduct",
-                      "TensorProductOnObjects",
-                      "TensorProductOnMorphismsWithGivenTensorProducts",
-                      "TensorUnit",
-                      "AssociatorLeftToRightWithGivenTensorProducts",
-                      "AssociatorRightToLeftWithGivenTensorProducts",
-                      "LeftUnitorWithGivenTensorProduct",
-                      "LeftUnitorInverseWithGivenTensorProduct",
-                      "RightUnitorWithGivenTensorProduct",
-                      "RightUnitorInverseWithGivenTensorProduct",
-                      "BraidingWithGivenTensorProducts",
-                      "DualOnObjects",
-                      "DualOnMorphismsWithGivenDuals",
-                      "EvaluationForDualWithGivenTensorProduct",
-                      "CoevaluationForDualWithGivenTensorProduct" ];
+                      "ProjectionInFactorOfFiberProduct" ];
 
     # whilst the following methods are installed
     installed_ops := ListInstalledOperationsOfCategory( category );
@@ -177,9 +163,60 @@ InstallGlobalFunction( IsProjCategory,
       Error( "a Proj-category must be additive, but the attribute is not set for the category in question" );
       return false;
 
-    elif not IsRigidSymmetricClosedMonoidalCategory( category ) then
+    fi;
 
-      Error( Concatenation( "a Proj-category must be a rigid symmetric and closed monoidal category, ",
+    # if all tests have been passed, return true
+    return true;
+
+end );
+
+InstallGlobalFunction( IsMonoidalStructurePresent,
+  function( category )
+    local installed_ops, required_ops, i;
+
+    # first check if the category has been finalized (i.e. no methods are to be added...)
+    if not HasIsFinalized( category ) or not IsFinalized( category ) then
+
+        Error( "Monoidal categories must be finalized" );
+        return;
+
+    fi;
+
+    # the following are required for a Proj-category
+    required_ops := [ "TensorProductOnObjects",
+                      "TensorProductOnMorphismsWithGivenTensorProducts",
+                      "TensorUnit",
+                      "AssociatorLeftToRightWithGivenTensorProducts",
+                      "AssociatorRightToLeftWithGivenTensorProducts",
+                      "LeftUnitorWithGivenTensorProduct",
+                      "LeftUnitorInverseWithGivenTensorProduct",
+                      "RightUnitorWithGivenTensorProduct",
+                      "RightUnitorInverseWithGivenTensorProduct",
+                      "BraidingWithGivenTensorProducts",
+                      "DualOnObjects",
+                      "DualOnMorphismsWithGivenDuals",
+                      "EvaluationForDualWithGivenTensorProduct",
+                      "CoevaluationForDualWithGivenTensorProduct" ];
+
+    # whilst the following methods are installed
+    installed_ops := ListInstalledOperationsOfCategory( category );
+
+    # check that all required methods are indeed installed
+    for i in required_ops do
+
+      if not i in installed_ops then
+
+        Error( Concatenation( i, " is not installed, but needed for a monoidal category" ) );
+        return false;
+
+      fi;
+
+    od;
+
+    # if all required methods are installed, check if the category also has the right properties set
+    if not IsRigidSymmetricClosedMonoidalCategory( category ) then
+
+      Error( Concatenation( "a monoidal category must be a rigid symmetric and closed monoidal category, ",
                             "but the attribute is not set for the category in question" ) );
       return false;
 

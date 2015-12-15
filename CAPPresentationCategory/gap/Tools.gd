@@ -40,3 +40,5 @@ DeclareOperation( "\^",
 ####################################################################################
 
 DeclareGlobalFunction( "IsProjCategory" );
+
+DeclareGlobalFunction( "IsMonoidalStructurePresent" );
