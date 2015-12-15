@@ -4,7 +4,7 @@
 ##
 ##  Copyright 2015,  Martin Bies,       ITP Heidelberg
 ##
-#! @Chapter Graded module presentations for CAP
+#! @Chapter The CAP category of graded module presentations for CAP
 ##
 #############################################################################
 
@@ -29,3 +29,14 @@ DeclareAttribute( "SfpgrmodLeft",
 #! @Arguments S
 DeclareAttribute( "SfpgrmodRight",
                  IsHomalgGradedRing ); 
+
+
+
+##############################################
+##
+## @Section Hom-Embedding
+##
+##############################################
+
+# A method specialised to graded module presentation is installed to compute Hom-embeddings in this context. They perform faster
+# than the method installed by the presentation category.

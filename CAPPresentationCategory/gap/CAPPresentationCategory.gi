@@ -781,21 +781,21 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         factor1 := TensorProductOnObjects( Source( UnderlyingMorphism( object1 ) ), Range( UnderlyingMorphism( object2 ) ) );
         factor2 := TensorProductOnObjects( Range( UnderlyingMorphism( object1 ) ), Source( UnderlyingMorphism( object2 ) ) );
         range := TensorProductOnObjects( Range( UnderlyingMorphism( object1 ) ), Range( UnderlyingMorphism( object2 ) ) );
-    
+
         # construct the diagram
         diagram := [ factor1, factor2 ];
-        
+
         # construct the sink
         mor1 := TensorProductOnMorphisms( UnderlyingMorphism( object1 ), IdentityMorphism( Range( UnderlyingMorphism( object2 ) ) ) );
         mor2 := TensorProductOnMorphisms( IdentityMorphism( Range( UnderlyingMorphism( object1 ) ) ), UnderlyingMorphism( object2 ) );
         sink := [ mor1, mor2 ];
-    
+
         # construct the information necessary to product the universal morphism
         uni := UniversalMorphismFromDirectSum( diagram, sink );
 
         # now return the object corresponding to this universal morphism
         return CAPPresentationCategoryObject( uni );
-    
+
     end );
 
     # @Description
