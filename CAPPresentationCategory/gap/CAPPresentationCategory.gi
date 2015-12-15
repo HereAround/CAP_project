@@ -809,7 +809,7 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Arguments morphism1, morphism2
     AddTensorProductOnMorphismsWithGivenTensorProducts( category,
       function( source, morphism1, morphism2, range )
-                
+
         return CAPPresentationCategoryMorphism(
                                     source,
                                     TensorProductOnMorphisms( UnderlyingMorphism( morphism1 ), UnderlyingMorphism( morphism2 ) ),
