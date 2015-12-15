@@ -7,9 +7,9 @@ LoadPackage( "AutoDoc" );
 AutoDoc( "GradedModulePresentationsForCAP" : scaffold := true, autodoc :=
          rec( files := [ "doc/Intros.autodoc",
                          "gap/GradedModulePresentationsForCAP.gd",
+                         "gap/GradedSubmodules.gd",
                          "gap/GradedModulePresentationsForCAPFunctors.gd",
                          "gap/GradedModulePresentationsForCAPNaturalTransformations.gd",
-                         "gap/GradedSubmodules.gd",
                          "gap/Tools.gd",
                          "examples/Example.g"
                          ],

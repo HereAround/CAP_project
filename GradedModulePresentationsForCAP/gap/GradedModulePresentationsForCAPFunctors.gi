@@ -78,6 +78,15 @@ end );
 
 # compute a smaller presentation for a graded left or right module presentation for CAP
 InstallMethod( LessGradedGenerators,
+               [ IsGradedLeftOrRightSubmoduleForCAP ],
+  function( submodule )
+
+    return LessGradedGenerators( PresentationForCAP( submodule ) );
+
+end );
+
+# compute a smaller presentation for a graded left or right module presentation for CAP
+InstallMethod( LessGradedGenerators,
                [ IsGradedLeftOrRightModulePresentationMorphismForCAP ],
   function( morphism )
     local source_transformation_triple, range_transformation_triple, TI, range_prime, Mprime, new_source, new_range, 
@@ -234,6 +243,15 @@ end );
 
 # compute a smaller presentation for a graded left or right module presentation for CAP
 InstallMethod( GradedStandardModule,
+               [ IsGradedLeftOrRightSubmoduleForCAP ],
+  function( submodule )
+
+    return GradedStandardModule( PresentationForCAP( submodule ) );
+
+end );
+
+# compute a smaller presentation for a graded left or right module presentation for CAP
+InstallMethod( GradedStandardModule,
                [ IsGradedLeftOrRightModulePresentationMorphismForCAP ],
   function( morphism )
     local new_source, new_range, new_underlying_morphism;
@@ -344,6 +362,15 @@ end );
 
 # compute a smaller presentation for a graded left or right module presentation for CAP
 InstallMethod( ByASmallerPresentation,
+               [ IsGradedLeftOrRightSubmoduleForCAP ],
+  function( submodule )
+
+    return GradedStandardModule( LessGradedGenerators( PresentationForCAP( submodule ) ) );
+
+end );
+
+# compute a smaller presentation for a graded left or right module presentation for CAP
+InstallMethod( ByASmallerPresentation,
                [ IsGradedLeftOrRightModulePresentationMorphismForCAP ],
   function( morphism )
 
@@ -427,6 +454,14 @@ InstallMethod( Truncation,
                            ] );
 
     return CAPPresentationCategoryObject( underlying_morphism );
+
+end );
+
+InstallMethod( Truncation,
+               [ IsGradedLeftOrRightSubmoduleForCAP, IsConeHPresentationList ],
+  function( submodule, cone_hpresentation_list )
+
+    return Truncation( PresentationForCAP( submodule ), cone_hpresentation_list );
 
 end );
 
@@ -596,6 +631,14 @@ InstallMethod( Truncation,
                            ] );
 
     return CAPPresentationCategoryObject( underlying_morphism );
+
+end );
+
+InstallMethod( Truncation,
+               [ IsGradedLeftOrRightSubmoduleForCAP, IsSemigroupGeneratorList ],
+  function( submodule, semigroup_generator_list )
+
+    return Truncation( PresentationForCAP( submodule ), semigroup_generator_list );
 
 end );
 
@@ -806,7 +849,7 @@ InstallGlobalFunction( FrobeniusPowerOfMatrix,
 
 end );
 
-# install Frobenius power of a module presentation
+# Frobenius power of a module presentation
 InstallMethod( FrobeniusPower,
                "Frobenius powers of presentation",
                [ IsGradedLeftOrRightModulePresentationForCAP, IsInt ],
@@ -865,7 +908,29 @@ InstallMethod( FrobeniusPower,
 
 end );
 
-# install Frobenius power of a module presentation morphism
+# Frobenius power of left or right submodules
+InstallMethod( FrobeniusPower,
+               "n-th Frobenius powers of ideals",
+               [ IsGradedLeftOrRightSubmoduleForCAP, IsInt ],
+  function( submodule, power )
+    local generator_matrix;
+
+    # extract the generators and take their individual powers via "FrobeniusPowerOfMatrix"
+    generator_matrix := HomalgMatrix( Generators( submodule ), HomalgGradedRing( submodule ) );
+    generator_matrix := FrobeniusPowerOfMatrix( generator_matrix, power );
+
+    # then return the associated ideal
+    if IsGradedLeftSubmoduleForCAP( submodule ) then
+      return GradedLeftSubmoduleForCAP( 
+                   EntriesOfHomalgMatrixAsListList( generator_matrix ), HomalgGradedRing( submodule ) );
+    else
+      return GradedRightSubmoduleForCAP( 
+                   EntriesOfHomalgMatrixAsListList( generator_matrix ), HomalgGradedRing( submodule ) );
+    fi;
+
+end );
+
+# Frobenius power of a module presentation morphism
 InstallMethod( FrobeniusPower,
                "Frobenius powers of presentation morphism",
                [ IsGradedLeftOrRightModulePresentationMorphismForCAP, IsInt ],
@@ -945,7 +1010,7 @@ InstallMethod( FrobeniusPower,
 
 end );
 
-# install Frobenius power of a module presentation morphism
+# Frobenius power of a module presentation morphism with given source and range powers
 InstallMethod( FrobeniusPowerWithGivenSourceAndRangePowers,
                "Frobenius powers of presentation morphism",
                [ IsGradedLeftOrRightModulePresentationMorphismForCAP, IsInt,

@@ -691,33 +691,3 @@ InstallMethod( \^,
     fi;
 
 end );
-
-
-
-##############################################################################################
-##
-#! @Section Frobenius powers for submodules
-##
-##############################################################################################
-
-# Frobenius power of left ideals
-InstallMethod( FrobeniusPower,
-               "n-th Frobenius powers of ideals",
-               [ IsGradedLeftOrRightSubmoduleForCAP and IsGradedLeftOrRightModulePresentationForCAP, IsInt ],
-  function( submodule, power )
-    local generator_matrix;
-
-    # extract the generators and take their individual powers via "FrobeniusPowerOfMatrix"
-    generator_matrix := HomalgMatrix( Generators( submodule ), HomalgGradedRing( submodule ) );
-    generator_matrix := FrobeniusPowerOfMatrix( generator_matrix, power );
-
-    # then return the associated ideal
-    if IsGradedLeftSubmoduleForCAP( submodule ) then
-      return GradedLeftSubmoduleForCAP( 
-                   EntriesOfHomalgMatrixAsListList( generator_matrix ), HomalgGradedRing( submodule ) );
-    else
-      return GradedRightSubmoduleForCAP( 
-                   EntriesOfHomalgMatrixAsListList( generator_matrix ), HomalgGradedRing( submodule ) );
-    fi;
-
-end );

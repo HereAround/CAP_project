@@ -240,13 +240,3 @@ DeclareOperation( "\^",
 #!
 DeclareOperation( "\^",
                   [ IsGradedRightSubmoduleForCAP, IsInt ] );
-
-
-
-##############################################################################################
-##
-#! @Section Frobenius powers for submodules
-##
-##############################################################################################
-
-#! A specialised method for Frobenius powers of graded submodules is available.
