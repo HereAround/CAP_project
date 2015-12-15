@@ -21,12 +21,12 @@ functor1_left := FunctorLessGradedGeneratorsLeft( S );
 #! Q[x_1,x_2,x_3,x_4] (with weights 
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 functor2_left := FunctorGradedStandardModuleLeft( S );
-#! Standard module for Category of graded left module presentations over
+#! Graded standard module for Category of graded left module presentations over
 #! Q[x_1,x_2,x_3,x_4] (with weights 
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 natural_transformation_left := 
 NaturalIsomorphismFromIdentityToGradedStandardModuleLeft( S );
-#! Natural isomorphism from Id to Standard module for Category of graded
+#! Natural isomorphism from Id to Graded standard module for Category of graded
 #! left module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 
@@ -43,12 +43,12 @@ functor1_right := FunctorLessGradedGeneratorsRight( S );
 #! Q[x_1,x_2,x_3,x_4] (with weights 
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 functor2_right := FunctorGradedStandardModuleRight( S );
-#! Standard module for Category of graded right module presentations over
+#! Graded standard module for Category of graded right module presentations over
 #! Q[x_1,x_2,x_3,x_4] (with weights 
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 natural_transformation_right := 
 NaturalIsomorphismFromIdentityToGradedStandardModuleRight( S );
-#! Natural isomorphism from Id to Standard module for Category of graded
+#! Natural isomorphism from Id to Graded standard module for Category of graded
 #! right module presentations over Q[x_1,x_2,x_3,x_4] (with weights 
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 
@@ -101,17 +101,16 @@ truncation1l := ApplyFunctor( truncation_functor_left, left_presentation1 );
 FullInformation( truncation1l );
 #! ================================================================================= 
 #!
-#! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 0 and 
-#! degrees: 
-#! [  ]
+#! A projective graded left module over Q[x_1,x_2,x_3,x_4] (with weights
+#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees: 
+#! [ [ ( 2, 0 ), 1 ] ]
 #!
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
-#! with matrix: 
-#! (an empty 0 x 1 matrix)
-#! 
-#! A projective graded left module over Q[x_1,x_2,x_3,x_4] (with weights 
+#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
+#! x_1
+#! (over a graded ring)
+#!
+#! A projective graded left module over Q[x_1,x_2,x_3,x_4] (with weights
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees: 
 #! [ [ ( 1, 0 ), 1 ] ]
 #!
@@ -145,47 +144,47 @@ trmorl := ApplyFunctor( truncation_functor_left, morl );
 #! <A morphism of graded left module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 FullInformation( trmorl );
-#! ================================================================================= 
-#!  
-#! Source: 
+#!
+#! =================================================================================
+#!
+#! Source:
 #! ------- 
 #! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 0 and degrees: 
-#! [  ]
-#! 
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix:
-#! (an empty 0 x 1 matrix)
-#! 
-#! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees: 
+#! [ [ ( 2, 0 ), 1 ] ]
+#!
+#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
+#! x_1
+#! (over a graded ring)
+#!
+#! A projective graded left module over Q[x_1,x_2,x_3,x_4] (with weights
+#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees:
 #! [ [ ( 1, 0 ), 1 ] ]
 #!
 #! --------------------------------------------------------------------------------- 
 #!
-#! Mapping matrix: 
-#! --------------- 
+#! Mapping matrix:
+#! ---------------
 #! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
 #! with matrix: 
 #! 1
 #! (over a graded ring)
 #!
 #! --------------------------------------------------------------------------------- 
 #!
-#! Range: 
-#! ------ 
-#! A projective graded left module over Q[x_1,x_2,x_3,x_4] (with weights 
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees: 
+#! Range:
+#! ------
+#! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees:
 #! [ [ ( 1, 0 ), 1 ] ]
-#! 
-#! A morphism in the category of projective graded left modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ]) 
-#! with matrix: 
+#!
+#! A morphism in the category of projective graded left modules over Q[x_1,x_2,x_3,x_4]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) with matrix: 
 #! 1
 #! (over a graded ring)
-#! 
+#!
 #! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees: 
 #! [ [ ( 1, 0 ), 1 ] ]
@@ -239,21 +238,22 @@ truncation1r := ApplyFunctor( truncation_functor_right, right_presentation1 );
 #! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 FullInformation( truncation1r );
-#! =================================================================================
-#!  
-#! A projective graded right module over Q[x_1,x_2,x_3,x_4] (with weights\
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 0 and degrees: 
-#! [  ]
-#! 
-#! A morphism in the category of projective graded right modules over 
-#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix: 
-#! (an empty 1 x 0 matrix)
-#! 
+#! ================================================================================= 
+#!
 #! A projective graded right module over Q[x_1,x_2,x_3,x_4] (with weights
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees: 
+#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees:
+#! [ [ ( 2, 0 ), 1 ] ]
+#!
+#! A morphism in the category of projective graded right modules over
+#! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ]])
+#! with matrix:
+#! x_1
+#! (over a graded ring)
+#!
+#! A projective graded right module over Q[x_1,x_2,x_3,x_4] (with weights
+#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees:
 #! [ [ ( 1, 0 ), 1 ] ]
-#! 
+#!
 #! =================================================================================
 truncation2r := ApplyFunctor( truncation_functor_right, right_presentation2 );
 #! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
@@ -276,7 +276,7 @@ FullInformation( truncation2r );
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees: 
 #! [ [ ( 1, 0 ), 1 ] ]
 #!
-#! ================================================================================= 
+#! =================================================================================
 morr := CAPPresentationCategoryMorphism( right_presentation1, m2r, right_presentation3 );
 #! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
@@ -284,19 +284,21 @@ trmorr := ApplyFunctor( truncation_functor_right, morr );
 #! <A morphism of graded right module presentations over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 FullInformation( trmorr );
+#!
 #! ================================================================================= 
 #!
 #! Source: 
 #! ------- 
 #! A projective graded right module over Q[x_1,x_2,x_3,x_4] (with weights
-#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 0 and degrees: 
-#! [  ]
+#! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees: 
+#! [ [ ( 2, 0 ), 1 ] ]
 #! 
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! with matrix: 
-#! (an empty 1 x 0 matrix)
-#! 
+#! x_1
+#! (over a graded ring)
+#!
 #! A projective graded right module over Q[x_1,x_2,x_3,x_4] (with weights
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees: 
 #! [ [ ( 1, 0 ), 1 ] ]
@@ -310,18 +312,18 @@ FullInformation( trmorr );
 #! with matrix: 
 #! 1
 #! (over a graded ring)
-#! 
+#!
 #! --------------------------------------------------------------------------------- 
-#! 
+#!
 #! Range: 
 #! ------ 
 #! A projective graded right module over Q[x_1,x_2,x_3,x_4] (with weights
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees: 
 #! [ [ ( 1, 0 ), 1 ] ]
-#! 
+#!
 #! A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! with matrix:
+#! with matrix: 
 #! 1
 #! (over a graded ring)
 #! 
@@ -329,8 +331,8 @@ FullInformation( trmorr );
 #! [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 1 and degrees: 
 #! [ [ ( 1, 0 ), 1 ] ]
 #! 
-#! =================================================================================
-#!
+#! ================================================================================= 
+#! 
 #! @EndExample
 
 

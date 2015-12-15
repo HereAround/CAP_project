@@ -9,42 +9,6 @@
 #############################################################################
 
 
-####################################################################################
-##
-#! @Section Frobenius powers of presentations
-##
-####################################################################################
-
-# Frobenius power of matrix
-DeclareGlobalFunction( "FrobeniusPowerOfMatrix" );
-
-#! @Description
-#! The arguments are a CAPPresentationCategoryObject $M$ and a non-negative integer $p$. This method
-#! then computes the $p$-th Frobenius power of $M$.
-#! @Returns a presentation category object
-#! @Arguments M, p
-DeclareOperation( "FrobeniusPower",
-                  [ IsGradedLeftOrRightModulePresentationForCAP, IsInt ] );
-
-#! @Description
-#! The arguments are a CAPPresentationCategoryMorphism $M$ and a non-negative integer $p$. This method
-#! then computes the $p$-th Frobenius power of $M$.
-#! @Returns a presentation category morphism
-#! @Arguments M, p
-DeclareOperation( "FrobeniusPower",
-                  [ IsGradedLeftOrRightModulePresentationMorphismForCAP, IsInt ] );
-
-#! @Description
-#! The arguments are a CAPPresentationCategoryMorphism $m$, a non-negative integer $p$, the p-th Frobenius power of
-#! the source of $m$, $s^\prime$, and the p-th Frobenius power of the range of $m$, $r^\prime$. This method
-#! then computes the $p$-th Frobenius power of $m$ by use of $s^\prime$ and $r^\prime$.
-#! @Returns a presentation category morphism
-#! @Arguments m, p, s', r'
-DeclareOperation( "FrobeniusPowerWithGivenSourceAndRangePowers",
-                  [ IsGradedLeftOrRightModulePresentationMorphismForCAP, IsInt,
-                    IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP ] );
-
-
 
 ####################################################################################
 ##
