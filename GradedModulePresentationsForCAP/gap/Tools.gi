@@ -260,7 +260,11 @@ InstallMethod( EmbeddingInProjectiveObject,
     range_object := CAPPresentationCategoryObject( 
                          ZeroMorphism( ZeroObject( CapCategory( cokernel_projection ) ), Range( cokernel_projection ) ) );
 
-    return CAPPresentationCategoryMorphism( presentation_object, cokernel_projection, range_object );
+    return CAPPresentationCategoryMorphism( presentation_object,
+                                            cokernel_projection,
+                                            range_object,
+                                            CapCategory( presentation_object )!.constructor_checks_wished
+                                           );
 
 end );
 

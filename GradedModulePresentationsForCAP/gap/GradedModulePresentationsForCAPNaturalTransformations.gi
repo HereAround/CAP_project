@@ -18,7 +18,6 @@
 # a function that computes the natural isomorphism 1 => StandardModule for both
 # left and right presentations
 InstallGlobalFunction( NaturalIsomorphismFromIdentityToGradedStandardModule,
-               
   function( graded_ring, left )
     local category, standard_module_functor, natural_transformation;
 
@@ -29,28 +28,33 @@ InstallGlobalFunction( NaturalIsomorphismFromIdentityToGradedStandardModule,
       category := SfpgrmodRight( graded_ring );
       standard_module_functor := FunctorGradedStandardModuleRight( graded_ring );
     fi;
-    
+
     # initialise the natural_transformation
-    natural_transformation := NaturalTransformation( Concatenation( "Natural isomorphism from Id to ", 
+    natural_transformation := NaturalTransformation( Concatenation( "Natural isomorphism from Id to ",
                                                      Name( standard_module_functor ) ),
-                                                     IdentityMorphism( AsCatObject( category ) ), 
+                                                     IdentityMorphism( AsCatObject( category ) ),
                                                      standard_module_functor 
                                                     );
 
     # add component of natural_transformation over object
-    AddNaturalTransformationFunction( natural_transformation,                                          
+    AddNaturalTransformationFunction( natural_transformation,
       function( id_object, object, standard_object )
         local matrix, underlying_morphism;
 
         matrix := HomalgIdentityMatrix( Rank( Range( UnderlyingMorphism( id_object ) ) ), graded_ring );
 
         underlying_morphism := CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism(
-                                                                                Range( UnderlyingMorphism( id_object ) ),
-                                                                                matrix,
-                                                                                Range( UnderlyingMorphism( standard_object ) )
-                                                                                );
+                                                      Range( UnderlyingMorphism( id_object ) ),
+                                                      matrix,
+                                                      Range( UnderlyingMorphism( standard_object ) ),
+                                                      CapCategory( UnderlyingMorphism( id_object ) )!.constructor_checks_wished 
+                                                     );
 
-        return CAPPresentationCategoryMorphism( id_object, underlying_morphism, standard_object );
+        return CAPPresentationCategoryMorphism( id_object, 
+                                                underlying_morphism, 
+                                                standard_object,
+                                                CapCategory( id_object )!.constructor_checks_wished 
+                                               );
 
     end );
 

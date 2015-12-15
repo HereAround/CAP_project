@@ -150,8 +150,12 @@ InstallGlobalFunction( GradedSubmoduleFromListListAndGradedRing,
     
     # compute the embedding
     range := CAPPresentationCategoryObject( ZeroMorphism( ZeroObject( CapCategory( range ) ), range ) );
-    embedding := CAPPresentationCategoryMorphism( pres, alpha, range );
-    
+    embedding := CAPPresentationCategoryMorphism( pres,
+                                                  alpha,
+                                                  range,
+                                                  CapCategory( pres )!.constructor_checks_wished
+                                                 );
+
     # determine the type
     if left then
       if Rank( Range( UnderlyingMorphism( range ) ) ) = 1 then
@@ -245,7 +249,11 @@ InstallGlobalFunction( GradedSubmoduleFromListListAndGivenRange,
     
     # compute the embedding
     range := CAPPresentationCategoryObject( ZeroMorphism( ZeroObject( CapCategory( range ) ), range ) );
-    embedding := CAPPresentationCategoryMorphism( pres, alpha, range );
+    embedding := CAPPresentationCategoryMorphism( pres,
+                                                  alpha,
+                                                  range,
+                                                  CapCategory( pres )!.constructor_checks_wished
+                                                 );
 
     # determine the type
     if left then
@@ -326,7 +334,11 @@ InstallGlobalFunction( GradedSubmoduleFromMorphism,
     
     # compute the embedding
     range := CAPPresentationCategoryObject( ZeroMorphism( ZeroObject( CapCategory( alpha ) ), Range( alpha ) ) );
-    embedding := CAPPresentationCategoryMorphism( pres, alpha, range );
+    embedding := CAPPresentationCategoryMorphism( pres,
+                                                  alpha,
+                                                  range,
+                                                  CapCategory( pres )!.constructor_checks_wished
+                                                 );
 
     # determine the type
     if left then
@@ -577,7 +589,11 @@ InstallMethod( \*,
     # compute the range and thereby compute the embedding properly
     range := CAPPresentationCategoryObject(
                          ZeroMorphism( ZeroObject( CapCategory( Range( new_embedding ) ) ), Range( new_embedding ) ) );
-    new_embedding := CAPPresentationCategoryMorphism( new_presentation, new_embedding, range );
+    new_embedding := CAPPresentationCategoryMorphism( new_presentation,
+                                                      new_embedding,
+                                                      range,
+                                                      CapCategory( new_presentation )!.constructor_checks_wished
+                                                     );
 
     # identify the type
     if left1 then
@@ -627,7 +643,11 @@ InstallMethod( \^,
       presentation := CAPPresentationCategoryObject( ZeroMorphism( ZeroObject( CapCategory( range ) ), range ) );
       generators := EntriesOfHomalgMatrixAsListList( 
                                      HomalgIdentityMatrix( Rank( range ), HomalgGradedRing( submodule ) ) );
-      embedding := CAPPresentationCategoryMorphism( presentation, IdentityMorphism( range ), presentation );
+      embedding := CAPPresentationCategoryMorphism( presentation,
+                                                    IdentityMorphism( range ),
+                                                    presentation,
+                                                    CapCategory( presentation )!.constructor_checks_wished
+                                                   );
 
       # identify the type
       left := IsGradedLeftSubmoduleForCAP( submodule );
