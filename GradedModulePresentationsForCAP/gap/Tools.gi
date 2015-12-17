@@ -180,8 +180,8 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
 
     local ideal_embedding, homalg_graded_ring, homalg_graded_ring_module, module_saturated, embedding, buffer_mapping;
 
-    # first check that the second object is indeed an ideal
-    ideal_embedding := EmbeddingInProjectiveObject( ideal );
+    # check that the module and the ideal are defined over the same ring
+    ideal_embedding := EmbeddingInSuperObjectForCAP( ideal );
     homalg_graded_ring := UnderlyingHomalgGradedRing( UnderlyingMorphism( ideal ) );
     if not IsIdenticalObj( UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ), homalg_graded_ring ) then
 

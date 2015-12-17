@@ -80,9 +80,21 @@ end );
 InstallMethod( LessGradedGenerators,
                [ IsGradedLeftOrRightSubmoduleForCAP ],
   function( submodule )
+    local new_presentation, embedding;
+  
+    # compute a new presentation
+    new_presentation := LessGradedGenerators( PresentationForCAP( submodule ) );
 
-    return LessGradedGenerators( PresentationForCAP( submodule ) );
-
+    # compute the embedding
+    embedding := EmbeddingInProjectiveObject( new_presentation );
+    
+    # and return the associated subobject
+    if IsGradedLeftSubmoduleForCAP( submodule ) then
+      return GradedLeftSubmoduleForCAP( UnderlyingMorphism( embedding ) );
+    else
+      return GradedRightSubmoduleForCAP( UnderlyingMorphism( embedding ) );
+    fi;
+    
 end );
 
 # compute a smaller presentation for a graded left or right module presentation for CAP
@@ -245,8 +257,20 @@ end );
 InstallMethod( GradedStandardModule,
                [ IsGradedLeftOrRightSubmoduleForCAP ],
   function( submodule )
+    local new_presentation, embedding;
+  
+    # compute a new presentation
+    new_presentation := GradedStandardModule( PresentationForCAP( submodule ) );
 
-    return GradedStandardModule( PresentationForCAP( submodule ) );
+    # compute the embedding
+    embedding := EmbeddingInProjectiveObject( new_presentation );
+    
+    # and return the associated subobject
+    if IsGradedLeftSubmoduleForCAP( submodule ) then
+      return GradedLeftSubmoduleForCAP( UnderlyingMorphism( embedding ) );
+    else
+      return GradedRightSubmoduleForCAP( UnderlyingMorphism( embedding ) );
+    fi;
 
 end );
 
@@ -364,8 +388,20 @@ end );
 InstallMethod( ByASmallerPresentation,
                [ IsGradedLeftOrRightSubmoduleForCAP ],
   function( submodule )
+    local new_presentation, embedding;
+  
+    # compute a new presentation
+    new_presentation := GradedStandardModule( LessGradedGenerators( PresentationForCAP( submodule ) ) );
 
-    return GradedStandardModule( LessGradedGenerators( PresentationForCAP( submodule ) ) );
+    # compute the embedding
+    embedding := EmbeddingInProjectiveObject( new_presentation );
+    
+    # and return the associated subobject
+    if IsGradedLeftSubmoduleForCAP( submodule ) then
+      return GradedLeftSubmoduleForCAP( UnderlyingMorphism( embedding ) );
+    else
+      return GradedRightSubmoduleForCAP( UnderlyingMorphism( embedding ) );
+    fi;
 
 end );
 
@@ -460,9 +496,21 @@ end );
 InstallMethod( Truncation,
                [ IsGradedLeftOrRightSubmoduleForCAP, IsConeHPresentationList ],
   function( submodule, cone_hpresentation_list )
+    local new_presentation, embedding;
+  
+    # compute a new presentation
+    new_presentation := Truncation( PresentationForCAP( submodule ), cone_hpresentation_list );
 
-    return Truncation( PresentationForCAP( submodule ), cone_hpresentation_list );
-
+    # compute the embedding
+    embedding := EmbeddingInProjectiveObject( new_presentation );
+    
+    # and return the associated subobject
+    if IsGradedLeftSubmoduleForCAP( submodule ) then
+      return GradedLeftSubmoduleForCAP( UnderlyingMorphism( embedding ) );
+    else
+      return GradedRightSubmoduleForCAP( UnderlyingMorphism( embedding ) );
+    fi;
+    
 end );
 
 InstallMethod( Truncation,
@@ -638,7 +686,20 @@ InstallMethod( Truncation,
                [ IsGradedLeftOrRightSubmoduleForCAP, IsSemigroupGeneratorList ],
   function( submodule, semigroup_generator_list )
 
-    return Truncation( PresentationForCAP( submodule ), semigroup_generator_list );
+    local new_presentation, embedding;
+  
+    # compute a new presentation
+    new_presentation := Truncation( PresentationForCAP( submodule ), semigroup_generator_list );
+
+    # compute the embedding
+    embedding := EmbeddingInProjectiveObject( new_presentation );
+    
+    # and return the associated subobject
+    if IsGradedLeftSubmoduleForCAP( submodule ) then
+      return GradedLeftSubmoduleForCAP( UnderlyingMorphism( embedding ) );
+    else
+      return GradedRightSubmoduleForCAP( UnderlyingMorphism( embedding ) );
+    fi;
 
 end );
 
@@ -924,7 +985,7 @@ InstallMethod( FrobeniusPower,
       return GradedLeftSubmoduleForCAP( 
                    EntriesOfHomalgMatrixAsListList( generator_matrix ), HomalgGradedRing( submodule ) );
     else
-      return GradedRightSubmoduleForCAP( 
+      return GradedRightSubmoduleForCAP(
                    EntriesOfHomalgMatrixAsListList( generator_matrix ), HomalgGradedRing( submodule ) );
     fi;
 
