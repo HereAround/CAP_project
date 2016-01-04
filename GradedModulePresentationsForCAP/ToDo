@@ -1,8 +1,6 @@
-(1) I do not trust "LessGenerators". In particular this "SimplerMatrix" method is quite mysterious.
-    -> Do it properly? Why is the transformation_triple homogeneous?
-(2) Immediate methods to trigger "LessGenerators" and "StandardModule" at certain places to simplify computations.
-(3) Get computations done faster, so that they compare to what GradedModules does in performance respects.
-(4) "Copy" the entire GradedModules into category theory setting, in particular using the same function names?
-(5) Add tests for "MinimalFreeResolution" and make it properly (i.e. put as complex...)
-(6) Add GAP category for "MinimalFreeResolution" and then write a "FullInformation" method
-(7) define type "GradedModulePresentationForCAP" and use it to filter methods
+(1) Immediate methods to trigger "LessGenerators" and "StandardModule" at certain places to simplify computations.
+(2) Get computations done faster, so that they compare to what GradedModules does in performance respects.
+(3) "Copy" the entire GradedModules into category theory setting, in particular using the same function names?
+(4) Add GAP category for "MinimalFreeResolution" and then write a "FullInformation" method
+
+(5) do more advance computation with GS or DirectProducts -> recursion depth trap -> investigate

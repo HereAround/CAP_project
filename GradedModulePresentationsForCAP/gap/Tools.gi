@@ -36,22 +36,30 @@ InstallMethod( Saturate,
     # save the image of the ideal_embedding
     homalg_graded_ring_module := Range( ideal_embedding );
 
+    Error( "another test" );
+    
     # now compute the saturation
     module_saturated := module;
+    #buffer_mapping := ByASmallerPresentation( 
+    #                        InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) ) );
+
     buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
-    buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsLeft( homalg_graded_ring ), buffer_mapping );
+    
+    Error( "before iso" );
 
     while not IsIsomorphism( buffer_mapping ) do
 
-      module_saturated := InternalHomOnObjects( homalg_graded_ring_module ,
-                                                InternalHomOnObjects( PresentationForCAP( ideal ), module_saturated ) 
-                                               );
-      module_saturated := ApplyFunctor( FunctorLessGradedGeneratorsLeft( homalg_graded_ring ), module_saturated );
-      buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
-      buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsLeft( homalg_graded_ring ), buffer_mapping );
-    
+      module_saturated := ByASmallerPresentation( 
+                                  InternalHomOnObjects( homalg_graded_ring_module ,
+                                                        InternalHomOnObjects( PresentationForCAP( ideal ), module_saturated ) 
+                                                       ) );
+      buffer_mapping := ByASmallerPresentation( 
+                                  InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) ) );
+
+      Error( "Before iso" );
+
     od;
-    
+
     # finally return the satured module
     return module_saturated;
 
@@ -88,17 +96,17 @@ InstallMethod( Saturate,
 
     # now compute the saturation
     module_saturated := module;
-    buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
-    buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsRight( homalg_graded_ring ), buffer_mapping );
+    buffer_mapping := ByASmallerPresentation(
+                             InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) ) );
 
     while not IsIsomorphism( buffer_mapping ) do
 
-      module_saturated := InternalHomOnObjects( homalg_graded_ring_module ,
+      module_saturated := ByASmallerPresentation(
+                                  InternalHomOnObjects( homalg_graded_ring_module ,
                                                 InternalHomOnObjects( PresentationForCAP( ideal ), module_saturated ) 
-                                               );
-      module_saturated := ApplyFunctor( FunctorLessGradedGeneratorsRight( homalg_graded_ring ), module_saturated );
-      buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
-      buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsRight( homalg_graded_ring ), buffer_mapping );
+                                               ) );
+      buffer_mapping := ByASmallerPresentation(
+                                  InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) ) );
 
     od;
 
@@ -141,9 +149,8 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
     embedding := IdentityMorphism( module );
     module_saturated := Range( embedding );
 
-    buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
-    #buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsLeft( homalg_graded_ring ), buffer_mapping );
-    buffer_mapping := ApplyFunctor( FunctorGradedStandardModuleLeft( homalg_graded_ring ), buffer_mapping );
+    buffer_mapping := ByASmallerPresentation(
+                               InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) ) );
 
     while not IsIsomorphism( buffer_mapping ) do
 
@@ -152,9 +159,8 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
 
       module_saturated := Range( embedding );
 
-      buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
-      #buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsLeft( homalg_graded_ring ), buffer_mapping );
-      buffer_mapping := ApplyFunctor( FunctorGradedStandardModuleLeft( homalg_graded_ring ), buffer_mapping );        
+      buffer_mapping := ByASmallerPresentation(
+                               InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) ) );
 
     od;
 
@@ -193,13 +199,12 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
     # save the image of the ideal_embedding
     homalg_graded_ring_module := Range( ideal_embedding );
 
-    # now compute the saturation    
+    # now compute the saturation
     embedding := IdentityMorphism( module );
     module_saturated := Range( embedding );
-    
-    buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
-    #buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsLeft( homalg_graded_ring ), buffer_mapping );
-    buffer_mapping := ApplyFunctor( FunctorGradedStandardModuleLeft( homalg_graded_ring ), buffer_mapping );
+
+    buffer_mapping := ByASmallerPresentation(
+                           InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) ) );
 
     while not IsIsomorphism( buffer_mapping ) do
 
@@ -208,9 +213,7 @@ InstallMethod( EmbeddingInSaturationOfGradedModulePresentation,
 
       module_saturated := Range( embedding );
 
-      buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
-      #buffer_mapping := ApplyFunctor( FunctorLessGradedGeneratorsLeft( homalg_graded_ring ), buffer_mapping );
-      buffer_mapping := ApplyFunctor( FunctorGradedStandardModuleLeft( homalg_graded_ring ), buffer_mapping );        
+      buffer_mapping := ByASmallerPresentation( InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) ) );
 
     od;
 
@@ -411,11 +414,10 @@ InstallMethod( BettiTableForCAP,
     betti_table := [];
 
     # use a presentation that does not contain units -> minimal (!) resolution          
-
     if left then
       new_mapping_matrix := ReducedBasisOfRowModule( UnderlyingHomalgMatrix( 
                                                                           UnderlyingMorphism( presentation_object ) ) );
-      buffer_mapping := DeduceMapFromMatrixAndRangeLeft( new_mapping_matrix, 
+      buffer_mapping := DeduceMapFromMatrixAndRangeLeft( new_mapping_matrix,
                                                                     Range( UnderlyingMorphism( presentation_object ) ) );
     else
       new_mapping_matrix := ReducedBasisOfColumnModule( UnderlyingHomalgMatrix( 
@@ -425,7 +427,7 @@ InstallMethod( BettiTableForCAP,
     fi;
 
     # and use this mapping as the first morphisms is the minimal free resolution
-    Add( betti_table, - UnzipDegreeList( Range( buffer_mapping ) ) );
+    Add( betti_table, UnzipDegreeList( Range( buffer_mapping ) ) );
     
     # check if we are already done
     if IsZeroForObjects( Source( buffer_mapping ) ) then
@@ -433,7 +435,7 @@ InstallMethod( BettiTableForCAP,
     fi;
     
     # otherwise add the source and compute the next mapping
-    Add( betti_table, - UnzipDegreeList( Source( buffer_mapping ) ) );
+    Add( betti_table, UnzipDegreeList( Source( buffer_mapping ) ) );
 
     # now compute "reduced" kernels
     if left then
@@ -448,7 +450,7 @@ InstallMethod( BettiTableForCAP,
     while not IsZeroForObjects( Source( buffer_mapping ) ) do
 
       # add the corresponding kernel embedding
-      Add( betti_table, - UnzipDegreeList( Source( buffer_mapping ) ) );
+      Add( betti_table, UnzipDegreeList( Source( buffer_mapping ) ) );
 
       # and compute the next kernel_embedding
       if left then

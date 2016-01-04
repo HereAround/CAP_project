@@ -991,9 +991,9 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Arguments a, b
     AddInternalHomOnObjects( category,
     function( a, b )
-    
+
       return Source( INTERNAL_HOM_EMBEDDING_IN_TENSOR_PRODUCT( a,b ) );
-          
+
     end );
 
     # @Description
@@ -1017,11 +1017,11 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     AddInternalHomOnMorphismsWithGivenInternalHoms( category,
     function( s, alpha, beta, r )
       local kernel1, kernel2, bridge_mapping;
-    
+
       # (1) extract the Hom-embeddings
       kernel1 := INTERNAL_HOM_EMBEDDING_IN_TENSOR_PRODUCT( Range( alpha ), Source( beta ) );
       kernel2 := INTERNAL_HOM_EMBEDDING_IN_TENSOR_PRODUCT( Source( alpha ), Range( beta ) );
-      
+
       # (2) construct the bridge_mapping A^vee \otimes B -> A'^\vee \otimes b'
       bridge_mapping := CAPPresentationCategoryMorphism(
                                  Range( kernel1 ),
