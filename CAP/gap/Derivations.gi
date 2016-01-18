@@ -834,7 +834,7 @@ InstallGlobalFunction( InstalledMethodsOfCategory,
         Print( "- ", i, "\n" );
     od;
     
-    Print( "\nPlease use DerivationsOfMethodByCategory( <category>, <name> ) do get\n",
+    Print( "\nPlease use DerivationsOfMethodByCategory( <category>, <name> ) to get\n",
            "information about how to add the missing methods\n" );
     
 end );
@@ -878,7 +878,7 @@ InstallGlobalFunction( DerivationsOfMethodByCategory,
             used_ops_with_multiples := UsedOperationsWithMultiples( current_derivation );
             for i in used_ops_with_multiples do
                 
-                Print( "* ", i[ 1 ], " (x", i[ 2 ], ")" );
+                Print( "* ", i[ 1 ], " (", i[ 2 ], "x)" );
                 Print( " installed with weight ", String( CurrentOperationWeight( weight_list, i[ 1 ] ) ) );
                 Print( "\n" );
               
@@ -937,7 +937,7 @@ InstallGlobalFunction( DerivationsOfMethodByCategory,
         
         for i in used_ops_with_multiples do
             
-            Print( "* ", i[ 1 ], " (x", i[ 2 ], ")" );
+            Print( "* ", i[ 1 ], " (", i[ 2 ], "x)" );
             
             if CurrentOperationWeight( weight_list, i[ 1 ] ) < infinity then
                 Print( ", (already installed with weight ", String( CurrentOperationWeight( weight_list, i[ 1 ] ) ),")" );
@@ -955,8 +955,20 @@ end );
 
 InstallGlobalFunction( ListPrimitivelyInstalledOperationsOfCategory,
   
-  function( cat )
-    local names;
+  function( arg )
+    local cat, filter, names;
+    
+    if Length( arg ) < 1 then
+        Error( "first argument needs to be <category>" );
+    fi;
+    
+    cat := arg[ 1 ];
+    
+    if Length( arg ) > 1 then
+        filter := arg[ 2 ];
+    else
+        filter := fail;
+    fi;
     
     if IsCapCategoryCell( cat ) then
         cat := CapCategory( cat );
@@ -966,7 +978,11 @@ InstallGlobalFunction( ListPrimitivelyInstalledOperationsOfCategory,
         Error( "input must be category or cell" );
     fi;
     
-    names := RecNames( cat!.primitive_operations );
+    names := AsSortedList( RecNames( cat!.primitive_operations ) );
+    
+    if filter <> fail then
+        names := Filtered( names, i -> PositionSublist( i, filter ) <> fail );
+    fi;
     
     return AsSortedList( names );
     
@@ -974,8 +990,20 @@ end );
 
 InstallGlobalFunction( ListInstalledOperationsOfCategory,
   
-  function( category )
-    local weight_list, list_of_methods, list_of_installed_methods;
+  function( arg )
+    local category, filter, weight_list, list_of_methods, list_of_installed_methods;
+    
+    if Length( arg ) < 1 then
+        Error( "first argument needs to be <category>" );
+    fi;
+    
+    category := arg[ 1 ];
+    
+    if Length( arg ) > 1 then
+        filter := arg[ 2 ];
+    else
+        filter := fail;
+    fi;
     
     if IsCapCategoryCell( category ) then
         category := CapCategory( category );
@@ -993,6 +1021,10 @@ InstallGlobalFunction( ListInstalledOperationsOfCategory,
     list_of_methods := AsSortedList( list_of_methods );
     
     list_of_methods := Filtered( list_of_methods, i -> CurrentOperationWeight( weight_list, i ) < infinity );
+    
+    if filter <> fail then
+        list_of_methods := Filtered( list_of_methods, i -> PositionSublist( i, filter ) <> fail );
+    fi;
     
     return list_of_methods;
     
