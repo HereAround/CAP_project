@@ -302,7 +302,7 @@ InstallMethod( MinimalFreeResolutionForCAP,
     else
       new_mapping_matrix := ReducedBasisOfColumnModule( UnderlyingHomalgMatrix(
                                                                            UnderlyingMorphism( presentation_object ) ) );
-      buffer_mapping := DeduceMapFromMatrixAndRangeRight( new_mapping_matrix, 
+      buffer_mapping := DeduceMapFromMatrixAndRangeRight( new_mapping_matrix,
                                                                     Range( UnderlyingMorphism( presentation_object ) ) );
     fi;
 
@@ -474,5 +474,78 @@ InstallMethod( BettiTableForCAP,
   function( submodule )
   
     return BettiTableForCAP( PresentationForCAP( submodule ) );
+
+end );
+
+
+
+####################################################################################
+##
+#! @Section Extension modules
+##
+####################################################################################
+
+InstallMethod( GradedExtForCAP,
+               "for an integer and two graded modules",
+               [ IsInt, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP ],
+  function( i, module1, module2 )
+    local left, mu, graded_hom_mapping;
+
+    # check input
+    left := IsGradedLeftModulePresentationForCAP( module1 );
+    if i < 0 then
+      Error( "the integer i must be non-negative" );
+      return;
+    elif IsGradedLeftModulePresentationForCAP( module2 ) <> left then
+      Error( "the two modules must either both be left or both be right modules" );
+      return;
+    fi;
+
+    # now compute the extension module
+
+    # (1) extract the i-th morphism from a resolution of module1 (if i = 0, then this is to be taken as the zero morphism)
+    if i = 0 then
+      mu := ZeroMorphism( module1, ZeroObject( CapCategory( module1 ) ) );
+    elif i = 1 then
+      mu := UnderlyingZFunctorCell( MinimalFreeResolutionForCAP( module1 ) )!.differential_func( -i );
+      mu := ApplyFunctor( EmbeddingOfProjCategory( CapCategory( mu ) ), mu );
+      mu := KernelEmbedding( CokernelProjection( mu ) );
+    else
+      mu := UnderlyingZFunctorCell( MinimalFreeResolutionForCAP( module1 ) )!.differential_func( -i );
+      mu := ApplyFunctor( EmbeddingOfProjCategory( CapCategory( mu ) ), mu );
+    fi;
+
+    # (2) compute GradedHom( Range( mu ), module2 ) -> GradedHom( Source( mu ), module2 )
+    graded_hom_mapping := InternalHomOnMorphisms( mu, IdentityMorphism( module2 ) );
+
+    # (3) then return the cokernel object of this morphism
+    return CokernelObject( graded_hom_mapping );
+
+end );
+
+InstallMethod( GradedExtForCAP,
+               "for an integer and two graded modules",
+               [ IsInt, IsGradedLeftOrRightSubmoduleForCAP, IsGradedLeftOrRightModulePresentationForCAP ],
+  function( i, module1, module2 )
+    
+    return GradedExtForCAP( i, PresentationForCAP( module1 ), module2 );
+
+end );
+
+InstallMethod( GradedExtForCAP,
+               "for an integer and two graded modules",
+               [ IsInt, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightSubmoduleForCAP ],
+  function( i, module1, module2 )
+
+    return GradedExtForCAP( i, module1, PresentationForCAP( module2 ) );
+
+end );
+
+InstallMethod( GradedExtForCAP,
+               "for an integer and two graded modules",
+               [ IsInt, IsGradedLeftOrRightSubmoduleForCAP, IsGradedLeftOrRightSubmoduleForCAP ],
+  function( i, module1, module2 )
+
+    return GradedExtForCAP( i, PresentationForCAP( module1 ), PresentationForCAP( module2 ) );
 
 end );
