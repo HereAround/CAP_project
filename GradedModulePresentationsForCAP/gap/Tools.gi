@@ -503,21 +503,28 @@ InstallMethod( GradedExtForCAP,
 
     # now compute the extension module
 
+    Error( "Test0" );
+    
     # (1) extract the i-th morphism from a resolution of module1 (if i = 0, then this is to be taken as the zero morphism)
     if i = 0 then
       mu := ZeroMorphism( module1, ZeroObject( CapCategory( module1 ) ) );
-    elif i = 1 then
-      mu := UnderlyingZFunctorCell( MinimalFreeResolutionForCAP( module1 ) )!.differential_func( -i );
-      mu := ApplyFunctor( EmbeddingOfProjCategory( CapCategory( mu ) ), mu );
-      mu := KernelEmbedding( CokernelProjection( mu ) );
+    #elif i = 1 then
+    #  mu := UnderlyingZFunctorCell( MinimalFreeResolutionForCAP( module1 ) )!.differential_func( -i );
+    #  mu := ApplyFunctor( EmbeddingOfProjCategory( CapCategory( mu ) ), mu );
+    #  mu := KernelEmbedding( CokernelProjection( mu ) );
     else
       mu := UnderlyingZFunctorCell( MinimalFreeResolutionForCAP( module1 ) )!.differential_func( -i );
       mu := ApplyFunctor( EmbeddingOfProjCategory( CapCategory( mu ) ), mu );
+      mu := KernelEmbedding( CokernelProjection( mu ) );
     fi;
 
+    Error( "Test1" );
+    
     # (2) compute GradedHom( Range( mu ), module2 ) -> GradedHom( Source( mu ), module2 )
     graded_hom_mapping := InternalHomOnMorphisms( mu, IdentityMorphism( module2 ) );
 
+    Error( "Test2" );
+    
     # (3) then return the cokernel object of this morphism
     return CokernelObject( graded_hom_mapping );
 
