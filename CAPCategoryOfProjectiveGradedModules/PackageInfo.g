@@ -13,39 +13,13 @@ PackageName := "CAPCategoryOfProjectiveGradedModules",
 Subtitle := "Category of projective graded modules over a graded ring",
 
 Version := Maximum( [
-  "2015.09.21", ## Martin version
+  "2015.11.13", ## Martin's version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
 Date := Concatenation( ~.Date{[ 9, 10 ]}, "/", ~.Date{[ 6, 7 ]}, "/", ~.Date{[ 1 .. 4 ]} ),
 
 Persons := [
-  rec(
-    IsAuthor := true,
-    IsMaintainer := true,
-    FirstNames := "Sebastian",
-    LastName := "Gutsche",
-    WWWHome := "http://wwwb.math.rwth-aachen.de/~gutsche",
-    Email := "gutsche@mathematik.uni-kl.de",
-    PostalAddress := "TODO",
-    Place := "Kaiserslautern",
-    Institution := "TU Kaiserslautern",
-  ),
-  rec(
-    IsAuthor := true,
-    IsMaintainer := true,
-    FirstNames := "Sebastian",
-    LastName := "Posur",
-    WWWHome := "http://wwwb.math.rwth-aachen.de/Mitarbeiter/posur.php",
-    Email := "sposur@momo.math.rwth-aachen.de",
-    PostalAddress := Concatenation(
-               "Lehrstuhl B für Mathematik RWTH - Aachen\n",
-               "Templergraben 64\n",
-               "52062 Aachen\n",
-               "Germany" ),
-    Place := "Aachen",
-    Institution := "Rheinisch-Westfälische Technische Hochschule Aachen",
-  ),
   rec(
     IsAuthor := true,
     IsMaintainer := true,
@@ -98,6 +72,8 @@ Dependencies := rec(
                            [ "MatricesForHomalg", ">= 2015.06.20" ],
                            [ "GradedRingForHomalg", "2014.08.27" ],
                            [ "CAP", ">= 2015.08.17" ],
+                           [ "4ti2Interface", ">= 2015.11.06" ],
+                           [ "NormalizInterface", ">=0" ]
                            ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],

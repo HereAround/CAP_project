@@ -1,11 +1,44 @@
 #############################################################################
 ##
-##                                       ModulePresentationsForCAP package
+##                  CAPPresentationCategory
 ##
-##  Copyright 2014, Sebastian Gutsche, TU Kaiserslautern
-##                  Sebastian Posur,   RWTH Aachen
+##  Copyright 2015,  Martin Bies,       ITP Heidelberg
+##
+#! @Chapter Convenience methods
 ##
 #############################################################################
 
-DeclareAttribute( "LessGeneratorsTransformationTriple",
-                  IsHomalgMatrix );
+
+####################################################################################
+##
+#! @Section Powers of objects and morphisms
+##
+####################################################################################
+
+#!
+DeclareOperation( "\*",
+               [ IsCAPPresentationCategoryObject, IsCAPPresentationCategoryObject ] );
+
+#!
+DeclareOperation( "\^",
+               [ IsCAPPresentationCategoryObject, IsInt ] );
+
+#!
+DeclareOperation( "\*",
+               [ IsCAPPresentationCategoryMorphism, IsCAPPresentationCategoryMorphism ] );
+
+#!
+DeclareOperation( "\^",
+               [ IsCAPPresentationCategoryMorphism, IsInt ] );
+
+
+
+####################################################################################
+##
+#! @Section Determine if a category is a Proj-category
+##
+####################################################################################
+
+DeclareGlobalFunction( "IsProjCategory" );
+
+DeclareGlobalFunction( "IsMonoidalStructurePresent" );

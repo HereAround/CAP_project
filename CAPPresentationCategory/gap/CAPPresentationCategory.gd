@@ -2,43 +2,35 @@
 ##
 ##                  CAPPresentationCategory package
 ##
-##  Copyright 2015, Sebastian Gutsche, TU Kaiserslautern
-##                  Sebastian Posur,   RWTH Aachen
-##                  Martin Bies,       ITP Heidelberg
+##  Copyright 2015, Martin Bies,       ITP Heidelberg
+##
+#! @Chapter Presentation Category
 ##
 #############################################################################
 
 ##############################################
 ##
-## Category
+#! @Section Constructor
 ##
 ##############################################
 
+#! @Description
+#! The argument is a so-called proj-category $P$. That is an additive category with weak lifts, weak kernels and a
+#! rigid, symmmetric, closed monoidal structure. The output is then the presentation category over this proj-category.
+#! Given that $P$ is a strict monoidal category, or that direct sums with the zero object of $P$ lead to identical
+#! objects, can simplify the structure of the presentation category (in that unitors become identities - not sure about
+#! the associators yet!) This could in principle be used, but is not used as of now. FIX ME FIX ME FIX ME).
+#! @Returns a category
+#! @Arguments P
 DeclareAttribute( "PresentationCategory",
                   IsCapCategory );
 
-##############################################
+###################################################
 ##
-## Add methods
+## Install the methods of the presentation category
 ##
-##############################################
+###################################################
 
-DeclareGlobalFunction( "ADD_FUNCTIONS_FOR_PRESENTATION_CATEGORY" );
+DeclareGlobalFunction( "ADD_BASIC_FUNCTIONS_FOR_PRESENTATION_CATEGORY" );
 
-#DeclareGlobalFunction( "ADD_INTERNAL_HOM_ON_OBJECTS" );
-
-#DeclareGlobalFunction( "ADD_INTERNAL_HOM_ON_MORPHISMS" );
-
-#DeclareGlobalFunction( "ADD_BRAIDING" );
-
-#DeclareGlobalFunction( "ADD_EVALUATION_MORPHISM" );
-
-#DeclareGlobalFunction( "ADD_COEVALUATION_MORPHISM" );
-
-#DeclareGlobalFunction( "ADD_TENSOR_UNIT" );
-
-#DeclareGlobalFunction( "ADD_TENSOR_PRODUCT_ON_OBJECTS" );
-
-#DeclareGlobalFunction( "ADD_TENSOR_PRODUCT_ON_MORPHISMS" );
-
-
+DeclareGlobalFunction( "ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY" );

@@ -2,22 +2,13 @@
 ##
 ##                  CAPPresentationCategory package
 ##
-##  Copyright 2015, Sebastian Gutsche, TU Kaiserslautern
-##                  Sebastian Posur,   RWTH Aachen
-##                  Martin Bies,       ITP Heidelberg
+##  Copyright 2015, Martin Bies,       ITP Heidelberg
+##
+##  Chapter Objects
 ##
 #############################################################################
 
-DeclareRepresentation( "IsCAPPresentationCategoryObjectRep",
-                       IsCAPPresentationCategoryObject and IsAttributeStoringRep,
-                       [ ] );
 
-BindGlobal( "TheFamilyOfCAPPresentationCategoryObjects",
-            NewFamily( "TheFamilyOfCAPPresentationCategoryObjects" ) );
-
-BindGlobal( "TheTypeOfCAPPresentationCategoryObject",
-            NewType( TheFamilyOfCAPPresentationCategoryObjects,
-                     IsCAPPresentationCategoryObjectRep ) );
 
 #############################
 ##
@@ -27,32 +18,43 @@ BindGlobal( "TheTypeOfCAPPresentationCategoryObject",
 
 ##
 InstallMethod( CAPPresentationCategoryObject,
-               [ IsCapCategoryMorphism, IsCapCategory ],
-  function( presentation_morphism, projective_category )
-    local category, presentation_category_object;
-  
-    # check that the input is valid
-    if not IsIdenticalObj( CapCategory( presentation_morphism ), projective_category ) then
-    
-      Error( "The morphism is not defined in the projective category. \n" );
-      return false;
-    
+               [ IsCapCategoryMorphism ],
+  function( presentation_morphism )
+    local projective_category, category, presentation_category_object, type;
+
+    # capture the CapCategory of the presentation morphism
+    projective_category := CapCategory( presentation_morphism );
+
+    # and "try" to compute its presentation category
+    # should the given category not be a proj-category, then this command will cause an error
+    category := PresentationCategory( projective_category );
+
+    # now initialise the object
+    presentation_category_object := rec( );
+
+    # set its type (differing special cases, as defined in SpecialGAPCategories.gd)
+    if IsCAPCategoryOfProjectiveGradedLeftModulesObject( ZeroObject( projective_category ) ) then
+      type := TheTypeOfGradedLeftModulePresentationForCAP;
+    elif IsCAPCategoryOfProjectiveGradedRightModulesObject( ZeroObject( projective_category ) ) then
+      type := TheTypeOfGradedRightModulePresentationForCAP;
+    else
+      type := TheTypeOfCAPPresentationCategoryObject;
     fi;
-    
-    # then construct the object
-    presentation_category_object := rec( );    
-    ObjectifyWithAttributes( presentation_category_object, TheTypeOfCAPPresentationCategoryObject,
+
+    # objective the presentation_category_object
+    ObjectifyWithAttributes( presentation_category_object, type,
                              UnderlyingMorphism, presentation_morphism
     );
 
     # add it to the presentation category
-    category := PresentationCategory( projective_category );
     Add( category, presentation_category_object );
-    
-    # and return the result
+
+    # and return it
     return presentation_category_object;    
 
-end );    
+end );
+
+
 
 ####################################
 ##
@@ -62,14 +64,39 @@ end );
 
 InstallMethod( String,
               [ IsCAPPresentationCategoryObject ],
-              
+              #999, # FIXME FIXME
   function( presentation_category_object )
-    
+
      return Concatenation( "An object of the presentation category over the ", 
                            Name( CapCategory( UnderlyingMorphism( presentation_category_object ) ) )
                            );
-                    
+
 end );
+
+InstallMethod( String,
+              [ IsGradedLeftModulePresentationForCAP and IsCAPPresentationCategoryObject ],
+              #999, # FIXME FIXME
+  function( graded_left_module_presentation )
+
+     return Concatenation( "A graded left module presentation over the ring ", 
+                           RingName( UnderlyingHomalgGradedRing( 
+                                     ZeroObject( UnderlyingMorphism( graded_left_module_presentation ) ) ) )
+                           );
+
+end );
+
+InstallMethod( String,
+              [ IsGradedRightModulePresentationForCAP and IsCAPPresentationCategoryObject ],
+              #999, # FIXME FIXME
+  function( graded_right_module_presentation )
+
+     return Concatenation( "A graded right module presentation over the ring ", 
+                           RingName( UnderlyingHomalgGradedRing( 
+                                     ZeroObject( UnderlyingMorphism( graded_right_module_presentation ) ) ) )
+                           );
+
+end );
+
 
 
 ####################################
@@ -79,8 +106,8 @@ end );
 ####################################
 
 InstallMethod( Display,
-               [ IsCAPPresentationCategoryObject ], 999, # FIX ME FIX ME FIX ME
-               
+               [ IsCAPPresentationCategoryObject ],
+               #999, # FIXME FIXME
   function( presentation_category_object )
 
      Print( Concatenation( "An object of the presentation category over the ", 
@@ -89,8 +116,31 @@ InstallMethod( Display,
                             ) );
   
      Display( UnderlyingMorphism( presentation_category_object ) );
-     
+
 end );
+
+InstallMethod( Display,
+               [ IsGradedLeftModulePresentationForCAP and IsCAPPresentationCategoryObject ],
+               #999, # FIXME FIXME
+  function( graded_left_module_presentation )
+
+     Print( Concatenation( String( graded_left_module_presentation ), " given by the following morphism: \n" ) );
+  
+     Display( UnderlyingMorphism( graded_left_module_presentation ) );
+
+end );
+
+InstallMethod( Display,
+               [ IsGradedRightModulePresentationForCAP and IsCAPPresentationCategoryObject ],
+               #999, # FIXME FIXME
+  function( graded_right_module_presentation )
+
+     Print( Concatenation( String( graded_right_module_presentation ), " given by the following morphism: \n" ) );
+  
+     Display( UnderlyingMorphism( graded_right_module_presentation ) );
+
+end );
+
 
 
 ####################################
@@ -101,78 +151,90 @@ end );
 
 InstallMethod( ViewObj,
                [ IsCAPPresentationCategoryObject ],
-
+               #999, # FIXME FIXME
   function( presentation_category_object )
 
     Print( Concatenation( "<", String( presentation_category_object ), ">" ) );
 
 end );
 
+InstallMethod( ViewObj,
+               [ IsGradedLeftModulePresentationForCAP and IsCAPPresentationCategoryObject ],
+               #999, # FIXME FIXME
+  function( graded_left_module_presentation )
+
+    Print( Concatenation( "<", String( graded_left_module_presentation ), ">" ) );
+
+end );
+
+InstallMethod( ViewObj,
+               [ IsGradedRightModulePresentationForCAP and IsCAPPresentationCategoryObject ],
+               #999, # FIXME FIXME
+  function( graded_right_module_presentation )
+
+    Print( Concatenation( "<", String( graded_right_module_presentation ), ">" ) );
+
+end );
+
+
+
+#######################################
+##
+## FullInformationMethod about object
+##
+#######################################
+
+InstallMethod( FullInformation,
+               [ IsCAPPresentationCategoryObject ],
+  function( presentation_category_object )
+
+    Print( "\n" );
+    Print( "================================================================================= \n \n" );
+
+    Display( Source( UnderlyingMorphism( presentation_category_object ) ) );
+    Print( "\n" );
+    Display( UnderlyingMorphism( presentation_category_object ) );
+    Print( "\n" );
+    Display( Range( UnderlyingMorphism( presentation_category_object ) ) ); 
+    Print( "\n" );
+    
+    Print( "================================================================================= \n \n" );
+    
+end );
+
+
 
 ##############################################
 ##
-## Non categorical methods
+## HOM-Embedding for convenience
 ##
 ##############################################
 
 ##
-#InstallMethodWithCacheFromObject( INTERNAL_HOM_EMBEDDING_IN_TENSOR_PRODUCT_LEFT,
-#                                  [ IsLeftOrRightPresentation, IsLeftOrRightPresentation ],
-                                  
-#  function( object_1, object_2 )
-#    local underlying_matrix_1, transposed_underlying_matrix_1, identity_matrix_2, differential_matrix, homalg_ring,
-#          free_module_source, free_module_range, differential;
-    
-#    underlying_matrix_1 := UnderlyingMatrix( object_1 );
-    
-#    transposed_underlying_matrix_1 := Involution( underlying_matrix_1 );
-    
-#    identity_matrix_2 := UnderlyingMatrix( IdentityMorphism( object_2 ) );
-    
-#    differential_matrix := KroneckerMat( transposed_underlying_matrix_1, identity_matrix_2 );
-    
-#    homalg_ring := UnderlyingHomalgRing( object_1 );
-    
-#    free_module_source := FreeLeftPresentation( NrColumns( underlying_matrix_1 ), homalg_ring );
-    
-#    free_module_range := FreeLeftPresentation( NrRows( underlying_matrix_1 ), homalg_ring );
-    
-#    differential :=  PresentationMorphism( TensorProductOnObjects( free_module_source, object_2 ),
-#                                           differential_matrix,
-#                                           TensorProductOnObjects( free_module_range, object_2 )
-#                                         );
-    
-#    return KernelEmbedding( differential );
-    
-#end );
+InstallMethodWithCacheFromObject( INTERNAL_HOM_EMBEDDING_IN_TENSOR_PRODUCT,
+                           [ IsCAPPresentationCategoryObject, IsCAPPresentationCategoryObject ],
+    function( a, b )
+      local source, range, underlying_map, final_mapping;
 
-##
-#InstallMethodWithCacheFromObject( INTERNAL_HOM_EMBEDDING_IN_TENSOR_PRODUCT_RIGHT,
-#                                  [ IsLeftOrRightPresentation, IsLeftOrRightPresentation ],
-                                  
-#  function( object_1, object_2 )
-#    local underlying_matrix_1, transposed_underlying_matrix_1, identity_matrix_2, differential_matrix, homalg_ring,
-#          free_module_source, free_module_range, differential;
-    
-#    underlying_matrix_1 := UnderlyingMatrix( object_1 );
-    
-#    transposed_underlying_matrix_1 := Involution( underlying_matrix_1 );
-    
-#    identity_matrix_2 := UnderlyingMatrix( IdentityMorphism( object_2 ) );
-    
-#    differential_matrix := KroneckerMat( transposed_underlying_matrix_1, identity_matrix_2 );
-    
-#    homalg_ring := UnderlyingHomalgRing( object_1 );
-    
-#    free_module_source := FreeRightPresentation( NrRows( underlying_matrix_1 ), homalg_ring );
-    
-#    free_module_range := FreeRightPresentation( NrColumns( underlying_matrix_1 ), homalg_ring );
-    
-#    differential :=  PresentationMorphism( TensorProductOnObjects( free_module_source, object_2 ),
-#                                           differential_matrix,
-#                                           TensorProductOnObjects( free_module_range, object_2 )
-#                                         );
-    
-#    return KernelEmbedding( differential );
-    
-#end );
+      # (1) construct the map
+      source := CAPPresentationCategoryObject( TensorProductOnMorphisms(
+                                                      IdentityMorphism( DualOnObjects( Range( UnderlyingMorphism( a ) ) ) ),
+                                                      UnderlyingMorphism( b ) )
+                                                      );
+      range := CAPPresentationCategoryObject( TensorProductOnMorphisms( 
+                                                      IdentityMorphism( DualOnObjects( Source( UnderlyingMorphism( a ) ) ) ),
+                                                      UnderlyingMorphism( b ) )
+                                                      );
+      underlying_map := TensorProductOnMorphisms( DualOnMorphisms( UnderlyingMorphism( a ) ), 
+                                                 IdentityMorphism( Range( UnderlyingMorphism( b ) ) )
+                                                );
+      final_mapping := CAPPresentationCategoryMorphism( source, 
+                                                        underlying_map, 
+                                                        range, 
+                                                        CapCategory( a )!.constructor_checks_wished 
+                                                       );
+
+      # (2) and return its kernel embedding
+      return KernelEmbedding( final_mapping );
+
+end );

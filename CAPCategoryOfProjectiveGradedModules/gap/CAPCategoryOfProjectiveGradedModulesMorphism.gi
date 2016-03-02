@@ -2,9 +2,9 @@
 ##
 ##                  CAPCategoryOfProjectiveGradedModules package
 ##
-##  Copyright 2015, Sebastian Gutsche, TU Kaiserslautern
-##                  Sebastian Posur,   RWTH Aachen
-##                  Martin Bies,       ITP Heidelberg
+##  Copyright 2015, Martin Bies,       ITP Heidelberg
+##
+## Chapter Morphisms
 ##
 #############################################################################
 
@@ -35,7 +35,7 @@ BindGlobal( "TheFamilyOfCAPCategoryOfProjectiveGradedRightModulesMorphisms",
 BindGlobal( "TheTypeOfCAPCategoryOfProjectiveGradedRightModulesMorphisms",
         NewType( TheFamilyOfCAPCategoryOfProjectiveGradedRightModulesMorphisms,
                 IsCAPCategoryOfProjectiveGradedRightModulesMorphismRep ) );
-                
+
 ####################################
 ##
 ## Constructors
@@ -46,7 +46,6 @@ BindGlobal( "TheTypeOfCAPCategoryOfProjectiveGradedRightModulesMorphisms",
 InstallMethod( CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism,
                [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsHomalgMatrix, 
                                                                       IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject ],
-
   function( source, homalg_matrix, range )
     local cap_category_of_projective_graded_modules_morphism, homalg_graded_ring, category, left, type;
     
@@ -56,8 +55,9 @@ InstallMethod( CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism,
     # check that source and range are objects in the same category
     if not IsIdenticalObj( category, CapCategory( range ) ) then
       
-      return Error( "source and range are not defined over identical categories" );
-      
+      Error( "Source and range are not defined over identical categories" );
+      return;
+
     fi;
     
     # extract the homalg_graded_ring
@@ -66,8 +66,9 @@ InstallMethod( CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism,
     # make a number of sanity tests (for left presentations actually!)
     if not IsIdenticalObj( homalg_graded_ring, UnderlyingHomalgGradedRing( source ) ) then
       
-      return Error( "the matrix is defined over a different ring than the objects" );
-      
+      Error( "The matrix is defined over a different ring than the objects" );
+      return;
+
     fi;
 
     # work out if we are considering left or right presentations
@@ -78,13 +79,15 @@ InstallMethod( CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism,
       
       if NrRows( homalg_matrix ) <> Rank( source ) then
           
-          Error( "the number of rows of the given matrix is incorrect" );
-          
+          Error( "The number of rows of the given matrix is incorrect" );
+          return;
+
       fi;
       
       if NrColumns( homalg_matrix ) <> Rank( range ) then
         
-        Error( "the number of columns of the given matrix is incorrect" );
+        Error( "The number of columns of the given matrix is incorrect" );
+        return;
         
       fi;
       
@@ -92,13 +95,15 @@ InstallMethod( CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism,
       
       if NrColumns( homalg_matrix ) <> Rank( source ) then
         
-        Error( "the number of columns of the given matrix is incorrect" );
+        Error( "The number of columns of the given matrix is incorrect" );
+        return;
         
       fi;
       
       if NrRows( homalg_matrix ) <> Rank( range ) then
         
-        Error( "the number of rows of the given matrix is incorrect" );
+        Error( "The number of rows of the given matrix is incorrect" );
+        return;
         
       fi;
       
@@ -112,7 +117,7 @@ InstallMethod( CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism,
         type := TheTypeOfCAPCategoryOfProjectiveGradedLeftModulesMorphisms;
     else
         type := TheTypeOfCAPCategoryOfProjectiveGradedRightModulesMorphisms;
-    fi;    
+    fi;
     
     ObjectifyWithAttributes( cap_category_of_projective_graded_modules_morphism, type, 
                              Source, source,
@@ -129,31 +134,76 @@ InstallMethod( CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism,
     
 end );
 
+##
+InstallMethod( CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism,
+               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsHomalgMatrix, 
+                                                            IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsBool ],
+  function( source, homalg_matrix, range, checks_wished )
+    local cap_category_of_projective_graded_modules_morphism, homalg_graded_ring, category, left, type;
+    
+    # if checks are wished, hand the input to the method above
+    if checks_wished then
+      return CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( source, homalg_matrix, range );
+    fi;
+    
+    # checks not wished, so continue here and collect necessary data
+    category := CapCategory( source );
+    homalg_graded_ring := HomalgRing( homalg_matrix );
+    left := IsCAPCategoryOfProjectiveGradedLeftModulesObject( source );
+    
+    # define the type
+    if left then
+        type := TheTypeOfCAPCategoryOfProjectiveGradedLeftModulesMorphisms;
+    else
+        type := TheTypeOfCAPCategoryOfProjectiveGradedRightModulesMorphisms;
+    fi;
+
+    # construct the morphism
+    cap_category_of_projective_graded_modules_morphism := rec( );
+    ObjectifyWithAttributes( cap_category_of_projective_graded_modules_morphism, type, 
+                             Source, source,
+                             Range, range,
+                             UnderlyingHomalgGradedRing, homalg_graded_ring,
+                             UnderlyingHomalgMatrix, homalg_matrix
+    );
+
+    # and add it to the category
+    Add( category, cap_category_of_projective_graded_modules_morphism );
+    
+    # finally return the morphism
+    return cap_category_of_projective_graded_modules_morphism;
+
+end );
+
+
+
 ####################################
 ##
-## View
+## String
 ##
 ####################################
 
 ##
-InstallMethod( ViewObj,
-               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism ], 999, # FIX ME FIX ME FIX ME!!!               
-               
+InstallMethod( String,
+               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism ],
+               999, # FIX ME FIX ME FIX ME!!!
   function( cap_category_of_projective_graded_modules_morphism )
 
     if IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( cap_category_of_projective_graded_modules_morphism ) then
 
-      Print( "A morphism in the category of projective graded right modules over ",
-              RingName( UnderlyingHomalgGradedRing( cap_category_of_projective_graded_modules_morphism ) ) );    
-    
+      return Concatenation( "A morphism in the category of projective graded left modules over ",
+                            RingName( UnderlyingHomalgGradedRing( cap_category_of_projective_graded_modules_morphism ) ) );
+
     else
 
-      Print( "A morphism in the category of projective graded right modules over ",
-              RingName( UnderlyingHomalgGradedRing( cap_category_of_projective_graded_modules_morphism ) ) );    
+      return Concatenation( "A morphism in the category of projective graded right modules over ",
+                            RingName( UnderlyingHomalgGradedRing( cap_category_of_projective_graded_modules_morphism ) ) );
 
     fi;
-      
+
 end );
+
+
 
 ####################################
 ##
@@ -162,26 +212,84 @@ end );
 ####################################
 
 InstallMethod( Display,
-               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism ], 999, # FIX ME FIX ME
-               
+               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism ], 
+               999, # FIX ME FIX ME
   function( cap_category_of_projective_graded_modules_morphism )
 
     if IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( cap_category_of_projective_graded_modules_morphism ) then
-  
+
       Print( "A morphism in the category of projective graded left modules over ", 
                                    RingName( UnderlyingHomalgGradedRing( cap_category_of_projective_graded_modules_morphism ) ),
                                    " with matrix: \n" );
-      
+
       Display( UnderlyingHomalgMatrix( cap_category_of_projective_graded_modules_morphism ) );
-    
+
     else
 
       Print( "A morphism in the category of projective graded right modules over ", 
                                    RingName( UnderlyingHomalgGradedRing( cap_category_of_projective_graded_modules_morphism ) ),
                                    " with matrix: \n" );
-      
+
       Display( UnderlyingHomalgMatrix( cap_category_of_projective_graded_modules_morphism ) );
 
     fi;
-   
+
+end );
+
+
+
+####################################
+##
+## View
+##
+####################################
+
+##
+InstallMethod( ViewObj,
+               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism ], 
+               999, # FIX ME FIX ME FIX ME!!!
+function( cap_category_of_projective_graded_modules_morphism )
+
+      Print( Concatenation( "<", String( cap_category_of_projective_graded_modules_morphism ), ">" ) );
+
+end );
+
+
+
+#######################################
+##
+## FullInformationMethod about morphism
+##
+#######################################
+
+InstallMethod( FullInformation,
+               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism ],
+  function( morphism )
+
+    Print( "\n" );
+    Print( "================================================================================= \n \n" );
+    
+    # Display Source
+    Print( "Source: \n" );
+    Print( "------- \n" );
+    Display( Source( morphism ) );
+    Print( "\n" );
+    Print( "\n" );
+    Print( "--------------------------------------------------------------------------------- \n \n" );
+    
+    # Display the mapping matrix
+    Print( "Mapping matrix: \n" );
+    Print( "--------------- \n" );
+    Display( UnderlyingHomalgMatrix( morphism ) );
+    Print( "\n" );
+    
+    Print( "--------------------------------------------------------------------------------- \n \n" );
+    
+    # Display the range"
+    Print( "Range: \n" );
+    Print( "------ \n" );
+    Display( Range( morphism ) );
+    Print( "\n \n" );
+    Print( "================================================================================= \n \n" );
+    
 end );

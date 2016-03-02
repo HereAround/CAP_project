@@ -1,20 +1,24 @@
 #############################################################################
 ##
-##                                       ModulePresentationsForCAP package
+##                  CAPPresentationCategory package
 ##
-##  Copyright 2014, Sebastian Gutsche, TU Kaiserslautern
-##                  Sebastian Posur,   RWTH Aachen
+##  Copyright 2015, Martin Bies,       ITP Heidelberg
+##
+#! @Chapter Presentation Category Functors
 ##
 #############################################################################
 
-DeclareAttribute( "FunctorStandardModuleLeft",
-                  IsHomalgRing );
 
-DeclareAttribute( "FunctorStandardModuleRight",
-                  IsHomalgRing );
+#######################################
+##
+#! @Section Functors
+##
+#######################################
 
-DeclareAttribute( "FunctorLessGeneratorsLeft",
-                  IsHomalgRing );
-
-DeclareAttribute( "FunctorLessGeneratorsRight",
-                  IsHomalgRing );
+#! @Description
+#! The argument is a Proj-category <A>category</A>. The output is the functor that embeds <A>category</A>
+#! into its presentation category.
+#! @Returns a functor
+#! @Arguments category
+DeclareAttribute( "EmbeddingOfProjCategory",
+                  IsCapCategory );

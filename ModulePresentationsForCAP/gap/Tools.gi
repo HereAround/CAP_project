@@ -8,6 +8,14 @@
 #############################################################################
 
 ## transformation_inverse * matrix * transformation = smaller_matrix
+## the above is not correct, rather T = transformation and T^-1 = transformation_inverse as in the diagram below
+##    S ------ matrix ---------> R
+##                            |    ^
+##                            |    |
+##                            T  T^{-1}
+##                            |    |
+##                            v    | 
+##    S' --- smaller_matrix ---> R'
 InstallMethod( LessGeneratorsTransformationTriple,
                [ IsHomalgMatrix ],
                

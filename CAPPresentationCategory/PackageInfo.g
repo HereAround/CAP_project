@@ -3,7 +3,7 @@ SetPackageInfo( rec(
 PackageName := "CAPPresentationCategory",
 Subtitle := "The CAP presentation category based on a projective category (e.g. CAPCategoryOfProjectiveGradedModules)",
 Version := Maximum( [
-           "2015.09.21", # Martin version
+           "2015.11.13", # Martin's version
            ##
            ] ),
 
@@ -14,41 +14,15 @@ Persons := [
   rec(
     IsAuthor := true,
     IsMaintainer := true,
-    FirstNames := "Sebastian",
-    LastName := "Gutsche",
-    WWWHome := "http://wwwb.math.rwth-aachen.de/~gutsche/",
-    Email := "gutsche@mathematik.uni-kl.de",
-    PostalAddress := Concatenation(
-               "Department of Mathematics\n",
-               "University of Kaiserslautern\n",
-               "67653 Kaiserslautern\n",
-               "Germany" ),
-    Place := "Kaiserslautern",
-    Institution := "TU Kaiserslautern",
-  ),
-  rec(
-    IsAuthor := true,
-    IsMaintainer := true,
-    FirstNames := "Sebastian",
-    LastName := "Posur",
-    WWWHome := "http://wwwb.math.rwth-aachen.de/Mitarbeiter/posur.php",
-    Email := "sposur@momo.math.rwth-aachen.de",
-    PostalAddress := Concatenation(
-               "Lehrstuhl B für Mathematik RWTH - Aachen\n",
-               "Templergraben 64\n",
-               "52062 Aachen\n",
-               "Germany" ),
-    Place := "Aachen",
-    Institution := "RWTH Aachen University",
-  ),
-  rec(
-    IsAuthor := true,
-    IsMaintainer := true,
     FirstNames := "Martin",
     LastName := "Bies",
-    WWWHome := "",
+    WWWHome := "TODO",
     Email := "bies@thphys.uni-heidelberg.de",
-    PostalAddress := "",
+    PostalAddress := Concatenation( 
+                 "Institut für theoretische Physik - Heidelberg \n",
+                 "Philosophenweg 19 \n",
+                 "69120 Heidelberg \n",
+                 "Germany" ), 
     Place := "Heidelberg",
     Institution := "ITP Heidelberg",
   ),  
@@ -86,7 +60,8 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">= 4.6",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
-                           [ "CAP", ">=0" ]
+                           [ "CAP", ">=0" ],
+                           [ "CAPCategoryOfProjectiveGradedModules", ">=0" ]
   ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
