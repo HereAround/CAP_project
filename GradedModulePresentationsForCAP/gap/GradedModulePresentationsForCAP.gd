@@ -1,8 +1,8 @@
 #############################################################################
 ##
-##                  GradedModulePresentationsForCAP
+## GradedModulePresentationsForCAP
 ##
-##  Copyright 2015,  Martin Bies,       ITP Heidelberg
+## Copyright 2016,  Martin Bies,       ITP Heidelberg
 ##
 #! @Chapter The CAP category of graded module presentations for CAP
 ##

@@ -1,8 +1,20 @@
-#! @Chapter Examples and tests of the presentation category over the category of projective graded modules
+##################################################
+##################################################
+#! @Chapter Examples and tests
+##################################################
+##################################################
 
+LoadPackage( "CAPCategoryOfProjectiveGradedModules" );;
+LoadPackage( "CAPPresentationCategory" );;
+
+#! To demonstrate the functionality of the presentation category, we construct objects and morphisms in the presentation category
+#! over the category of projective graded modules and then perform various categorical constructions with such objects and morphisms.
+
+
+
+###################################
 #! @Section Constructors of objects
-
-#LoadPackage( "CAPPresentationCategory" );;
+###################################
 
 #! We first construct objects of the presentation category over the category of projective graded left $S$-modules, where
 #! $S$ is the Coxring of $\mathbb{P}^1 \times \mathbb{P}^1$.
@@ -88,8 +100,9 @@ presentation2r := CAPPresentationCategoryObject( n3 );
 #! @EndExample
 
 
-
+###########################################
 #! @Section All information about an object
+###########################################
 
 #! To see all the data that defines an object in the presentation category, the command $\text{FullInformation}$ 
 #! can be used.
@@ -124,8 +137,9 @@ FullInformation( presentation1l );
 
 
 
-
+##################################################
 #! @Section Morphisms in the presentation category
+##################################################
 
 #! @Example
 
@@ -371,8 +385,9 @@ FullInformation( ColiftAlongEpimorphism( presentation_morphism_r,
 
 
 
-
+###############################################################################################
 #! @Section A few categorical constructions for the presentation category over the left modules
+###############################################################################################
 
 #! @Example
 dSl := DirectSum( [ presentation1l, presentation2l ] );
@@ -693,7 +708,9 @@ IsEqualForMorphisms( i1_l, comparer_l );
 
 
 
+################################################################################################
 #! @Section A few categorical constructions for the presentation category over the right modules
+################################################################################################
 
 #! @Example
 dSr := DirectSum( [ presentation1r, presentation2r ] );
@@ -996,7 +1013,7 @@ IsEpimorphism( cokernel_r );
 IsIsomorphism( cokernel_r );
 #! false
 comparer_r := CAPPresentationCategoryMorphism( 
-                   Source( i1_r ), 
+                   Source( i1_r ),
                    CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( 
                            Range( UnderlyingMorphism( Source( i1_r ) ) ),
                            HomalgMatrix( [[0,0],[1,0],[0,1],[0,0]], S ),

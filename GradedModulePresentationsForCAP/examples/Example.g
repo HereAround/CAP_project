@@ -1,8 +1,16 @@
+##################################################
+##################################################
 #! @Chapter Examples and Tests
-
-#! @Section The category SfpgrmodLeft
+##################################################
+##################################################
 
 LoadPackage( "GradedModulePresentationsForCAP" );;
+
+
+
+#####################################
+#! @Section The category SfpgrmodLeft
+#####################################
 
 #! @Example
 
@@ -32,7 +40,11 @@ NaturalIsomorphismFromIdentityToGradedStandardModuleLeft( S );
 
 #! @EndExample
 
+
+
+######################################
 #! @Section The category SfpgrmodRight
+######################################
 
 #! @Example
 category_right := SfpgrmodRight( S );
@@ -56,7 +68,9 @@ NaturalIsomorphismFromIdentityToGradedStandardModuleRight( S );
 
 
 
+##############################
 #! @Section Graded left ideals
+##############################
 
 #! @Example
 IdealLeft := GradedLeftSubmoduleForCAP( [ [ "x_1*x_3" ], 
@@ -163,12 +177,9 @@ Display( 2ndFrobPowerIdealLeft );
 
 
 
-
-
-
-
-
+###############################
 #! @Section Graded right ideals
+###############################
 
 #! @Example
 IdealRight := GradedRightSubmoduleForCAP( [ [ "x_1*x_3", 
@@ -273,15 +284,9 @@ Display( 2ndFrobPowerIdealRight );
 
 
 
-
-
-
-
-
-
-
-
+##################################
 #! @Section Graded left submodules
+##################################
 
 #! @Example
 SubmoduleLeft := GradedLeftSubmoduleForCAP( [ [ "x_1*x_3" ], 
@@ -413,7 +418,9 @@ FullInformation( EmbeddingInSuperObjectForCAP( SubmoduleLeft3 ) );
 
 
 
+###################################
 #! @Section Graded right submodules
+###################################
 
 #! @Example
 SubmoduleRight := GradedRightSubmoduleForCAP( [ [ "x_1*x_3", 
@@ -544,7 +551,9 @@ FullInformation( EmbeddingInSuperObjectForCAP( SubmoduleRight3 ) );
 
 
 
+#################################
 #! @Section The Frobenius functor
+#################################
 
 #! @Example
 frob_functor_left := FrobeniusPowerFunctorLeft( S, 2 );
@@ -666,8 +675,9 @@ FullInformation( ApplyFunctor( frob_functor_right,
 
 
 
-
+#####################################################
 #! @Section Minimal free resolutions and Betti tables
+#####################################################
 
 #! @Example
 res1 := MinimalFreeResolutionForCAP( IdealLeft );

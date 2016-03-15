@@ -17,9 +17,7 @@ AutoDoc( "CAPPresentationCategory" : scaffold := true, autodoc :=
              ),
          maketest := rec( folder := ".",
                           commands :=
-                            [ "LoadPackage( \"CAP\" );",
-                              "LoadPackage( \"IO_ForHomalg\" );",
-                              "LoadPackage( \"GaussForHomalg\" );",
+                            [ "LoadPackage( \"IO_ForHomalg\" );",
                               "LoadPackage( \"CAPCategoryOfProjectiveGradedModules\" );",
                               "LoadPackage( \"CAPPresentationCategory\" );",
                               "HOMALG_IO.show_banners := false;",

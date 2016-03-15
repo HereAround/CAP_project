@@ -1,8 +1,8 @@
 #############################################################################
 ##
-##                  CAPPresentationCategory package
+## CAPPresentationCategory package
 ##
-##  Copyright 2015, Martin Bies,       ITP Heidelberg
+## Copyright 2016, Martin Bies,       ITP Heidelberg
 ##
 ## Presentation Category Functors
 ##

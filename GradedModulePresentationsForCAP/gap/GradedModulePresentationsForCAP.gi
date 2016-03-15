@@ -1,10 +1,10 @@
 #############################################################################
 ##
-##                  GradedModulePresentationsForCAP
+## GradedModulePresentationsForCAP
 ##
-##  Copyright 2015,  Martin Bies,       ITP Heidelberg
+## Copyright 2016,  Martin Bies,       ITP Heidelberg
 ##
-##  Chapter The CAP category of graded module presentations for CAP
+## Chapter The CAP category of graded module presentations for CAP
 ##
 #############################################################################
 
@@ -263,7 +263,7 @@ InstallMethod( String,
 end );
 
 InstallMethod( String,
-              [ IsGradedLeftModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
+              [ IsGradedLeftModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 999,
   function( graded_left_module_presentation_morphism )
 
      return Concatenation( "A morphism of graded left module presentations over ",
@@ -274,7 +274,7 @@ InstallMethod( String,
 end );
 
 InstallMethod( String,
-              [ IsGradedRightModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
+              [ IsGradedRightModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 999,
   function( graded_right_module_presentation_morphism )
 
      return Concatenation( "A morphism of graded right module presentations over ", 
@@ -313,7 +313,7 @@ InstallMethod( Display,
 end );
 
 InstallMethod( Display,
-               [ IsGradedLeftModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
+               [ IsGradedLeftModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 999,
   function( graded_left_module_presentation_morphism )
 
      Print( Concatenation( "A morphism of graded left module presentations over ",
@@ -327,7 +327,7 @@ InstallMethod( Display,
 end );
 
 InstallMethod( Display,
-               [ IsGradedRightModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
+               [ IsGradedRightModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 999,
   function( graded_right_module_presentation_morphism )
 
      Print( Concatenation( "A morphism of graded right module presentations over ",
@@ -365,7 +365,7 @@ InstallMethod( ViewObj,
 end );
 
 InstallMethod( ViewObj,
-               [ IsGradedLeftModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
+               [ IsGradedLeftModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 999,
   function( graded_left_module_presentation_morphism )
 
     Print( Concatenation( "<", String( graded_left_module_presentation_morphism ), ">" ) );
@@ -373,7 +373,7 @@ InstallMethod( ViewObj,
 end );
 
 InstallMethod( ViewObj,
-               [ IsGradedRightModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 
+               [ IsGradedRightModulePresentationMorphismForCAP and IsCAPPresentationCategoryMorphism ], 999,
   function( graded_right_module_presentation_morphism )
 
     Print( Concatenation( "<", String( graded_right_module_presentation_morphism ), ">" ) );

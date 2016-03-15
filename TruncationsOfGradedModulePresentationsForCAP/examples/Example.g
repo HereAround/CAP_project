@@ -1,7 +1,10 @@
+##################################################
+##################################################
 #! @Chapter Examples and Tests
+##################################################
+##################################################
 
-LoadPackage( "CAPCategoryOfProjectiveGradedModules" );;
-LoadPackage( "TruncationsForGradedModulePresentationsForCAP" );;
+LoadPackage( "TruncationsOfGradedModulePresentationsForCAP" );;
 
 
 
@@ -30,8 +33,6 @@ cone1 := ConeVPresentationList( [[ 1,0 ], [ 0, 1 ]] );
 cone2 := ConeHPresentationList( [[ 1,1 ], [ -1, 1 ]] );
 #! <A list of hyperplane constraints of a cone in Z^2>
 #! @EndExample
-
-Print( "Test1 \n" );
 
 #! We can check if a semigroup in $\mathbb{Z}^n$ is the semigroup of a cone. In case it is, we can convert 
 #! into an H-presentation or V-presentation.
@@ -408,16 +409,9 @@ Display( UnderlyingHomalgMatrix( component_r ) );
 
 
 
-
-
-
-
-
-
-
-
-
+##########################################################
 #! @Section Truncations in SfpgrmodLeft
+##########################################################
 
 #! @Example
 Q1 := CAPCategoryOfProjectiveGradedLeftModulesObject( [ [[2,0],1] ], S );
@@ -456,7 +450,7 @@ truncation_functor_left := TruncationFunctorLeft(
                            S, SemigroupGeneratorList( [[1,0],[0,1]] ) );
 #! Truncation functor for Category of graded left module presentations 
 #! over Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! to the cone given by the h-constraints [ [ 1, 0 ], [ 0, 1 ] ]
+#! to the cone given by the h-constraints [ [ 0, 1 ], [ 1, 0 ] ]
 truncation1l := ApplyFunctor( truncation_functor_left, left_presentation1 );
 #! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
@@ -557,7 +551,9 @@ FullInformation( trmorl );
 
 
 
+#################################################################
 #! @Section Truncations for graded module presentations (for CAP)
+#################################################################
 
 #! @Example
 P1 := CAPCategoryOfProjectiveGradedRightModulesObject( [ [[2,0],1] ], S );
@@ -596,7 +592,7 @@ truncation_functor_right := TruncationFunctorRight(
                             S, SemigroupGeneratorList( [[1,0],[0,1]] ) );
 #! Truncation functor for Category of graded right module presentations 
 #! over Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! to the cone given by the h-constraints [ [ 1, 0 ], [ 0, 1 ] ]
+#! to the cone given by the h-constraints [ [ 0, 1 ], [ 1, 0 ] ]
 truncation1r := ApplyFunctor( truncation_functor_right, right_presentation1 );
 #! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>

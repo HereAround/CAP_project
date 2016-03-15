@@ -1,10 +1,10 @@
 #############################################################################
 ##
-##                  GradedModulePresentationsForCAP
+## GradedModulePresentationsForCAP
 ##
-##  Copyright 2015,  Martin Bies,       ITP Heidelberg
+## Copyright 2016,  Martin Bies,       ITP Heidelberg
 ##
-##  Chapter Natural transformations for graded module presentations for CAP
+## Chapter Natural transformations for graded module presentations for CAP
 ##
 #############################################################################
 

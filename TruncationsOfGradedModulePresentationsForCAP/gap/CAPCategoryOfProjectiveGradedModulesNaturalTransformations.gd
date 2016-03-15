@@ -11,7 +11,7 @@
 
 ####################################################################################
 ##
-#! @Section Natural transformation from truncation functor to identity functor
+#! @Section Natural transformations for projective graded modules
 ##
 ####################################################################################
 

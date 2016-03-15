@@ -61,7 +61,6 @@ Dependencies := rec(
   GAP := ">= 4.6",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
                            [ "CAP", ">=2016.02.17" ],
-                           [ "CAPCategoryOfProjectiveGradedModules", ">=2016.03.15" ]
   ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],

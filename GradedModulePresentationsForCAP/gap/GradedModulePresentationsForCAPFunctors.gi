@@ -1,10 +1,10 @@
 #############################################################################
 ##
-##                  GradedModulePresentationsForCAP
+## GradedModulePresentationsForCAP
 ##
-##  Copyright 2015,  Martin Bies,       ITP Heidelberg
+## Copyright 2016,  Martin Bies,       ITP Heidelberg
 ##
-##  Chapter Functors for graded module presentations for CAP
+## Chapter Functors for graded module presentations for CAP
 ##
 #############################################################################
 

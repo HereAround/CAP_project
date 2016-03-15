@@ -4,7 +4,7 @@
 
 LoadPackage( "AutoDoc" );
 
-AutoDoc( "CAPCategoryOfProjectiveGradedModules" : scaffold := true, autodoc :=
+AutoDoc( "TruncationsOfGradedModulePresentationsForCAP" : scaffold := true, autodoc :=
          rec( files := [ "doc/Intros.autodoc",
                          "gap/SemigroupAndConeWrapper.gd",
                          "gap/CAPCategoryOfProjectiveGradedModulesFunctors.gd",
@@ -16,10 +16,7 @@ AutoDoc( "CAPCategoryOfProjectiveGradedModules" : scaffold := true, autodoc :=
              ),
          maketest := rec( folder := ".",
                           commands :=
-                            [ "LoadPackage( \"CAP\" );",
-                              "LoadPackage( \"IO_ForHomalg\" );",
-                              "LoadPackage( \"GaussForHomalg\" );",
-                              "LoadPackage( \"CAPCategoryOfProjectiveGradedModules\" );",
+                            [ "LoadPackage( \"IO_ForHomalg\" );",
                               "LoadPackage( \"TruncationsOfGradedModulePresentationsForCAP\" );",
                               "HOMALG_IO.show_banners := false;",
                               "HOMALG_IO.suppress_PID := true;",

@@ -18,10 +18,6 @@ AutoDoc( "GradedModulePresentationsForCAP" : scaffold := true, autodoc :=
          maketest := rec( folder := ".",
                           commands :=
                             [ "LoadPackage( \"IO_ForHomalg\" );",
-                              "LoadPackage( \"GaussForHomalg\" );",
-                              "LoadPackage( \"CAP\" );",
-                              "LoadPackage( \"CAPCategoryOfProjectiveGradedModules\" );",
-                              "LoadPackage( \"CAPPresentationCategory\" );",
                               "LoadPackage( \"GradedModulePresentationsForCAP\" );",
                               "HOMALG_IO.show_banners := false;",
                               "HOMALG_IO.suppress_PID := true;",

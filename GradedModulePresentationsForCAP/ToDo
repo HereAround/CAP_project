@@ -3,4 +3,5 @@
 (3) "Copy" the entire GradedModules into category theory setting, in particular using the same function names?
 (4) Add GAP category for "MinimalFreeResolution" and then write a "FullInformation" method
 
-(5) do more advance computation with GS or DirectProducts -> recursion depth trap -> investigate
+(5) advanced computation with GS or DirectProducts lead to recursion depth trap, which cannot be escaped after lick 20 - 30 'returns'
+    -> investigate (minimal examples can be constructed from cohomology computations in master thesis)

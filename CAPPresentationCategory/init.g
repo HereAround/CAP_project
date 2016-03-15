@@ -1,3 +1,7 @@
+#
+# CAPPresentationCategory: PresentationCategory over a proj-category
+#
+
 ReadPackage( "CAPPresentationCategory", "gap/CAPPresentationCategory.gd");
 ReadPackage( "CAPPresentationCategory", "gap/CAPPresentationCategoryObject.gd");
 ReadPackage( "CAPPresentationCategory", "gap/CAPPresentationCategoryMorphism.gd");

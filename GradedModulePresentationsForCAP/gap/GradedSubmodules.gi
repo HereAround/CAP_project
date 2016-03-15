@@ -1,10 +1,10 @@
 #############################################################################
 ##
-##                  GradedModulePresentationsForCAP
+## GradedModulePresentationsForCAP
 ##
-##  Copyright 2015,  Martin Bies,       ITP Heidelberg
+## Copyright 2016,  Martin Bies,       ITP Heidelberg
 ##
-##  Chapter Graded submodules of projective graded modules over a graded ring
+## Chapter Graded submodules of projective graded modules over a graded ring
 ##
 #############################################################################
 
