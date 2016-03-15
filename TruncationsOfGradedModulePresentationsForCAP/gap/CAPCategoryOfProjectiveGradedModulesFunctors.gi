@@ -1,8 +1,8 @@
 #############################################################################
 ##
-##                  CAPCategoryOfProjectiveGradedModules package
+## TruncationsOfGradedModulePresentationsForCAP package
 ##
-##  Copyright 2015, Martin Bies,       ITP Heidelberg
+## Copyright 2016, Martin Bies,       ITP Heidelberg
 ##
 ## Chapter Functors for the category of projective graded left modules
 ##

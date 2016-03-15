@@ -1,16 +1,12 @@
 #
-# CAPCategoryOfProjectiveGradedModules: Category of projective graded modules over a graded ring
+# TruncationsOfGradedModulePresentationsForCAP: Truncating a graded module presentation (for CAP) to an affine (cone) semigroup
 #
 
 LoadPackage( "AutoDoc" );
 
 AutoDoc( "CAPCategoryOfProjectiveGradedModules" : scaffold := true, autodoc :=
          rec( files := [ "doc/Intros.autodoc",
-                         "gap/CAPCategoryOfProjectiveGradedLeftModules.gd",
-                         "gap/CAPCategoryOfProjectiveGradedRightModules.gd",
-                         "gap/CAPCategoryOfProjectiveGradedModulesObject.gd",
-                         "gap/CAPCategoryOfProjectiveGradedModulesMorphism.gd",
-                         "gap/Tools.gd",
+                         "gap/SemigroupAndConeWrapper.gd",
                          "examples/Example.g"
                          ],
              scan_dirs := []

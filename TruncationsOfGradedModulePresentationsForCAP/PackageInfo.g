@@ -1,5 +1,5 @@
 #
-# CAPCategoryOfProjectiveGradedModules: Category of projective graded modules over a graded ring
+# TruncationsOfGradedModulePresentationsForCAP: Truncating a graded module presentation (for CAP) to an affine (cone) semigroup
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -8,9 +8,9 @@
 #
 SetPackageInfo( rec(
 
-PackageName := "CAPCategoryOfProjectiveGradedModules",
+PackageName := "TruncationsOfGradedModulePresentationsForCAP",
 
-Subtitle := "Category of projective graded modules over a graded ring",
+Subtitle := "Truncating a graded module presentation (for CAP) to an affine (cone) semigroup",
 
 Version := Maximum( [
   "2016.03.15", ## Martin's version
@@ -39,7 +39,7 @@ Persons := [
 
 PackageWWWHome := "http://TODO/",
 
-ArchiveURL     := Concatenation( ~.PackageWWWHome, "CAPCategoryOfProjectiveGradedModules-", ~.Version ),
+ArchiveURL     := Concatenation( ~.PackageWWWHome, "TruncationsOfGradedModulePresentationsForCAP-", ~.Version ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
@@ -58,21 +58,23 @@ Status := "dev",
 AbstractHTML   :=  "",
 
 PackageDoc := rec(
-  BookName  := "CAPCategoryOfProjectiveGradedModules",
+  BookName  := "TruncationsOfGradedModulePresentationsForCAP",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Category of projective graded modules over a graded ring",
+  LongTitle := "Truncating a graded module presentation (for CAP) to an affine (cone) semigroup",
 ),
 
 Dependencies := rec(
   GAP := ">= 4.6",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
-                           [ "AutoDoc", ">=2016.02.16" ],
-                           [ "MatricesForHomalg", ">= 2015.11.06" ],
-                           [ "GradedRingForHomalg", ">= 2015.12.04" ],
-                           [ "CAP", ">= 2016.02.19" ],
+                           [ "MatricesForHomalg", ">= 2015.06.20" ],
+                           [ "GradedRingForHomalg", ">=2014.08.27" ],
+                           [ "CAPCategoryOfProjectiveGradedModules", ">=2015.11.13" ],
+                           [ "CAP", ">= 2015.08.17" ],
+                           [ "4ti2Interface", ">= 2015.11.06" ],
+                           [ "NormalizInterface", ">=0.9.6" ]
                            ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
