@@ -390,8 +390,48 @@ InstallMethod( SfpgrmodLeft,
                 " for graded rings ",
                 [ IsHomalgGradedRing ],
   function( graded_ring )
+    local category, underlying_graded_ring;
 
-    return PresentationCategory( CAPCategoryOfProjectiveGradedLeftModules( graded_ring ) );
+      # identify the underlying proj category
+      projective_category := CAPCategoryOfProjectiveGradedLeftModules( graded_ring ) );
+
+      # set the category
+      category := CreateCapCategory( Concatenation( "Category of graded left module presentations over ",
+                                                    RingName( graded_ring ) ) );
+
+      # set properties of the category
+      category!.underlying_projective_category := projective_category; # <- underlying Proj-category
+      category!.constructor_checks_wished := true; # <- false means that no consistency checks are performed in construtors
+      SetIsAbelianCategory( category, true );
+
+      # add basic functionality for the category
+      ADD_BASIC_FUNCTIONS_FOR_PRESENTATION_CATEGORY( category, category!.constructor_checks_wished );
+
+      # install more functionality and more properties
+      ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY( category, category!.constructor_checks_wished );
+      SetIsSymmetricClosedMonoidalCategory( category, true );
+      SetIsStrictMonoidalCategory( category, true );
+
+      # (6) add logic
+      AddTheoremFileToCategory( category,
+        Filename(
+          DirectoriesPackageLibrary( "CAPPresentationCategory", "Logic" ),
+          "Propositions.tex" )
+      );
+      AddPredicateImplicationFileToCategory( category,
+        Filename(
+          DirectoriesPackageLibrary( "CAPPresentationCategory", "Logic" ),
+          "PredicateImplications.tex" )
+      );
+      AddEvalRuleFileToCategory( category,
+        Filename(
+          DirectoriesPackageLibrary( "CAPPresentationCategory", "Logic" ),
+          "Relations.tex" )
+      );
+
+      # finalise and return
+      Finalize( category );
+      return category;
 
 end );
 
@@ -400,8 +440,48 @@ InstallMethod( SfpgrmodRight,
                 " for graded rings ",
                 [ IsHomalgGradedRing ],
   function( graded_ring )
+    local category, underlying_graded_ring;
 
-    return PresentationCategory( CAPCategoryOfProjectiveGradedRightModules( graded_ring ) );
+      # identify the underlying proj category
+      projective_category := CAPCategoryOfProjectiveGradedRightModules( graded_ring ) );
+
+      # set the category
+      category := CreateCapCategory( Concatenation( "Category of graded left module presentations over ",
+                                                    RingName( graded_ring ) ) );
+
+      # set properties of the category
+      category!.underlying_projective_category := projective_category; # <- underlying Proj-category
+      category!.constructor_checks_wished := true; # <- false means that no consistency checks are performed in construtors
+      SetIsAbelianCategory( category, true );
+
+      # add basic functionality for the category
+      ADD_BASIC_FUNCTIONS_FOR_PRESENTATION_CATEGORY( category, category!.constructor_checks_wished );
+
+      # install more functionality and more properties
+      ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY( category, category!.constructor_checks_wished );
+      SetIsSymmetricClosedMonoidalCategory( category, true );
+      SetIsStrictMonoidalCategory( category, true );
+
+      # (6) add logic
+      AddTheoremFileToCategory( category,
+        Filename(
+          DirectoriesPackageLibrary( "CAPPresentationCategory", "Logic" ),
+          "Propositions.tex" )
+      );
+      AddPredicateImplicationFileToCategory( category,
+        Filename(
+          DirectoriesPackageLibrary( "CAPPresentationCategory", "Logic" ),
+          "PredicateImplications.tex" )
+      );
+      AddEvalRuleFileToCategory( category,
+        Filename(
+          DirectoriesPackageLibrary( "CAPPresentationCategory", "Logic" ),
+          "Relations.tex" )
+      );
+
+      # finalise and return
+      Finalize( category );
+      return category;
 
 end );
 

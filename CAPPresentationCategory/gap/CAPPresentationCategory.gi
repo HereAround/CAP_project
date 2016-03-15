@@ -17,7 +17,7 @@
 InstallMethod( PresentationCategory,
                [ IsCapCategory ],
   function( projective_category )
-    local category, underlying_graded_ring;
+    local category;
 
     # (1) check if the input is a proj-category
     if not IsProjCategory( projective_category ) then
@@ -28,25 +28,7 @@ InstallMethod( PresentationCategory,
     fi;
 
     # (2) set the name of the category
-    if IsCAPCategoryOfProjectiveGradedLeftModulesObject( ZeroObject( projective_category ) ) then
-
-      # this is the category of graded left module presentations
-      underlying_graded_ring := UnderlyingHomalgGradedRing( ZeroObject( projective_category ) );
-      category := CreateCapCategory( Concatenation( "Category of graded left module presentations over ",
-                                                    RingName( underlying_graded_ring ) ) );
-
-    elif IsCAPCategoryOfProjectiveGradedRightModulesObject( ZeroObject( projective_category ) ) then
-
-      # this is the category of graded right module presentations
-      underlying_graded_ring := UnderlyingHomalgGradedRing( ZeroObject( projective_category ) );
-      category := CreateCapCategory( Concatenation( "Category of graded right module presentations over ",
-                                                    RingName( underlying_graded_ring ) ) );
-
-    else
-
-      category := CreateCapCategory( Concatenation( "Presentation category over ", Name( projective_category ) ) );
-
-    fi;
+    category := CreateCapCategory( Concatenation( "Presentation category over ", Name( projective_category ) ) );
 
     # (3) set properties of the category
     category!.underlying_projective_category := projective_category; # <- underlying Proj-category

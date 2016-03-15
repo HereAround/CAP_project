@@ -129,7 +129,7 @@ end );
 ####################################
 
 InstallMethod( String,
-              [ IsCAPPresentationCategoryMorphism ], 
+              [ IsCAPPresentationCategoryMorphism ], 999,
   function( presentation_category_morphism )
 
      return Concatenation( "A morphism of the presentation category over the ", 
@@ -147,7 +147,7 @@ end );
 ####################################
 
 InstallMethod( Display,
-               [ IsCAPPresentationCategoryMorphism ], 
+               [ IsCAPPresentationCategoryMorphism ], 999,
   function( presentation_category_morphism )
 
      Print( Concatenation( "A morphism of the presentation category over the ", 
@@ -168,7 +168,7 @@ end );
 ####################################
 
 InstallMethod( ViewObj,
-               [ IsCAPPresentationCategoryMorphism ], 
+               [ IsCAPPresentationCategoryMorphism ], 999,
   function( presentation_category_morphism )
 
     Print( Concatenation( "<", String( presentation_category_morphism ), ">" ) );
