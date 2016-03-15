@@ -6,3 +6,4 @@
 ReadPackage( "TruncationsOfGradedModulePresentationsForCAP", "gap/SemigroupAndConeWrapper.gi" );
 ReadPackage( "TruncationsOfGradedModulePresentationsForCAP", "gap/CAPCategoryOfProjectiveGradedModulesFunctors.gi" );
 ReadPackage( "TruncationsOfGradedModulePresentationsForCAP", "gap/CAPCategoryOfProjectiveGradedModulesNaturalTransformations.gi" );
+ReadPackage( "TruncationsOfGradedModulePresentationsForCAP", "gap/GradedModulePresentationsForCAPFunctors.gi" );

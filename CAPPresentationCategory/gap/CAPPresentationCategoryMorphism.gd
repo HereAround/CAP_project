@@ -8,6 +8,22 @@
 ##
 #############################################################################
 
+
+
+##################################################
+##
+#! @Section The GAP category for morphisms
+##
+##################################################
+
+#! @Description
+#! The GAP category of morphisms in the presentation category over a proj-category $P$.
+#! @Arguments object
+DeclareCategory( "IsCAPPresentationCategoryMorphism",
+                 IsCapCategoryMorphism );
+
+
+
 #############################
 ##
 #! @Section Constructors

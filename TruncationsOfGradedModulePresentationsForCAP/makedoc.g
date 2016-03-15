@@ -9,6 +9,7 @@ AutoDoc( "CAPCategoryOfProjectiveGradedModules" : scaffold := true, autodoc :=
                          "gap/SemigroupAndConeWrapper.gd",
                          "gap/CAPCategoryOfProjectiveGradedModulesFunctors.gd",
                          "gap/CAPCategoryOfProjectiveGradedModulesNaturalTransformations.gd",
+                         "gap/GradedModulePresentationsForCAPFunctors.gd",
                          "examples/Example.g"
                          ],
              scan_dirs := []

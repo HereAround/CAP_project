@@ -8,6 +8,60 @@
 ##
 #############################################################################
 
+
+
+######################################################################
+##
+#! @Section The GAP categories for graded module presentations for CAP
+##
+######################################################################
+
+#! @Description
+#! The GAP category of graded left and right module presentations.
+#! @Arguments object
+DeclareCategory( "IsGradedLeftOrRightModulePresentationForCAP",
+                 IsCAPPresentationCategoryObject );
+
+#! @Description
+#! The GAP category of objects in the presentation category over the category of projective graded left modules.
+#! @Arguments object
+DeclareCategory( "IsGradedLeftModulePresentationForCAP",
+                 IsGradedLeftOrRightModulePresentationForCAP );
+
+#! @Description
+#! The GAP category of objects in the presentation category over the category of projective graded right modules.
+#! @Arguments object
+DeclareCategory( "IsGradedRightModulePresentationForCAP",
+                 IsGradedLeftOrRightModulePresentationForCAP );
+
+
+
+###############################################################################
+##
+#! @Section The GAP categories for graded module presentation morphisms for CAP
+##
+###############################################################################
+
+#! @Description
+#! The GAP category of left or right module presentation morphisms
+#! @Arguments object
+DeclareCategory( "IsGradedLeftOrRightModulePresentationMorphismForCAP",
+                 IsCAPPresentationCategoryMorphism );
+
+#! @Description
+#! The GAP category of morphisms in the presentation category over the category of projective graded left modules.
+#! @Arguments object
+DeclareCategory( "IsGradedLeftModulePresentationMorphismForCAP",
+                 IsGradedLeftOrRightModulePresentationMorphismForCAP );
+
+#! @Description
+#! The GAP category of morphisms in the presentation category over the category of projective graded right modules.
+#! @Arguments object
+DeclareCategory( "IsGradedRightModulePresentationMorphismForCAP",
+                 IsGradedLeftOrRightModulePresentationMorphismForCAP );
+
+
+
 ######################################
 ##
 #! @Section CAP categories

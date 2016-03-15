@@ -3,7 +3,7 @@ SetPackageInfo( rec(
 PackageName := "GradedModulePresentationsForCAP",
 Subtitle := "Graded module presentations for CAP over a graded ring",
 Version := Maximum( [
-           "2015.11.13", # Martin's version
+           "2016.03.15", # Martin's version
            ##
            ] ),
 
@@ -60,10 +60,10 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">= 4.6",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
-                           [ "CAP", ">=0" ],
-                           [ "CAPCategoryOfProjectiveGradedModules", ">=0" ],
-                           [ "CAPPresentationCategory", ">=0" ],
-                           [ "ComplexesAndFilteredObjectsForCAP", ">=0" ],
+                           [ "CAP", ">=2016.02.19" ],
+                           [ "CAPCategoryOfProjectiveGradedModules", ">=2016.03.15" ],
+                           [ "CAPPresentationCategory", ">=2016.03.15" ],
+                           [ "ComplexesAndFilteredObjectsForCAP", ">=2015.10.20" ],
   ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],

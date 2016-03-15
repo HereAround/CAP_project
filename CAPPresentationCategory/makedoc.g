@@ -23,6 +23,7 @@ AutoDoc( "CAPPresentationCategory" : scaffold := true, autodoc :=
                               "LoadPackage( \"GaussForHomalg\" );",
                               "LoadPackage( \"CAPCategoryOfProjectiveGradedModules\" );",
                               "LoadPackage( \"CAPPresentationCategory\" );",
+                              "LoadPackage( \"GradedModulePresentationsForCAP\" );",
                               "HOMALG_IO.show_banners := false;",
                               "HOMALG_IO.suppress_PID := true;",
                               "HOMALG_IO.use_common_stream := true;",

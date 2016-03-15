@@ -8,6 +8,21 @@
 ##
 #############################################################################
 
+
+#############################
+##
+#! @Section GAP Category
+##
+#############################
+
+#! @Description
+#! The GAP category of objects in the presentation category over a proj-category $P$.
+#! @Arguments object
+DeclareCategory( "IsCAPPresentationCategoryObject",
+                 IsCapCategoryObject );
+
+
+
 #############################
 ##
 #! @Section Constructors

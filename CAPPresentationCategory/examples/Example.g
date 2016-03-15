@@ -98,7 +98,7 @@ FullInformation( presentation1l );
 #! 
 #! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! of rank 1 and degrees: 
+#! of rank 1 and degrees:
 #! [ [ ( 1, 0 ), 1 ] ]
 #! 
 #! A morphism in the category of projective graded left modules over 

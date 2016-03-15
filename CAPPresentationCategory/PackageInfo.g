@@ -3,7 +3,7 @@ SetPackageInfo( rec(
 PackageName := "CAPPresentationCategory",
 Subtitle := "The CAP presentation category based on a projective category (e.g. CAPCategoryOfProjectiveGradedModules)",
 Version := Maximum( [
-           "2015.11.13", # Martin's version
+           "2016.03.15", # Martin's version
            ##
            ] ),
 
@@ -60,8 +60,8 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">= 4.6",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
-                           [ "CAP", ">=0" ],
-                           [ "CAPCategoryOfProjectiveGradedModules", ">=0" ]
+                           [ "CAP", ">=2016.02.17" ],
+                           [ "CAPCategoryOfProjectiveGradedModules", ">=2016.03.15" ]
   ],
   SuggestedOtherPackages := [ ],
   ExternalConditions := [ ],
