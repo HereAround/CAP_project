@@ -758,7 +758,7 @@ InstallGlobalFunction( FrobeniusPowerFunctor,
     fi;
 
     # next compute the category under consideration
-    if left = true then    
+    if left = true then
       category := SfpgrmodLeft( graded_ring );
     else
       category := SfpgrmodRight( graded_ring );

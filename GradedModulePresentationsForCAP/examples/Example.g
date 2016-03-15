@@ -294,7 +294,8 @@ HomalgGradedRing( SubmoduleLeft );
 #! Q[x_1,x_2,x_3,x_4]
 #! (weights: [ ( 1, 0 ), ( 1, 0 ), ( 0, 1 ), ( 0, 1 ) ])
 SubmoduleLeft2 := GradedLeftSubmoduleForCAP( [ [ "x_1*x_3", 1 ],
-             [ "x_1*x_4", 1 ], [ "x_2*x_3", 1 ], [ "x_2*x_4", 1 ] ], S );
+             [ "x_1*x_4", 1 ], [ "x_2*x_3", 1 ], [ "x_2*x_4", 1 ] ], 
+             CAPCategoryOfProjectiveGradedLeftModulesObject( [[[0,0],1], [[1,1],1]], S ) );
 #! <A graded left submodule over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 FullInformation( EmbeddingInSuperObjectForCAP( SubmoduleLeft2 ) );
@@ -347,7 +348,7 @@ FullInformation( EmbeddingInSuperObjectForCAP( SubmoduleLeft2 ) );
 #! 
 #! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
-#! [ [ 0, 2 ] ]
+#! [ [ 0, 1 ], [ ( 1, 1 ), 1 ] ]
 #! 
 #! ================================================================================= 
 #! 
@@ -412,22 +413,6 @@ FullInformation( EmbeddingInSuperObjectForCAP( SubmoduleLeft3 ) );
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #! @Section Graded right submodules
 
 #! @Example
@@ -441,7 +426,8 @@ HomalgGradedRing( SubmoduleRight );
 #! Q[x_1,x_2,x_3,x_4]
 #! (weights: [ ( 1, 0 ), ( 1, 0 ), ( 0, 1 ), ( 0, 1 ) ])
 SubmoduleRight2 := GradedRightSubmoduleForCAP( [ [ "x_1*x_3",
-                  "x_1*x_4", "x_2*x_3", "x_2*x_4" ], [ 1, 1, 1, 1 ] ], S );
+                   "x_1*x_4", "x_2*x_3", "x_2*x_4" ], [ 1, 1, 1, 1 ] ],
+                   CAPCategoryOfProjectiveGradedRightModulesObject( [[[0,0],1], [[1,1],1]], S ) );
 #! <A graded right submodule over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 FullInformation( EmbeddingInSuperObjectForCAP( SubmoduleRight2 ) );
@@ -493,8 +479,8 @@ FullInformation( EmbeddingInSuperObjectForCAP( SubmoduleRight2 ) );
 #! 
 #! A projective graded right module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) of rank 2 and degrees: 
-#! [ [ 0, 2 ] ]
-#! 
+#! [ [ 0, 1 ], [ ( 1, 1 ), 1 ] ]
+#!
 #! ================================================================================= 
 #! 
 IsGradedRightSubmoduleForCAP( SubmoduleRight2 );
@@ -555,11 +541,6 @@ FullInformation( EmbeddingInSuperObjectForCAP( SubmoduleRight3 ) );
 #! =================================================================================
 
 #! @EndExample
-
-
-
-
-
 
 
 
@@ -711,8 +692,8 @@ FullInformation( res1 );
 #! [ [ [ 2, 2 ], 1 ] ]
 #! 
 betti1 := BettiTableForCAP( IdealLeft );
-#! [ [ ( -1, -1 ), ( -1, -1 ), ( -1, -1 ), ( -1, -1 ) ], [ ( -1, -2 ), ( -1, -2 ), 
-#! ( -2, -1 ), ( -2, -1 ) ], [ ( -2, -2 ) ] ]
+#! [ [ ( 1, 1 ), ( 1, 1 ), ( 1, 1 ), ( 1, 1 ) ], [ ( 1, 2 ), ( 1, 2 ), 
+#! ( 2, 1 ), ( 2, 1 ) ], [ ( 2, 2 ) ] ]
 res2 := MinimalFreeResolutionForCAP( IdealRight );
 #! <An object in Complex category of CAP category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
@@ -722,7 +703,7 @@ FullInformation( res2 );
 #!  | 
 #! -x_4,0,   -x_2,0,   
 #! x_3, 0,   0,   -x_2,
-#! 0,   -x_4,x_1, 0,   
+#! 0,   -x_4,x_1, 0, 
 #! 0,   x_3, 0,   x_1  
 #! (over a graded ring)
 #!  | 
@@ -738,7 +719,7 @@ FullInformation( res2 );
 #! [ [ [ 2, 2 ], 1 ] ]
 #! 
 betti2 := BettiTableForCAP( IdealRight );
-#! [ [ ( -1, -1 ), ( -1, -1 ), ( -1, -1 ), ( -1, -1 ) ], [ ( -1, -2 ), ( -1, -2 ), 
-#! ( -2, -1 ), ( -2, -1 ) ], [ ( -2, -2 ) ] ]
+#! [ [ ( 1, 1 ), ( 1, 1 ), ( 1, 1 ), ( 1, 1 ) ], [ ( 1, 2 ), ( 1, 2 ), 
+#! ( 2, 1 ), ( 2, 1 ) ], [ ( 2, 2 ) ] ]
 
 #! @EndExample

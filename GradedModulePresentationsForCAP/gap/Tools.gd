@@ -115,7 +115,7 @@ DeclareAttribute( "BettiTableForCAP",
 ####################################################################################
 
 #! @Description
-#! The arguments are an integer <A>i<A> and two f.p. graded modules <A>M_1<A> and <A>M_2<A>. Then this method
+#! The arguments are an integer <A>i</A> and two f.p. graded modules <A>M_1</A> and <A>M_2</A>. Then this method
 #! computes <A>\text{Ext}^i \left( M_1, M_2 \right) </A>.
 #! @Returns a f.p. graded module
 #! @Arguments e, M1, M2

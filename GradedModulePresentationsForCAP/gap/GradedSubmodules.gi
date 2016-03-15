@@ -125,15 +125,29 @@ InstallGlobalFunction( GradedSubmoduleFromListListAndGradedRing,
                          [ [ TheZeroElement( DegreeGroup( homalg_graded_ring ) ), NrColumns( matrix ) ] ],
                          homalg_graded_ring
                          );
+
       alpha := DeduceMapFromMatrixAndRangeLeft( matrix, range );
+
+      if not IsWellDefined( alpha ) then
+        Error( "Cannot deduce underlying morphism of projective graded modules from the given input." );
+        return;
+      fi;
+
     else
       range := CAPCategoryOfProjectiveGradedRightModulesObject(
                          [ [ TheZeroElement( DegreeGroup( homalg_graded_ring ) ), NrRows( matrix ) ] ],
                          homalg_graded_ring
                          );
-      alpha := DeduceMapFromMatrixAndRangeRight( matrix, range );                         
+
+      alpha := DeduceMapFromMatrixAndRangeRight( matrix, range );
+
+      if not IsWellDefined( alpha ) then
+        Error( "Cannot deduce underlying morphism of projective graded modules from the given input." );
+        return;
+      fi;
+
     fi;
-    
+
     # we are thus looking at the following diagram
     #     ?                           0
     #     |                           |
@@ -144,10 +158,10 @@ InstallGlobalFunction( GradedSubmoduleFromListListAndGradedRing,
     #
     # We construct the two ? and the ?-mapping as the pullback of zero_morphism and alpha. This amounts to computing the
     # kernel embedding of alpha and identifying it with ?-mapping. This is therefore what we do.
-    
+
     # now compute the presentation of the ideal
     pres := CAPPresentationCategoryObject( KernelEmbedding( alpha ) );
-    
+
     # compute the embedding
     range := CAPPresentationCategoryObject( ZeroMorphism( ZeroObject( CapCategory( range ) ), range ) );
     embedding := CAPPresentationCategoryMorphism( pres,
@@ -219,20 +233,20 @@ end );
 InstallGlobalFunction( GradedSubmoduleFromListListAndGivenRange,
   function( generator_list, range, left )
     local homalg_graded_ring, graded_submodule, matrix, alpha, pres, embedding, type;
-    
+
     # extract the graded ring
     homalg_graded_ring := UnderlyingHomalgGradedRing( range );
-    
+
     # construct the graded module morphism encoded by 'generator_list'
     matrix := HomalgMatrix( generator_list, homalg_graded_ring );
-    
+
     # now define alpha
     if left then
       alpha := DeduceMapFromMatrixAndRangeLeft( matrix, range );
     else
       alpha := DeduceMapFromMatrixAndRangeRight( matrix, range );
     fi;
-    
+
     # we are thus looking at the following diagram
     #     ?                           0
     #     |                           |
@@ -243,10 +257,10 @@ InstallGlobalFunction( GradedSubmoduleFromListListAndGivenRange,
     #
     # We construct the two ? and the ?-mapping as the pullback of zero_morphism and alpha. This amounts to computing the
     # kernel embedding of alpha and identifying it with ?-mapping. This is therefore what we do.
-    
+
     # now compute the presentation of the ideal
     pres := CAPPresentationCategoryObject( KernelEmbedding( alpha ) );
-    
+
     # compute the embedding
     range := CAPPresentationCategoryObject( ZeroMorphism( ZeroObject( CapCategory( range ) ), range ) );
     embedding := CAPPresentationCategoryMorphism( pres,
@@ -289,7 +303,7 @@ end );
 InstallMethod( GradedLeftSubmoduleForCAP,
                " a list of generators and a projective graded left module",
                [ IsList, IsCAPCategoryOfProjectiveGradedLeftModulesObject ],
-  function( generator_list, range )               
+  function( generator_list, range )
 
     return GradedSubmoduleFromListListAndGivenRange( generator_list, range, true );
 

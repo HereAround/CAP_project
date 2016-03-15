@@ -390,10 +390,10 @@ InstallMethod( SfpgrmodLeft,
                 " for graded rings ",
                 [ IsHomalgGradedRing ],
   function( graded_ring )
-    local category, underlying_graded_ring;
+    local projective_category, category;
 
       # identify the underlying proj category
-      projective_category := CAPCategoryOfProjectiveGradedLeftModules( graded_ring ) );
+      projective_category := CAPCategoryOfProjectiveGradedLeftModules( graded_ring );
 
       # set the category
       category := CreateCapCategory( Concatenation( "Category of graded left module presentations over ",
@@ -440,13 +440,13 @@ InstallMethod( SfpgrmodRight,
                 " for graded rings ",
                 [ IsHomalgGradedRing ],
   function( graded_ring )
-    local category, underlying_graded_ring;
+    local projective_category, category;
 
       # identify the underlying proj category
-      projective_category := CAPCategoryOfProjectiveGradedRightModules( graded_ring ) );
+      projective_category := CAPCategoryOfProjectiveGradedRightModules( graded_ring );
 
       # set the category
-      category := CreateCapCategory( Concatenation( "Category of graded left module presentations over ",
+      category := CreateCapCategory( Concatenation( "Category of graded right module presentations over ",
                                                     RingName( graded_ring ) ) );
 
       # set properties of the category
