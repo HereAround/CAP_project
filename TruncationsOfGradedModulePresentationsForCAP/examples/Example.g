@@ -44,8 +44,8 @@ TurnIntoConeHPresentationList( semigroup1 );
 Display( TurnIntoConeHPresentationList( semigroup1 ) );
 #! A list of hyperplane constraints of a cone in Z^2 -
 #! h-constraints are as follows: 
-#! [ [   1,  -1 ],
-#!   [   0,   1 ] ]
+#! [ [   0,  1 ],
+#!   [   1, -1 ] ]
 TurnIntoConeVPresentationList( semigroup1 );
 #! <A list of vertex generators of a cone in Z^2>
 Display( TurnIntoConeVPresentationList( semigroup1 ) );
@@ -71,7 +71,7 @@ PointContainedInCone( cone2, [ 1,-1 ] );
 PointContainedInCone( cone2, [ 1,1 ] ); 
 #! true
 cone3 := NmzCone( [ "integral_closure", [[ 2,1 ], [ 1,0 ]] ] );
-#! <a Normaliz cone with long int coefficients>
+#! <a Normaliz cone>
 PointContainedInCone( cone3, [ 3,1 ] );
 #! true
 PointContainedInCone( cone3, [ 3,2 ] );
@@ -147,9 +147,13 @@ PointContainedInAffineSemigroup( affine_semigroup2, [ 3,3 ] );
 #########################################################
 
 #! @Example
-S;
+Q := HomalgFieldOfRationalsInSingular();
+#! Q
+S := GradedRing( Q * "x_1, x_2, x_3, x_4" );
 #! Q[x_1,x_2,x_3,x_4]
-#! (weights: [ ( 1, 0 ), ( 1, 0 ), ( 0, 1 ), ( 0, 1 ) ])
+#! (weights: yet unset)
+SetWeightsOfIndeterminates( S, [[1,0],[1,0],[0,1],[0,1]] );
+#!
 D := DegreeGroup( S );
 #! <A free left module of rank 2 on free generators>
 IsFree( D );
@@ -229,8 +233,8 @@ truncatorL2 := TruncationFunctorForProjectiveGradedLeftModules(
                         S, SemigroupGeneratorList( [[ 1,0 ], [ 0,1 ]] ) );
 #! Truncation functor for CAP category of projective graded 
 #! left modules over Q[x_1,x_2,x_3,x_4] 
-#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! to the cone given by the h-constraints [ [ 1, 0 ], [ 0, 1 ] ]
+#! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
+#! to the cone given by the h-constraints [ [ 0, 1 ], [ 1, 0 ] ]
 tL2 := ApplyFunctor( truncatorL, NewObjectL );
 #! <A projective graded left module of rank 1>
 Display( tL2 );
@@ -265,7 +269,7 @@ nat_trans_l := NaturalTransformationFromTruncationToIdentityForProjectiveGradedL
 #! Natural transformation from Truncation functor for CAP category 
 #! of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! to the cone given by the h-constraints [ [ 1, 0 ], [ 0, 1 ] ] to id
+#! to the cone given by the h-constraints [ [ 0, 1 ], [ 1, 0 ] ] to id
 component_l := ApplyNaturalTransformation( nat_trans_l, NewObjectL );
 #! <A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
@@ -358,7 +362,7 @@ truncatorR2 := TruncationFunctorForProjectiveGradedRightModules(
 #! Truncation functor for CAP category of projective graded 
 #! right modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! to the cone given by the h-constraints [ [ 1, 0 ], [ 0, 1 ] ]
+#! to the cone given by the h-constraints [ [ 0, 1 ], [ 1, 0 ] ]
 tR2 := ApplyFunctor( truncatorR, NewObjectR );
 #! <A projective graded right module of rank 1>
 Display( tR2 );
@@ -392,7 +396,7 @@ nat_trans_r := NaturalTransformationFromTruncationToIdentityForProjectiveGradedR
 #! Natural transformation from Truncation functor for CAP category 
 #! of projective graded right modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! to the cone given by the h-constraints [ [ 1, 0 ], [ 0, 1 ] ] to id
+#! to the cone given by the h-constraints [ [ 0, 1 ], [ 1, 0 ] ] to id
 component_r := ApplyNaturalTransformation( nat_trans_r, NewObjectR );
 #! <A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>

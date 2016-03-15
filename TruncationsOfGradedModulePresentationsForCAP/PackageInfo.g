@@ -69,10 +69,10 @@ PackageDoc := rec(
 Dependencies := rec(
   GAP := ">= 4.6",
   NeededOtherPackages := [ [ "GAPDoc", ">= 1.5" ],
-                           [ "MatricesForHomalg", ">= 2015.06.20" ],
-                           [ "GradedRingForHomalg", ">=2014.08.27" ],
-                           [ "CAPCategoryOfProjectiveGradedModules", ">=2015.11.13" ],
-                           [ "CAP", ">= 2015.08.17" ],
+                           [ "MatricesForHomalg", ">= 2015.11.06" ],
+                           [ "GradedRingForHomalg", ">=2015.12.04" ],
+                           [ "CAPCategoryOfProjectiveGradedModules", ">=2016.03.15" ],
+                           [ "CAP", ">= 2016.02.19" ],
                            [ "4ti2Interface", ">= 2015.11.06" ],
                            [ "NormalizInterface", ">=0.9.6" ]
                            ],
