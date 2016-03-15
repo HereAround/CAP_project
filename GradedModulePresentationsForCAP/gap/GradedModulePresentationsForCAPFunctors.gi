@@ -747,7 +747,7 @@ end );
 # a function that computes the Frobenius power functor for both left and right presentations
 InstallGlobalFunction( FrobeniusPowerFunctor,
   function( graded_ring, power, left )
-    local rank, i, category, functor;
+    local category, functor;
 
     # check if the degree_group of the underlying homalg_graded_ring is free
     if power < 0  then

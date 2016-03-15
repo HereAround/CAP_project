@@ -110,9 +110,12 @@ InstallMethod( CAPPresentationCategoryObject,
   function( presentation_morphism )
     local category, presentation_category_object, type;
 
-    # and "try" to compute its presentation category
-    # should the given category not be a proj-category, then this command will cause an error
-    category := PresentationCategory( CapCategory( presentation_morphism ) );
+    # compute the category
+    if IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( presentation_morphism ) then
+      category := SfpgrmodLeft( UnderlyingHomalgGradedRing( presentation_morphism ) );
+    else
+      category := SfpgrmodRight( UnderlyingHomalgGradedRing( presentation_morphism ) );
+    fi;
 
     # set its type (differing special cases, as defined in SpecialGAPCategories.gd)
     if IsCAPCategoryOfProjectiveGradedLeftModulesMorphism( presentation_morphism ) then
