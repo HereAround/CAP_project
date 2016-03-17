@@ -809,15 +809,15 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     AddTensorUnit( category,
       function( )
         local proj_category;
-        
+
         # identity the proj_category
         proj_category := category!.underlying_projective_category;
-        
+
         # and return the universal morphism 0 -> 1 from the zero object in the tensor unit
         return CAPPresentationCategoryObject( UniversalMorphismFromZeroObject( TensorUnit( proj_category ) ) );
-        
+
     end );
-    
+
     # @Description
     # Given three objects a, b, c in the presentation category we consider source = ( a \otimes b ) \otimes c and 
     # range = a \otimes ( b \otimes c ). The result is the associator source -> range, which we derive from the associator in the 
@@ -828,13 +828,16 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Arguments source, a, b, c, range
     AddAssociatorLeftToRightWithGivenTensorProducts( category,
       function( source, a, b, c, range )
-        
+
         # return the morphism as derived from the Proj-category
         return CAPPresentationCategoryMorphism( source,
-                      AssociatorLeftToRight( Range( UnderlyingMorphism( source ) ), Range( UnderlyingMorphism( range ) ) ),
-                      range,
-                      checks_wished
-                     );
+                                                AssociatorLeftToRight( Range( UnderlyingMorphism( a ) ),
+                                                                       Range( UnderlyingMorphism( b ) ),
+                                                                       Range( UnderlyingMorphism( c ) ) 
+                                                                      ),
+                                                range,
+                                                checks_wished
+                                               );
 
         # FIXME
         # always well-defined?
@@ -851,13 +854,16 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Arguments source, a, b, c, range
     AddAssociatorRightToLeftWithGivenTensorProducts( category,
       function( source, a, b, c, range )
-        
+
         # return the morphism as derived from the Proj-category
         return CAPPresentationCategoryMorphism( source,
-                      AssociatorRightToLeft( Range( UnderlyingMorphism( source ) ), Range( UnderlyingMorphism( range ) ) ),
-                      range,
-                      checks_wished
-                     );
+                                                AssociatorRightToLeft( Range( UnderlyingMorphism( a ) ),
+                                                                       Range( UnderlyingMorphism( b ) ),
+                                                                       Range( UnderlyingMorphism( c ) ) 
+                                                                      ),
+                                                range,
+                                                checks_wished
+                                               );
         # FIXME
         # well-defined?
 
@@ -943,15 +949,15 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # @Arguments s = a \otimes b, a, b, r = b \otimes a
     AddBraidingWithGivenTensorProducts( category,
     function( s, a, b, r)
-    
+
       return CAPPresentationCategoryMorphism( s,
-                                              Braiding( Range( UnderlyingMorphism( s ) ), Range( UnderlyingMorphism( r ) ) ),
+                                              Braiding( Range( UnderlyingMorphism( a ) ), Range( UnderlyingMorphism( b ) ) ),
                                               r,
                                               checks_wished
                                              );
 
     end );
-    
+
     ######################################################################
     #
     # @Section Add Symmetric Closed Monoidal Structure
@@ -991,7 +997,7 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     #                          \alpha^\vee \otimes \beta (bridge_mapping)
     #                                       |
     # 0 -> Hom( a , b  ) --kernel1--> A^\vee  \otimes b  --- \alpha^\vee \otimes 1_b   ---> R_1^\vee \otimes b
-    #                
+    #
     # We compute the left square, i.e. the two kernel embeddings and the vertical map. Finally we compute the lift
     # Hom( a,b ) ---> Hom( a', b' ) and return this morphism.
     # @Returns a morphism
@@ -1033,12 +1039,12 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     #                                                        ^
     #                                                        |
     #                                                   'evaluation'
-    #                                                        |        
+    #                                                        |
     #                                             b \otimes ( A^\vee \otimes a )
     #                                                        ^
     #                                                        |
     #                                                   associator
-    #                                                        |    
+    #                                                        |
     #                                             ( b \otimes A^\vee ) \otimes a
     #                                                        ^
     #                                                        |
@@ -1047,27 +1053,27 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # Hom( a, b ) \otimes a --------------------> ( A^\vee \otimes b ) \otimes a
     # The composition of all these morphisms produces the evaluation morphism.
     # @Returns a morphism
-    # @Arguments a, b, s = Hom( a, b ) \otimes a    
+    # @Arguments a, b, s = Hom( a, b ) \otimes a
     AddEvaluationMorphismWithGivenSource( category,
       function( a, b, s )
         local projective_category, Hom_embedding, Hom_embedding_tensored, Adual, braiding, associator, evaluation;
+
         # (0) extract the underlying proj-category
         projective_category := category!.underlying_projective_category;
-        
+
         # (1) the hom-embedding
         Hom_embedding := INTERNAL_HOM_EMBEDDING_IN_TENSOR_PRODUCT( a, b );
         Hom_embedding_tensored := TensorProductOnMorphisms( Hom_embedding, IdentityMorphism( a ) );
-        
+
         # (2) the braiding
         Adual := CAPPresentationCategoryObject(
                     ZeroMorphism( ZeroObject( projective_category ), DualOnObjects( Range( UnderlyingMorphism( a ) ) ) ) );
-
         braiding := Braiding( Adual, b );
         braiding := TensorProductOnMorphisms( braiding, IdentityMorphism( a ) );
-        
+
         # (3) associator_left_to_right
         associator := AssociatorLeftToRight( b, Adual, a );
-        
+
         # (4) evaluation
         evaluation := CAPPresentationCategoryMorphism( TensorProductOnObjects( Adual, a ),
                                                        EvaluationForDual( Range( UnderlyingMorphism( a ) ) ),
@@ -1076,8 +1082,8 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
                                                       );
         evaluation := TensorProductOnMorphisms( IdentityMorphism( b ), evaluation );
 
-        # (5) now compute the coevaluation morphism by a lift
-        return PreCompose( Hom_embedding_tensored, braiding, associator, evaluation );
+        # (5) now compute the evaluation morphism by a lift
+        return PreCompose( [ Hom_embedding_tensored, braiding, associator, evaluation ] );
 
     end );
 
@@ -1088,14 +1094,14 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     #                                                        ^
     #                                                        |
     #                                                   associator
-    #                                                        |    
+    #                                                        |
     #                                             ( a \otimes b ) \otimes B^\vee
     #                                                        ^
     #                                                        |
     #                                                     braiding
     #                                                        |
     # Hom( b, a \otimes b ) --------------------> B^\vee \otimes ( a \otimes b )
-    # The corresponding lift produces the desired morphism.    
+    # The corresponding lift produces the desired morphism.
     # @Returns a morphism
     # @Arguments a, b, r = Hom( b, a \otimes b )
     AddCoevaluationMorphismWithGivenRange( category,
