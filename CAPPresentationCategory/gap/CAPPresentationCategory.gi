@@ -643,7 +643,7 @@ InstallGlobalFunction( ADD_BASIC_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     AddKernelEmbedding( category,
       function( morphism )
         local kernel_embedding, underlying_morphism_of_kernel, kernel_object;
-        
+
         kernel_embedding := ProjectionInFactorOfFiberProduct( [ UnderlyingMorphism( morphism ), 
                                                                 UnderlyingMorphism( Range( morphism ) ) ], 1 );
 
