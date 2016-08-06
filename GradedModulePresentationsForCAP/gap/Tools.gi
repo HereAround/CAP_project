@@ -36,15 +36,13 @@ InstallMethod( Saturate,
     # save the image of the ideal_embedding
     homalg_graded_ring_module := Range( ideal_embedding );
 
-    Error( "another test" );
-    
     # now compute the saturation
     module_saturated := module;
-    #buffer_mapping := ByASmallerPresentation( 
+    #buffer_mapping := ByASmallerPresentation(
     #                        InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) ) );
 
     buffer_mapping := InternalHomOnMorphisms( ideal_embedding, IdentityMorphism( module_saturated ) );
-    
+
     Error( "before iso" );
 
     while not IsIsomorphism( buffer_mapping ) do
@@ -413,27 +411,23 @@ InstallMethod( BettiTableForCAP,
     # initialise morphisms
     betti_table := [];
 
-    # use a presentation that does not contain units -> minimal (!) resolution          
+    # use a presentation that does not contain units -> minimal (!) resolution
     if left then
-      new_mapping_matrix := ReducedBasisOfRowModule( UnderlyingHomalgMatrix( 
-                                                                          UnderlyingMorphism( presentation_object ) ) );
-      buffer_mapping := DeduceMapFromMatrixAndRangeLeft( new_mapping_matrix,
-                                                                    Range( UnderlyingMorphism( presentation_object ) ) );
+      new_mapping_matrix := ReducedBasisOfRowModule( UnderlyingHomalgMatrix( UnderlyingMorphism( presentation_object ) ) );
+      buffer_mapping := DeduceMapFromMatrixAndRangeLeft( new_mapping_matrix, Range( UnderlyingMorphism( presentation_object ) ) );
     else
-      new_mapping_matrix := ReducedBasisOfColumnModule( UnderlyingHomalgMatrix( 
-                                                                           UnderlyingMorphism( presentation_object ) ) );      
-      buffer_mapping := DeduceMapFromMatrixAndRangeRight( new_mapping_matrix, 
-                                                                    Range( UnderlyingMorphism( presentation_object ) ) );
+      new_mapping_matrix := ReducedBasisOfColumnModule( UnderlyingHomalgMatrix( UnderlyingMorphism( presentation_object ) ) );
+      buffer_mapping := DeduceMapFromMatrixAndRangeRight( new_mapping_matrix, Range( UnderlyingMorphism( presentation_object ) ) );
     fi;
 
     # and use this mapping as the first morphisms is the minimal free resolution
     Add( betti_table, UnzipDegreeList( Range( buffer_mapping ) ) );
-    
+
     # check if we are already done
     if IsZeroForObjects( Source( buffer_mapping ) ) then
       return betti_table;
     fi;
-    
+
     # otherwise add the source and compute the next mapping
     Add( betti_table, UnzipDegreeList( Source( buffer_mapping ) ) );
 
@@ -548,5 +542,78 @@ InstallMethod( GradedExtForCAP,
   function( i, module1, module2 )
 
     return GradedExtForCAP( i, PresentationForCAP( module1 ), PresentationForCAP( module2 ) );
+
+end );
+
+
+
+####################################################################################
+##
+#! @Section Twisting graded module presentations
+##
+####################################################################################
+
+InstallMethod( Twist,
+               "for a graded left or right module presentation and a list of integers",
+               [ IsGradedLeftOrRightModulePresentationForCAP, IsList ],
+  function( module, twist )
+    local degree_group, k, left, new_range_degrees, new_range, matrix;
+
+    # check that the twist has the correct length to belong to the degree group of the ring over which the module is defined
+    degree_group := DegreeGroup( UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ) );
+    if Length( twist ) <> Rank( degree_group ) then
+
+      Error( "The given list cannot be interpreted as an element of the degree group of the graded ring which the module is defined over" );
+      return;
+
+    fi;
+
+    # check that the entries of the twist are all integers
+    for k in [ 1 .. Length( twist ) ] do
+
+      if not IsInt( twist[ k ] ) then
+
+        Error( "The entries of the given twist-list must be integers" );
+        return;
+
+      fi;
+
+    od;
+
+    # have to differ left and right module presentations eventually
+    left := IsGradedLeftModulePresentationForCAP( module );
+
+    # now perform the twist by subtracting twist from all generators and relations of the module
+    new_range_degrees := List( [ 1 .. Length( DegreeList( Range( UnderlyingMorphism( module ) ) ) ) ],
+                                k -> [ UnderlyingListOfRingElements( DegreeList( Range( UnderlyingMorphism( module ) ) )[ k ][ 1 ] ) - twist,
+                                       DegreeList( Range( UnderlyingMorphism( module ) ) )[ k ][ 2 ] ] );
+
+    # compute the new range object and deduce the mapping matrix
+    if left then
+      new_range := CAPCategoryOfProjectiveGradedLeftModulesObject( new_range_degrees,
+                                                                   UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ) 
+                                                                  );
+    else
+      new_range := CAPCategoryOfProjectiveGradedRightModulesObject( new_range_degrees,
+                                                                    UnderlyingHomalgGradedRing( UnderlyingMorphism( module ) ) 
+                                                                   );
+    fi;
+    matrix := UnderlyingHomalgMatrix( UnderlyingMorphism( module ) );
+
+    # then compute the new module presentation from new_range and matrix and return the result
+    if left then
+      return CAPPresentationCategoryObject( DeduceMapFromMatrixAndRangeLeft( matrix , new_range ) );
+    else
+      return CAPPresentationCategoryObject( DeduceMapFromMatrixAndRangeRight( matrix , new_range ) );
+    fi;
+
+end );
+
+InstallMethod( Twist,
+               "for a graded left or right module presentation and a list of integers",
+               [ IsGradedLeftOrRightModulePresentationForCAP, IsHomalgModuleElement ],
+  function( module, twist )
+
+    return Twist( module, UnderlyingListOfRingElements( twist ) );
 
 end );

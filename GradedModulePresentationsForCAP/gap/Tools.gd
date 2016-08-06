@@ -121,3 +121,21 @@ DeclareAttribute( "BettiTableForCAP",
 #! @Arguments e, M1, M2
 DeclareOperation( "GradedExtForCAP",
                   [ IsInt, IsGradedLeftOrRightModulePresentationForCAP, IsGradedLeftOrRightModulePresentationForCAP ] );
+
+
+
+####################################################################################
+##
+#! @Section Twisting graded module presentations
+##
+####################################################################################
+
+#! @Description
+#! The argument is a graded left or right module presentation <A>M</A> and an element of the class group of the ring over which
+#! this module is graded. We then compute the twisted graded module presentation.
+#! @Returns a GradedLeftOrRightModulePresentationForCAP
+#! @Arguments M
+DeclareOperation( "Twist",
+                  [ IsGradedLeftOrRightModulePresentationForCAP, IsList ] );
+DeclareOperation( "Twist",
+                  [ IsGradedLeftOrRightModulePresentationForCAP, IsHomalgModuleElement ] );
