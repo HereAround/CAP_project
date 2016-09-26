@@ -85,18 +85,17 @@ BindGlobal( "TheTypeOfAffineConeSemigroups",
 ############################################
 
 InstallMethod( SemigroupGeneratorList,
-               [ IsList ],
-  function( list_of_generators )
+               [ IsList, IsInt ],
+  function( list_of_generators, embedding_dimension )
     local helper_list, i, j, sg_generator_list;
 
-    # we expect at least one generator
-    if Length( list_of_generators ) = 0 then
-      Error( "no generator given" );
+    if embedding_dimension < 0 then
+      Error( "the embedding dimension cannot be negative" );
       return;
     fi;
 
     # we have to check that 
-    # (1) all entries of the list_of_generators are of the same length
+    # (1) all entries of the list_of_generators are of the same length 'embedding_dimension'
     # (2) all entries are integers
 
     # @ (1)
@@ -105,8 +104,8 @@ InstallMethod( SemigroupGeneratorList,
     if Length( helper_list ) > 1 then
       Error( "all generators have to be of the same length");
       return;
-    elif helper_list[ 1 ] = 0 then
-      Error( "the generators must be of length 1 or longer" );
+    elif helper_list[ 1 ] <> embedding_dimension then
+      Error( Concatenation( "the generators must be of the length", String( embedding_dimension ) ) );
       return;
     fi;
 
@@ -128,7 +127,7 @@ InstallMethod( SemigroupGeneratorList,
     sg_generator_list := rec();
     ObjectifyWithAttributes( sg_generator_list, TheTypeOfSemigroupGeneratorLists,
                              UnderlyingList, DuplicateFreeList( list_of_generators ),
-                             EmbeddingDimension, Length( list_of_generators[ 1 ] )
+                             EmbeddingDimension, embedding_dimension
                             );
 
     # and return this object
@@ -136,14 +135,28 @@ InstallMethod( SemigroupGeneratorList,
 
 end );
 
-InstallMethod( ConeHPresentationList,
+# convenience method which deduces the embedding dimension (if possible) from a given list of generators
+InstallMethod( SemigroupGeneratorList,
                [ IsList ],
-  function( list_of_hconstraints )
+  function( list_of_generators )
+
+    if Length( list_of_generators ) = 0 then
+      Error( "the embedding dimension cannot be deduced uniquely from the given list of semigroup generators" );
+      return;
+    else
+      return SemigroupGeneratorList( list_of_generators, Length( list_of_generators[ 1 ] ) );
+    fi;
+
+end );
+
+InstallMethod( ConeHPresentationList,
+               [ IsList, IsInt ],
+  function( list_of_hconstraints, embedding_dimension )
     local helper_list, i, j, cone_hpresentation_list;
 
     # we expect at least one h-constraint
-    if Length( list_of_hconstraints ) = 0 then
-      Error( "no h-constraint given" );
+    if embedding_dimension < 0 then
+      Error( "the embedding dimension must be non-negative" );
       return;
     fi;
 
@@ -157,8 +170,8 @@ InstallMethod( ConeHPresentationList,
     if Length( helper_list ) > 1 then
       Error( "all h-constraints have to be of the same length");
       return;
-    elif helper_list[ 1 ] = 0 then
-      Error( "the h-constraints must be of length 1 or longer" );
+    elif helper_list[ 1 ] <> embedding_dimension then
+      Error( Concatenation( "the h-constraints must be of length ", String( embedding_dimension ) ) );
       return;
     fi;
 
@@ -180,7 +193,7 @@ InstallMethod( ConeHPresentationList,
     cone_hpresentation_list := rec();
     ObjectifyWithAttributes( cone_hpresentation_list, TheTypeOfConeHPresentationLists,
                              UnderlyingList, DuplicateFreeList( list_of_hconstraints ),
-                             EmbeddingDimension, Length( list_of_hconstraints[ 1 ] )
+                             EmbeddingDimension, embedding_dimension
                             );
 
     # and return this object
@@ -189,9 +202,22 @@ InstallMethod( ConeHPresentationList,
 end );
 
 InstallMethod( ConeHPresentationList,
+               [ IsList ],
+  function( list_of_hconstraints )
+
+    if Length( list_of_hconstraints ) = 0 then
+      Error( "the embedding dimension cannot be deduced uniquely from the given list of h-constraints" );
+      return;
+    else
+      return ConeHPresentationList( list_of_hconstraints, Length( list_of_hconstraints[ 1 ] ) );
+    fi;
+
+end );
+
+InstallMethod( ConeHPresentationList,
                [ IsNormalizCone ],
   function( cone )
-    local underlying_list, cone_hpresentation_list;
+    local cone_hpresentation_list;
 
     # check if the cone is full-dimensional, so that normaliz can compute an H-presentation
     NmzCompute( cone );
@@ -203,10 +229,9 @@ InstallMethod( ConeHPresentationList,
     fi;
 
     # if normaliz can provide an h-presentation, we can now compute a ConeHPresentationList
-    underlying_list := NmzSupportHyperplanes( cone );
     cone_hpresentation_list := rec();
     ObjectifyWithAttributes( cone_hpresentation_list, TheTypeOfConeHPresentationLists,
-                             UnderlyingList, underlying_list,
+                             UnderlyingList, NmzSupportHyperplanes( cone ),
                              EmbeddingDimension, NmzEmbeddingDimension( cone )
                             );
 
@@ -216,13 +241,13 @@ InstallMethod( ConeHPresentationList,
 end );
 
 InstallMethod( ConeVPresentationList,
-               [ IsList ],
-  function( list_of_generators )
+               [ IsList, IsInt ],
+  function( list_of_generators, embedding_dimension )
     local helper_list, i, j, cone_vpresentation_list;
 
-    # we expect at least one h-constraint
-    if Length( list_of_generators ) = 0 then
-      Error( "no generator given" );
+    # we expect at least one ray
+    if embedding_dimension < 0 then
+      Error( "the embedding dimension must be non-negative" );
       return;
     fi;
 
@@ -236,8 +261,8 @@ InstallMethod( ConeVPresentationList,
     if Length( helper_list ) > 1 then
       Error( "all generators have to be of the same length");
       return;
-    elif helper_list[ 1 ] = 0 then
-      Error( "the generators must be of length 1 or longer" );
+    elif helper_list[ 1 ] <> embedding_dimension then
+      Error( Concatenation( "the generators must be of length ", String( embedding_dimension ) ) );
       return;
     fi;
 
@@ -259,11 +284,24 @@ InstallMethod( ConeVPresentationList,
     cone_vpresentation_list := rec();
     ObjectifyWithAttributes( cone_vpresentation_list, TheTypeOfConeVPresentationLists,
                              UnderlyingList, DuplicateFreeList( list_of_generators ),
-                             EmbeddingDimension, Length( list_of_generators[ 1 ] )
+                             EmbeddingDimension, embedding_dimension
                             );
 
     # and return this object
     return cone_vpresentation_list;
+
+end );
+
+InstallMethod( ConeVPresentationList,
+               [ IsList ],
+  function( list_of_generators )
+
+    if Length( list_of_generators ) = 0 then
+      Error( "the embedding dimension cannot be deduced uniquely from the given list of generators" );
+      return;
+    else
+      return ConeVPresentationList( list_of_generators, Length( list_of_generators[ 1 ] ) );
+    fi;
 
 end );
 
@@ -297,7 +335,7 @@ end );
 InstallMethod( AffineConeSemigroup,
                [ IsNormalizCone, IsList ],
   function( cone, offset_point )
-    local i, affine_cone_semigroup;
+    local i, embedding_dim, affine_cone_semigroup;
 
     # now check that the offset_point lies in the same lattice as the semigroup of the cone
     NmzCompute( cone );
@@ -313,22 +351,23 @@ InstallMethod( AffineConeSemigroup,
     od;
 
     # we have found that the input is valid, so collect the information that we need about the cone
+    embedding_dim := Length( offset_point );
     affine_cone_semigroup := rec();
     if NmzHasConeProperty( cone, "HilbertBasis" ) and NmzRank( cone ) = NmzEmbeddingDimension( cone ) then
 
       ObjectifyWithAttributes( affine_cone_semigroup, TheTypeOfAffineConeSemigroups,
-                               Offset, offset_point,
-                               UnderlyingConeVPresentationList, ConeVPresentationList( NmzHilbertBasis( cone ) ),
-                               UnderlyingConeHPresentationList, ConeHPresentationList( NmzSupportHyperplanes( cone ) ),
-                               EmbeddingDimension, Length( offset_point )
-                            );
+                          Offset, offset_point,
+                          UnderlyingConeVPresentationList, ConeVPresentationList( NmzHilbertBasis( cone ), embedding_dim ),
+                          UnderlyingConeHPresentationList, ConeHPresentationList( NmzSupportHyperplanes( cone ), embedding_dim ),
+                          EmbeddingDimension, embedding_dim
+                          );
 
     elif NmzHasConeProperty( cone, "HilbertBasis" ) and NmzRank( cone ) <> NmzEmbeddingDimension( cone ) then
 
       ObjectifyWithAttributes( affine_cone_semigroup, TheTypeOfAffineConeSemigroups,
                                Offset, offset_point,
-                               UnderlyingConeVPresentationList, ConeVPresentationList( NmzHilbertBasis( cone ) ),
-                               EmbeddingDimension, Length( offset_point )
+                               UnderlyingConeVPresentationList, ConeVPresentationList( NmzHilbertBasis( cone ), embedding_dim ),
+                               EmbeddingDimension, embedding_dim
                             );
 
     fi;
@@ -341,7 +380,7 @@ end );
 InstallMethod( AffineConeSemigroup,
                [ IsConeVPresentationList, IsList ],
   function( cone_vpresentation_list, offset_point )
-    local cone, i, affine_cone_semigroup;
+    local cone, i, embedding_dim, affine_cone_semigroup;
 
     # compute the cone
     cone := NmzCone( [ "integral_closure", UnderlyingList( cone_vpresentation_list ) ] );
@@ -360,22 +399,23 @@ InstallMethod( AffineConeSemigroup,
     od;
 
     # we have found that the input is valid, so collect the information that we need about the cone
+    embedding_dim := Length( offset_point );
     affine_cone_semigroup := rec();
     if NmzRank( cone ) = NmzEmbeddingDimension( cone ) then
 
       ObjectifyWithAttributes( affine_cone_semigroup, TheTypeOfAffineConeSemigroups,
-                               Offset, offset_point,
-                               UnderlyingConeVPresentationList, cone_vpresentation_list,
-                               UnderlyingConeHPresentationList, ConeHPresentationList( NmzSupportHyperplanes( cone ) ),
-                               EmbeddingDimension, Length( offset_point )
-                            );
+                          Offset, offset_point,
+                          UnderlyingConeVPresentationList, cone_vpresentation_list,
+                          UnderlyingConeHPresentationList, ConeHPresentationList( NmzSupportHyperplanes( cone ), embedding_dim ),
+                          EmbeddingDimension, embedding_dim
+                          );
 
     elif NmzRank( cone ) <> NmzEmbeddingDimension( cone ) then
 
       ObjectifyWithAttributes( affine_cone_semigroup, TheTypeOfAffineConeSemigroups,
                                Offset, offset_point,
                                UnderlyingConeVPresentationList, cone_vpresentation_list,
-                               EmbeddingDimension, Length( offset_point )
+                               EmbeddingDimension, embedding_dim
                             );
 
     fi;
@@ -388,7 +428,7 @@ end );
 InstallMethod( AffineConeSemigroup,
                [ IsConeHPresentationList, IsList ],
   function( cone_hpresentation_list, offset_point )
-    local cone, i, affine_cone_semigroup;
+    local cone, i, embedding_dim, affine_cone_semigroup;
 
     # compute the cone
     cone := NmzCone( [ "inequalities", UnderlyingList( cone_hpresentation_list ) ] );
@@ -407,14 +447,15 @@ InstallMethod( AffineConeSemigroup,
     od;
 
     # we have found that the input is valid, so collect the information that we need about the cone
+    embedding_dim := Length( offset_point );
     affine_cone_semigroup := rec();
     if NmzHasConeProperty( cone, "HilbertBasis" ) then
 
       ObjectifyWithAttributes( affine_cone_semigroup, TheTypeOfAffineConeSemigroups,
                                Offset, offset_point,
-                               UnderlyingConeVPresentationList, ConeVPresentationList( NmzHilbertBasis( cone ) ),
+                               UnderlyingConeVPresentationList, ConeVPresentationList( NmzHilbertBasis( cone ), embedding_dim ),
                                UnderlyingConeHPresentationList, cone_hpresentation_list,
-                               EmbeddingDimension, Length( offset_point )
+                               EmbeddingDimension, embedding_dim
                             );
 
     else
@@ -422,7 +463,7 @@ InstallMethod( AffineConeSemigroup,
       ObjectifyWithAttributes( affine_cone_semigroup, TheTypeOfAffineConeSemigroups,
                                Offset, offset_point,
                                UnderlyingConeHPresentationList, cone_hpresentation_list,
-                               EmbeddingDimension, Length( offset_point )
+                               EmbeddingDimension, embedding_dim
                             );
 
     fi;
@@ -458,9 +499,9 @@ InstallMethod( AffineSemigroup,
     # we have found that the input is valid, so collect the information that we need about the cone
     affine_semigroup := rec();
     ObjectifyWithAttributes( affine_semigroup, TheTypeOfAffineSemigroups,
-                               UnderlyingSemigroupGeneratorList, semigroup_generator_list,
-                               Offset, offset_point,
-                               EmbeddingDimension, Length( offset_point )
+                             UnderlyingSemigroupGeneratorList, semigroup_generator_list,
+                             Offset, offset_point,
+                             EmbeddingDimension, Length( offset_point )
                             );
 
     # and return this object

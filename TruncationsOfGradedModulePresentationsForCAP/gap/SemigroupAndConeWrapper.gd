@@ -15,7 +15,7 @@
 ############################################
 
 #! @Description
-#! The GAP category of lists of integer-valued lists, which encode subsemigroups of $Z^n$.
+#! The GAP category of lists of integer-valued lists, which encode the generators of subsemigroups of $Z^n$.
 #! @Arguments object
 DeclareCategory( "IsSemigroupGeneratorList",
                  IsObject );
@@ -40,8 +40,8 @@ DeclareCategory( "IsAffineSemigroup",
                  IsObject );
 
 #! @Description
-#! The GAP category of affine semigroups $H$ of cones in $\mathbb{Z}^n$. This means that there is a cone
-#! $C subseteq \mathbb{Z}^n$ and $p \in \mathbb{Z}^n$ such that $H = p + \left( C \cap \mathbb{Z}^n \right)$.
+#! The GAP category of affine semigroups $H$ associated to affine cones in $\mathbb{Z}^n$. This means that there is a cone
+#! $C subseteq \mathbb{R}^n$ and $p \in \mathbb{Z}^n$ such that $H = p + \left( C \cap \mathbb{Z}^n \right)$.
 #! @Arguments object
 DeclareCategory( "IsAffineConeSemigroup",
                  IsAffineSemigroup );
@@ -57,18 +57,22 @@ InstallTrueMethod( IsAffineSemigroup, IsAffineConeSemigroup );
 ############################################
 
 #! @Description
-#! The argument is a list $L$. We then check if this list could be the list of generators of a subsemigroup of $Z^n$.
-#! If so, we create the corresponding SemigroupGeneratorList.
+#! The argument is a list $L$ and a non-negative integer $d$. We then check if this list could be the list of generators
+#! of a subsemigroup of $Z^d$. If so, we create the corresponding SemigroupGeneratorList.
 #! @Returns a SemigroupGeneratorList
 #! @Arguments L
+DeclareOperation( "SemigroupGeneratorList",
+                  [ IsList, IsInt ] );
 DeclareOperation( "SemigroupGeneratorList",
                   [ IsList ] );
 
 #! @Description
-#! The argument is a list $L$. We then check if this list could be the list of hyperplane constraints of a cone in $Z^n$.
-#! If so, we create the corresponding ConeHPresentationList.
+#! The argument is a list $L$ and a non-negative integer $d$. We then check if this list could be the list of hyperplane
+#! constraints of a cone in $Z^d$. If so, we create the corresponding ConeHPresentationList.
 #! @Returns a ConeHPresentationList
 #! @Arguments L
+DeclareOperation( "ConeHPresentationList",
+                  [ IsList, IsInt ] );
 DeclareOperation( "ConeHPresentationList",
                   [ IsList ] );
 
@@ -81,10 +85,12 @@ DeclareOperation( "ConeHPresentationList",
                   [ IsNormalizCone ] );
 
 #! @Description
-#! The argument is a list $L$. We then check if this list could be the list of (ray) generators of a cone in $Z^n$.
-#! If so, we create the corresponding ConeVPresentationList.
+#! The argument is a list $L$ and a non-negative integer $d$. We then check if this list could be the list of (ray) 
+#! generators of a cone in $Z^d$. If so, we create the corresponding ConeVPresentationList.
 #! @Returns a ConeVPresentationList
 #! @Arguments L
+DeclareOperation( "ConeVPresentationList",
+                  [ IsList, IsInt ] );
 DeclareOperation( "ConeVPresentationList",
                   [ IsList ] );
 

@@ -523,7 +523,7 @@ InstallGlobalFunction( ADD_BASIC_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
         #  A \oplus R_C ------- \tilde{\psi} ------> C
         #
         # then we compute the lift by use of \underlying_morphism( morphism1 ) and \tilde{psi}
-        
+
         # (1) construction of \tilde{\psi}
         A := Range( UnderlyingMorphism( Source( morphism2 ) ) );
         R_C := Source( UnderlyingMorphism( Range( morphism2 ) ) );
@@ -971,7 +971,7 @@ InstallGlobalFunction( ADD_MONOIDAL_FUNCTIONS_FOR_PRESENTATION_CATEGORY,
     # 0 -> Hom( a,b ) -> Hom( A, b ) -> Hom( R_1, b )
     #
     # Now since A, R_1 are projective objects in the presentation category, even the following sequence is exact
-    #   
+    #
     # 0 -> Hom( a,b ) -> A^\vee \otimes b --- \alpha^\vee \otimes 1_b ---> R_1^\vee \otimes b
     #
     # By computing the kernel object of \alpha^\vee \otimes 1_b, we thus succeed in computing Hom( a,b ).
