@@ -522,7 +522,7 @@ InstallMethod( String,
   function( semigroup_generator_list )
 
     return Concatenation( "A list of generators of a semigroup of Z^",
-                          String( Length( UnderlyingList( semigroup_generator_list )[ 1 ] ) ) );
+                           String( EmbeddingDimension( semigroup_generator_list ) ) );
 
 end );
 
@@ -531,7 +531,7 @@ InstallMethod( String,
   function( cone_hpresentation_list )
 
     return Concatenation( "A list of hyperplane constraints of a cone in Z^",
-                          String( Length( UnderlyingList( cone_hpresentation_list )[ 1 ] ) ) );
+                          String( EmbeddingDimension( cone_hpresentation_list ) ) );
 
 end );
 
@@ -540,7 +540,7 @@ InstallMethod( String,
   function( cone_vpresentation_list )
 
     return Concatenation( "A list of vertex generators of a cone in Z^",
-                          String( Length( UnderlyingList( cone_vpresentation_list )[ 1 ] ) ) );
+                          String( EmbeddingDimension( cone_vpresentation_list ) ) );
 
 end );
 
