@@ -51,7 +51,7 @@ TurnIntoConeVPresentationList( semigroup1 );
 #! <A list of vertex generators of a cone in Z^2>
 Display( TurnIntoConeVPresentationList( semigroup1 ) );
 #! A list of vertex generators of a cone in Z^2 -
-#! generators are as follows: 
+#! ray generators are as follows: 
 #! [ [  1,  0 ],
 #!   [  1,  1 ] ]
 IsSemigroupOfCone( semigroup2 );

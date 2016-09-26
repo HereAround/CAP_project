@@ -594,7 +594,7 @@ InstallMethod( Display,
                [ IsConeVPresentationList ],
   function( cone_vpresentation_list )
 
-    Print( Concatenation( String( cone_vpresentation_list ), " - rays are as follows: \n" ) );
+    Print( Concatenation( String( cone_vpresentation_list ), " - ray generators are as follows: \n" ) );
     Display( UnderlyingList( cone_vpresentation_list ) );
     Print( "\n" );
 
