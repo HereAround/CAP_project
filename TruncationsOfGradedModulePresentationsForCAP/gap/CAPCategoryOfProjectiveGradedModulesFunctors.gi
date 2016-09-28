@@ -22,7 +22,7 @@ InstallMethod( TruncationOfProjectiveGradedModule,
     local conversion, rank, degree_list, new_degree_list, i;
 
     # check if we are given the semigroup of a cone
-    conversion := TurnIntoConeHPresentationList( semigroup_generator_list );
+    conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
     if conversion <> fail then
       return TruncationOfProjectiveGradedModule( projective_module, conversion );
     fi;
@@ -132,7 +132,7 @@ InstallMethod( EmbeddingOfTruncationOfProjectiveGradedModule,
     local conversion, rank, degree_list, new_degree_list, embedding_matrix, counter, i, j, row, graded_ring, truncated_module;
 
     # check if the input is the semigroup of a cone and if so, hand the computation over to that method
-    conversion := TurnIntoConeHPresentationList( semigroup_generator_list );
+    conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
     if not conversion = fail then
 
       return EmbeddingOfTruncationOfProjectiveGradedModule( projective_module, conversion );
@@ -314,7 +314,7 @@ InstallMethod( ProjectionOntoTruncationOfProjectiveGradedModule,
     local conversion, rank, degree_list, new_degree_list, projection_matrix, counter, i, j, row, graded_ring, truncated_module;
 
     # check if the input is the semigroup of a cone and if so, hand the computation over to that method
-    conversion := TurnIntoConeHPresentationList( semigroup_generator_list );
+    conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
     if not conversion = fail then
 
       return ProjectionOntoTruncationOfProjectiveGradedModule( projective_module, conversion );
@@ -826,7 +826,7 @@ InstallMethod( TruncationFunctorForProjectiveGradedLeftModules,
 
         # check if the given semigroup is the semigroup of a cone, and if so simplify matters by computing the
         # corresponding functor
-       conversion := TurnIntoConeHPresentationList( semigroup_generator_list );
+       conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
 
        if conversion = fail then
 
@@ -866,7 +866,7 @@ InstallMethod( TruncationFunctorForProjectiveGradedRightModules,
 
         # check if the given semigroup is the semigroup of a cone, and if so simplify matters by computing the
         # corresponding functor
-       conversion := TurnIntoConeHPresentationList( semigroup_generator_list );
+       conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
 
        if conversion = fail then
 

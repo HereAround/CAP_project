@@ -143,16 +143,33 @@ DeclareOperation( "AffineSemigroup",
 ############################################
 
 #! @Description
+#! The argument is a SemigroupGeneratorList $L$. We then return the underlying list.
+#! @Returns a list
+#! @Arguments L
+DeclareAttribute( "UnderlyingList",
+                  IsSemigroupGeneratorList );
+
+#! @Description
 #! The argument is a SemigroupGeneratorList $L$. We then return the embedding dimension of this semigroup.
+#! @Returns a non-negative integer
 #! @Arguments L
 DeclareAttribute( "EmbeddingDimension",
                   IsSemigroupGeneratorList );
 
 #! @Description
-#! The argument is a SemigroupGeneratorList $L$. We then return the underlying list.
-#! @Returns a list
+#! The argument is a SemigroupGeneratorList $L$. If the associated semigroup is a cone semigroup, then 
+#! we return an HPresentation of this cone. Otherwise the method returns fail.
+#! @Returns a ConeHPresentationList or fail
 #! @Arguments L
-DeclareAttribute( "UnderlyingList",
+DeclareAttribute( "UnderlyingConeHPresentationList",
+                  IsSemigroupGeneratorList );
+
+#! @Description
+#! The argument is a SemigroupGeneratorList $L$. If the associated semigroup is a cone semigroup, then 
+#! we return a VPresentation of this cone. Otherwise the method returns fail.
+#! @Returns a ConeVPresentationList or fail
+#! @Arguments L
+DeclareAttribute( "UnderlyingConeVPresentationList",
                   IsSemigroupGeneratorList );
 
 #! @Description
@@ -164,6 +181,7 @@ DeclareAttribute( "UnderlyingList",
 
 #! @Description
 #! The argument is a ConeHPresentationList $L$. We then return the embedding dimension of this cone.
+#! @Returns a non-negative integer
 #! @Arguments L
 DeclareAttribute( "EmbeddingDimension",
                   IsConeHPresentationList );
@@ -177,28 +195,10 @@ DeclareAttribute( "UnderlyingList",
 
 #! @Description
 #! The argument is a ConeVPresentationList $L$. We then return the embedding dimension of this cone.
+#! @Returns a non-negative integer
 #! @Arguments L
 DeclareAttribute( "EmbeddingDimension",
                   IsConeVPresentationList );
-
-#! @Description
-#! The argument is a SemigroupGeneratorList $L$. We try to convert $L$ into a ConeHPresentationList. If this
-#! succeeds, the result will be a ConeHPresentationList. If the conversion is not possible
-#! (because the given semigroup is not the semigroup of a cone or because Normaliz cannot perform the conversion), 
-#! the result will be fail.
-#! @Returns AConeHPresentationList or fail
-#! @Arguments L
-DeclareAttribute( "TurnIntoConeHPresentationList",
-                  IsSemigroupGeneratorList );
-
-#! @Description
-#! The argument is a SemigroupGeneratorList $L$. We try to convert $L$ into a ConeVPresentationList. If this
-#! succeeds, the result will be a ConeVPresentationList. If the conversion is not possible because the given semigroup 
-#! is not the semigroup of a cone, the result will be fail.
-#! @Returns AConeVPresentationList or fail
-#! @Arguments L
-DeclareAttribute( "TurnIntoConeVPresentationList",
-                  IsSemigroupGeneratorList );
 
 #! @Description
 #! The argument is an AffineConeSemigroup $S$. This one is given as $S = p + \left( C \cap \mathbb{Z}^n \right)$ for a 
@@ -229,6 +229,7 @@ DeclareAttribute( "UnderlyingConeVPresentationList",
 DeclareAttribute( "EmbeddingDimension",
                   IsAffineConeSemigroup );
 
+
 #! @Description
 #! The argument is an AffineSemigroup $S$. This one is given as $S = p + H$ for a 
 #! point $p \in \mathbb{Z}^n$ and a semigroup $H \subseteq \mathbb{Z}^n$. We then return the offset $p$.
@@ -252,15 +253,6 @@ DeclareAttribute( "UnderlyingSemigroupGeneratorList",
 DeclareAttribute( "EmbeddingDimension",
                   IsAffineSemigroup );
 
-#! @Description
-#! The argument is a SemigroupGeneratorList $L$. We try to convert $L$ into a ConeVPresentationList. If this
-#! succeeds, the result will be a ConeVPresentationList. If the conversion is not possible because the given semigroup 
-#! is not the semigroup of a cone, the result will be fail.
-#! @Returns AConeVPresentationList or fail
-#! @Arguments L
-DeclareAttribute( "TurnIntoAffineConeSemigroup",
-                  IsAffineSemigroup );
-
 
 
 ############################################
@@ -270,21 +262,83 @@ DeclareAttribute( "TurnIntoAffineConeSemigroup",
 ############################################
 
 #! @Description
-#! The argument is a SemigroupGeneratorList $L$. We then check if this is the semigroup of a cone. In this case we 
-#! return true, otherwise false.
+#! The argument is a SemigroupGeneratorList $L$. This property returns 'true' if this list is empty and 'false' otherwise.
 #! @Returns true or false
 #! @Arguments L
-DeclareProperty( "IsSemigroupOfCone",
+DeclareProperty( "IsEmpty",
+                 IsSemigroupGeneratorList );
+
+#! @Description
+#! The argument is a ConeHPresentationList $L$. This property returns 'true' if this list is empty and 'false' otherwise.
+#! @Returns true or false
+#! @Arguments L
+DeclareProperty( "IsEmpty",
+                 IsConeHPresentationList );
+
+#! @Description
+#! The argument is a ConeVPresentationList $L$. This property returns 'true' if this list is empty and 'false' otherwise.
+#! @Returns true or false
+#! @Arguments L
+DeclareProperty( "IsEmpty",
+                 IsConeVPresentationList );
+
+#! @Description
+#! The argument is an affine semigroup. This property returns 'true' if this semigroup consists only of the offset point
+#! and otherwise returns 'false'.
+#! @Returns true or false
+#! @Arguments L
+DeclareProperty( "IsTrivial",
+                 IsAffineSemigroup );
+
+#! @Description
+#! The argument is an affine cone semigroup. This property returns 'true' if this semigroup consists only of the offset point
+#! and otherwise returns 'false'.
+#! @Returns true or false
+#! @Arguments L
+DeclareProperty( "IsTrivial",
+                 IsAffineConeSemigroup );
+
+#! @Description
+#! The argument is a SemigroupGeneratorList $L$. We return if this is a ConeSemigroupGeneratorList. If Normaliz cannot decide
+#! this, we return 'fail'.
+#! @Returns true, false or fail
+#! @Arguments L
+DeclareProperty( "IsSemigroupOfConeGeneratorList",
                   IsSemigroupGeneratorList );
 
 #! @Description
-#! The argument is a AffineSemigroup $H$. We then check if this is the semigroup of a cone, i.e. if $H$ is an
-#! affine cone semigroup. In this case we return true, otherwise false.
-#! @Returns true or false
+#! The argument is a AffineSemigroup $H$. We return if this is an AffineConeSemigroup. If Normaliz cannot decide this 'fail'
+#! is returned.
+#! @Returns true, false or fail
 #! @Arguments H
 DeclareProperty( "IsAffineSemigroupOfCone",
                   IsAffineSemigroup );
 
+
+
+############################################
+##
+#! @Section Operations
+##
+############################################
+
+#! @Description
+#! The argument is a list $L$ of generators of a semigroup in $\mathbb{Z}^n$. We then check if this 
+#! is the semigroup of a cone. In this case we return 'true', otherwise 'false'. If the operation fails due to 
+#! shortcommings in Normaliz we return 'fail'.
+#! @Returns true, false or fail
+#! @Arguments L
+DeclareOperation( "DecideIfIsConeSemigroupGeneratorList",
+                  [ IsList ] );
+
+#! @Description
+#! The argument is a AffineSemigroup $H$. We then check if this is the semigroup of a cone, i.e. if $H$ is an
+#! affine cone semigroup. In this case we return 'true', otherwise 'false'. if the operation fails due to 
+#! shortcommings in Normaliz we return 'fail'.
+#! @Returns true, false or fail
+#! @Arguments H
+DeclareOperation( "DecideIfIsAffineConeSemigroup",
+                  [ IsAffineSemigroup ] );
 
 
 ###############################################################################

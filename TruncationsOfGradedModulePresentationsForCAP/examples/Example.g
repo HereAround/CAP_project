@@ -17,46 +17,46 @@ LoadPackage( "TruncationsOfGradedModulePresentationsForCAP" );;
 
 #! @Example
 semigroup1 := SemigroupGeneratorList( [[ 1,0 ], [ 1,1 ]] );
-#! <A list of generators of a semigroup of Z^2>
+#! <A list of 2 generators of a cone-semigroup in Z^2>
 IsSemigroupGeneratorList( semigroup1 );
 #! true
 UnderlyingList( semigroup1 );
 #! [ [ 1, 0 ], [ 1, 1 ] ]
 semigroup2 := SemigroupGeneratorList( [[ 2,0 ], [ 1,1 ]] );
-#! <A list of generators of a semigroup of Z^2>
+#! <A list of 2 generators of a non-cone semigroup in Z^2>
 IsSemigroupGeneratorList( semigroup2 );
 #! true
 UnderlyingList( semigroup2 );
 #! [ [ 2, 0 ], [ 1, 1 ] ]
 cone1 := ConeVPresentationList( [[ 1,0 ], [ 0, 1 ]] );
-#! <A list of vertex generators of a cone in Z^2>
+#! <A list of 2 vertex generators of a cone in Z^2>
 cone2 := ConeHPresentationList( [[ 1,1 ], [ -1, 1 ]] );
-#! <A list of hyperplane constraints of a cone in Z^2>
+#! <A list of 2 hyperplane constraints of a cone in Z^2>
 #! @EndExample
 
 #! We can check if a semigroup in $\mathbb{Z}^n$ is the semigroup of a cone. In case it is, we can convert 
 #! into an H-presentation or V-presentation.
 
 #! @Example
-IsSemigroupOfCone( semigroup1 );
+IsSemigroupOfConeGeneratorList( semigroup1 );
 #! true
-TurnIntoConeHPresentationList( semigroup1 );
-#! <A list of hyperplane constraints of a cone in Z^2>
-Display( TurnIntoConeHPresentationList( semigroup1 ) );
-#! A list of hyperplane constraints of a cone in Z^2 -
+UnderlyingConeHPresentationList( semigroup1 );
+#! <A list of 2 hyperplane constraints of a cone in Z^2>
+Display( UnderlyingConeHPresentationList( semigroup1 ) );
+#! A list of 2 hyperplane constraints of a cone in Z^2 -
 #! h-constraints are as follows: 
 #! [ [   0,  1 ],
 #!   [   1, -1 ] ]
-TurnIntoConeVPresentationList( semigroup1 );
-#! <A list of vertex generators of a cone in Z^2>
-Display( TurnIntoConeVPresentationList( semigroup1 ) );
-#! A list of vertex generators of a cone in Z^2 -
+UnderlyingConeVPresentationList( semigroup1 );
+#! <A list of 2 vertex generators of a cone in Z^2>
+Display( UnderlyingConeVPresentationList( semigroup1 ) );
+#! A list of 2 vertex generators of a cone in Z^2 -
 #! ray generators are as follows: 
 #! [ [  1,  0 ],
 #!   [  1,  1 ] ]
-IsSemigroupOfCone( semigroup2 );
+IsSemigroupOfConeGeneratorList( semigroup2 );
 #! false
-TurnIntoConeHPresentationList( semigroup2 );
+UnderlyingConeHPresentationList( semigroup2 );
 #! fail
 #! @EndExample
 
@@ -90,15 +90,15 @@ PointContainedInSemigroup( semigroup2, [ 2,0 ] );
 
 #! @Example
 affine_cone_semigroup1 := AffineConeSemigroup( cone1, [ 5,2 ] );
-#! <An affine cone_semigroup in Z^2>
+#! <A non-trivial affine cone-semigroup in Z^2>
 affine_cone_semigroup2 := AffineConeSemigroup( cone2, [ 3,0 ] );
-#! <An affine cone_semigroup in Z^2>
+#! <A non-trivial affine cone-semigroup in Z^2>
 affine_cone_semigroup3 := AffineConeSemigroup( cone3, [ -1,-1 ] );
-#! <An affine cone_semigroup in Z^2>
+#! <An affine cone-semigroup in Z^2>
 affine_semigroup1 := AffineSemigroup( semigroup1, [ -1,-1 ] );
-#! <An affine cone_semigroup in Z^2>
+#! <A non-trivial affine cone-semigroup in Z^2>
 affine_semigroup2 := AffineSemigroup( semigroup2, [ 2,2 ] );
-#! <An affine semigroup in Z^2>
+#! <A non-trivial affine non-cone semigroup in Z^2>
 #! @EndExample
 
 #! We can access the properties of these affine semigroups as follows.
@@ -107,9 +107,9 @@ affine_semigroup2 := AffineSemigroup( semigroup2, [ 2,2 ] );
 IsAffineConeSemigroup( affine_semigroup2 );
 #! false
 UnderlyingSemigroupGeneratorList( affine_semigroup2 );
-#! <A list of generators of a semigroup of Z^2>
+#! <A list of 2 generators of a non-cone semigroup in Z^2>
 Display( UnderlyingSemigroupGeneratorList( affine_semigroup2 ) );
-#! A list of generators of a semigroup of Z^2 - generators are as follows: 
+#! A list of 2 generators of a non-cone semigroup in Z^2 - generators are as follows: 
 #! [ [  2,  0 ],
 #!   [  1,  1 ] ]
 IsAffineConeSemigroup( affine_semigroup1 );
@@ -117,14 +117,14 @@ IsAffineConeSemigroup( affine_semigroup1 );
 Offset( affine_cone_semigroup2 );
 #! [ 3, 0 ]
 UnderlyingConeHPresentationList( affine_cone_semigroup1 );
-#! <A list of hyperplane constraints of a cone in Z^2>
+#! <A list of 2 hyperplane constraints of a cone in Z^2>
 #! @EndExample
 
 #! Of course we can also decide membership in affine (cone_)semigroups.
 
 #! @Example
 Display( affine_cone_semigroup1 );
-#! An affine cone_semigroup in Z^2
+#! A non-trivial affine cone-semigroup in Z^2
 #! Offset: [ 5, 2 ]
 #! Cone generators: [ [ 1, 0 ], [ 0, 1 ] ]
 PointContainedInAffineConeSemigroup( affine_cone_semigroup1, [ 1,1 ] );
@@ -132,7 +132,7 @@ PointContainedInAffineConeSemigroup( affine_cone_semigroup1, [ 1,1 ] );
 PointContainedInAffineConeSemigroup( affine_cone_semigroup1, [ 5,4 ] );
 #! true
 Display( affine_semigroup2 );
-#! An affine semigroup in Z^2
+#! A non-trivial affine non-cone semigroup in Z^2
 #! Offset: [ 2, 2 ]
 #! Semigroup generators: [ [ 2, 0 ], [ 1, 1 ] ]
 PointContainedInAffineSemigroup( affine_semigroup2, [ 3,2 ] );

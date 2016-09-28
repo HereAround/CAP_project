@@ -204,7 +204,7 @@ InstallMethod( Truncation,
     local conversion, underlying_morphism;
 
     # check if the semigroup is the semigroup of a cone
-    conversion := TurnIntoConeHPresentationList( semigroup_generator_list );
+    conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
     if conversion <> fail then
       return Truncation( module_presentation, conversion );
     fi;
@@ -250,7 +250,7 @@ InstallMethod( Truncation,
          underlying_morphism_range, new_range;
 
     # check if the semigroup is the semigroup of a cone
-    conversion := TurnIntoConeHPresentationList( semigroup_generator_list );
+    conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
     if conversion <> fail then
       return Truncation( module_presentation_morphism, conversion );
     fi;
@@ -302,7 +302,7 @@ InstallGlobalFunction( TruncationFunctorToSemigroups,
     local conversion, rank, i, category, functor;
 
     # check if the semigroup is the semigroup of a cone
-    conversion := TurnIntoConeHPresentationList( semigroup_generator_list );
+    conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
     if conversion <> fail then
       return TruncationFunctorToCones( graded_ring, conversion );
     fi;
@@ -379,7 +379,7 @@ InstallMethod( TruncationFunctorLeft,
   function( graded_ring, semigroup_generator_list )
     local conversion;
 
-    conversion := TurnIntoConeHPresentationList( semigroup_generator_list );
+    conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
 
     if conversion = fail then
       return TruncationFunctorToSemigroups( graded_ring, semigroup_generator_list, true );
@@ -396,7 +396,7 @@ InstallMethod( TruncationFunctorRight,
 function( graded_ring, semigroup_generator_list )
   local conversion;
 
-    conversion := TurnIntoConeHPresentationList( semigroup_generator_list );
+    conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
 
     if conversion = fail then
       return TruncationFunctorToSemigroups( graded_ring, semigroup_generator_list, false );
