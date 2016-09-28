@@ -627,25 +627,46 @@ InstallMethod( String,
                            );
     # otherwise
     else
-      if IsSemigroupOfConeGeneratorList( semigroup_generator_list ) = true then
-        return Concatenation( "A list of ",
-                              String( Length( UnderlyingList( semigroup_generator_list ) ) ),
-                              " generators of a cone-semigroup in Z^",
-                              String( EmbeddingDimension( semigroup_generator_list ) ) 
-                             );
-      elif IsSemigroupOfConeGeneratorList( semigroup_generator_list ) = false then
-        return Concatenation( "A list of ",
-                              String( Length( UnderlyingList( semigroup_generator_list ) ) ),
-                              " generators of a non-cone semigroup in Z^",
-                              String( EmbeddingDimension( semigroup_generator_list ) ) 
-                             );
+      if Length( UnderlyingList( semigroup_generator_list ) ) = 1 then
+
+        if IsSemigroupOfConeGeneratorList( semigroup_generator_list ) = true then
+          return Concatenation( "A list of 1 generator of a cone-semigroup in Z^",
+                                String( EmbeddingDimension( semigroup_generator_list ) ) 
+                               );
+        elif IsSemigroupOfConeGeneratorList( semigroup_generator_list ) = false then
+          return Concatenation( "A list of 1 generator of a non-cone semigroup in Z^",
+                                String( EmbeddingDimension( semigroup_generator_list ) ) 
+                               );
+        else
+          return Concatenation( "A list of 1 generator of a semigroup in Z^",
+                                String( EmbeddingDimension( semigroup_generator_list ) ) 
+                               );
+        fi;
+
       else
-        return Concatenation( "A list of ",
-                              String( Length( UnderlyingList( semigroup_generator_list ) ) ),
-                              " generators of a semigroup in Z^",
-                              String( EmbeddingDimension( semigroup_generator_list ) ) 
-                             );
+
+        if IsSemigroupOfConeGeneratorList( semigroup_generator_list ) = true then
+          return Concatenation( "A list of ",
+                                String( Length( UnderlyingList( semigroup_generator_list ) ) ),
+                                " generators of a cone-semigroup in Z^",
+                                String( EmbeddingDimension( semigroup_generator_list ) ) 
+                               );
+        elif IsSemigroupOfConeGeneratorList( semigroup_generator_list ) = false then
+          return Concatenation( "A list of ",
+                                String( Length( UnderlyingList( semigroup_generator_list ) ) ),
+                                " generators of a non-cone semigroup in Z^",
+                                String( EmbeddingDimension( semigroup_generator_list ) ) 
+                               );
+        else
+          return Concatenation( "A list of ",
+                                String( Length( UnderlyingList( semigroup_generator_list ) ) ),
+                                " generators of a semigroup in Z^",
+                                String( EmbeddingDimension( semigroup_generator_list ) ) 
+                               );
+        fi;
+
       fi;
+
     fi;
 
 end );
@@ -661,11 +682,18 @@ InstallMethod( String,
                            );
     # otherwise
     else
-      return Concatenation( "A list of ",
-                            String( Length( UnderlyingList( cone_hpresentation_list ) ) ),
-                            " hyperplane constraints of a cone in Z^",
-                            String( EmbeddingDimension( cone_hpresentation_list ) ) 
-                           );
+      if Length( UnderlyingList( cone_hpresentation_list ) ) = 1 then
+
+        return Concatenation( "A list of 1 hyperplane constraint of a cone in Z^",
+                              String( EmbeddingDimension( cone_hpresentation_list ) ) 
+                             );
+      else
+        return Concatenation( "A list of ",
+                              String( Length( UnderlyingList( cone_hpresentation_list ) ) ),
+                              " hyperplane constraints of a cone in Z^",
+                              String( EmbeddingDimension( cone_hpresentation_list ) ) 
+                             );
+      fi;
     fi;
 
 end );
@@ -681,11 +709,23 @@ InstallMethod( String,
                            );
     # otherwise
     else
-      return Concatenation( "A list of ",
+
+      if Length( UnderlyingList( cone_vpresentation_list ) ) = 1 then
+
+        return Concatenation( "A list of 1 vertex generators of a cone in Z^",
+                              String( EmbeddingDimension( cone_vpresentation_list ) ) 
+                             );
+
+      else
+
+        return Concatenation( "A list of ",
                             String( Length( UnderlyingList( cone_vpresentation_list ) ) ),
                             " vertex generators of a cone in Z^",
                             String( EmbeddingDimension( cone_vpresentation_list ) ) 
                            );
+
+      fi;
+
     fi;
 
 end );
