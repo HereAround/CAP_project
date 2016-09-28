@@ -13,7 +13,7 @@ PackageName := "TruncationsOfGradedModulePresentationsForCAP",
 Subtitle := "Truncating a graded module presentation (for CAP) to an affine (cone) semigroup",
 
 Version := Maximum( [
-  "2016.03.15", ## Martin's version
+  "2016.09.28", ## Martin's version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
