@@ -954,10 +954,11 @@ end );
 InstallMethod( DecideIfIsConeSemigroupGeneratorList,
                "for semigroup_generator_lists",
                [ IsList ],
-  function( list_of_generators )
-    local cone, hilbert_basis, i, pos;
+  function( list_of_original_generators )
+    local list_of_generators, cone, hilbert_basis, i, pos;
 
     # extract the necessary data
+    list_of_generators := DuplicateFreeList( list_of_original_generators );
     cone := NmzCone( [ "integral_closure", list_of_generators ] );
     NmzCompute( cone );
 
