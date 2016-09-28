@@ -244,7 +244,7 @@ DeclareAttribute( "Offset",
 #! @Returns a SemigroupGeneratorList
 #! @Arguments S
 DeclareAttribute( "UnderlyingSemigroupGeneratorList",
-                  IsAffineConeSemigroup );
+                  IsAffineSemigroup );
 
 #! @Description
 #! The argument is an AffineSemigroup $S$. We then return the embedding dimension of this affine semigroup.
@@ -337,8 +337,8 @@ DeclareOperation( "DecideIfIsConeSemigroupGeneratorList",
 #! shortcommings in Normaliz we return 'fail'.
 #! @Returns true, false or fail
 #! @Arguments H
-DeclareOperation( "DecideIfIsAffineConeSemigroup",
-                  [ IsAffineSemigroup ] );
+#DeclareOperation( "DecideIfIsAffineConeSemigroup",
+#                  [ IsAffineSemigroup ] );
 
 
 ###############################################################################

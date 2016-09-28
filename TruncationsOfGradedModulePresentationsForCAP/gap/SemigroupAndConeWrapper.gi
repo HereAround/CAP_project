@@ -444,6 +444,9 @@ InstallMethod( AffineConeSemigroup,
 
     fi;
 
+    # and remember that this is an AffineSemigroup of a cone
+    SetIsAffineSemigroupOfCone( affine_cone_semigroup, true );
+
     # and return this object
     return affine_cone_semigroup;
 
@@ -498,6 +501,9 @@ InstallMethod( AffineConeSemigroup,
     else
       SetIsTrivial( affine_cone_semigroup, false );
     fi;
+
+    # and remember that this is an AffineSemigroup of a cone
+    SetIsAffineSemigroupOfCone( affine_cone_semigroup, true );
 
     # and return this object
     return affine_cone_semigroup;
@@ -559,6 +565,9 @@ InstallMethod( AffineConeSemigroup,
 
     fi;
 
+    # and remember that this is an AffineSemigroup of a cone
+    SetIsAffineSemigroupOfCone( affine_cone_semigroup, true );
+
     # and return this object
     return affine_cone_semigroup;
 
@@ -605,6 +614,16 @@ InstallMethod( AffineSemigroup,
 
     # and return this object
     return affine_semigroup;
+
+end );
+
+# this method can be used to compute the attribute IsAffineSemigroupOfCone if it is not known
+InstallMethod( IsAffineSemigroupOfCone,
+               "for semigroup_generator_lists",
+               [ IsAffineSemigroup ],
+  function( affine_semigroup )
+
+    return IsAffineConeSemigroup( UnderlyingSemigroupGeneratorList( affine_semigroup ) );
 
 end );
 
@@ -1001,15 +1020,6 @@ InstallMethod( DecideIfIsConeSemigroupGeneratorList,
 
 end );
 
-InstallMethod( DecideIfIsAffineConeSemigroup,
-               "for semigroup_generator_lists",
-               [ IsAffineSemigroup ],
-  function( affine_semigroup )
-
-    return IsAffineConeSemigroup( UnderlyingSemigroupGeneratorList( affine_semigroup ) );
-
-end );
-
 
 
 #############################################################################
@@ -1168,6 +1178,12 @@ InstallMethod( PointContainedInAffineSemigroup,
                [ IsAffineSemigroup, IsList ],
   function( affine_semigroup, point )
 
-   return PointContainedInSemigroup( UnderlyingSemigroupGeneratorList( affine_semigroup ),  point - Offset( affine_semigroup ) );
+   if IsAffineConeSemigroup( affine_semigroup ) then
+     return PointContainedInAffineConeSemigroup( affine_semigroup, point ); 
+   else
+     return PointContainedInSemigroup( UnderlyingSemigroupGeneratorList( affine_semigroup ),  
+                                       point - Offset( affine_semigroup ) 
+                                      );
+   fi;
 
 end );
