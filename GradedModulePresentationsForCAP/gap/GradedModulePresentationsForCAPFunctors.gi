@@ -26,13 +26,14 @@
 # U,T are ment to be invertible. Then the following method computes [ M', T, T^-1 ]
 
 # FIXME: Why is T homogeneous?
-InstallMethod( LessGradedGeneratorsTransformationTriple,
+InstallMethod( LessGeneratorsTransformationTriple,
+#InstallMethod( LessGeneratorsTransformationTripleLeft,
                [ IsHomalgMatrix ],
   function( matrix )
     local transformation, transformation_inverse, smaller_matrix;
 
     # initialise the transformation matrices T, T^{-1}
-    transformation := HomalgVoidMatrix( HomalgRing( matrix ) );    
+    transformation := HomalgVoidMatrix( HomalgRing( matrix ) );
     transformation_inverse := HomalgVoidMatrix( HomalgRing( matrix ) );
 
     # compute M' and thereby set values for T and T^{-1}
@@ -42,6 +43,26 @@ InstallMethod( LessGradedGeneratorsTransformationTriple,
     return [ smaller_matrix, transformation, transformation_inverse ];
 
 end );
+
+##
+#InstallMethod( LessGeneratorsTransformationTripleRight,
+#               [ IsHomalgMatrix ],
+#  function( matrix )
+#    local transformation, transformation_inverse, smaller_matrix;
+
+    # initialise the transformation matrices T, T^{-1}
+#    transformation := HomalgVoidMatrix( HomalgRing( matrix ) );
+#    transformation_inverse := HomalgVoidMatrix( HomalgRing( matrix ) );
+
+    # compute M' and thereby set values for T and T^{-1}
+#    smaller_matrix := SimplerEquivalentMatrix( matrix, transformation, transformation_inverse, "", "", "" );
+
+    # return the triple of desired information
+#    return [ smaller_matrix, transformation, transformation_inverse ];
+
+#end );
+
+
 
 # compute a smaller presentation for a graded left or right module presentation for CAP
 InstallMethod( LessGradedGenerators,
