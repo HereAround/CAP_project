@@ -10,9 +10,10 @@
 
 
 # an attribute for homalg_matrices, that allows to represent that matrix 'smaller'
-DeclareAttribute( "LessGradedGeneratorsTransformationTriple",
+DeclareAttribute( "LessGradedGeneratorsTransformationTripleLeft",
                   IsHomalgMatrix );
-
+DeclareAttribute( "LessGradedGeneratorsTransformationTripleRight",
+                  IsHomalgMatrix );
 
 
 #################################################

@@ -16,51 +16,74 @@
 ##
 ################################################
 
-# This method intends to simply this module presentation. To this end we look at the following diagram:
-# module1 --- M ---> module2
-#    |                   |
-#    U                   T
-#    |                   |
-#    v                   v
-# module1' --- M' ---> module2'
-# U,T are ment to be invertible. Then the following method computes [ M', T, T^-1 ]
+# Here we make use of the function 'SimplerEquivalentMatrix' from MatricesForHomalg, Basic.gi
+# This function accepts a matrix M and produces a simpler matrix M2 from it. Optionally it can compute matrices
+# U, UI, V and VI such that the following holds true:
+# M * V = UI * M2 and U * M = M2 * VI
+# For left-modules (R -M-> G and R2 -M2-> G2) this corresponds to having the following commutative diagrams:
 
-# FIXME: Why is T homogeneous?
-InstallMethod( LessGeneratorsTransformationTriple,
-#InstallMethod( LessGeneratorsTransformationTripleLeft,
+# R --- UI ---> R2               R <--- U ---- R2
+# |             |                |             |
+# M             M2               M             M2
+# |             |                |             |
+# v             v                v             v
+# G --- V ----> G2               G <--- VI --- G2
+
+# and for right-modules to the diagram
+
+# R --- VI ---> R2               R <--- V ---- R2
+# |             |                |             |
+# M             M2               M             M2
+# |             |                |             |
+# v             v                v             v
+# G --- U ----> G2               G <--- UI --- G2
+
+# So if we want to describe the transformation from the origional module into a simpler module we wish to compute
+# left-modules: V (and VI)
+# right-modules: U ( and UI)
+
+# This is achieved from the following code (initialise V, VI, U and UI as HomalgVoidMatrices first)
+# left-modules: SimplerEquivalentMatrix( M, V, VI, "", "" );
+# right-modules: SimplerEquivalentMatrix( M, U, UI, "", "", "" );
+# Note the different number of empty strings in this function - this is crucial!
+
+# That said, we have the following methods
+
+# FIXME: Why are U,UI,V and VI homogeneous?
+InstallMethod( LessGradedGeneratorsTransformationTripleLeft,
                [ IsHomalgMatrix ],
   function( matrix )
-    local transformation, transformation_inverse, smaller_matrix;
+    local V, VI, smaller_matrix;
 
-    # initialise the transformation matrices T, T^{-1}
-    transformation := HomalgVoidMatrix( HomalgRing( matrix ) );
-    transformation_inverse := HomalgVoidMatrix( HomalgRing( matrix ) );
+    # initialise the transformation matrices
+    V := HomalgVoidMatrix( HomalgRing( matrix ) );
+    VI := HomalgVoidMatrix( HomalgRing( matrix ) );
 
     # compute M' and thereby set values for T and T^{-1}
-    smaller_matrix := SimplerEquivalentMatrix( matrix, transformation, transformation_inverse, "", "" );
+    smaller_matrix := SimplerEquivalentMatrix( matrix, V, VI, "", "" );
 
     # return the triple of desired information
-    return [ smaller_matrix, transformation, transformation_inverse ];
+    return [ smaller_matrix, V, VI ];
 
 end );
 
 ##
-#InstallMethod( LessGeneratorsTransformationTripleRight,
-#               [ IsHomalgMatrix ],
-#  function( matrix )
-#    local transformation, transformation_inverse, smaller_matrix;
+InstallMethod( LessGradedGeneratorsTransformationTripleRight,
+               [ IsHomalgMatrix ],
+  function( matrix )
+    local U, UI, smaller_matrix;
 
-    # initialise the transformation matrices T, T^{-1}
-#    transformation := HomalgVoidMatrix( HomalgRing( matrix ) );
-#    transformation_inverse := HomalgVoidMatrix( HomalgRing( matrix ) );
+    # initialise the transformation matrices
+    U := HomalgVoidMatrix( HomalgRing( matrix ) );
+    UI := HomalgVoidMatrix( HomalgRing( matrix ) );
 
     # compute M' and thereby set values for T and T^{-1}
-#    smaller_matrix := SimplerEquivalentMatrix( matrix, transformation, transformation_inverse, "", "", "" );
+    smaller_matrix := SimplerEquivalentMatrix( matrix, U, UI, "", "", "" );
 
     # return the triple of desired information
-#    return [ smaller_matrix, transformation, transformation_inverse ];
+    return [ smaller_matrix, U, UI ];
 
-#end );
+end );
 
 
 
@@ -81,15 +104,19 @@ InstallMethod( LessGradedGenerators,
     # now deduce the bottom line
     if IsGradedLeftModulePresentationForCAP( module_presentation ) then
 
-      TI := LessGradedGeneratorsTransformationTriple( UnderlyingHomalgMatrix( UnderlyingMorphism( module_presentation ) ) )[ 3 ];
-      range_prime := Source( DeduceMapFromMatrixAndRangeLeft( TI, Range( UnderlyingMorphism( module_presentation ) ) ) );
+      TI := LessGradedGeneratorsTransformationTripleLeft(
+                UnderlyingHomalgMatrix( UnderlyingMorphism( module_presentation ) ) )[ 3 ];
+      range_prime := Source( DeduceMapFromMatrixAndRangeLeft(
+                                 TI, Range( UnderlyingMorphism( module_presentation ) ) ) );
       Mprime := ReducedSyzygiesOfRows( TI, UnderlyingHomalgMatrix( UnderlyingMorphism( module_presentation ) ) );
       return CAPPresentationCategoryObject( DeduceMapFromMatrixAndRangeLeft( Mprime, range_prime ) );
 
     else
 
-      TI := LessGradedGeneratorsTransformationTriple( UnderlyingHomalgMatrix( UnderlyingMorphism( module_presentation ) ) )[ 2 ];
-      range_prime := Source( DeduceMapFromMatrixAndRangeRight( TI, Range( UnderlyingMorphism( module_presentation ) ) ) );
+      TI := LessGradedGeneratorsTransformationTripleRight( 
+                UnderlyingHomalgMatrix( UnderlyingMorphism( module_presentation ) ) )[ 3 ];
+      range_prime := Source( DeduceMapFromMatrixAndRangeRight( 
+                                 TI, Range( UnderlyingMorphism( module_presentation ) ) ) );
       Mprime := ReducedSyzygiesOfColumns( TI, UnderlyingHomalgMatrix( UnderlyingMorphism( module_presentation ) ) );
       return CAPPresentationCategoryObject( DeduceMapFromMatrixAndRangeRight( Mprime, range_prime ) );
 
@@ -102,20 +129,20 @@ InstallMethod( LessGradedGenerators,
                [ IsGradedLeftOrRightSubmoduleForCAP ],
   function( submodule )
     local new_presentation, embedding;
-  
+
     # compute a new presentation
     new_presentation := LessGradedGenerators( PresentationForCAP( submodule ) );
 
     # compute the embedding
     embedding := EmbeddingInProjectiveObject( new_presentation );
-    
+
     # and return the associated subobject
     if IsGradedLeftSubmoduleForCAP( submodule ) then
       return GradedLeftSubmoduleForCAP( UnderlyingMorphism( embedding ) );
     else
       return GradedRightSubmoduleForCAP( UnderlyingMorphism( embedding ) );
     fi;
-    
+
 end );
 
 # compute a smaller presentation for a graded left or right module presentation for CAP
@@ -126,10 +153,17 @@ InstallMethod( LessGradedGenerators,
          new_morphism_matrix, new_morphism;
 
     # compute the transformation of source and range
-    source_transformation_triple := LessGradedGeneratorsTransformationTriple(
-                                                    UnderlyingHomalgMatrix( UnderlyingMorphism( Source( morphism ) ) ) );
-    range_transformation_triple := LessGradedGeneratorsTransformationTriple(
-                                                     UnderlyingHomalgMatrix( UnderlyingMorphism( Range( morphism ) ) ) );
+    if IsGradedLeftModulePresentationMorphismForCAP( morphism ) then
+      source_transformation_triple := LessGradedGeneratorsTransformationTripleLeft(
+                                        UnderlyingHomalgMatrix( UnderlyingMorphism( Source( morphism ) ) ) );
+      range_transformation_triple := LessGradedGeneratorsTransformationTripleLeft(
+                                        UnderlyingHomalgMatrix( UnderlyingMorphism( Range( morphism ) ) ) );
+    else
+      source_transformation_triple := LessGradedGeneratorsTransformationTripleRight(
+                                        UnderlyingHomalgMatrix( UnderlyingMorphism( Source( morphism ) ) ) );
+      range_transformation_triple := LessGradedGeneratorsTransformationTripleRight(
+                                        UnderlyingHomalgMatrix( UnderlyingMorphism( Range( morphism ) ) ) );
+    fi;
 
     # and extract the underlying homalg matrix of the morphism
     new_morphism_matrix := UnderlyingHomalgMatrix( UnderlyingMorphism( morphism ) );
