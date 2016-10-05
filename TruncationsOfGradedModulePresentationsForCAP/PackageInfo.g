@@ -10,10 +10,10 @@ SetPackageInfo( rec(
 
 PackageName := "TruncationsOfGradedModulePresentationsForCAP",
 
-Subtitle := "Truncating a graded module presentation (for CAP) to an affine (cone) semigroup",
+Subtitle := "Truncations of graded module presentations (for CAP) to affine semigroups",
 
 Version := Maximum( [
-  "2016.09.28", ## Martin's version
+  "2016.10.05", ## Martin's version
 ] ),
 
 Date := ~.Version{[ 1 .. 10 ]},
@@ -63,7 +63,7 @@ PackageDoc := rec(
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
   SixFile   := "doc/manual.six",
-  LongTitle := "Truncating a graded module presentation (for CAP) to an affine (cone) semigroup",
+  LongTitle := "Truncations of graded module presentations (for CAP) to affine semigroups",
 ),
 
 Dependencies := rec(

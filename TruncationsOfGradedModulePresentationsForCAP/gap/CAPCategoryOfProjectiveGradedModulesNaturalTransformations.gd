@@ -15,24 +15,24 @@
 ##
 ####################################################################################
 
-# a function that computes the natural transformation |_C => id for both
+# a function that computes the natural transformation |_H => id for both
 # left and right presentations
 DeclareGlobalFunction( "NaturalTransformationFromTruncationToIdentityForProjectiveGradedModules" );
 
 #! @Description
-#! The argument is a homalg graded ring $S$ and a cone $C$ in the degree group of $S$. 
-#! The output is the natural transformation from the left truncation functor (to $C$) to the
+#! The argument is a homalg graded ring $S$ and a semigroup $H$ in the degree group of $S$. 
+#! The output is the natural transformation from the left truncation functor (to $H$) to the
 #! identity functor.
-#! @Returns a natural transformation $\left. \cdot \right|_C \Rightarrow \mathrm{id}$
+#! @Returns a natural transformation $\left. \cdot \right|_H \Rightarrow \mathrm{id}$
 #! @Arguments S
 DeclareOperation( "NaturalTransformationFromTruncationToIdentityForProjectiveGradedLeftModules",
-                  [ IsHomalgGradedRing, IsSemigroupGeneratorList ] );
+                  [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ] );
 
 #! @Description
-#! The argument is a homalg graded ring $S$ and a cone $C$ in the degree group of $S$. 
-#! The output is the natural transformation from the right truncation functor (to $C$) to the
+#! The argument is a homalg graded ring $S$ and a semigroup $H$ in the degree group of $S$. 
+#! The output is the natural transformation from the right truncation functor (to $H$) to the
 #! identity functor.
-#! @Returns a natural transformation $\left. \cdot \right|_C \Rightarrow \mathrm{id}$
+#! @Returns a natural transformation $\left. \cdot \right|_H \Rightarrow \mathrm{id}$
 #! @Arguments S
 DeclareOperation( "NaturalTransformationFromTruncationToIdentityForProjectiveGradedRightModules",
-                  [ IsHomalgGradedRing, IsSemigroupGeneratorList ] );
+                  [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ] );

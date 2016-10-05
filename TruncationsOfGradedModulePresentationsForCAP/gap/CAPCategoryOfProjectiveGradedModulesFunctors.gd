@@ -19,52 +19,31 @@
 #! Consider a graded ring $R$ such that its degree group is identical to $\mathbb{Z}^n$ for
 #! suitable $n \in \mathbb{N}_{\geq 0}$. Then consider a projective graded left module $M$
 #! over $R$ and a subsemigroup $H$ in the degree group of $R$. We expect that $H$ is given to the
-#! method as a SemigroupGeneratorList.
+#! method as a SemigroupForGradedModulePresentationsForCAP.
 #! Under these circumstances we truncate $M$ to the subsemigroup $H$.
 #! @Returns an object
 #! @Arguments M, H
 DeclareOperation( "TruncationOfProjectiveGradedModule",
-                   [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupGeneratorList ] );
-
-#! @Description
-#! Consider a graded ring $R$ such that its degree group is identical to $\mathbb{Z}^n$ for
-#! suitable $n \in \mathbb{N}_{\geq 0}$. Then consider a projective graded left module $M$
-#! over $R$ and the semigroup $H$ of a cone in the degree group of $R$, given as a ConeHPresentationList.
-#! Under these circumstances we truncate $M$ to this subsemigroup $H$.
-#! @Returns an object
-#! @Arguments M, H
-DeclareOperation( "TruncationOfProjectiveGradedModule",
-                   [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsConeHPresentationList ] );
+                  [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupForGradedModulePresentationsForCAP ] );
 
 #! @Description
 #! Consider a graded ring $R$ such that its degree group is identical to $\mathbb{Z}^n$ for
 #! suitable $n \in \mathbb{N}_{\geq 0}$. Then consider a projective graded left module $M$
 #! over $R$ and a subsemigroup $H$ in the degree group of $R$. We expect that $H$ is given to the
-#! method as a SemigroupGeneratorList.
+#! method as a SemigroupForGradedModulePresentationsForCAP.
 #! Under these circumstances we compute the embedding of the truncation of $M$ onto the subsemigroup $H$
 #! into $M$.
 #! @Returns a morphism
 #! @Arguments M, H
 DeclareOperation( "EmbeddingOfTruncationOfProjectiveGradedModule",
-                   [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupGeneratorList ] );
+                  [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupForGradedModulePresentationsForCAP ] );
 
 #! @Description
 #! Consider a graded ring $R$ such that its degree group is identical to $\mathbb{Z}^n$ for
 #! suitable $n \in \mathbb{N}_{\geq 0}$. Then consider a projective graded left module $M$
-#! over $R$ and the semigroup $H$ of a cone in the degree group of $R$, given as a ConeHPresentationList.
-#! Under these circumstances we compute the embedding of the truncation of $M$ onto the subsemigroup $H$
-#! into $M$.
-#! @Returns a morphism
-#! @Arguments M, H
-DeclareOperation( "EmbeddingOfTruncationOfProjectiveGradedModule",
-                   [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsConeHPresentationList ] );
-
-#! @Description
-#! Consider a graded ring $R$ such that its degree group is identical to $\mathbb{Z}^n$ for
-#! suitable $n \in \mathbb{N}_{\geq 0}$. Then consider a projective graded left module $M$
-#! over $R$ and the semigroup $H$ of a cone in the degree group of $R$, given as a ConeHPresentationList.
-#! The method accepts $M$ and its truncation $N \equiv \left. M \right|_H$ to $H$ as arguments and computes the embedding
-#! $\left. M \right|_H \hookrightarrow M$ from this input.
+#! over $R$ and a semigroup $H$ given as a SemigroupForGradedModulePresentationsForCAP.
+#! The method accepts $M$ and its truncation $\left. M \right|_H$ as arguments and then computes the embedding
+#! $\left. M \right|_H \hookrightarrow M$.
 #! @Returns a morphism
 #! @Arguments M, N 
 DeclareOperation( "EmbeddingOfTruncationOfProjectiveGradedModuleWithGivenTruncationObject",
@@ -75,31 +54,20 @@ DeclareOperation( "EmbeddingOfTruncationOfProjectiveGradedModuleWithGivenTruncat
 #! Consider a graded ring $R$ such that its degree group is identical to $\mathbb{Z}^n$ for
 #! suitable $n \in \mathbb{N}_{\geq 0}$. Then consider a projective graded left module $M$
 #! over $R$ and a subsemigroup $H$ in the degree group of $R$. We expect that $H$ is given to the
-#! method as a SemigroupGeneratorList.
+#! method as a SemigroupForGradedModulePresentationsForCAP.
 #! Under these circumstances we compute the projection morphism of $M$ onto its truncation to the 
 #! subsemigroup $H$
 #! @Returns a morphism
 #! @Arguments M, H
 DeclareOperation( "ProjectionOntoTruncationOfProjectiveGradedModule",
-                   [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupGeneratorList ] );
+                  [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupForGradedModulePresentationsForCAP ] );
 
 #! @Description
 #! Consider a graded ring $R$ such that its degree group is identical to $\mathbb{Z}^n$ for
 #! suitable $n \in \mathbb{N}_{\geq 0}$. Then consider a projective graded left module $M$
-#! over $R$ and the semigroup $H$ of a cone in the degree group of $R$, given as a ConeHPresentationList.
-#! Under these circumstances we compute the projection morphism of $M$ onto its truncation to the 
-#! subsemigroup $H$
-#! @Returns a morphism
-#! @Arguments M, H
-DeclareOperation( "ProjectionOntoTruncationOfProjectiveGradedModule",
-                   [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsConeHPresentationList ] );
-
-#! @Description
-#! Consider a graded ring $R$ such that its degree group is identical to $\mathbb{Z}^n$ for
-#! suitable $n \in \mathbb{N}_{\geq 0}$. Then consider a projective graded left module $M$
-#! over $R$ and the semigroup $H$ of a cone in the degree group of $R$, given as a ConeHPresentationList.
-#! The method accepts $M$ and its truncation $N \equiv \left. M \right|_H$ to $H$ as arguments and computes the projection
-#! $M \twoheadrightarrow \left. M \right|_H$ from this input.
+#! over $R$ and the semigroup $H$ given as SemigroupForGradedModulePresentationsForCAP.
+#! The method accepts $M$ and its truncation $\left. M \right|_H$ and then computes the projection
+#! $M \twoheadrightarrow \left. M \right|_H$.
 #! @Returns a morphism
 #! @Arguments M, N
 DeclareOperation( "ProjectionOntoTruncationOfProjectiveGradedModuleWithGivenTruncationObject",
@@ -121,37 +89,19 @@ DeclareGlobalFunction( "TruncationFunctorForProjectiveGradedModulesToSemigroups"
 DeclareGlobalFunction( "TruncationFunctorForProjectiveGradedModulesToCones" );
 
 #! @Description
-#! The argument is a homalg graded ring $R$ and a subsemigroup $H$ (given as a list of generators) in the
-#! degree group of the ring $R$. The output is the functor which truncates projective graded 
-#! left-modules and left-module-morphisms to the subsemigroup $H$. 
+#! The argument is a homalg graded ring $R$ and a subsemigroup $H$ (given as SemigroupForGradedModulePresentationsForCAP) 
+#! in the degree group of the ring $R$. The output is the functor which truncates projective graded left-modules and 
+#! left-module-morphisms to the subsemigroup $H$. 
 #! @Returns a functor
 #! @Arguments R, H
 DeclareOperation( "TruncationFunctorForProjectiveGradedLeftModules",
-                  [ IsHomalgGradedRing, IsSemigroupGeneratorList ] );
+                  [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ] );
 
 #! @Description
-#! The argument is a homalg graded ring $R$ and the subsemigroup $H$ of a cone (given as a list of h-constraints) in the
-#! degree group of the ring $R$. The output is the functor which truncates projective graded 
-#! left-modules and left-module-morphisms to the subsemigroup $H$. 
-#! @Returns a functor
-#! @Arguments R, H
-DeclareOperation( "TruncationFunctorForProjectiveGradedLeftModules",
-                  [ IsHomalgGradedRing, IsConeHPresentationList ] );
-
-#! @Description
-#! The argument is a homalg graded ring $R$ and a subsemigroup $H$ (given as a list of generators) in the
-#! degree group of the ring $R$. The output is the functor which truncates projective graded 
+#! The argument is a homalg graded ring $R$ and a subsemigroup $H$ (given as SemigroupForGradedModulePresentationsForCAP) 
+#! in the degree group of the ring $R$. The output is the functor which truncates projective graded 
 #! right-modules and right-module-morphisms to the subsemigroup $H$. 
 #! @Returns a functor
 #! @Arguments R, H
 DeclareOperation( "TruncationFunctorForProjectiveGradedRightModules",
-                  [ IsHomalgGradedRing, IsSemigroupGeneratorList ] );
-
-#! @Description
-#! The argument is a homalg graded ring $R$ and a subsemigroup $H$ of a cone (given as a list of h-constraints) in the
-#! degree group of the ring $R$. The output is the functor which truncates projective graded 
-#! right-modules and right-module-morphisms to the subsemigroup $H$. 
-#! @Returns a functor
-#! @Arguments R, H
-DeclareOperation( "TruncationFunctorForProjectiveGradedRightModules",
-                  [ IsHomalgGradedRing, IsConeHPresentationList ] );
+                  [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ] );

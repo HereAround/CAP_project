@@ -17,27 +17,21 @@
 
 # Truncation of projective graded modules
 InstallMethod( TruncationOfProjectiveGradedModule,
-               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupGeneratorList ],
-  function( projective_module, semigroup_generator_list )
-    local conversion, rank, degree_list, new_degree_list, i;
-
-    # check if we are given the semigroup of a cone
-    conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
-    if conversion <> fail then
-      return TruncationOfProjectiveGradedModule( projective_module, conversion );
-    fi;
+               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupForGradedModulePresentationsForCAP ],
+  function( projective_module, semigroup_for_CAP )
+    local rank, degree_list, new_degree_list, i;
 
     # check if the degree_group of the underlying homalg_graded_ring is free
     if not IsFree( DegreeGroup( UnderlyingHomalgGradedRing( projective_module ) ) ) then
 
-      Error( "Currently truncations are only supported for freely-graded rings" );
+      Error( "Currently truncations are only supported for modules over freely-graded rings" );
       return;
 
     fi;
 
-    # next make a basic check to see if cone_h_list could be valid
+    # next make a basic check to see if the semigroup is embedded into the degree group of the ring
     rank := Rank( DegreeGroup( UnderlyingHomalgGradedRing( projective_module ) ) );
-    if EmbeddingDimension( semigroup_generator_list ) <> rank then
+    if EmbeddingDimension( semigroup_for_CAP ) <> rank then
 
       Error( "The semigroup is not contained in the degree_group of the graded ring" );
       return;
@@ -52,59 +46,7 @@ InstallMethod( TruncationOfProjectiveGradedModule,
     for i in [ 1 .. Length( degree_list ) ] do
 
       # if the degree lies in the semigroup, then add this degree layer to the degree_list of the truncated module
-      if PointContainedInSemigroup( semigroup_generator_list, UnderlyingListOfRingElements( degree_list[ i ][ 1 ] ) ) then
-        Add( new_degree_list, degree_list[ i ] );
-      fi;
-
-    od;
-
-    # and finally return the object
-    if IsCAPCategoryOfProjectiveGradedLeftModulesObject( projective_module ) then
-      return CAPCategoryOfProjectiveGradedLeftModulesObject( new_degree_list,
-                                                             UnderlyingHomalgGradedRing( projective_module ),
-                                                             CapCategory( projective_module )!.constructor_checks_wished
-                                                            );
-    else
-      return CAPCategoryOfProjectiveGradedRightModulesObject( new_degree_list,
-                                                              UnderlyingHomalgGradedRing( projective_module ),
-                                                              CapCategory( projective_module )!.constructor_checks_wished
-                                                             );
-    fi;
-
-end );
-
-# Truncation of projective graded modules
-InstallMethod( TruncationOfProjectiveGradedModule,
-               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsConeHPresentationList ],
-  function( projective_module, cone_hpresentation_list )
-    local rank, degree_list, new_degree_list, i;
-
-    # check if the degree_group of the underlying homalg_graded_ring is free
-    if not IsFree( DegreeGroup( UnderlyingHomalgGradedRing( projective_module ) ) ) then
-
-      Error( "Currently truncations are only supported for freely-graded rings" );
-      return;
-
-    fi;
-
-    # next make a basic check to see if cone_h_list could be valid
-    rank := Rank( DegreeGroup( UnderlyingHomalgGradedRing( projective_module ) ) );
-    if EmbeddingDimension( cone_hpresentation_list ) <> rank then
-
-      Error( "The semigroup is not contained in the degree_group of the graded ring" );
-      return;
-
-    fi;
-
-    # now identify the degree_list of the module in question
-    degree_list := DegreeList( projective_module );
-
-    # now compute the embedding matrix and the degrees of the truncated module
-    new_degree_list := [];
-    for i in [ 1 .. Length( degree_list ) ] do
-
-      # if the degree lies in the cone, then add this degree layer to the degree_list of the truncated module
-      if PointContainedInCone( cone_hpresentation_list, UnderlyingListOfRingElements( degree_list[ i ][ 1 ] ) ) then
+      if PointContainedInSemigroup( semigroup_for_CAP, UnderlyingListOfRingElements( degree_list[ i ][ 1 ] ) ) then
         Add( new_degree_list, degree_list[ i ] );
       fi;
 
@@ -127,17 +69,9 @@ end );
 
 # Embedding of truncation of projective graded module into the original module
 InstallMethod( EmbeddingOfTruncationOfProjectiveGradedModule,
-               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupGeneratorList ],
-  function( projective_module, semigroup_generator_list )
-    local conversion, rank, degree_list, new_degree_list, embedding_matrix, counter, i, j, row, graded_ring, truncated_module;
-
-    # check if the input is the semigroup of a cone and if so, hand the computation over to that method
-    conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
-    if not conversion = fail then
-
-      return EmbeddingOfTruncationOfProjectiveGradedModule( projective_module, conversion );
-
-    fi;
+               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupForGradedModulePresentationsForCAP ],
+  function( projective_module, semigroup_for_CAP )
+    local rank, degree_list, new_degree_list, embedding_matrix, counter, i, j, row, graded_ring, truncated_module;
 
     # check if the degree_group of the underlying homalg_graded_ring is free
     if not IsFree( DegreeGroup( UnderlyingHomalgGradedRing( projective_module ) ) ) then
@@ -149,7 +83,7 @@ InstallMethod( EmbeddingOfTruncationOfProjectiveGradedModule,
 
     # next check if semigroup_generator_list is valid
     rank := Rank( DegreeGroup( UnderlyingHomalgGradedRing( projective_module ) ) );
-    if EmbeddingDimension( semigroup_generator_list ) <> rank then
+    if EmbeddingDimension( semigroup_for_CAP ) <> rank then
 
       Error( "The semigroup is not contained in the degree_group of the graded ring" );
       return;
@@ -164,7 +98,7 @@ InstallMethod( EmbeddingOfTruncationOfProjectiveGradedModule,
     for i in [ 1 .. Length( degree_list ) ] do
 
       # if the degree lies in the semigroup, then add this degree layer to the degree_list of the truncated module
-      if PointContainedInSemigroup( semigroup_generator_list, UnderlyingListOfRingElements( degree_list[ i ][ 1 ] ) ) then
+      if PointContainedInSemigroup( semigroup_for_CAP, UnderlyingListOfRingElements( degree_list[ i ][ 1 ] ) ) then
 
         # add this degree to the new_degree_list
         Add( new_degree_list, degree_list[ i ] );
@@ -192,7 +126,7 @@ InstallMethod( EmbeddingOfTruncationOfProjectiveGradedModule,
 
     fi;
 
-    # install the truncated module (and transpose the embedding_matrix for right_modules)
+    # otherwise install the truncated module (and transpose the embedding_matrix for right_modules)
     graded_ring := UnderlyingHomalgGradedRing( projective_module );
     if IsCAPCategoryOfProjectiveGradedLeftModulesObject( projective_module ) then
 
@@ -211,94 +145,7 @@ InstallMethod( EmbeddingOfTruncationOfProjectiveGradedModule,
 
     fi;
 
-    # and return the corresponding embedding
-    return CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( truncated_module,
-                                                                    HomalgMatrix( embedding_matrix, graded_ring ),
-                                                                    projective_module,
-                                                                    CapCategory( projective_module )!.constructor_checks_wished
-                                                                   );
-
-end );
-
-# Embedding of truncation of projective graded module into the original module
-InstallMethod( EmbeddingOfTruncationOfProjectiveGradedModule,
-               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsConeHPresentationList ],
-  function( projective_module, cone_hpresentation_list )
-    local conversion, rank, degree_list, new_degree_list, embedding_matrix, counter, i, j, row, graded_ring, truncated_module;
-
-    # check if the degree_group of the underlying homalg_graded_ring is free
-    if not IsFree( DegreeGroup( UnderlyingHomalgGradedRing( projective_module ) ) ) then
-
-      Error( "Currently truncations are only supported for freely-graded rings" );
-      return;
-
-    fi;
-
-    # next check if cone_hpresentation_list is valid
-    rank := Rank( DegreeGroup( UnderlyingHomalgGradedRing( projective_module ) ) );
-    if EmbeddingDimension( cone_hpresentation_list ) <> rank then
-
-      Error( "The semigroup is not contained in the degree_group of the graded ring" );
-      return;
-
-    fi;
-
-    # now compute the embedding matrix and the degrees of the truncated module
-    degree_list := DegreeList( projective_module );
-    new_degree_list := [];
-    embedding_matrix := [];
-    counter := 0;
-    for i in [ 1 .. Length( degree_list ) ] do
-
-      # if the degree lies in the cone, then add this degree layer to the degree_list of the truncated module
-      if PointContainedInCone( cone_hpresentation_list, UnderlyingListOfRingElements( degree_list[ i ][ 1 ] ) ) then
-
-        # add this degree to the new_degree_list
-        Add( new_degree_list, degree_list[ i ] );
-
-        # now add rows to the embedding matrix
-        for j in [ 1 .. degree_list[ i ][ 2 ] ] do
-
-          row := List( [ 1 .. Rank( projective_module ) ], x -> 0 );
-          row[ counter + j ] := 1;
-          Add( embedding_matrix, row );
-
-        od;
-
-      fi;
-
-      # increase the counter
-      counter := counter + degree_list[ i ][ 2 ];
-
-    od;
-
-    # if the new_dgree_list is empty, the truncated module is the zero_module and the embedding is the zero_morphism
-    if Length( new_degree_list ) = 0 then
-
-      return ZeroMorphism( ZeroObject( CapCategory( projective_module ) ), projective_module );
-
-    fi;
-
-    # install the truncated module (and transpose the embedding_matrix for right_modules)
-    graded_ring := UnderlyingHomalgGradedRing( projective_module );
-    if IsCAPCategoryOfProjectiveGradedLeftModulesObject( projective_module ) then
-
-      truncated_module := CAPCategoryOfProjectiveGradedLeftModulesObject( new_degree_list, 
-                                                                    graded_ring,
-                                                                    CapCategory( projective_module )!.constructor_checks_wished
-                                                                    );
-
-    else
-
-      embedding_matrix := TransposedMat( embedding_matrix );
-      truncated_module := CAPCategoryOfProjectiveGradedRightModulesObject( new_degree_list, 
-                                                                    graded_ring,
-                                                                    CapCategory( projective_module )!.constructor_checks_wished
-                                                                    );
-
-    fi;
-
-    # and return the corresponding embedding    
+    # finally return the embedding
     return CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( truncated_module,
                                                                     HomalgMatrix( embedding_matrix, graded_ring ),
                                                                     projective_module,
@@ -309,17 +156,9 @@ end );
 
 # Projection onto truncation of projective graded module
 InstallMethod( ProjectionOntoTruncationOfProjectiveGradedModule,
-               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupGeneratorList ],
-  function( projective_module, semigroup_generator_list )
-    local conversion, rank, degree_list, new_degree_list, projection_matrix, counter, i, j, row, graded_ring, truncated_module;
-
-    # check if the input is the semigroup of a cone and if so, hand the computation over to that method
-    conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
-    if not conversion = fail then
-
-      return ProjectionOntoTruncationOfProjectiveGradedModule( projective_module, conversion );
-
-    fi;
+               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupForGradedModulePresentationsForCAP ],
+  function( projective_module, semigroup_for_CAP )
+    local rank, degree_list, new_degree_list, projection_matrix, counter, i, j, row, graded_ring, truncated_module;
 
     # check if the degree_group of the underlying homalg_graded_ring is free
     if not IsFree( DegreeGroup( UnderlyingHomalgGradedRing( projective_module ) ) ) then
@@ -331,7 +170,7 @@ InstallMethod( ProjectionOntoTruncationOfProjectiveGradedModule,
 
     # next check if semigroup_generator_list is valid
     rank := Rank( DegreeGroup( UnderlyingHomalgGradedRing( projective_module ) ) );
-    if EmbeddingDimension( semigroup_generator_list ) <> rank then
+    if EmbeddingDimension( semigroup_for_CAP ) <> rank then
 
       Error( "The semigroup is not contained in the degree_group of the graded ring" );
       return;
@@ -346,7 +185,7 @@ InstallMethod( ProjectionOntoTruncationOfProjectiveGradedModule,
     for i in [ 1 .. Length( degree_list ) ] do
 
       # if the degree lies in the semigroup, then add this degree layer to the degree_list of the truncated module
-      if PointContainedInSemigroup( semigroup_generator_list, UnderlyingListOfRingElements( degree_list[ i ][ 1 ] ) ) then
+      if PointContainedInSemigroup( semigroup_for_CAP, UnderlyingListOfRingElements( degree_list[ i ][ 1 ] ) ) then
 
         # add this degree to the new_degree_list
         Add( new_degree_list, degree_list[ i ] );
@@ -374,94 +213,7 @@ InstallMethod( ProjectionOntoTruncationOfProjectiveGradedModule,
 
     fi;
 
-    # install the truncated module (and transpose the embedding_matrix for right_modules)
-    graded_ring := UnderlyingHomalgGradedRing( projective_module );
-    if IsCAPCategoryOfProjectiveGradedLeftModulesObject( projective_module ) then
-
-      projection_matrix := TransposedMat( projection_matrix );
-      truncated_module := CAPCategoryOfProjectiveGradedLeftModulesObject( new_degree_list, 
-                                                                    graded_ring,
-                                                                    CapCategory( projective_module )!.constructor_checks_wished
-                                                                    );
-
-    else
-
-      truncated_module := CAPCategoryOfProjectiveGradedRightModulesObject( new_degree_list, 
-                                                                    graded_ring,
-                                                                    CapCategory( projective_module )!.constructor_checks_wished
-                                                                    );
-
-    fi;
-
-    # and return the corresponding embedding    
-    return CAPCategoryOfProjectiveGradedLeftOrRightModulesMorphism( projective_module,
-                                                                    HomalgMatrix( projection_matrix, graded_ring ),
-                                                                    truncated_module,
-                                                                    CapCategory( projective_module )!.constructor_checks_wished
-                                                                   );
-
-end );
-
-# Projection onto truncation of projective graded module
-InstallMethod( ProjectionOntoTruncationOfProjectiveGradedModule,
-               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsConeHPresentationList ],
-  function( projective_module, cone_hpresentation_list )
-    local conversion, rank, degree_list, new_degree_list, projection_matrix, counter, i, j, row, graded_ring, truncated_module;
-
-    # check if the degree_group of the underlying homalg_graded_ring is free
-    if not IsFree( DegreeGroup( UnderlyingHomalgGradedRing( projective_module ) ) ) then
-
-      Error( "Currently truncations are only supported for freely-graded rings" );
-      return;
-
-    fi;
-
-    # next check if semigroup_generator_list is valid
-    rank := Rank( DegreeGroup( UnderlyingHomalgGradedRing( projective_module ) ) );
-    if EmbeddingDimension( cone_hpresentation_list ) <> rank then
-
-      Error( "The semigroup is not contained in the degree_group of the graded ring" );
-      return;
-
-    fi;
-
-    # now compute the embedding matrix and the degrees of the truncated module
-    degree_list := DegreeList( projective_module );
-    new_degree_list := [];
-    projection_matrix := [];
-    counter := 0;
-    for i in [ 1 .. Length( degree_list ) ] do
-
-      # if the degree lies in the cone, then add this degree layer to the degree_list of the truncated module
-      if PointContainedInCone( cone_hpresentation_list, UnderlyingListOfRingElements( degree_list[ i ][ 1 ] ) ) then
-
-        # add this degree to the new_degree_list
-        Add( new_degree_list, degree_list[ i ] );
-
-        # now add rows to the embedding matrix
-        for j in [ 1 .. degree_list[ i ][ 2 ] ] do
-
-          row := List( [ 1 .. Rank( projective_module ) ], x -> 0 );
-          row[ counter + j ] := 1;
-          Add( projection_matrix, row );
-
-        od;
-
-      fi;
-
-      # increase the counter
-      counter := counter + degree_list[ i ][ 2 ];
-
-    od;
-
-    # if the new_dgree_list is empty, the truncated module is the zero_module and the embedding is the zero_morphism
-    if Length( new_degree_list ) = 0 then
-
-      return ZeroMorphism( projective_module, ZeroObject( CapCategory( projective_module ) ) );
-
-    fi;
-
-    # install the truncated module (and transpose the embedding_matrix for right_modules)
+    # otherwise install the truncated module (and transpose the embedding_matrix for right_modules)
     graded_ring := UnderlyingHomalgGradedRing( projective_module );
     if IsCAPCategoryOfProjectiveGradedLeftModulesObject( projective_module ) then
 
@@ -547,7 +299,7 @@ InstallMethod( EmbeddingOfTruncationOfProjectiveGradedModuleWithGivenTruncationO
         elif degree_list[ i ][ 2 ] < truncated_degree_list[ counter2 ][ 2 ] then
           truncated_degree_list[ counter2 ][ 2 ] := truncated_degree_list[ counter2 ][ 2 ] - degree_list[ i ][ 2 ];
         else
-          Error( "Something went wrong - probably the given truncation object has been corrupted" );
+          Error( "Something went wrong - is the given truncation object corrupted" );
           return;
         fi;
 
@@ -646,7 +398,7 @@ InstallMethod( ProjectionOntoTruncationOfProjectiveGradedModuleWithGivenTruncati
         elif degree_list[ i ][ 2 ] < truncated_degree_list[ counter2 ][ 2 ] then
           truncated_degree_list[ counter2 ][ 2 ] := truncated_degree_list[ counter2 ][ 2 ] - degree_list[ i ][ 2 ];
         else
-          Error( "Something went wrong" );
+          Error( "Something went wrong - is the given truncation object corrupted" );
           return;
         fi;
 
@@ -696,7 +448,7 @@ end );
 
 # this function computes the trunction functor for both left and right presentations
 InstallGlobalFunction( TruncationFunctorForProjectiveGradedModulesToSemigroups,
-  function( graded_ring, semigroup_generator_list, left )
+  function( graded_ring, semigroup_for_CAP, left )
     local rank, i, category, functor;
 
     # check if the degree_group of the underlying homalg_graded_ring is free
@@ -709,7 +461,7 @@ InstallGlobalFunction( TruncationFunctorForProjectiveGradedModulesToSemigroups,
 
     # next check if the cone_h_list is valid
     rank := Rank( DegreeGroup( graded_ring ) );
-    if EmbeddingDimension( semigroup_generator_list ) <> rank then
+    if EmbeddingDimension( semigroup_for_CAP ) <> rank then
 
       Error( "The semigroup is not contained in the degree_group of the graded ring" );
       return;
@@ -725,7 +477,7 @@ InstallGlobalFunction( TruncationFunctorForProjectiveGradedModulesToSemigroups,
 
     functor := CapFunctor( 
                       Concatenation( "Truncation functor for ", Name( category ), " to the semigroup generated by ", 
-                                     String( UnderlyingList( semigroup_generator_list ) ) ), 
+                                     String( GeneratorList( semigroup_for_CAP ) ) ), 
                       category,
                       category
                       );
@@ -734,70 +486,7 @@ InstallGlobalFunction( TruncationFunctorForProjectiveGradedModulesToSemigroups,
     AddObjectFunction( functor,
       function( object )
 
-        return TruncationOfProjectiveGradedModule( object, semigroup_generator_list );
-
-      end );
-
-    # now define the functor operation on the morphisms
-    AddMorphismFunction( functor,
-      function( new_source, morphism, new_range )
-
-        return PreCompose( [
-               EmbeddingOfTruncationOfProjectiveGradedModuleWithGivenTruncationObject( Source( morphism ), new_source ),
-               morphism,
-               ProjectionOntoTruncationOfProjectiveGradedModuleWithGivenTruncationObject( Range( morphism ), new_range )
-                           ] );
-
-      end );
-
-    # finally return the functor
-    return functor;
-
-end );
-
-
-# this function computes the trunction functor for both left and right presentations
-InstallGlobalFunction( TruncationFunctorForProjectiveGradedModulesToCones,
-  function( graded_ring, cone_hpresentation_list, left )
-    local conversion, rank, i, category, functor;
-
-    # check if the degree_group of the underlying homalg_graded_ring is free
-    if not IsFree( DegreeGroup( graded_ring ) ) then
-
-      Error( "Currently truncations are only supported for freely-graded rings" );
-      return;
-
-    fi;
-
-    # next check if the cone_h_list is valid
-    rank := Rank( DegreeGroup( graded_ring ) );
-    if EmbeddingDimension( cone_hpresentation_list ) <> rank then
-
-      Error( "The semigroup is not contained in the degree_group of the graded ring" );
-      return;
-
-    fi;
-
-    # first compute the category under consideration
-    if left = true then    
-      category := CAPCategoryOfProjectiveGradedLeftModules( graded_ring );
-    else
-      category := CAPCategoryOfProjectiveGradedRightModules( graded_ring );
-    fi;
-
-    functor := CapFunctor( 
-                      Concatenation( "Truncation functor for ", Name( category ), 
-                                     " to the cone given by the h-constraints ", 
-                                     String( UnderlyingList( cone_hpresentation_list ) ) ), 
-                      category,
-                      category
-                      );
-
-    # now define the functor operation on the objects
-    AddObjectFunction( functor,
-      function( object )
-
-        return TruncationOfProjectiveGradedModule( object, cone_hpresentation_list );
+        return TruncationOfProjectiveGradedModule( object, semigroup_for_CAP );
 
       end );
 
@@ -820,80 +509,24 @@ end );
 
 # functor to compute the truncation of left-modules
 InstallMethod( TruncationFunctorForProjectiveGradedLeftModules,
-               [ IsHomalgGradedRing, IsSemigroupGeneratorList ],
+               [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ],
       function( graded_ring, semigroup_generator_list )
-        local conversion;
 
-        # check if the given semigroup is the semigroup of a cone, and if so simplify matters by computing the
-        # corresponding functor
-       conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
-
-       if conversion = fail then
-
-          return TruncationFunctorForProjectiveGradedModulesToSemigroups( graded_ring, 
-                                                                          semigroup_generator_list, 
-                                                                          true 
-                                                                         );
-
-       else
-
-          return TruncationFunctorForProjectiveGradedModulesToCones( graded_ring, 
-                                                                     conversion, 
-                                                                     true 
-                                                                    );
-
-       fi;
-
-end );
-
-# functor to compute the truncation of left-modules
-InstallMethod( TruncationFunctorForProjectiveGradedLeftModules,
-               [ IsHomalgGradedRing, IsConeHPresentationList ],
-      function( graded_ring, cone_hpresentation_list )
-
-        return TruncationFunctorForProjectiveGradedModulesToCones( graded_ring, 
-                                                                   cone_hpresentation_list, 
-                                                                   true 
-                                                                  );
+        return TruncationFunctorForProjectiveGradedModulesToSemigroups( graded_ring, 
+                                                                        semigroup_generator_list, 
+                                                                        true 
+                                                                       );
 
 end );
 
 # functor to compute the truncation of right-modules
 InstallMethod( TruncationFunctorForProjectiveGradedRightModules,
-               [ IsHomalgGradedRing, IsSemigroupGeneratorList ],
+               [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ],
       function( graded_ring, semigroup_generator_list )
-        local conversion;
 
-        # check if the given semigroup is the semigroup of a cone, and if so simplify matters by computing the
-        # corresponding functor
-       conversion := UnderlyingConeHPresentationList( semigroup_generator_list );
-
-       if conversion = fail then
-
-          return TruncationFunctorForProjectiveGradedModulesToSemigroups( graded_ring, 
-                                                                          semigroup_generator_list, 
-                                                                          false 
-                                                                         );
-
-       else
-
-          return TruncationFunctorForProjectiveGradedModulesToCones( graded_ring, 
-                                                                     conversion, 
-                                                                     false 
-                                                                    );
-
-       fi;
-
-end );
-
-# functor to compute the truncation of right-modules
-InstallMethod( TruncationFunctorForProjectiveGradedRightModules,
-               [ IsHomalgGradedRing, IsConeHPresentationList ],
-      function( graded_ring, cone_hpresentation_list )
-      
-        return TruncationFunctorForProjectiveGradedModulesToCones( graded_ring, 
-                                                                   cone_hpresentation_list, 
-                                                                   false 
-                                                                  );
+        return TruncationFunctorForProjectiveGradedModulesToSemigroups( graded_ring, 
+                                                                        semigroup_generator_list, 
+                                                                        false 
+                                                                       );
 
 end );

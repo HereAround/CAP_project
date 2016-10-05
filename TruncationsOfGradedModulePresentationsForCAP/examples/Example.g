@@ -16,67 +16,40 @@ LoadPackage( "TruncationsOfGradedModulePresentationsForCAP" );;
 #! as well as hyperplane constraints that define cones in $\mathbb{Z}^n$. Here are some examples:
 
 #! @Example
-semigroup1 := SemigroupGeneratorList( [[ 1,0 ], [ 1,1 ]] );
-#! <A list of 2 generators of a cone-semigroup in Z^2>
-IsSemigroupGeneratorList( semigroup1 );
+semigroup1 := SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 1,1 ]] );
+#! <A cone-semigroup in Z^2 formed as the span of 2 generators>
+IsSemigroupForGradedModulePresentationsForCAP( semigroup1 );
 #! true
-UnderlyingList( semigroup1 );
+GeneratorList( semigroup1 );
 #! [ [ 1, 0 ], [ 1, 1 ] ]
-semigroup2 := SemigroupGeneratorList( [[ 2,0 ], [ 1,1 ]] );
-#! <A list of 2 generators of a non-cone semigroup in Z^2>
-IsSemigroupGeneratorList( semigroup2 );
+semigroup2 := SemigroupForGradedModulePresentationsForCAP( [[ 2,0 ], [ 1,1 ]] );
+#! <A non-cone semigroup in Z^2 formed as the span of 2 generators>
+IsSemigroupForGradedModulePresentationsForCAP( semigroup2 );
 #! true
-UnderlyingList( semigroup2 );
+GeneratorList( semigroup2 );
 #! [ [ 2, 0 ], [ 1, 1 ] ]
-cone1 := ConeVPresentationList( [[ 1,0 ], [ 0, 1 ]] );
-#! <A list of 2 vertex generators of a cone in Z^2>
-cone2 := ConeHPresentationList( [[ 1,1 ], [ -1, 1 ]] );
-#! <A list of 2 hyperplane constraints of a cone in Z^2>
 #! @EndExample
 
-#! We can check if a semigroup in $\mathbb{Z}^n$ is the semigroup of a cone. In case it is, we can convert 
-#! into an H-presentation or V-presentation.
+#! We can check if a semigroup in $\mathbb{Z}^n$ is the semigroup of a cone. In case we can look at an H-presentation
+#! of this cone.
 
 #! @Example
-IsSemigroupOfConeGeneratorList( semigroup1 );
+IsSemigroupOfCone( semigroup1 );
 #! true
-UnderlyingConeHPresentationList( semigroup1 );
-#! <A list of 2 hyperplane constraints of a cone in Z^2>
-Display( UnderlyingConeHPresentationList( semigroup1 ) );
-#! A list of 2 hyperplane constraints of a cone in Z^2 -
-#! h-constraints are as follows: 
+ConeHPresentationList( semigroup1 );
+#! [ [ 0, 1 ], [ 1, -1 ] ]
+Display( ConeHPresentationList( semigroup1 ) );
 #! [ [   0,  1 ],
 #!   [   1, -1 ] ]
-UnderlyingConeVPresentationList( semigroup1 );
-#! <A list of 2 vertex generators of a cone in Z^2>
-Display( UnderlyingConeVPresentationList( semigroup1 ) );
-#! A list of 2 vertex generators of a cone in Z^2 -
-#! ray generators are as follows: 
-#! [ [  1,  0 ],
-#!   [  1,  1 ] ]
-IsSemigroupOfConeGeneratorList( semigroup2 );
+IsSemigroupOfCone( semigroup2 );
 #! false
-UnderlyingConeHPresentationList( semigroup2 );
-#! fail
+HasConeHPresentationList( semigroup2 );
+#! false
 #! @EndExample
 
-#! We can check membership of points in semigroups and cones.
+#! We can check membership of points in semigroups.
 
 #! @Example
-PointContainedInCone( cone1, [ 1,1 ] );
-#! true
-PointContainedInCone( cone1, [ 1,-1 ] );
-#! false
-PointContainedInCone( cone2, [ 1,-1 ] );
-#! false
-PointContainedInCone( cone2, [ 1,1 ] ); 
-#! true
-cone3 := NmzCone( [ "integral_closure", [[ 2,1 ], [ 1,0 ]] ] );
-#! <a Normaliz cone>
-PointContainedInCone( cone3, [ 3,1 ] );
-#! true
-PointContainedInCone( cone3, [ 3,2 ] );
-#! false
 PointContainedInSemigroup( semigroup2, [ 1,0 ] );
 #! false
 PointContainedInSemigroup( semigroup2, [ 2,0 ] );
@@ -85,51 +58,45 @@ PointContainedInSemigroup( semigroup2, [ 2,0 ] );
 
 #! Given a semigroup $S \subseteq \mathbb{Z}^n$ and a point $p \in \mathbb{Z}^n$ we can consider
 #! $$ H := p + S = \left\{ p + x \; , \; x \in S \right\}. $$
-#! We term this an affine semigroup. Given that $S = C \cap \mathbb{Z}^n$ for a cone $C \subseteq \mathbb{Z}^n$, we term
-#! this an affine cone_semigroup. The constructors are as follows:
+#! We term this an affine semigroup. Given that $S = C \cap \mathbb{Z}^n$ for a cone $C \subseteq \mathbb{Z}^n$, we use
+#! the term affine cone_semigroup. The constructors are as follows:
 
 #! @Example
-affine_cone_semigroup1 := AffineConeSemigroup( cone1, [ 5,2 ] );
+affine_semigroup1 := AffineSemigroupForGradedModulePresentationsForCAP( semigroup1, [ -1, -1 ] );
 #! <A non-trivial affine cone-semigroup in Z^2>
-affine_cone_semigroup2 := AffineConeSemigroup( cone2, [ 3,0 ] );
-#! <A non-trivial affine cone-semigroup in Z^2>
-affine_cone_semigroup3 := AffineConeSemigroup( cone3, [ -1,-1 ] );
-#! <An affine cone-semigroup in Z^2>
-affine_semigroup1 := AffineSemigroup( semigroup1, [ -1,-1 ] );
-#! <A non-trivial affine cone-semigroup in Z^2>
-affine_semigroup2 := AffineSemigroup( semigroup2, [ 2,2 ] );
+affine_semigroup2 := AffineSemigroupForGradedModulePresentationsForCAP( semigroup2, [ 2, 2 ] );
 #! <A non-trivial affine non-cone semigroup in Z^2>
 #! @EndExample
 
 #! We can access the properties of these affine semigroups as follows.
 
 #! @Example
-IsAffineConeSemigroup( affine_semigroup2 );
+IsAffineSemigroupOfCone( affine_semigroup2 );
 #! false
-UnderlyingSemigroupGeneratorList( affine_semigroup2 );
-#! <A list of 2 generators of a non-cone semigroup in Z^2>
-Display( UnderlyingSemigroupGeneratorList( affine_semigroup2 ) );
-#! A list of 2 generators of a non-cone semigroup in Z^2 - generators are as follows: 
+UnderlyingSemigroup( affine_semigroup2 );
+#! <A non-cone semigroup in Z^2 formed as the span of 2 generators>
+Display( UnderlyingSemigroup( affine_semigroup2 ) );
+#! A non-cone semigroup in Z^2 formed as the span of 2 generators - generators are as follows:
 #! [ [  2,  0 ],
 #!   [  1,  1 ] ]
-IsAffineConeSemigroup( affine_semigroup1 );
+IsAffineSemigroupOfCone( affine_semigroup1 );
 #! true
-Offset( affine_cone_semigroup2 );
-#! [ 3, 0 ]
-UnderlyingConeHPresentationList( affine_cone_semigroup1 );
-#! <A list of 2 hyperplane constraints of a cone in Z^2>
+Offset( affine_semigroup2 );
+#! [ 2, 2 ]
+ConeHPresentationList( UnderlyingSemigroup( affine_semigroup1 ) );
+#! [ [ 0, 1 ], [ 1, -1 ] ]
 #! @EndExample
 
 #! Of course we can also decide membership in affine (cone_)semigroups.
 
 #! @Example
-Display( affine_cone_semigroup1 );
+Display( affine_semigroup1 );
 #! A non-trivial affine cone-semigroup in Z^2
-#! Offset: [ 5, 2 ]
-#! Cone generators: [ [ 1, 0 ], [ 0, 1 ] ]
-PointContainedInAffineConeSemigroup( affine_cone_semigroup1, [ 1,1 ] );
+#! Offset: [ -1, -1 ]
+#! Hilbert basis: [ [ 1, 0 ], [ 1, 1 ] ]
+PointContainedInAffineSemigroup( affine_semigroup1, [ -2,-2 ] );
 #! false
-PointContainedInAffineConeSemigroup( affine_cone_semigroup1, [ 5,4 ] );
+PointContainedInAffineSemigroup( affine_semigroup1, [ 3,1 ] );
 #! true
 Display( affine_semigroup2 );
 #! A non-trivial affine non-cone semigroup in Z^2
@@ -163,28 +130,28 @@ NewObjectL := CAPCategoryOfProjectiveGradedLeftModulesObject(
               [ [[1,0],1], [[-1,-1],2] ], S );
 #! <A projective graded left module of rank 3>
 tL := TruncationOfProjectiveGradedModule( NewObjectL, 
-      SemigroupGeneratorList( [[1,0],[0,1]] ) );
+      SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
 #! <A projective graded left module of rank 1>
 Display( tL );
 #! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! of rank 1 and degrees: [ [ ( 1, 0 ), 1 ] ]
 tL2 := TruncationOfProjectiveGradedModule( NewObjectL, 
-       SemigroupGeneratorList( [[ 1,0 ], [ 0,2 ]] ) );
+       SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,2 ]] ) );
 #! <A projective graded left module of rank 1>
 Display( tL2 );
 #! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! of rank 1 and degrees: [ [ ( 1, 0 ), 1 ] ]
 embL := EmbeddingOfTruncationOfProjectiveGradedModule( NewObjectL, 
-        SemigroupGeneratorList( [[1,0],[0,1]] ) );
+        SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
 #! <A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( embL ) );
 #! 1, 0, 0
 #! (over a graded ring)
 embL2 := EmbeddingOfTruncationOfProjectiveGradedModule( NewObjectL, 
-        SemigroupGeneratorList( [[1,0],[0,2]] ) );
+        SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,2]] ) );
 #! <A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( embL2 ) );
@@ -198,7 +165,7 @@ Display( UnderlyingHomalgMatrix( embL3 ) );
 #! 1, 0, 0
 #! (over a graded ring)
 projL := ProjectionOntoTruncationOfProjectiveGradedModule( NewObjectL, 
-         SemigroupGeneratorList( [[ 1,0 ], [ 0,1 ]] ) );
+         SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,1 ]] ) );
 #! <A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( projL ) );
@@ -207,7 +174,7 @@ Display( UnderlyingHomalgMatrix( projL ) );
 #! 0
 #! (over a graded ring)
 projL2 := ProjectionOntoTruncationOfProjectiveGradedModule( NewObjectL, 
-         SemigroupGeneratorList( [[ 1,0 ], [ 0,2 ]] ) );
+         SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,2 ]] ) );
 #! <A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( projL2 ) );
@@ -225,17 +192,17 @@ Display( UnderlyingHomalgMatrix( projL3 ) );
 #! 0 
 #! (over a graded ring)
 truncatorL := TruncationFunctorForProjectiveGradedLeftModules(
-                        S, SemigroupGeneratorList( [[ 1,0 ], [ 0,2 ]] ) );
+                        S, SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,2 ]] ) );
 #! Truncation functor for CAP category of projective graded 
 #! left modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! to the semigroup generated by [ [ 1, 0 ], [ 0, 2 ] ]
 truncatorL2 := TruncationFunctorForProjectiveGradedLeftModules(
-                        S, SemigroupGeneratorList( [[ 1,0 ], [ 0,1 ]] ) );
+                        S, SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,1 ]] ) );
 #! Truncation functor for CAP category of projective graded 
 #! left modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
-#! to the cone given by the h-constraints [ [ 0, 1 ], [ 1, 0 ] ]
+#! to the semigroup generated by [ [ 1,0 ], [ 0, 1 ] ]
 tL2 := ApplyFunctor( truncatorL, NewObjectL );
 #! <A projective graded left module of rank 1>
 Display( tL2 );
@@ -266,11 +233,11 @@ Display( UnderlyingHomalgMatrix( tr2_test_morphismL ) );
 #! 0
 #! (over a graded ring)
 nat_trans_l := NaturalTransformationFromTruncationToIdentityForProjectiveGradedLeftModules( 
-                        S, SemigroupGeneratorList( [[ 1,0 ], [ 0,1 ]] ) );
+                        S, SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,1 ]] ) );
 #! Natural transformation from Truncation functor for CAP category 
 #! of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! to the cone given by the h-constraints [ [ 0, 1 ], [ 1, 0 ] ] to id
+#! to the semigroup generated by [ [ 1, 0 ], [ 0, 1 ] ] to id
 component_l := ApplyNaturalTransformation( nat_trans_l, NewObjectL );
 #! <A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
@@ -291,21 +258,21 @@ NewObjectR := CAPCategoryOfProjectiveGradedRightModulesObject(
               [ [[1,0],1], [[-1,-1],2] ], S );
 #! <A projective graded right module of rank 3>
 tR := TruncationOfProjectiveGradedModule( NewObjectR, 
-      SemigroupGeneratorList( [[1,0],[0,1]] ) );
+      SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
 #! <A projective graded right module of rank 1>
 Display( tR );
 #! A projective graded right module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! of rank 1 and degrees: [ [ ( 1, 0 ), 1 ] ]
 tR2 := TruncationOfProjectiveGradedModule( NewObjectR, 
-       SemigroupGeneratorList( [[ 1,0 ], [ 0,2 ]] ) );
+       SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,2 ]] ) );
 #! <A projective graded right module of rank 1>
 Display( tR2 );
 #! A projective graded right module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! of rank 1 and degrees: [ [ ( 1, 0 ), 1 ] ]
 embR := EmbeddingOfTruncationOfProjectiveGradedModule( NewObjectR, 
-        SemigroupGeneratorList( [[1,0],[0,1]] ) );
+        SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
 #! <A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( embR ) );
@@ -314,7 +281,7 @@ Display( UnderlyingHomalgMatrix( embR ) );
 #! 0
 #! (over a graded ring)
 embR2 := EmbeddingOfTruncationOfProjectiveGradedModule( NewObjectL, 
-        SemigroupGeneratorList( [[1,0],[0,2]] ) );
+        SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,2]] ) );
 #! <A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( embR2 ) );
@@ -332,14 +299,14 @@ Display( UnderlyingHomalgMatrix( embR3 ) );
 #! 0
 #! (over a graded ring)
 projR := ProjectionOntoTruncationOfProjectiveGradedModule( NewObjectR,
-         SemigroupGeneratorList( [[ 1,0 ], [ 0,1 ]] ) );
+         SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,1 ]] ) );
 #! <A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( projR ) );
 #! 1, 0, 0
 #! (over a graded ring)
 projR2 := ProjectionOntoTruncationOfProjectiveGradedModule( NewObjectR, 
-         SemigroupGeneratorList( [[ 1,0 ], [ 0,2 ]] ) );
+         SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,2 ]] ) );
 #! <A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( projR2 ) );
@@ -353,17 +320,17 @@ Display( UnderlyingHomalgMatrix( projR3 ) );
 #! 1, 0, 0
 #! (over a graded ring)
 truncatorR := TruncationFunctorForProjectiveGradedRightModules( S, 
-                             SemigroupGeneratorList( [[ 1,0 ], [ 0,2 ]] ) );
+                             SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,2 ]] ) );
 #! Truncation functor for CAP category of projective graded 
 #! right modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! to the semigroup generated by [ [ 1, 0 ], [ 0, 2 ] ]
 truncatorR2 := TruncationFunctorForProjectiveGradedRightModules(
-                        S, SemigroupGeneratorList( [[ 1,0 ], [ 0,1 ]] ) );
+                        S, SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,1 ]] ) );
 #! Truncation functor for CAP category of projective graded 
 #! right modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! to the cone given by the h-constraints [ [ 0, 1 ], [ 1, 0 ] ]
+#! to the semigroup generated by [ [ 1, 0 ], [ 0, 1 ] ]
 tR2 := ApplyFunctor( truncatorR, NewObjectR );
 #! <A projective graded right module of rank 1>
 Display( tR2 );
@@ -393,11 +360,11 @@ Display( UnderlyingHomalgMatrix( tr2_test_morphismR ) );
 #! 1, 0
 #! (over a graded ring)
 nat_trans_r := NaturalTransformationFromTruncationToIdentityForProjectiveGradedRightModules
-                               ( S, SemigroupGeneratorList( [[1,0],[0,1]] ) );
+                               ( S, SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
 #! Natural transformation from Truncation functor for CAP category 
 #! of projective graded right modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! to the cone given by the h-constraints [ [ 0, 1 ], [ 1, 0 ] ] to id
+#! to the semigroup generated by [ [ 1,0 ], [ 0, 1 ] ] to id
 component_r := ApplyNaturalTransformation( nat_trans_r, NewObjectR );
 #! <A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
@@ -447,10 +414,10 @@ left_presentation3 := CAPPresentationCategoryObject( m3l );
 #! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 truncation_functor_left := TruncationFunctorLeft( 
-                           S, SemigroupGeneratorList( [[1,0],[0,1]] ) );
+                           S, SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
 #! Truncation functor for Category of graded left module presentations 
 #! over Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! to the cone given by the h-constraints [ [ 0, 1 ], [ 1, 0 ] ]
+#! to the semigroup generated by [ [ 1, 0 ], [ 0, 1 ] ]
 truncation1l := ApplyFunctor( truncation_functor_left, left_presentation1 );
 #! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
@@ -589,10 +556,10 @@ right_presentation3 := CAPPresentationCategoryObject( m3r );
 #! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 truncation_functor_right := TruncationFunctorRight( 
-                            S, SemigroupGeneratorList( [[1,0],[0,1]] ) );
+                            S, SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
 #! Truncation functor for Category of graded right module presentations 
 #! over Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
-#! to the cone given by the h-constraints [ [ 0, 1 ], [ 1, 0 ] ]
+#! to the semigroup generated by [ [ 1, 0 ], [ 0, 1 ] ]
 truncation1r := ApplyFunctor( truncation_functor_right, right_presentation1 );
 #! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
