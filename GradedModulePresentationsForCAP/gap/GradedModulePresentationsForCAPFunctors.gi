@@ -113,7 +113,7 @@ InstallMethod( LessGradedGenerators,
 
     else
 
-      TI := LessGradedGeneratorsTransformationTripleRight( 
+      TI := LessGradedGeneratorsTransformationTripleRight(
                 UnderlyingHomalgMatrix( UnderlyingMorphism( module_presentation ) ) )[ 3 ];
       range_prime := Source( DeduceMapFromMatrixAndRangeRight( 
                                  TI, Range( UnderlyingMorphism( module_presentation ) ) ) );
@@ -313,13 +313,13 @@ InstallMethod( GradedStandardModule,
                [ IsGradedLeftOrRightSubmoduleForCAP ],
   function( submodule )
     local new_presentation, embedding;
-  
+
     # compute a new presentation
     new_presentation := GradedStandardModule( PresentationForCAP( submodule ) );
 
     # compute the embedding
     embedding := EmbeddingInProjectiveObject( new_presentation );
-    
+
     # and return the associated subobject
     if IsGradedLeftSubmoduleForCAP( submodule ) then
       return GradedLeftSubmoduleForCAP( UnderlyingMorphism( embedding ) );
@@ -450,7 +450,7 @@ InstallMethod( ByASmallerPresentation,
 
     # compute the embedding
     embedding := EmbeddingInProjectiveObject( new_presentation );
-    
+
     # and return the associated subobject
     if IsGradedLeftSubmoduleForCAP( submodule ) then
       return GradedLeftSubmoduleForCAP( UnderlyingMorphism( embedding ) );

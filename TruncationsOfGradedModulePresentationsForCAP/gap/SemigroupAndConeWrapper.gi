@@ -418,26 +418,19 @@ InstallMethod( DecideIfIsConeSemigroupGeneratorList,
     hilbert_basis := NmzHilbertBasis( cone );
 
     # now compare list_of_generators and hilbert_basis modulo potential permutations
-    if Length( hilbert_basis ) <> Length( list_of_generators ) then
+    if Length( hilbert_basis ) > Length( list_of_generators ) then
       return false;
     fi;
 
-    # find matches of the elements in the list_of_generators in hilbert_basis and then delete those elements from
-    # the hilbert_basis
+    # scan over list_of_generators
+    # for each generator see if find a counterpart in hilbert_basis
+    # then delete this counter_part
     for i in [ 1 .. Length( list_of_generators ) ] do
 
-      pos := 1;
-      while not list_of_generators[ i ] = hilbert_basis[ pos ] do
-        pos := pos + 1;
-
-        if pos > Length( hilbert_basis ) then
-          return false;
-        fi;
-
-      od;
-
-      # found match at position "pos" in hilbert_basis, so delete this entry from hilbert_basis
-      Remove( hilbert_basis, pos );
+      pos := Position( hilbert_basis, list_of_generators[ i ] );
+      if pos <> fail then
+        Remove( hilbert_basis, pos );
+      fi;
 
     od;
 
@@ -467,7 +460,7 @@ InstallMethod( PointContainedInSemigroup,
       return;
     fi;
 
-    # check if semigroup_generator_list is trivial
+    # check if semigroup is trivial
     # if so, then the point lies in the semigroup iff point = [ 0,...,0 ]
     if IsTrivial( semigroup_for_CAP ) then
       if point = List( [ 1 .. Length( point ) ], k -> 0 ) then
