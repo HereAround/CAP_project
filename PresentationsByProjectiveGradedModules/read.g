@@ -1,10 +1,10 @@
 #
-# GradedModulePresentationsForCAP
+# PresentationsByProjectiveGradedModules
 #
 # Reading the implementation part of the package.
 
-ReadPackage( "GradedModulePresentationsForCAP", "gap/GradedModulePresentationsForCAP.gi" );
-ReadPackage( "GradedModulePresentationsForCAP", "gap/GradedSubmodules.gi" );
-ReadPackage( "GradedModulePresentationsForCAP", "gap/GradedModulePresentationsForCAPFunctors.gi" );
-ReadPackage( "GradedModulePresentationsForCAP", "gap/GradedModulePresentationsForCAPNaturalTransformations.gi" );
-ReadPackage( "GradedModulePresentationsForCAP", "gap/Tools.gi" );
+ReadPackage( "PresentationsByProjectiveGradedModules", "gap/PresentationsByProjectiveGradedModules.gi" );
+ReadPackage( "PresentationsByProjectiveGradedModules", "gap/GradedSubmodules.gi" );
+ReadPackage( "PresentationsByProjectiveGradedModules", "gap/PresentationsByProjectiveGradedModulesFunctors.gi" );
+ReadPackage( "PresentationsByProjectiveGradedModules", "gap/PresentationsByProjectiveGradedModulesNaturalTransformations.gi" );
+ReadPackage( "PresentationsByProjectiveGradedModules", "gap/Tools.gi" );

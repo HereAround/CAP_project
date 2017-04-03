@@ -1,6 +1,6 @@
 ####################################################################################
 ##
-## GradedModulePresentationsForCAP
+## PresentationsByProjectiveGradedModules
 ##
 ## Copyright 2016,  Martin Bies,       ITP Heidelberg
 ##

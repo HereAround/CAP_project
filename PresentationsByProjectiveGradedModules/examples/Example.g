@@ -4,7 +4,7 @@
 ##################################################
 ##################################################
 
-LoadPackage( "GradedModulePresentationsForCAP" );;
+LoadPackage( "PresentationsByProjectiveGradedModules" );;
 
 
 

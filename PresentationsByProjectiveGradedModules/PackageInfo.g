@@ -1,6 +1,6 @@
 SetPackageInfo( rec(
 
-PackageName := "GradedModulePresentationsForCAP",
+PackageName := "PresentationsByProjectiveGradedModules",
 Subtitle := "Graded module presentations for CAP over a graded ring",
 Version := Maximum( [
            "2016.03.15", # Martin's version
@@ -30,7 +30,7 @@ Persons := [
 
 PackageWWWHome := "",
 
-ArchiveURL     := Concatenation( ~.PackageWWWHome, "GradedModulePresentationsForCAP-", ~.Version ),
+ArchiveURL     := Concatenation( ~.PackageWWWHome, "PresentationsByProjectiveGradedModules-", ~.Version ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
@@ -49,7 +49,7 @@ Status := "dev",
 AbstractHTML   :=  "",
 
 PackageDoc := rec(
-  BookName  := "GradedModulePresentationsForCAP",
+  BookName  := "PresentationsByProjectiveGradedModules",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
