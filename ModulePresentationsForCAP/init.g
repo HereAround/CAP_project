@@ -9,4 +9,6 @@ ReadPackage( "ModulePresentationsForCAP", "gap/ModulePresentationFunctors.gd");
 
 ReadPackage( "ModulePresentationsForCAP", "gap/ModulePresentationNaturalTransformations.gd");
 
+ReadPackage( "ModulePresentationsForCAP", "gap/LiftPresentationTransformation.gd");
+
 ReadPackage( "ModulePresentationsForCAP", "gap/Tools.gd");

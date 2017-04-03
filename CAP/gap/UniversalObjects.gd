@@ -9,11 +9,6 @@
 ##
 #############################################################################
 
-
-## needed for multiple genesis
-DeclareOperation( "AddToGenesis",
-                  [ IsCapCategoryCell, IsObject, IsObject ] );
-
 ####################################
 ##
 #! @Section Kernel
@@ -54,15 +49,6 @@ DeclareAttribute( "KernelEmbedding",
                   IsCapCategoryMorphism );
 
 #! @Description
-#! This is a convenience method.
-#! The argument is an object $K$ that was created as a kernel.
-#! The output is the kernel embedding $\iota: K \rightarrow A$.
-#! @Returns a morphism in $\mathrm{Hom}(K,A)$
-#! @Arguments K
-DeclareAttribute( "KernelEmbedding",
-                  IsCapCategoryObject );
-
-#! @Description
 #! The arguments are a morphism $\alpha: A \rightarrow B$
 #! and an object $K = \mathrm{KernelObject}(\alpha)$.
 #! The output is the kernel embedding $\iota: K \rightarrow A$.
@@ -70,17 +56,6 @@ DeclareAttribute( "KernelEmbedding",
 #! @Arguments alpha, K
 DeclareOperation( "KernelEmbeddingWithGivenKernelObject",
                   [ IsCapCategoryMorphism, IsCapCategoryObject ] );
-
-#! @Description
-#! This is a convenience method.
-#! The arguments are an object $K$ which was created as a kernel,
-#! and a test morphism $\tau: T \rightarrow A$ satisfying $\alpha \circ \tau \sim_{T,B} 0$.
-#! The output is the morphism $u(\tau): T \rightarrow K$
-#! given by the universal property of the kernel.
-#! @Returns a morphism in $\mathrm{Hom}(T,K)$
-#! @Arguments K, tau
-DeclareOperation( "KernelLift",
-                  [ IsCapCategoryObject, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments are a morphism $\alpha: A \rightarrow B$
@@ -216,7 +191,7 @@ DeclareOperation( "KernelObjectFunctorial",
                   [ IsList ] );
 
 #! @Description
-#! The arguments are three morphism
+#! The arguments are three morphisms
 #! $\alpha: A \rightarrow B$, $\mu: A \rightarrow A'$, $\alpha': A' \rightarrow B'$.
 #! The output is the morphism
 #! $\mathrm{KernelObject}( \alpha ) \rightarrow \mathrm{KernelObject}( \alpha' )$
@@ -227,34 +202,37 @@ DeclareOperation( "KernelObjectFunctorial",
                   [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
+#! The arguments are an object $s = \mathrm{KernelObject}( \alpha )$,
+#! three morphisms
+#! $\alpha: A \rightarrow B$, $\mu: A \rightarrow A'$, $\alpha': A' \rightarrow B'$,
+#! and an object $r = \mathrm{KernelObject}( \alpha' )$.
+#! The output is the morphism
+#! $\mathrm{KernelObject}( \alpha ) \rightarrow \mathrm{KernelObject}( \alpha' )$
+#! given by the functorality of the kernel.
+#! @Returns a morphism in $\mathrm{Hom}( s, r )$
+#! @Arguments s, alpha, mu, alpha_prime, r
+DeclareOperation( "KernelObjectFunctorialWithGivenKernelObjects",
+                  [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, 
+                    IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+#! @Description
 #! The arguments are a category $C$ and a function $F$.
 #! This operations adds the given function $F$
-#! to the category for the basic operation <C>KernelObjectFunctorial</C>.
-#! $F: (\alpha, \mu, \alpha') \mapsto (\mathrm{KernelObject}( \alpha ) \rightarrow \mathrm{KernelObject}( \alpha' ))$.
+#! to the category for the basic operation <C>KernelObjectFunctorialWithGivenKernelObjects</C>.
+#! $F: (\mathrm{KernelObject}( \alpha ), \alpha, \mu, \alpha', \mathrm{KernelObject}( \alpha' )) \mapsto (\mathrm{KernelObject}( \alpha ) \rightarrow \mathrm{KernelObject}( \alpha' ))$.
 #! @Returns nothing
 #! @Arguments C, F
-DeclareOperation( "AddKernelObjectFunctorial",
+DeclareOperation( "AddKernelObjectFunctorialWithGivenKernelObjects",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddKernelObjectFunctorial",
+DeclareOperation( "AddKernelObjectFunctorialWithGivenKernelObjects",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddKernelObjectFunctorial",
+DeclareOperation( "AddKernelObjectFunctorialWithGivenKernelObjects",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddKernelObjectFunctorial",
+DeclareOperation( "AddKernelObjectFunctorialWithGivenKernelObjects",
                   [ IsCapCategory, IsList ] );
-
-## WasCreatedAs Filter
-#! @Chapter Technical Details
-
-#! @Section Universal Objects
-
-#! @Description 
-#! When created, this filter is set to true for a kernel object. 
-#! Note that we chose <C>WasCreatedAsKernelObject</C> to be a filter rather than a property,
-#! because by default, a filter is set to false. 
-DeclareFilter( "WasCreatedAsKernelObject" );
 
 #! @Chapter Universal Objects
 
@@ -299,15 +277,6 @@ DeclareAttribute( "CokernelProjection",
                   IsCapCategoryMorphism );
 
 #! @Description
-#! This is a convenience method.
-#! The argument is an object $K$ which was created as a cokernel.
-#! The output is the cokernel projection $\epsilon: B \rightarrow K$.
-#! @Returns a morphism in $\mathrm{Hom}(B, K)$
-#! @Arguments K
-DeclareAttribute( "CokernelProjection",
-                  IsCapCategoryObject );
-
-#! @Description
 #! The arguments are a morphism $\alpha: A \rightarrow B$
 #! and an object $K = \mathrm{CokernelObject}(\alpha)$.
 #! The output is the cokernel projection $\epsilon: B \rightarrow \mathrm{CokernelObject}( \alpha )$.
@@ -316,17 +285,6 @@ DeclareAttribute( "CokernelProjection",
 DeclareOperation( "CokernelProjectionWithGivenCokernelObject",
                   [ IsCapCategoryMorphism, IsCapCategoryObject ] );
 
-
-#! @Description
-#! This is a convenience method.
-#! The arguments are an object $K$ which was created as a cokernel,
-#! and a test morphism $\tau: B \rightarrow T$ satisfying $\tau \circ \alpha \sim_{A, T} 0$.
-#! The output is the morphism $u(\tau): K \rightarrow T$
-#! given by the universal property of the cokernel.
-#! @Returns a morphism in $\mathrm{Hom}(K,T)$
-#! @Arguments K, tau
-DeclareOperation( "CokernelColift",
-                  [ IsCapCategoryObject, IsCapCategoryMorphism ] );
 
 #! @Description
 #! The arguments are a morphism $\alpha: A \rightarrow B$
@@ -471,34 +429,37 @@ DeclareOperation( "CokernelFunctorial",
                   [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ] );
 
 #! @Description
+#! The arguments are an object $s = \mathrm{CokernelObject}( \alpha )$,
+#! three morphisms
+#! $\alpha: A \rightarrow B, \nu: B \rightarrow B', \alpha': A' \rightarrow B'$,
+#! and an object $r = \mathrm{CokernelObject}( \alpha' )$.
+#! The output is the morphism
+#! $\mathrm{CokernelObject}( \alpha ) \rightarrow \mathrm{CokernelObject}( \alpha' )$
+#! given by the functorality of the cokernel.
+#! @Returns a morphism in $\mathrm{Hom}(s, r)$
+#! @Arguments s, alpha, nu, alpha_prime, r
+DeclareOperation( "CokernelFunctorialWithGivenCokernelObjects",
+                  [ IsCapCategoryObject, IsCapCategoryMorphism, IsCapCategoryMorphism, 
+                    IsCapCategoryMorphism, IsCapCategoryObject ] );
+
+#! @Description
 #! The arguments are a category $C$ and a function $F$.
 #! This operations adds the given function $F$
-#! to the category for the basic operation <C>CokernelFunctorial</C>.
-#! $F: (\alpha, \nu, \alpha') \mapsto (\mathrm{CokernelObject}( \alpha ) \rightarrow \mathrm{CokernelObject}( \alpha' ))$.
+#! to the category for the basic operation <C>CokernelFunctorialWithGivenCokernelObjects</C>.
+#! $F: (\mathrm{CokernelObject}( \alpha ), \alpha, \nu, \alpha', \mathrm{CokernelObject}( \alpha' )) \mapsto (\mathrm{CokernelObject}( \alpha ) \rightarrow \mathrm{CokernelObject}( \alpha' ))$.
 #! @Returns nothing
 #! @Arguments C, F
-DeclareOperation( "AddCokernelFunctorial",
+DeclareOperation( "AddCokernelFunctorialWithGivenCokernelObjects",
                   [ IsCapCategory, IsFunction ] );
 
-DeclareOperation( "AddCokernelFunctorial",
+DeclareOperation( "AddCokernelFunctorialWithGivenCokernelObjects",
                   [ IsCapCategory, IsFunction, IsInt ] );
 
-DeclareOperation( "AddCokernelFunctorial",
+DeclareOperation( "AddCokernelFunctorialWithGivenCokernelObjects",
                   [ IsCapCategory, IsList, IsInt ] );
 
-DeclareOperation( "AddCokernelFunctorial",
+DeclareOperation( "AddCokernelFunctorialWithGivenCokernelObjects",
                   [ IsCapCategory, IsList ] );
-
-## WasCreatedAs Filter
-#! @Chapter Technical Details
-
-#! @Section Universal Objects
-
-#! @Description 
-#! When created, this filter is set to true for a cokernel object. 
-#! Note that we chose <C>WasCreatedAsCokernelObject</C> to be a filter rather than a property,
-#! because by default, a filter is set to false. 
-DeclareFilter( "WasCreatedAsCokernelObject" );
 
 #! @Chapter Universal Objects
 
@@ -800,18 +761,6 @@ DeclareOperation( "AddIsomorphismFromTerminalObjectToZeroObject",
 DeclareOperation( "AddIsomorphismFromTerminalObjectToZeroObject",
                   [ IsCapCategory, IsList ] );
 
-## WasCreatedAs Filter
-
-#! @Chapter Technical Details
-
-#! @Section Universal Objects
-
-#! @Description 
-#! When created, this filter is set to true for a zero object. 
-#! Note that we chose <C>WasCreatedAsZeroObject</C> to be a filter rather than a property,
-#! because by default, a filter is set to false.
-DeclareFilter( "WasCreatedAsZeroObject" );
-
 #! @Chapter Universal Objects
 
 ####################################
@@ -961,18 +910,6 @@ DeclareOperation( "AddTerminalObjectFunctorial",
 DeclareOperation( "AddTerminalObjectFunctorial",
                   [ IsCapCategory, IsList ] );
 
-## WasCreatedAs Filter
-
-#! @Chapter Technical Details
-
-#! @Section Universal Objects
-
-#! @Description 
-#! When created, this filter is set to true for a terminal object. 
-#! Note that we chose <C>WasCreatedAsTerminalObject</C> to be a filter rather than a property,
-#! because by default, a filter is set to false.
-DeclareFilter( "WasCreatedAsTerminalObject" );
-
 #! @Chapter Universal Objects
 
 ####################################
@@ -1117,18 +1054,6 @@ DeclareOperation( "AddInitialObjectFunctorial",
 
 DeclareOperation( "AddInitialObjectFunctorial",
                   [ IsCapCategory, IsList ] );
-
-## WasCreatedAs Filter
-
-#! @Chapter Technical Details
-
-#! @Section Universal Objects
-
-#! @Description 
-#! When created, this filter is set to true for an initial object. 
-#! Note that we chose <C>WasCreatedAsInitialObject</C> to be a filter rather than a property,
-#! because by default, a filter is set to false.
-DeclareFilter( "WasCreatedAsInitialObject" );
 
 #! @Chapter Universal Objects
 
@@ -1672,46 +1597,39 @@ DeclareOperation( "DirectSumFunctorial",
                   [ IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ and a function $F$.
-#! This operations adds the given function $F$
-#! to the category for the basic operation <C>DirectSumFunctorial</C>.
-#! $F: (( \mu_1, \dots, \mu_n )) \mapsto (\bigoplus_{i=1}^n S_i \rightarrow \bigoplus_{i=1}^n S_i')$.
-#! @Returns nothing
-#! @Arguments C, F
-DeclareOperation( "AddDirectSumFunctorial",
-                  [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddDirectSumFunctorial",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-
-DeclareOperation( "AddDirectSumFunctorial",
-                  [ IsCapCategory, IsList, IsInt ] );
-
-DeclareOperation( "AddDirectSumFunctorial",
-                  [ IsCapCategory, IsList ] );
+#! The arguments are an object $d_1 = \bigoplus_{i=1}^n S_i$,
+#! a list of morphisms $L = ( \mu_1: S_1 \rightarrow S_1', \dots, \mu_n: S_n \rightarrow S_n' )$,
+#! and an object $d_2 = \bigoplus_{i=1}^n S_i'$.
+#! The output is a morphism
+#! $d_1 \rightarrow d_2$
+#! given by the functorality of the direct sum.
+#! @Returns a morphism in $\mathrm{Hom}( d_1, d_2 )$
+#! @Arguments d_1, L, d_2
+DeclareOperation( "DirectSumFunctorialWithGivenDirectSums",
+                  [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
 
 #! @Description
-#! The arguments are a list of morphisms $L = ( \mu_1: S_1 \rightarrow S_1', \dots, \mu_n: S_n \rightarrow S_n' )$
-#! and a method selection morphism.
-#! The output is a morphism
-#! $\bigoplus_{i=1}^n S_i \rightarrow \bigoplus_{i=1}^n S_i'$
-#! given by the functorality of the direct sum.
-#! @Returns a morphism in $\mathrm{Hom}( \bigoplus_{i=1}^n S_i, \bigoplus_{i=1}^n S_i' )$
-#! @Arguments L, method_selection_morphism
-DeclareOperation( "DirectSumFunctorialOp",
-                  [ IsList, IsCapCategoryMorphism ] );
+#! The arguments are a category $C$ and a function $F$.
+#! This operations adds the given function $F$
+#! to the category for the basic operation <C>DirectSumFunctorialWithGivenDirectSums</C>.
+#! $F: (\bigoplus_{i=1}^n S_i, ( \mu_1, \dots, \mu_n ), \bigoplus_{i=1}^n S_i') \mapsto (\bigoplus_{i=1}^n S_i \rightarrow \bigoplus_{i=1}^n S_i')$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddDirectSumFunctorialWithGivenDirectSums",
+                  [ IsCapCategory, IsFunction ] );
 
-## WasCreatedAs Filter
+DeclareOperation( "AddDirectSumFunctorialWithGivenDirectSums",
+                  [ IsCapCategory, IsFunction, IsInt ] );
+
+DeclareOperation( "AddDirectSumFunctorialWithGivenDirectSums",
+                  [ IsCapCategory, IsList, IsInt ] );
+
+DeclareOperation( "AddDirectSumFunctorialWithGivenDirectSums",
+                  [ IsCapCategory, IsList ] );
 
 #! @Chapter Technical Details
 
 #! @Section Universal Objects
-
-#! @Description 
-#! When created, this filter is set to true for a direct sum object. 
-#! Note that we chose <C>WasCreatedAsDirectSum</C> to be a filter rather than a property,
-#! because by default, a filter is set to false.
-DeclareFilter( "WasCreatedAsDirectSum" );
 
 DeclareProperty( "IS_IMPLIED_DIRECT_SUM", 
                  IsCapCategoryObject );
@@ -1963,49 +1881,36 @@ DeclareOperation( "CoproductFunctorial",
                   [ IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ and a function $F$.
-#! This operations adds the given function $F$
-#! to the category for the basic operation <C>CoproductFunctorial</C>.
-#! $F: ( \mu_1, \dots, \mu_n) \rightarrow (\bigsqcup_{i=1}^n I_i \rightarrow \bigsqcup_{i=1}^n I_i')$.
-#! @Returns nothing
-#! @Arguments C, F
-DeclareOperation( "AddCoproductFunctorial",
-                  [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddCoproductFunctorial",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-
-DeclareOperation( "AddCoproductFunctorial",
-                  [ IsCapCategory, IsList, IsInt ] );
-
-DeclareOperation( "AddCoproductFunctorial",
-                  [ IsCapCategory, IsList ] );
-
-
-#! @Description
-#! The arguments are a list $L = ( \mu_1: I_1 \rightarrow I_1', \dots, \mu_n: I_n \rightarrow I_n' )$
-#! and a method selection morphism.
+#! The arguments are an object $s = \bigsqcup_{i=1}^n I_i$, 
+#! a list $L = ( \mu_1: I_1 \rightarrow I_1', \dots, \mu_n: I_n \rightarrow I_n' )$,
+#! and an object $r = \bigsqcup_{i=1}^n I_i'$.
 #! The output is a morphism
 #! $\bigsqcup_{i=1}^n I_i \rightarrow \bigsqcup_{i=1}^n I_i'$
 #! given by the functorality of the coproduct.
-#! @Returns a morphism in $\mathrm{Hom}(\bigsqcup_{i=1}^n I_i, \bigsqcup_{i=1}^n I_i')$
-#! @Arguments L, method_selection_morphism
-DeclareOperation( "CoproductFunctorialOp",
-                  [ IsList, IsCapCategoryMorphism ] );
+#! @Returns a morphism in $\mathrm{Hom}(s, r)$
+#! @Arguments s, L, r
+DeclareOperation( "CoproductFunctorialWithGivenCoproducts",
+                  [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
 
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operations adds the given function $F$
+#! to the category for the basic operation <C>CoproductFunctorialWithGivenCoproducts</C>.
+#! $F: (\bigsqcup_{i=1}^n I_i, (\mu_1, \dots, \mu_n), \bigsqcup_{i=1}^n I_i') \rightarrow (\bigsqcup_{i=1}^n I_i \rightarrow \bigsqcup_{i=1}^n I_i')$.
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddCoproductFunctorialWithGivenCoproducts",
+                  [ IsCapCategory, IsFunction ] );
 
+DeclareOperation( "AddCoproductFunctorialWithGivenCoproducts",
+                  [ IsCapCategory, IsFunction, IsInt ] );
 
-## WasCreatedAs Filter
+DeclareOperation( "AddCoproductFunctorialWithGivenCoproducts",
+                  [ IsCapCategory, IsList, IsInt ] );
 
-#! @Chapter Technical Details
+DeclareOperation( "AddCoproductFunctorialWithGivenCoproducts",
+                  [ IsCapCategory, IsList ] );
 
-#! @Section Universal Objects
-
-#! @Description 
-#! When created, this filter is set to true for a coproduct object. 
-#! Note that we chose <C>WasCreatedAsCoprodcut</C> to be a filter rather than a property,
-#! because by default, a filter is set to false.
-DeclareFilter( "WasCreatedAsCoproduct" );
 #! @Chapter Universal Objects
 
 
@@ -2220,47 +2125,35 @@ DeclareOperation( "DirectProductFunctorial",
                   [ IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ and a function $F$.
-#! This operations adds the given function $F$
-#! to the category for the basic operation <C>DirectProductFunctorial</C>.
-#! $F: ( (\mu_i: P_i \rightarrow P'_i)_{i=1\dots n} ) \mapsto (\prod_{i=1}^n P_i \rightarrow \prod_{i=1}^n P_i')$
-#! @Returns nothing
-#! @Arguments C, F
-DeclareOperation( "AddDirectProductFunctorial",
-                  [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddDirectProductFunctorial",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-
-DeclareOperation( "AddDirectProductFunctorial",
-                  [ IsCapCategory, IsList, IsInt ] );
-
-DeclareOperation( "AddDirectProductFunctorial",
-                  [ IsCapCategory, IsList ] );
-
-#! @Description
-#! The arguments are a list of morphisms $L = (\mu_i: P_i \rightarrow P'_i)_{i=1\dots n}$,
-#! and a morphism for method selection.
+#! The arguments are an object $s = \prod_{i=1}^n P_i$,
+#! a list of morphisms $L = (\mu_i: P_i \rightarrow P'_i)_{i=1\dots n}$,
+#! and an object $r = \prod_{i=1}^n P_i'$.
 #! The output is a morphism
 #! $\prod_{i=1}^n P_i \rightarrow \prod_{i=1}^n P_i'$
 #! given by the functorality of the direct product.
-#! @Returns a morphism in $\mathrm{Hom}( P_i, \prod_{i=1}^n P_i' )$
-#! @Arguments L, method_selection_morphism
-DeclareOperation( "DirectProductFunctorialOp",
-                  [ IsList, IsCapCategoryMorphism ] );
+#! @Returns a morphism in $\mathrm{Hom}( s, r )$
+#! @Arguments s, L, r
+DeclareOperation( "DirectProductFunctorialWithGivenDirectProducts",
+                  [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
 
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operations adds the given function $F$
+#! to the category for the basic operation <C>DirectProductFunctorialWithGivenDirectProducts</C>.
+#! $F: ( \prod_{i=1}^n P_i, (\mu_i: P_i \rightarrow P'_i)_{i=1\dots n}, \prod_{i=1}^n P_i' ) \mapsto (\prod_{i=1}^n P_i \rightarrow \prod_{i=1}^n P_i')$
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddDirectProductFunctorialWithGivenDirectProducts",
+                  [ IsCapCategory, IsFunction ] );
 
-## WasCreatedAs Filter
+DeclareOperation( "AddDirectProductFunctorialWithGivenDirectProducts",
+                  [ IsCapCategory, IsFunction, IsInt ] );
 
-#! @Chapter Technical Details
+DeclareOperation( "AddDirectProductFunctorialWithGivenDirectProducts",
+                  [ IsCapCategory, IsList, IsInt ] );
 
-#! @Section Universal Objects
-
-#! @Description 
-#! When created, this filter is set to true for a terminal object. 
-#! Note that we chose <C>WasCreatedAsDirectProduct</C> to be a filter rather than a property,
-#! because by default, a filter is set to false.
-DeclareFilter( "WasCreatedAsDirectProduct" );
+DeclareOperation( "AddDirectProductFunctorialWithGivenDirectProducts",
+                  [ IsCapCategory, IsList ] );
 
 #! @Chapter Universal Objects
 
@@ -2527,12 +2420,6 @@ DeclareOperation( "ProjectionInFactorOfFiberProductWithGivenFiberProduct",
 #!  The output is the morphism
 #!  $u( \tau ): T \rightarrow \mathrm{FiberProduct}(D)$
 #!  given by the universal property of the fiber product.
-#! * The arguments are an object $P$ which was created as a pullback from a list $D = ( \beta_i: P_i \rightarrow B )_{i = 1 \dots n}$
-#!  and morphisms $\tau_1: T \rightarrow P_1, \dots, \tau_n: T \rightarrow P_n$
-#!  such that $\beta_i \circ \tau_i  \sim_{T, B} \beta_j \circ \tau_j$ for all pairs $i,j$.
-#!  The output is the morphism
-#!  $u( \tau ): T \rightarrow P$
-#!  given by the universal property of the fiber product.
 DeclareGlobalFunction( "UniversalMorphismIntoFiberProduct" );
 
 #! @Description
@@ -2674,49 +2561,38 @@ DeclareOperation( "FiberProductFunctorial",
                   [ IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ and a function $F$.
-#! This operations adds the given function $F$
-#! to the category for the basic operation <C>FiberProductFunctorial</C>.
-#! $F: ( (\beta_i: P_i \rightarrow B, \mu_i: P_i \rightarrow P_i', \beta_i': P_i' \rightarrow B')_{i = 1 \dots n} ) \mapsto (\mathrm{FiberProduct}( ( \beta_i )_{i=1 \dots n} ) \rightarrow \mathrm{FiberProduct}( ( \beta_i' )_{i=1 \dots n} ) )$
-#! @Returns nothing
-#! @Arguments C, F
-DeclareOperation( "AddFiberProductFunctorial",
-                  [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddFiberProductFunctorial",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-
-DeclareOperation( "AddFiberProductFunctorial",
-                  [ IsCapCategory, IsList, IsInt ] );
-
-DeclareOperation( "AddFiberProductFunctorial",
-                  [ IsCapCategory, IsList ] );
-
-#! @Description
-#! The arguments are a list of triples of morphisms
+#! The arguments are an object $s = \mathrm{FiberProduct}( ( \beta_i )_{i=1 \dots n} )$,
+#! a list of triples of morphisms
 #! $L = ( (\beta_i: P_i \rightarrow B, \mu_i: P_i \rightarrow P_i', \beta_i': P_i' \rightarrow B')_{i = 1 \dots n} )$
 #! such that there exists a morphism $\beta: B \rightarrow B'$
 #! such that $\beta_i' \circ \mu_i \sim_{P_i,B'} \beta \circ \beta_i$ for $i = 1, \dots, n$,
-#! and a morphism for method selection.
+#! and an object $r = \mathrm{FiberProduct}( ( \beta_i' )_{i=1 \dots n} )$.
 #! The output is the morphism
-#! $\mathrm{FiberProduct}( ( \beta_i )_{i=1 \dots n} ) \rightarrow \mathrm{FiberProduct}( ( \beta_i' )_{i=1 \dots n} )$
+#! $s \rightarrow r$
 #! given by the functorality of the fiber product.
-#! @Returns a morphism in $\mathrm{Hom}(\mathrm{FiberProduct}( ( \beta_i )_{i=1 \dots n} ), \mathrm{FiberProduct}( ( \beta_i' )_{i=1 \dots n} ))$
-#! @Arguments L, method_selection_morphism
-DeclareOperation( "FiberProductFunctorialOp",
-                  [ IsList, IsCapCategoryMorphism ] );
+#! @Returns a morphism in $\mathrm{Hom}(s, r)$
+#! @Arguments s, L, r
+DeclareOperation( "FiberProductFunctorialWithGivenFiberProducts",
+                  [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
 
-## WasCreatedAs Filter
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operations adds the given function $F$
+#! to the category for the basic operation <C>FiberProductFunctorialWithGivenFiberProducts</C>.
+#! $F: ( \mathrm{FiberProduct}( ( \beta_i )_{i=1 \dots n} ), (\beta_i: P_i \rightarrow B, \mu_i: P_i \rightarrow P_i', \beta_i': P_i' \rightarrow B')_{i = 1 \dots n}, \mathrm{FiberProduct}( ( \beta_i' )_{i=1 \dots n} ) ) \mapsto (\mathrm{FiberProduct}( ( \beta_i )_{i=1 \dots n} ) \rightarrow \mathrm{FiberProduct}( ( \beta_i' )_{i=1 \dots n} ) )$
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddFiberProductFunctorialWithGivenFiberProducts",
+                  [ IsCapCategory, IsFunction ] );
 
-#! @Chapter Technical Details
+DeclareOperation( "AddFiberProductFunctorialWithGivenFiberProducts",
+                  [ IsCapCategory, IsFunction, IsInt ] );
 
-#! @Section Universal Objects
+DeclareOperation( "AddFiberProductFunctorialWithGivenFiberProducts",
+                  [ IsCapCategory, IsList, IsInt ] );
 
-#! @Description 
-#! When created, this filter is set to true for a pullback. 
-#! Note that we chose <C>WasCreatedAsFiberProduct</C> to be a filter rather than a property,
-#! because by default, a filter is set to false.
-DeclareFilter( "WasCreatedAsFiberProduct" );
+DeclareOperation( "AddFiberProductFunctorialWithGivenFiberProducts",
+                  [ IsCapCategory, IsList ] );
 
 #! @Chapter Universal Objects
 
@@ -2984,12 +2860,6 @@ DeclareOperation( "InjectionOfCofactorOfPushoutWithGivenPushout",
 #!  The output is the morphism
 #!  $u( \tau ): \mathrm{Pushout}(D) \rightarrow T$
 #!  given by the universal property of the pushout.
-#! * The arguments are an object $I$ which was created as a pushout from a list $D = ( \beta_i: B \rightarrow I_i )_{i = 1 \dots n}$
-#!  and morphisms $\tau_1: I_1 \rightarrow T, \dots, \tau_n: I_n \rightarrow T$ such that
-#!  $\tau_i \circ \beta_i \sim_{B,T} \tau_j \circ \beta_j$.
-#!  The output is the morphism
-#!  $u( \tau ): I \rightarrow T$
-#!  given by the universal property of the pushout.
 DeclareGlobalFunction( "UniversalMorphismFromPushout" );
 
 #! @Description
@@ -3131,50 +3001,38 @@ DeclareOperation( "PushoutFunctorial",
                   [ IsList ] );
 
 #! @Description
-#! The arguments are a category $C$ and a function $F$.
-#! This operations adds the given function $F$
-#! to the category for the basic operation <C>PushoutFunctorial</C>.
-#! $F: ( ( \beta_i: B \rightarrow I_i, \mu_i: I_i \rightarrow I_i', \beta_i': B' \rightarrow I_i' )_{i = 1 \dots n} ) \mapsto (\mathrm{Pushout}( ( \beta_i )_{i=1}^n ) \rightarrow \mathrm{Pushout}( ( \beta_i' )_{i=1}^n ) )$
-#! @Returns nothing
-#! @Arguments C, F
-DeclareOperation( "AddPushoutFunctorial",
-                  [ IsCapCategory, IsFunction ] );
-
-DeclareOperation( "AddPushoutFunctorial",
-                  [ IsCapCategory, IsFunction, IsInt ] );
-
-DeclareOperation( "AddPushoutFunctorial",
-                  [ IsCapCategory, IsList, IsInt ] );
-
-DeclareOperation( "AddPushoutFunctorial",
-                  [ IsCapCategory, IsList ] );
-
-#! @Description
-#! The argument is a list
+#! The arguments are an object $s = \mathrm{Pushout}( ( \beta_i )_{i=1}^n )$,
+#! a list
 #! $L = ( ( \beta_i: B \rightarrow I_i, \mu_i: I_i \rightarrow I_i', \beta_i': B' \rightarrow I_i' )_{i = 1 \dots n} )$
 #! such that there exists a morphism $\beta: B \rightarrow B'$
 #! such that $\beta_i' \circ \beta \sim_{B, I_i'} \mu_i \circ \beta_i$ for $i = 1, \dots n$,
-#! and a morphism for method selection.
+#! and an object $r = \mathrm{Pushout}( ( \beta_i' )_{i=1}^n )$.
 #! The output is the morphism
-#! $\mathrm{Pushout}( ( \beta_i )_{i=1}^n ) \rightarrow \mathrm{Pushout}( ( \beta_i' )_{i=1}^n )$
+#! $s \rightarrow r$
 #! given by the functorality of the pushout.
-#! @Returns a morphism in $\mathrm{Hom}(\mathrm{Pushout}( ( \beta_i )_{i=1}^n ), \mathrm{Pushout}( ( \beta_i' )_{i=1}^n ))$
-#! @Arguments L, method_selection_morphism
-DeclareOperation( "PushoutFunctorialOp",
-                  [ IsList, IsCapCategoryMorphism ] );
+#! @Returns a morphism in $\mathrm{Hom}(s, r)$
+#! @Arguments s, L, r
+DeclareOperation( "PushoutFunctorialWithGivenPushouts",
+                  [ IsCapCategoryObject, IsList, IsCapCategoryObject ] );
 
+#! @Description
+#! The arguments are a category $C$ and a function $F$.
+#! This operations adds the given function $F$
+#! to the category for the basic operation <C>PushoutFunctorial</C>.
+#! $F: ( \mathrm{Pushout}( ( \beta_i )_{i=1}^n ), ( \beta_i: B \rightarrow I_i, \mu_i: I_i \rightarrow I_i', \beta_i': B' \rightarrow I_i' )_{i = 1 \dots n}, \mathrm{Pushout}( ( \beta_i' )_{i=1}^n ) ) \mapsto (\mathrm{Pushout}( ( \beta_i )_{i=1}^n ) \rightarrow \mathrm{Pushout}( ( \beta_i' )_{i=1}^n ) )$
+#! @Returns nothing
+#! @Arguments C, F
+DeclareOperation( "AddPushoutFunctorialWithGivenPushouts",
+                  [ IsCapCategory, IsFunction ] );
 
-## WasCreatedAs Filter
+DeclareOperation( "AddPushoutFunctorialWithGivenPushouts",
+                  [ IsCapCategory, IsFunction, IsInt ] );
 
-#! @Chapter Technical Details
+DeclareOperation( "AddPushoutFunctorialWithGivenPushouts",
+                  [ IsCapCategory, IsList, IsInt ] );
 
-#! @Section Universal Objects
-
-#! @Description 
-#! When created, this filter is set to true for a pushout. 
-#! Note that we chose <C>WasCreatedAsPushout</C> to be a filter rather than a property,
-#! because by default, a filter is set to false.
-DeclareFilter( "WasCreatedAsPushout" );
+DeclareOperation( "AddPushoutFunctorialWithGivenPushouts",
+                  [ IsCapCategory, IsList ] );
 
 #! @Chapter Universal Objects
 
@@ -3265,17 +3123,6 @@ DeclareAttribute( "ImageObject",
                   IsCapCategoryMorphism );
 
 #! @Description
-#! This is a convenience method.
-#! The argument is an object $I$ which was created as an image object
-#! of a morphism $\alpha: A \rightarrow B$.
-#! The output is the image embedding
-#! $\iota: I \hookrightarrow B$.
-#! @Returns a morphism in $\mathrm{Hom}(I,B)$.
-#! @Arguments I
-DeclareAttribute( "ImageEmbedding",
-                  IsCapCategoryObject );
-
-#! @Description
 #! The argument is a morphism $\alpha: A \rightarrow B$.
 #! The output is the image embedding
 #! $\iota: \mathrm{im}(\alpha) \hookrightarrow B$.
@@ -3294,16 +3141,6 @@ DeclareAttribute( "ImageEmbedding",
 DeclareOperation( "ImageEmbeddingWithGivenImageObject",
                   [ IsCapCategoryMorphism, IsCapCategoryObject ] );
 
-#! @Description
-#! This is a convenience method.
-#! The argument is an object $I$ which was created as an image object
-#! of a morphism $\alpha: A \rightarrow B$.
-#! The output is the coastriction to image
-#! $c: A \rightarrow I$.
-#! @Returns a morphism in $\mathrm{Hom}(A, I)$
-#! @Arguments I
-DeclareAttribute( "CoastrictionToImage",
-                  IsCapCategoryObject );
 
 #! @Description
 #! The argument is a morphism $\alpha: A \rightarrow B$.
@@ -3489,18 +3326,6 @@ DeclareOperation( "AddUniversalMorphismFromImageWithGivenImageObject",
 DeclareOperation( "AddUniversalMorphismFromImageWithGivenImageObject",
                   [ IsCapCategory, IsList ] );
 
-
-## WasCreatedAs Filter
-
-#! @Chapter Technical Details
-
-#! @Section Universal Objects
-
-#! @Description 
-#! When created, this filter is set to true for an image. 
-#! Note that we chose <C>WasCreatedAsImageObject</C> to be a filter rather than a property,
-#! because by default, a filter is set to false.
-DeclareFilter( "WasCreatedAsImageObject" );
 #! @Chapter Universal Objects
 
 ####################################
@@ -3896,16 +3721,6 @@ DeclareOperation( "AddUniversalMorphismIntoCoimageWithGivenCoimage",
 DeclareOperation( "AddUniversalMorphismIntoCoimageWithGivenCoimage",
                   [ IsCapCategory, IsList ] );
 
-
-
-
-## WasCreatedAs Filter
-
-#! @Chapter Technical Details
-
-#! @Section Universal Objects
-
-DeclareFilter( "WasCreatedAsCoimage" );
 #! @Chapter Universal Objects
 
 ####################################
@@ -3913,46 +3728,6 @@ DeclareFilter( "WasCreatedAsCoimage" );
 #! @Section Convenience Methods
 ##
 ####################################
-
-#! @Description
-#! This is a convenience method.
-#! There are five different ways to use this method:
-#! * The arguments are an object $S$ which was created as a direct sum
-#!  and an integer $k$.
-#!  The output is the $k$-th injection $\iota_{k}: S_k \rightarrow S$.
-#! * The arguments are an object $I$ which was created as a coproduct
-#!  and an integer $k$.
-#!  The output is the $k$-th injection $\iota_{k}: I_k \rightarrow I$.
-#! * The arguments are an object $I$ which was created as a pushout
-#!  and an integer $k$.
-#!  The output is the $k$-th injection $\iota_{k}: I_k \rightarrow I$.
-#! * The arguments are a list of objects $D = ( I_1, \dots, I_n )$
-#!  and an integer $k$.
-#!  The output is the $k$-th injection $\iota_{k}: I_k \rightarrow \bigsqcup_{i=1}^n I_i$.
-#! * The arguments are a list of morphisms $D = ( \beta_i: B \rightarrow I_i )_{i = 1 \dots n}$
-#!  and an integer $k$.
-#!  The output is the $k$-th injection $\iota_{k}: I_k \rightarrow \mathrm{Pushout}(D)$.
-DeclareGlobalFunction( "InjectionOfCofactor" );
-
-#! @Description
-#! This is a convenience method.
-#! There are five different ways to use this method:
-#! * The arguments are an object $S$ which was created as a direct sum
-#!  and an integer $k$.
-#!  The output is the $k$-th projection $\pi_{k}: S \rightarrow S_k$.
-#! * The arguments are an object $P$ which was created as a direct product
-#!  and an integer $k$.
-#!  The output is the $k$-th projection $\pi_{k}: P \rightarrow P_k$.
-#! * The arguments are an object $P$ which was created as a fiber product
-#!  and an integer $k$.
-#!  The output is the $k$-th projection $\pi_{k}: P \rightarrow P_k$.
-#! * The arguments are a list of objects $D = ( P_1, \dots, P_n )$
-#!  and an integer $k$.
-#!  The output is the $k$-th projection $\pi_{k}: \prod_{i=1}^n P_i \rightarrow P_k$.
-#! * The arguments are a list of morphisms $D = ( \beta_i: P_i \rightarrow B )_{i = 1 \dots n}$
-#!  and an integer $k$.
-#!  The output is the $k$-th projection $\pi_{k}: \mathrm{FiberProduct}(D) \rightarrow P_k$.
-DeclareGlobalFunction( "ProjectionInFactor" );
 
 ####################################
 ##
@@ -3965,5 +3740,3 @@ DeclareGlobalFunction( "ProjectionInFactor" );
 ## Function Attributes
 
 ## Add Operations
-
-## WasCreatedAs Filter

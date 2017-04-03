@@ -214,12 +214,22 @@ end );
 
 ## FIXME: This might be dangerous
 ##
-InstallMethod( Zero,
-               [ IsCapCategoryMorphism ],
+# InstallMethod( Zero,
+#                [ IsCapCategoryMorphism ],
+#                
+#   function( mor )
+#     
+#     return ZeroMorphism( Source( mor ), Range( mor ) );
+#     
+# end );
+
+##
+InstallMethod( \-,
+               [ IsCapCategoryMorphism, IsCapCategoryMorphism ],
                
-  function( mor )
+  function( alpha, beta )
     
-    return ZeroMorphism( Source( mor ), Range( mor ) );
+    return alpha + AdditiveInverse( beta );
     
 end );
 
@@ -341,15 +351,18 @@ InstallGlobalFunction( CAP_INTERNAL_CREATE_MORPHISM_PRINT,
     AddRelationToGraph( print_graph,
                         rec( Source := [ rec( Conditions := "IsIsomorphism",
                                               PrintString := "iso",
-                                              Adjective := true ) ],
+                                              Adjective := true,
+                                              NoSepString := true ) ],
                              Range := [ rec( Conditions := "IsSplitMonomorphism",
                                              PrintString := "split mono",
                                              TypeOfView := "ViewObj",
                                              ComputeLevel := "AllWithCompute",
-                                             Adjective := true ),
+                                             Adjective := true,
+                                              NoSepString := true ),
                                         rec( Conditions := "IsSplitEpimorphism",
                                              PrintString := "split epi",
-                                             Adjective := true ) ] ) );
+                                             Adjective := true,
+                                              NoSepString := true ) ] ) );
     
     AddRelationToGraph( print_graph,
                         rec( Source := [ rec( Conditions := "IsOne",
@@ -357,7 +370,8 @@ InstallGlobalFunction( CAP_INTERNAL_CREATE_MORPHISM_PRINT,
                                               Adjective := true ) ],
                              Range := [ rec( Conditions := "IsAutomorphism",
                                              PrintString := "auto",
-                                             Adjective := true ),
+                                             Adjective := true,
+                                             NoSepString := true ),
                                         "IsIsomorphism" ] ) );
     
     AddRelationToGraph( print_graph,
@@ -365,19 +379,22 @@ InstallGlobalFunction( CAP_INTERNAL_CREATE_MORPHISM_PRINT,
                              Range := [ "IsIsomorphism",
                                         rec( Conditions := "IsEndomorphism",
                                              PrintString := "endo",
-                                             Adjective := true ) ] ) );
+                                             Adjective := true,
+                                             NoSepString := true) ] ) );
     
     AddRelationToGraph( print_graph,
                         rec( Source := [ "IsSplitMonomorphism" ],
                              Range := [ rec( Conditions := "IsMonomorphism",
                                              PrintString := "mono",
-                                             Adjective := true ) ] ) );
+                                             Adjective := true,
+                                             NoSepString := true ) ] ) );
     
     AddRelationToGraph( print_graph,
                         rec( Source := [ "IsSplitEpimorphism" ],
                              Range := [ rec( Conditions := "IsEpimorphism",
                                              PrintString := "epi",
-                                             Adjective := true ) ] ) );
+                                             Adjective := true,
+                                             NoSepString := true ) ] ) );
     
     AddNodeToGraph( print_graph,
                     rec( Conditions := "IsZero",

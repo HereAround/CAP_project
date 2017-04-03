@@ -9,53 +9,12 @@
 ##
 #############################################################################
 
-##
-InstallMethod( AddToGenesis,
-               [ IsCapCategoryCell, IsString, IsObject ], 
-
-  function( cell, genesis_entry_name, genesis_entry )
-    
-    if HasGenesis( cell ) then
-      
-      CAP_MergeRecords( Genesis( cell ), rec( (genesis_entry_name) := genesis_entry ) );
-      
-   else
-      
-      SetGenesis( cell, rec( (genesis_entry_name) := genesis_entry ) );
-      
-   fi;
-   
-end );
 
 ####################################
 ##
 ## Kernel
 ##
 ####################################
-
-####################################
-## Convenience methods
-####################################
-
-##
-InstallMethod( KernelLift,
-               [ IsCapCategoryObject, IsCapCategoryMorphism ],
-               
-  function( kernel, test_morphism )
-  
-    return KernelLift( Genesis( kernel )!.KernelObjectDiagram, test_morphism );
-  
-end );
-
-##
-InstallMethod( KernelEmbedding,
-               [ IsCapCategoryObject and WasCreatedAsKernelObject ],
-               
-  function( kernel )
-  
-    return KernelEmbedding( Genesis( kernel )!.KernelObjectDiagram );
-    
-end );
 
 ####################################
 ## Functorial operations
@@ -67,7 +26,20 @@ InstallMethod( KernelObjectFunctorial,
                                   
   function( morphism_of_morphisms )
     
-    return KernelObjectFunctorial( morphism_of_morphisms[1], morphism_of_morphisms[2][1], morphism_of_morphisms[3] );
+    return KernelObjectFunctorialWithGivenKernelObjects(
+             KernelObject( morphism_of_morphisms[1] ),
+             morphism_of_morphisms[1], morphism_of_morphisms[2][1], morphism_of_morphisms[3],
+             KernelObject( morphism_of_morphisms[3] ) );
+    
+end );
+
+##
+InstallMethod( KernelObjectFunctorial,
+               [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+                                  
+  function( alpha, mu, alpha_prime )
+    
+    return KernelObjectFunctorialWithGivenKernelObjects( KernelObject( alpha ), alpha, mu, alpha_prime, KernelObject( alpha_prime ) );
     
 end );
 
@@ -78,40 +50,29 @@ end );
 ####################################
 
 ####################################
-## Convenience methods
-####################################
-
-##
-InstallMethod( CokernelColift,
-               [ IsCapCategoryObject, IsCapCategoryMorphism ],
-               
-  function( cokernel, test_morphism )
-  
-    return CokernelColift( Genesis( cokernel )!.CokernelObjectDiagram, test_morphism );
-  
-end );
-
-##
-InstallMethod( CokernelProjection,
-               [ IsCapCategoryObject and WasCreatedAsCokernelObject ],
-               
-  function( cokernel )
-    
-    return CokernelProjection( Genesis( cokernel )!.CokernelObjectDiagram );
-    
-end );
-
-####################################
 ## Functorial operations
 ####################################
 
 ##
 InstallMethod( CokernelFunctorial,
                [ IsList ],
-                                  
+               
   function( morphism_of_morphisms )
     
-    return CokernelFunctorial( morphism_of_morphisms[1], morphism_of_morphisms[2][2], morphism_of_morphisms[3] );
+    return CokernelFunctorialWithGivenCokernelObjects( 
+           CokernelObject( morphism_of_morphisms[1] ),
+           morphism_of_morphisms[1], morphism_of_morphisms[2][2], morphism_of_morphisms[3],
+           CokernelObject( morphism_of_morphisms[3] ) );
+    
+end );
+
+##
+InstallMethod( CokernelFunctorial,
+               [ IsCapCategoryMorphism, IsCapCategoryMorphism, IsCapCategoryMorphism ],
+               
+  function( alpha, nu, alpha_prime )
+    
+    return CokernelFunctorialWithGivenCokernelObjects( CokernelObject( alpha ), alpha, nu, alpha_prime, CokernelObject( alpha_prime ) );
     
 end );
 
@@ -120,71 +81,6 @@ end );
 ## Coproduct and Pushout
 ##
 ####################################
-
-####################################
-## Convenience methods
-####################################
-
-##
-InstallGlobalFunction( InjectionOfCofactor,
-               
-  function( object_product_list, injection_number )
-    local number_of_objects;
-    
-    ## this might only happen when
-    ## the function which was added to construct the coproduct/pushout does not return
-    ## a new object but some part of its input
-    if WasCreatedAsCoproduct( object_product_list ) and WasCreatedAsPushout( object_product_list ) then
-      
-      return Error( "this object is a coproduct and a pushout concurrently, thus the injection is ambiguous" );
-        
-    fi;
-    
-    if WasCreatedAsCoproduct( object_product_list ) and WasCreatedAsDirectSum( object_product_list ) then
-      
-      return Error( "this object is a coproduct and a direct sum concurrently, thus the injection is ambiguous" );
-        
-    fi;
-    
-    if WasCreatedAsPushout( object_product_list ) and WasCreatedAsDirectSum( object_product_list ) then
-      
-      return Error( "this object is a pushout and a direct sum concurrently, thus the injection is ambiguous" );
-        
-    fi;
-    
-    ## convenience: first argument was created as a direct sum
-    if WasCreatedAsDirectSum( object_product_list ) then
-      
-      return InjectionOfCofactorOfDirectSum( Genesis( object_product_list )!.DirectSumDiagram, injection_number );
-      
-    fi;
-    
-    ## convenience: first argument was created as a coproduct
-    if WasCreatedAsCoproduct( object_product_list ) then
-      
-      return InjectionOfCofactorOfCoproduct( Genesis( object_product_list )!.CoproductDiagram, injection_number );
-    
-    fi;
-    
-    ## convenience: first argument was created as a pushout
-    if WasCreatedAsPushout( object_product_list ) then
-      
-      return InjectionOfCofactorOfPushout( Genesis( object_product_list )!.PushoutDiagram, injection_number );
-      
-    fi;
-    
-    ## first argument is a product object
-    if IsCapCategoryObject( object_product_list[1] ) then
-      
-      return InjectionOfCofactorOfCoproductOp( object_product_list, injection_number, object_product_list[1] );
-    
-    else ## IsCapCategoryMorphism( object_product_list[1] ) = true
-      
-      return InjectionOfCofactorOfPushoutOp( object_product_list, injection_number, object_product_list[1] );
-      
-    fi;
-    
-end );
 
 ####################################
 ##
@@ -270,13 +166,16 @@ end );
 ##
 InstallMethod( CoproductFunctorial,
                [ IsList ],
-                                  
+               
   function( morphism_list )
     
-    return CoproductFunctorialOp( morphism_list, morphism_list[1] );
+    return CoproductFunctorialWithGivenCoproducts(
+             Coproduct( List( morphism_list, Source ) ),
+             morphism_list,
+             Coproduct( List( morphism_list, Range ) )
+           );
     
 end );
-
 
 ####################################
 ##
@@ -287,67 +186,6 @@ end );
 ####################################
 ## Convenience methods
 ####################################
-
-##
-InstallGlobalFunction( ProjectionInFactor,
-               
-  function( object_product_list, projection_number )
-    local number_of_objects;
-    
-    ## this might only happen when
-    ## the function which was added to construct the product/ pullback does not return
-    ## a new object but some part of its input
-    if WasCreatedAsDirectProduct( object_product_list ) and WasCreatedAsFiberProduct( object_product_list ) then
-        
-        return Error( "this object is a product and a pullback concurrently, thus the projection is ambiguous" );
-        
-    fi;
-    
-    if WasCreatedAsDirectSum( object_product_list ) and WasCreatedAsFiberProduct( object_product_list ) then
-        
-        return Error( "this object is a direct sum and a pullback concurrently, thus the projection is ambiguous" );
-        
-    fi;
-    
-    if WasCreatedAsDirectProduct( object_product_list ) and WasCreatedAsDirectSum( object_product_list ) then
-        
-        return Error( "this object is a product and a direct sum concurrently, thus the projection is ambiguous" );
-        
-    fi;
-    
-    ## convenience: first argument was created as direct sum
-    if WasCreatedAsDirectSum( object_product_list ) then
-      
-      return ProjectionInFactorOfDirectSum( Genesis( object_product_list )!.DirectSumDiagram, projection_number );
-      
-    fi;
-    
-    ## convenience: first argument was created as direct product
-    if WasCreatedAsDirectProduct( object_product_list ) then
-      
-      return ProjectionInFactorOfDirectProduct( Genesis( object_product_list )!.DirectProductDiagram, projection_number );
-      
-    fi;
-    
-    ## convenience: first argument was created as a pullback
-    if WasCreatedAsFiberProduct( object_product_list ) then
-      
-      return ProjectionInFactorOfFiberProduct( Genesis( object_product_list )!.FiberProductDiagram, projection_number );
-      
-    fi;
-    
-    ## assumption: first argument is a product object
-    if IsCapCategoryObject( object_product_list[1] )  then 
-      
-      return ProjectionInFactorOfDirectProductOp( object_product_list, projection_number, object_product_list[1] );
-      
-    else # IsCapCategoryMorphism( object_product_list[1] ) = true
-      
-      return ProjectionInFactorOfFiberProductOp( object_product_list, projection_number, object_product_list[1] );
-      
-    fi;
-  
-end );
 
 
 ####################################
@@ -404,10 +242,13 @@ end );
 ##
 InstallMethod( DirectProductFunctorial,
                [ IsList ],
-                                  
+                         
   function( morphism_list )
     
-    return DirectProductFunctorialOp( morphism_list, morphism_list[1] );
+    return DirectProductFunctorialWithGivenDirectProducts(
+             DirectProduct( List( morphism_list, Source ) ),
+             morphism_list,
+             DirectProduct( List( morphism_list, Range ) ) );
     
 end );
 
@@ -532,23 +373,25 @@ InstallMethod( IsomorphismFromDirectSumToCoproduct,
 end );
 
 ####################################
-## Add methods
-####################################
-
-
-####################################
 ## Functorial operations
 ####################################
 
 ##
 InstallMethod( DirectSumFunctorial,
                [ IsList ],
-                                  
-  function( morphism_list )
+               
+  function( diagram )
     
-    return DirectSumFunctorialOp( morphism_list, morphism_list[1] );
+    return DirectSumFunctorialWithGivenDirectSums(
+             DirectSum( List( diagram, Source ) ), diagram, DirectSum( List( diagram, Range ) )
+           );
     
 end );
+
+####################################
+## Add methods
+####################################
+
 
 ####################################
 ## Categorical methods
@@ -729,7 +572,7 @@ end );
 InstallGlobalFunction( UniversalMorphismIntoFiberProduct,
 
   function( arg )
-    local diagram, pullback_or_diagram, source;
+    local diagram, source;
     
     if Length( arg ) = 2
        and IsList( arg[1] )
@@ -739,19 +582,11 @@ InstallGlobalFunction( UniversalMorphismIntoFiberProduct,
        
     fi;
     
-    pullback_or_diagram := arg[ 1 ];
+    diagram := arg[ 1 ];
     
     source := arg{[ 2 .. Length( arg ) ]};
     
-    if WasCreatedAsFiberProduct( pullback_or_diagram ) then
-    
-      diagram := Genesis( pullback_or_diagram )!.FiberProductDiagram;
-    
-      return UniversalMorphismIntoFiberProductOp( diagram, source, diagram[1] );
-    
-    fi;
-    
-    return UniversalMorphismIntoFiberProductOp( pullback_or_diagram, source, pullback_or_diagram[1] );
+    return UniversalMorphismIntoFiberProductOp( diagram, source, diagram[1] );
     
 end );
 
@@ -825,7 +660,11 @@ InstallMethod( FiberProductFunctorial,
                
   function( morphism_of_morphisms )
       
-      return FiberProductFunctorialOp( morphism_of_morphisms, morphism_of_morphisms[1][1] );
+      return FiberProductFunctorialWithGivenFiberProducts(
+               FiberProduct( List( morphism_of_morphisms, elem -> elem[1] ) ),
+               morphism_of_morphisms,
+               FiberProduct( List( morphism_of_morphisms, elem -> elem[3] ) )
+             );
       
 end );
 
@@ -873,7 +712,7 @@ end );
 InstallGlobalFunction( UniversalMorphismFromPushout,
 
   function( arg )
-    local diagram, pushout_or_diagram, sink;
+    local diagram, sink;
     
     if Length( arg ) = 2
        and IsList( arg[1] )
@@ -883,19 +722,11 @@ InstallGlobalFunction( UniversalMorphismFromPushout,
        
     fi;
     
-    pushout_or_diagram := arg[ 1 ];
+    diagram := arg[ 1 ];
     
     sink := arg{[ 2 .. Length( arg ) ]};
     
-    if WasCreatedAsPushout( pushout_or_diagram ) then
-    
-      diagram := Genesis( pushout_or_diagram )!.PushoutDiagram;
-    
-      return UniversalMorphismFromPushoutOp( diagram, sink, diagram[1] );
-    
-    fi;
-    
-    return UniversalMorphismFromPushoutOp( pushout_or_diagram, sink, pushout_or_diagram[1] );
+    return UniversalMorphismFromPushoutOp( diagram, sink, diagram[1] );
     
 end );
 
@@ -930,39 +761,14 @@ InstallMethod( PushoutFunctorial,
                
   function( morphism_of_morphisms )
       
-      return PushoutFunctorialOp( morphism_of_morphisms, morphism_of_morphisms[1][1] );
+      return PushoutFunctorialWithGivenPushouts( 
+               Pushout( List( morphism_of_morphisms, elem -> elem[1] ) ),
+               morphism_of_morphisms,
+               Pushout( List( morphism_of_morphisms, elem -> elem[3] ) )
+             );
       
 end );
 
-####################################
-##
-## Image
-##
-####################################
-
-####################################
-## Convenience methods
-####################################
-
-##
-InstallMethod( ImageEmbedding,
-               [ IsCapCategoryObject and WasCreatedAsImageObject ],
-               
-  function( image )
-    
-    return ImageEmbedding( Genesis( image )!.ImageDiagram );
-    
-end );
-
-##
-InstallMethod( CoastrictionToImage,
-               [ IsCapCategoryObject and WasCreatedAsImageObject ],
-               
-  function( image )
-    
-    return CoastrictionToImage( Genesis( image )!.ImageDiagram );
-    
-end );
 
 ####################################
 ##

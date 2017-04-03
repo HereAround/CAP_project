@@ -228,24 +228,6 @@ UniversalMorphismFromZeroObject := rec(
   return_type := "morphism",
   dual_operation := "UniversalMorphismIntoZeroObject",
   
-  ## this redirect and this post function have to be given manually, because
-  ## they call the setter and getter functions of CapCategory( diagram ), and 
-  ## not of diagram.
-  redirect_function := function( test_sink )
-    local category;
-    
-    category := CapCategory( test_sink );
-    
-    if HasZeroObject( category ) then
-      
-      return [ true, UniversalMorphismFromZeroObjectWithGivenZeroObject( test_sink, ZeroObject( category ) ) ];
-      
-    fi;
-    
-    return [ false ];
-    
-  end,
-  
   post_function := function( test_sink, universal_morphism )
     local category, zero_object;
     
@@ -254,8 +236,6 @@ UniversalMorphismFromZeroObject := rec(
     zero_object := Source( universal_morphism );
     
     SetZeroObject( category, zero_object );
-    
-    SetFilterObj( zero_object, WasCreatedAsZeroObject );
     
   end ),
   
@@ -277,24 +257,6 @@ UniversalMorphismIntoZeroObject := rec(
   return_type := "morphism",
   dual_operation := "UniversalMorphismFromZeroObject",
   
-  ## this redirect and this post function have to be given manually, because
-  ## they call the setter and getter functions of CapCategory( diagram ), and 
-  ## not of diagram.
-  redirect_function := function( test_source )
-    local category;
-    
-    category := CapCategory( test_source );
-        
-    if HasZeroObject( category ) then
-    
-      return [ true, UniversalMorphismIntoZeroObjectWithGivenZeroObject( test_source, ZeroObject( category ) ) ];
-      
-    fi;
-    
-    return [ false ];
-    
-  end,
-
   post_function := function( test_source, universal_morphism )
     local category, zero_object;
     
@@ -303,8 +265,6 @@ UniversalMorphismIntoZeroObject := rec(
     zero_object := Range( universal_morphism );
     
     SetZeroObject( category, zero_object );
-    
-    SetFilterObj( zero_object, WasCreatedAsTerminalObject );
     
   end ),
 
@@ -324,7 +284,8 @@ IsomorphismFromZeroObjectToInitialObject := rec(
   argument_list := [ 1 ],
   cache_name := "IsomorphismFromZeroObjectToInitialObject",
   return_type := "morphism",
-  dual_operation := "IsomorphismFromTerminalObjectToZeroObject" ),
+  dual_operation := "IsomorphismFromTerminalObjectToZeroObject",
+  no_with_given := true ),
 
 IsomorphismFromInitialObjectToZeroObject := rec(
   installation_name := "IsomorphismFromInitialObjectToZeroObject",
@@ -333,7 +294,8 @@ IsomorphismFromInitialObjectToZeroObject := rec(
   argument_list := [ 1 ],
   cache_name := "IsomorphismFromInitialObjectToZeroObject",
   return_type := "morphism",
-  dual_operation := "IsomorphismFromZeroObjectToTerminalObject" ),
+  dual_operation := "IsomorphismFromZeroObjectToTerminalObject",
+  no_with_given := true ),
 
 IsomorphismFromZeroObjectToTerminalObject := rec(
   installation_name := "IsomorphismFromZeroObjectToTerminalObject",
@@ -342,7 +304,8 @@ IsomorphismFromZeroObjectToTerminalObject := rec(
   argument_list := [ 1 ],
   cache_name := "IsomorphismFromZeroObjectToTerminalObject",
   return_type := "morphism",
-  dual_operation := "IsomorphismFromInitialObjectToZeroObject" ),
+  dual_operation := "IsomorphismFromInitialObjectToZeroObject",
+  no_with_given := true ),
 
 IsomorphismFromTerminalObjectToZeroObject := rec(
   installation_name := "IsomorphismFromTerminalObjectToZeroObject",
@@ -351,7 +314,8 @@ IsomorphismFromTerminalObjectToZeroObject := rec(
   argument_list := [ 1 ],
   cache_name := "IsomorphismFromTerminalObjectToZeroObject",
   return_type := "morphism",
-  dual_operation := "IsomorphismFromZeroObjectToInitialObject" ),
+  dual_operation := "IsomorphismFromZeroObjectToInitialObject",
+  no_with_given := true ),
 
 ZeroMorphism := rec(
   installation_name := "ZeroMorphism",
@@ -583,24 +547,6 @@ UniversalMorphismIntoTerminalObject := rec(
   return_type := "morphism",
   dual_operation := "UniversalMorphismFromInitialObject",
   
-  ## this redirect and this post function have to be given manually, because
-  ## they call the setter and getter functions of CapCategory( diagram ), and 
-  ## not of diagram.
-  redirect_function := function( test_source )
-    local category;
-    
-    category := CapCategory( test_source );
-        
-    if HasTerminalObject( category ) then
-    
-      return [ true, UniversalMorphismIntoTerminalObjectWithGivenTerminalObject( test_source, TerminalObject( category ) ) ];
-      
-    fi;
-    
-    return [ false ];
-    
-  end,
-
   post_function := function( test_source, universal_morphism )
     local category, terminal_object;
     
@@ -609,8 +555,6 @@ UniversalMorphismIntoTerminalObject := rec(
     terminal_object := Range( universal_morphism );
     
     SetTerminalObject( category, terminal_object );
-    
-    SetFilterObj( terminal_object, WasCreatedAsTerminalObject );
     
   end ),
 
@@ -641,24 +585,6 @@ UniversalMorphismFromInitialObject := rec(
   return_type := "morphism",
   dual_operation := "UniversalMorphismIntoTerminalObject",
   
-  ## this redirect and this post function have to be given manually, because
-  ## they call the setter and getter functions of CapCategory( diagram ), and 
-  ## not of diagram.
-  redirect_function := function( test_sink )
-    local category;
-    
-    category := CapCategory( test_sink );
-    
-    if HasInitialObject( category ) then
-      
-      return [ true, UniversalMorphismFromInitialObjectWithGivenInitialObject( test_sink, InitialObject( category ) ) ];
-      
-    fi;
-    
-    return [ false ];
-    
-  end,
-  
   post_function := function( test_sink, universal_morphism )
     local category, initial_object;
     
@@ -667,8 +593,6 @@ UniversalMorphismFromInitialObject := rec(
     initial_object := Source( universal_morphism );
     
     SetInitialObject( category, initial_object );
-    
-    SetFilterObj( initial_object, WasCreatedAsInitialObject );
     
   end ),
 
@@ -2076,21 +2000,21 @@ UniversalMorphismFromImageWithGivenImageObject := rec(
   end,
   return_type := "morphism" ),
 
-KernelObjectFunctorial := rec(
-  installation_name := "KernelObjectFunctorial",
-  filter_list := [ "morphism", "morphism", "morphism" ],
-  io_type := [ [ "alpha", "mu", "alphap" ], [ "K", "Kp" ] ],
-  cache_name := "KernelObjectFunctorial",
+KernelObjectFunctorialWithGivenKernelObjects := rec(
+  installation_name := "KernelObjectFunctorialWithGivenKernelObjects",
+  filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
+  io_type := [ [ "K", "alpha", "mu", "alphap", "Kp" ], [ "K", "Kp" ] ],
+  cache_name := "KernelObjectFunctorialWithGivenKernelObjects",
   return_type := "morphism",
-  dual_operation := "CokernelFunctorial" ),
+  dual_operation := "CokernelFunctorialWithGivenCokernelObjects" ),
 
-CokernelFunctorial := rec(
-  installation_name := "CokernelFunctorial",
-  filter_list := [ "morphism", "morphism", "morphism" ],
-  io_type := [ [ "alpha", "nu", "alphap" ], [ "C", "Cp" ] ],
-  cache_name := "CokernelFunctorial",
+CokernelFunctorialWithGivenCokernelObjects := rec(
+  installation_name := "CokernelFunctorialWithGivenCokernelObjects",
+  filter_list := [ "object", "morphism", "morphism", "morphism", "object" ],
+  io_type := [ [ "C", "alpha", "nu", "alphap", "Cp" ], [ "C", "Cp" ] ],
+  cache_name := "CokernelFunctorialWithGivenCokernelObjects",
   return_type := "morphism",
-  dual_operation := "KernelObjectFunctorial" ),
+  dual_operation := "KernelObjectFunctorialWithGivenKernelObjects" ),
 
 TerminalObjectFunctorial := rec(
   installation_name := "TerminalObjectFunctorial",
@@ -2098,7 +2022,8 @@ TerminalObjectFunctorial := rec(
   ## TODO: io_type?
   cache_name := "TerminalObjectFunctorial",
   return_type := "morphism",
-  dual_operation := "InitialObjectFunctorial" ),
+  dual_operation := "InitialObjectFunctorial",
+  no_with_given := true ),
 
 InitialObjectFunctorial := rec(
   installation_name := "InitialObjectFunctorial",
@@ -2106,51 +2031,47 @@ InitialObjectFunctorial := rec(
   ## TODO: io_type?
   cache_name := "InitialObjectFunctorial",
   return_type := "morphism",
-  dual_operation := "TerminalObjectFunctorial" ),
+  dual_operation := "TerminalObjectFunctorial",
+  no_with_given := true ),
 
-DirectProductFunctorial := rec(
-  installation_name := "DirectProductFunctorialOp",
-  filter_list := [ IsList, "morphism" ],
-  io_type := [ [ "L" ], [ "P", "Pp" ] ],
-  argument_list := [ 1 ],
-  cache_name := "DirectProductFunctorialOp",
+DirectProductFunctorialWithGivenDirectProducts := rec(
+  installation_name := "DirectProductFunctorialWithGivenDirectProducts",
+  filter_list := [ "object", IsList, "object" ],
+  io_type := [ [ "P", "L", "Pp" ], [ "P", "Pp" ] ],
+  cache_name := "DirectProductFunctorialWithGivenDirectProducts",
   return_type := "morphism",
-  dual_operation := "CoproductFunctorial" ),
+  dual_operation := "CoproductFunctorialWithGivenCoproducts" ),
 
-CoproductFunctorial := rec(
-  installation_name := "CoproductFunctorialOp",
-  argument_list := [ 1 ],
-  filter_list := [ IsList, "morphism" ],
-  io_type := [ [ "L" ], [ "I", "Ip" ] ],
-  cache_name := "CoproductFunctorialOp",
+CoproductFunctorialWithGivenCoproducts := rec(
+  installation_name := "CoproductFunctorialWithGivenCoproducts",
+  filter_list := [ "object", IsList, "object" ],
+  io_type := [ [ "I", "L", "Ip" ], [ "I", "Ip" ] ],
+  cache_name := "CoproductFunctorialWithGivenCoproducts",
   return_type := "morphism",
-  dual_operation := "DirectProductFunctorial" ),
+  dual_operation := "DirectProductFunctorialWithGivenDirectProducts" ),
 
-DirectSumFunctorial := rec(
-  installation_name := "DirectSumFunctorialOp",
-  argument_list := [ 1 ],
-  filter_list := [ IsList, "morphism" ],
-  io_type := [ [ "L" ], [ "S", "Sp" ] ],
-  cache_name := "DirectSumFunctorialOp",
+DirectSumFunctorialWithGivenDirectSums := rec(
+  installation_name := "DirectSumFunctorialWithGivenDirectSums",
+  filter_list := [ "object", IsList, "object" ],
+  io_type := [ [ "d1", "L", "d2" ], [ "d1", "d2" ] ],
+  cache_name := "DirectSumFunctorialWithGivenDirectSums",
   return_type := "morphism" ),
 
-FiberProductFunctorial := rec(
-  installation_name := "FiberProductFunctorialOp",
-  argument_list := [ 1 ],
-  filter_list := [ IsList, "morphism" ],
-  io_type := [ [ "L" ], [ "P", "Pp" ] ],
-  cache_name := "FiberProductFunctorialOp",
+FiberProductFunctorialWithGivenFiberProducts := rec(
+  installation_name := "FiberProductFunctorialWithGivenFiberProducts",
+  filter_list := [ "object", IsList, "object" ],
+  io_type := [ [ "P", "L", "Pp" ], [ "P", "Pp" ] ],
+  cache_name := "FiberProductFunctorialWithGivenFiberProducts",
   return_type := "morphism",
-  dual_operation := "PushoutFunctorial" ),
+  dual_operation := "PushoutFunctorialWithGivenPushouts" ),
 
-PushoutFunctorial := rec(
-  installation_name := "PushoutFunctorialOp",
-  argument_list := [ 1 ],
-  filter_list := [ IsList, "morphism" ],
-  io_type := [ [ "L" ], [ "I", "Ip" ] ],
-  cache_name := "PushoutFunctorialOp",
+PushoutFunctorialWithGivenPushouts := rec(
+  installation_name := "PushoutFunctorialWithGivenPushouts",
+  filter_list := [ "object", IsList, "object" ],
+  io_type := [ [ "I", "L", "Ip" ], [ "I", "Ip" ] ],
+  cache_name := "PushoutFunctorialWithGivenPushouts",
   return_type := "morphism",
-  dual_operation := "FiberProductFunctorial" ),
+  dual_operation := "FiberProductFunctorialWithGivenFiberProducts" ),
 
 HorizontalPreCompose := rec(
   installation_name := "HorizontalPreCompose",
@@ -2263,7 +2184,8 @@ DirectSumDiagonalDifference := rec(
   io_type := [ [ "D" ], [ "S", "D_1_range" ] ],
   cache_name := "DirectSumDiagonalDifferenceOp",
   return_type := "morphism",
-  dual_operation := "DirectSumCodiagonalDifference" ),
+  dual_operation := "DirectSumCodiagonalDifference",
+  no_with_given := true ),
   
 FiberProductEmbeddingInDirectSum := rec(
   installation_name := "FiberProductEmbeddingInDirectSumOp",
@@ -2272,7 +2194,8 @@ FiberProductEmbeddingInDirectSum := rec(
   io_type := [ [ "D" ], [ "P", "S" ] ],
   cache_name := "FiberProductEmbeddingInDirectSumOp",
   return_type := "morphism",
-  dual_operation := "DirectSumProjectionInPushout" ),
+  dual_operation := "DirectSumProjectionInPushout",
+  no_with_given := true ),
   
 IsomorphismFromFiberProductToKernelOfDiagonalDifference := rec(
   installation_name := "IsomorphismFromFiberProductToKernelOfDiagonalDifferenceOp",
@@ -2281,7 +2204,8 @@ IsomorphismFromFiberProductToKernelOfDiagonalDifference := rec(
   argument_list := [ 1 ],
   cache_name := "IsomorphismFromFiberProductToKernelOfDiagonalDifferenceOp",
   return_type := "morphism",
-  dual_operation := "IsomorphismFromCokernelOfDiagonalDifferenceToPushout" ),
+  dual_operation := "IsomorphismFromCokernelOfDiagonalDifferenceToPushout",
+  no_with_given := true ),
   
 IsomorphismFromKernelOfDiagonalDifferenceToFiberProduct := rec(
   installation_name := "IsomorphismFromKernelOfDiagonalDifferenceToFiberProductOp",
@@ -2290,7 +2214,8 @@ IsomorphismFromKernelOfDiagonalDifferenceToFiberProduct := rec(
   argument_list := [ 1 ],
   cache_name := "IsomorphismFromKernelOfDiagonalDifferenceToFiberProductOp",
   return_type := "morphism",
-  dual_operation := "IsomorphismFromPushoutToCokernelOfDiagonalDifference" ),
+  dual_operation := "IsomorphismFromPushoutToCokernelOfDiagonalDifference",
+  no_with_given := true ),
 
 IsomorphismFromPushoutToCokernelOfDiagonalDifference := rec(
   installation_name := "IsomorphismFromPushoutToCokernelOfDiagonalDifferenceOp",
@@ -2299,7 +2224,8 @@ IsomorphismFromPushoutToCokernelOfDiagonalDifference := rec(
   argument_list := [ 1 ],
   cache_name := "IsomorphismFromPushoutToCokernelOfDiagonalDifferenceOp",
   return_type := "morphism",
-  dual_operation := "IsomorphismFromKernelOfDiagonalDifferenceToFiberProduct" ),
+  dual_operation := "IsomorphismFromKernelOfDiagonalDifferenceToFiberProduct",
+  no_with_given := true ),
 
 IsomorphismFromCokernelOfDiagonalDifferenceToPushout := rec(
   installation_name := "IsomorphismFromCokernelOfDiagonalDifferenceToPushoutOp",
@@ -2308,35 +2234,40 @@ IsomorphismFromCokernelOfDiagonalDifferenceToPushout := rec(
   argument_list := [ 1 ],
   cache_name := "IsomorphismFromCokernelOfDiagonalDifferenceToPushoutOp",
   return_type := "morphism",
-  dual_operation := "IsomorphismFromFiberProductToKernelOfDiagonalDifference" ),
+  dual_operation := "IsomorphismFromFiberProductToKernelOfDiagonalDifference",
+  no_with_given := true ),
 
 IsomorphismFromImageObjectToKernelOfCokernel := rec(
   installation_name := "IsomorphismFromImageObjectToKernelOfCokernel",
   filter_list := [ "morphism" ],
   io_type := [ [ "alpha" ], [ "I", "K" ] ],
   cache_name := "IsomorphismFromImageObjectToKernelOfCokernel",
-  return_type := "morphism" ),
+  return_type := "morphism",
+  no_with_given := true ),
 
 IsomorphismFromKernelOfCokernelToImageObject := rec(
   installation_name := "IsomorphismFromKernelOfCokernelToImageObject",
   filter_list := [ "morphism" ],
   io_type := [ [ "alpha" ], [ "K", "I" ] ],
   cache_name := "IsomorphismFromKernelOfCokernelToImageObject",
-  return_type := "morphism" ),
+  return_type := "morphism",
+  no_with_given := true ),
 
 IsomorphismFromCoimageToCokernelOfKernel := rec(
   installation_name := "IsomorphismFromCoimageToCokernelOfKernel",
   filter_list := [ "morphism" ],
   io_type := [ [ "alpha" ], [ "CI", "C" ] ],
   cache_name := "IsomorphismFromCoimageToCokernelOfKernel",
-  return_type := "morphism" ),
+  return_type := "morphism",
+  no_with_given := true ),
 
 IsomorphismFromCokernelOfKernelToCoimage := rec(
   installation_name := "IsomorphismFromCokernelOfKernelToCoimage",
   filter_list := [ "morphism" ],
   io_type := [ [ "alpha" ], [ "I", "CI" ] ],
   cache_name := "IsomorphismFromCokernelOfKernelToCoimage",
-  return_type := "morphism" ),
+  return_type := "morphism",
+  no_with_given := true ),
 
 IsomorphismFromDirectSumToDirectProduct := rec(
   installation_name := "IsomorphismFromDirectSumToDirectProductOp",
@@ -2345,7 +2276,8 @@ IsomorphismFromDirectSumToDirectProduct := rec(
   argument_list := [ 1 ],
   cache_name := "IsomorphismFromDirectSumToDirectProductOp",
   return_type := "morphism",
-  dual_operation := "IsomorphismFromCoproductToDirectSum" ),
+  dual_operation := "IsomorphismFromCoproductToDirectSum",
+  no_with_given := true ),
 
 IsomorphismFromDirectSumToCoproduct := rec(
   installation_name := "IsomorphismFromDirectSumToCoproductOp",
@@ -2354,7 +2286,8 @@ IsomorphismFromDirectSumToCoproduct := rec(
   argument_list := [ 1 ],
   cache_name := "IsomorphismFromDirectSumToCoproductOp",
   return_type := "morphism",
-  dual_operation := "IsomorphismFromDirectProductToDirectSum" ),
+  dual_operation := "IsomorphismFromDirectProductToDirectSum",
+  no_with_given := true ),
 
 IsomorphismFromDirectProductToDirectSum := rec(
   installation_name := "IsomorphismFromDirectProductToDirectSumOp",
@@ -2363,7 +2296,8 @@ IsomorphismFromDirectProductToDirectSum := rec(
   argument_list := [ 1 ],
   cache_name := "IsomorphismFromDirectProductToDirectSumOp",
   return_type := "morphism",
-  dual_operation := "IsomorphismFromDirectSumToCoproduct" ),
+  dual_operation := "IsomorphismFromDirectSumToCoproduct",
+  no_with_given := true ),
 
 IsomorphismFromCoproductToDirectSum := rec(
   installation_name := "IsomorphismFromCoproductToDirectSumOp",
@@ -2372,7 +2306,8 @@ IsomorphismFromCoproductToDirectSum := rec(
   argument_list := [ 1 ],
   cache_name := "IsomorphismFromCoproductToDirectSumOp",
   return_type := "morphism",
-  dual_operation := "IsomorphismFromDirectSumToCoproduct" ),
+  dual_operation := "IsomorphismFromDirectSumToCoproduct",
+  no_with_given := true ),
 
 DirectSumCodiagonalDifference := rec(
   installation_name := "DirectSumCodiagonalDifferenceOp",
@@ -2381,7 +2316,8 @@ DirectSumCodiagonalDifference := rec(
   filter_list := [ IsList, "morphism" ],
   cache_name := "DirectSumCodiagonalDifferenceOp",
   return_type := "morphism",
-  dual_operation := "DirectSumDiagonalDifference" ),
+  dual_operation := "DirectSumDiagonalDifference",
+  no_with_given := true ),
 
 DirectSumProjectionInPushout := rec(
   installation_name := "DirectSumProjectionInPushoutOp",
@@ -2390,7 +2326,8 @@ DirectSumProjectionInPushout := rec(
   argument_list := [ 1 ],
   cache_name := "DirectSumProjectionInPushoutOp",
   return_type := "morphism",
-  dual_operation := "FiberProductEmbeddingInDirectSum" ),
+  dual_operation := "FiberProductEmbeddingInDirectSum",
+  no_with_given := true ),
 
   ) );
 
