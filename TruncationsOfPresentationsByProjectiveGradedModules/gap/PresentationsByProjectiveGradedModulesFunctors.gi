@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## TruncationsOfGradedModulePresentationsForCAP package
+## TruncationsOfPresentationsByProjectiveGradedModules package
 ##
 ## Copyright 2016,  Martin Bies,       ITP Heidelberg
 ##
@@ -17,7 +17,7 @@
 ###############################################
 
 InstallMethod( Truncation,
-               [ IsGradedLeftOrRightModulePresentationForCAP, IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsGradedLeftOrRightModulePresentationForCAP, IsSemigroupForPresentationsByProjectiveGradedModules ],
   function( module_presentation, semigroup_for_CAP )
     local underlying_morphism;
 
@@ -34,7 +34,7 @@ InstallMethod( Truncation,
 end );
 
 InstallMethod( Truncation,
-               [ IsGradedLeftOrRightSubmoduleForCAP, IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsGradedLeftOrRightSubmoduleForCAP, IsSemigroupForPresentationsByProjectiveGradedModules ],
   function( submodule, semigroup_for_CAP )
     local new_presentation, embedding;
 
@@ -54,7 +54,7 @@ InstallMethod( Truncation,
 end );
 
 InstallMethod( Truncation,
-               [ IsGradedLeftOrRightModulePresentationMorphismForCAP, IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsGradedLeftOrRightModulePresentationMorphismForCAP, IsSemigroupForPresentationsByProjectiveGradedModules ],
   function( module_presentation_morphism, semigroup_for_CAP )
     local embedding, projection, underlying_morphism, underlying_morphism_source, new_source,
          underlying_morphism_range, new_range;
@@ -173,7 +173,7 @@ end );
 
 # functor to compute the truncation of left presentations
 InstallMethod( TruncationFunctorLeft,
-               [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsHomalgGradedRing, IsSemigroupForPresentationsByProjectiveGradedModules ],
   function( graded_ring, semigroup_for_CAP )
 
     return TruncationFunctorToSemigroups( graded_ring, semigroup_for_CAP, true );
@@ -182,7 +182,7 @@ end );
 
 # functor to compute the truncation of right presentations
 InstallMethod( TruncationFunctorRight,
-               [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsHomalgGradedRing, IsSemigroupForPresentationsByProjectiveGradedModules ],
 function( graded_ring, semigroup_for_CAP )
 
     return TruncationFunctorToSemigroups( graded_ring, semigroup_for_CAP, false );

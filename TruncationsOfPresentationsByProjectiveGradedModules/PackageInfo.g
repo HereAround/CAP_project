@@ -1,5 +1,5 @@
 #
-# TruncationsOfGradedModulePresentationsForCAP: Truncating a graded module presentation (for CAP) to an affine (cone) semigroup
+# TruncationsOfPresentationsByProjectiveGradedModules: Truncating a graded module presentation (for CAP) to an affine (cone) semigroup
 #
 # This file contains package meta data. For additional information on
 # the meaning and correct usage of these fields, please consult the
@@ -8,7 +8,7 @@
 #
 SetPackageInfo( rec(
 
-PackageName := "TruncationsOfGradedModulePresentationsForCAP",
+PackageName := "TruncationsOfPresentationsByProjectiveGradedModules",
 
 Subtitle := "Truncations of graded module presentations (for CAP) to affine semigroups",
 
@@ -39,7 +39,7 @@ Persons := [
 
 PackageWWWHome := "http://TODO/",
 
-ArchiveURL     := Concatenation( ~.PackageWWWHome, "TruncationsOfGradedModulePresentationsForCAP-", ~.Version ),
+ArchiveURL     := Concatenation( ~.PackageWWWHome, "TruncationsOfPresentationsByProjectiveGradedModules-", ~.Version ),
 README_URL     := Concatenation( ~.PackageWWWHome, "README" ),
 PackageInfoURL := Concatenation( ~.PackageWWWHome, "PackageInfo.g" ),
 
@@ -58,7 +58,7 @@ Status := "dev",
 AbstractHTML   :=  "",
 
 PackageDoc := rec(
-  BookName  := "TruncationsOfGradedModulePresentationsForCAP",
+  BookName  := "TruncationsOfPresentationsByProjectiveGradedModules",
   ArchiveURLSubset := ["doc"],
   HTMLStart := "doc/chap0.html",
   PDFFile   := "doc/manual.pdf",
@@ -76,7 +76,7 @@ Dependencies := rec(
                            [ "CAPCategoryOfProjectiveGradedModules", ">=2016.03.15" ],
                            [ "CAPPresentationCategory", ">=2016.03.15" ],
                            [ "ComplexesAndFilteredObjectsForCAP", ">=2015.10.20" ],
-                           [ "GradedModulePresentationsForCAP", ">=2016.03.15" ],
+                           [ "PresentationsByProjectiveGradedModules", ">=2016.03.15" ],
                            [ "4ti2Interface", ">= 2015.11.06" ],
                            [ "NormalizInterface", ">=0.9.6" ]
                            ],

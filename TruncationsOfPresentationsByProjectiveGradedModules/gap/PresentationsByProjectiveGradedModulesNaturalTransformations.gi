@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## TruncationsOfGradedModulePresentationsForCAP package
+## TruncationsOfPresentationsByProjectiveGradedModules package
 ##
 ## Copyright 2016, Martin Bies,       ITP Heidelberg
 ##
@@ -69,7 +69,7 @@ end );
 
 # natural isomorphism 1 => Standard module for left presentations
 InstallMethod( NaturalTransformationFromTruncationToIdentityForProjectiveGradedLeftModules,
-               [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsHomalgGradedRing, IsSemigroupForPresentationsByProjectiveGradedModules ],
   function( graded_ring, semigroup_for_CAP )
 
     return NaturalTransformationFromTruncationToIdentityForProjectiveGradedModules( graded_ring, 
@@ -79,7 +79,7 @@ end );
 
 # natural isomorphism 1 => Standard module for right presentations
 InstallMethod( NaturalTransformationFromTruncationToIdentityForProjectiveGradedRightModules,
-               [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsHomalgGradedRing, IsSemigroupForPresentationsByProjectiveGradedModules ],
   function( graded_ring, semigroup_for_CAP )
 
     return NaturalTransformationFromTruncationToIdentityForProjectiveGradedModules( graded_ring, 

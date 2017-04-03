@@ -1,9 +1,9 @@
 #
-# TruncationsOfGradedModulePresentationsForCAP: Truncating a graded module presentation (for CAP) to an affine (cone) semigroup
+# TruncationsOfPresentationsByProjectiveGradedModules: Truncating a graded module presentation (for CAP) to an affine (cone) semigroup
 #
 # Reading the implementation part of the package.
 
-ReadPackage( "TruncationsOfGradedModulePresentationsForCAP", "gap/SemigroupAndConeWrapper.gi" );
-ReadPackage( "TruncationsOfGradedModulePresentationsForCAP", "gap/CAPCategoryOfProjectiveGradedModulesFunctors.gi" );
-ReadPackage( "TruncationsOfGradedModulePresentationsForCAP", "gap/CAPCategoryOfProjectiveGradedModulesNaturalTransformations.gi" );
-ReadPackage( "TruncationsOfGradedModulePresentationsForCAP", "gap/GradedModulePresentationsForCAPFunctors.gi" );
+ReadPackage( "TruncationsOfPresentationsByProjectiveGradedModules", "gap/SemigroupAndConeWrapper.gi" );
+ReadPackage( "TruncationsOfPresentationsByProjectiveGradedModules", "gap/CAPCategoryOfProjectiveGradedModulesFunctors.gi" );
+ReadPackage( "TruncationsOfPresentationsByProjectiveGradedModules", "gap/PresentationsByProjectiveGradedModulesNaturalTransformations.gi" );
+ReadPackage( "TruncationsOfPresentationsByProjectiveGradedModules", "gap/PresentationsByProjectiveGradedModulesFunctors.gi" );

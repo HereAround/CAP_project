@@ -1,6 +1,6 @@
 ####################################################################################
 ##
-## TruncationsOfGradedModulePresentationsForCAP package
+## TruncationsOfPresentationsByProjectiveGradedModules package
 ##
 ##  Copyright 2016, Martin Bies,       ITP Heidelberg
 ##
@@ -17,14 +17,14 @@
 #! @Description
 #! The GAP category of lists of integer-valued lists, which encode the generators of subsemigroups of $Z^n$.
 #! @Arguments object
-DeclareCategory( "IsSemigroupForGradedModulePresentationsForCAP",
+DeclareCategory( "IsSemigroupForPresentationsByProjectiveGradedModules",
                  IsObject );
 
 #! @Description
 #! The GAP category of affine semigroups $H$ in $\mathbb{Z}^n$. That means that there is a semigroup 
 #! $G \subseteq \mathbb{Z}^n$ and $p \in \mathbb{Z}^n$ such that $H = p + G$.
 #! @Arguments object
-DeclareCategory( "IsAffineSemigroupForGradedModulePresentationsForCAP",
+DeclareCategory( "IsAffineSemigroupForPresentationsByProjectiveGradedModules",
                  IsObject );
 
 
@@ -40,22 +40,22 @@ DeclareCategory( "IsAffineSemigroupForGradedModulePresentationsForCAP",
 #! of a subsemigroup of $Z^d$. If so, we create the corresponding SemigroupGeneratorList.
 #! @Returns a SemigroupGeneratorList
 #! @Arguments L
-DeclareOperation( "SemigroupForGradedModulePresentationsForCAP",
+DeclareOperation( "SemigroupForPresentationsByProjectiveGradedModules",
                   [ IsList, IsInt ] );
-DeclareOperation( "SemigroupForGradedModulePresentationsForCAP",
+DeclareOperation( "SemigroupForPresentationsByProjectiveGradedModules",
                   [ IsList ] );
 
 #! @Description
-#! The argument is a SemigroupForGradedModulePresentationsForCAP $S$ and a point $p \in \mathbb{Z}^n$ encoded as list
+#! The argument is a SemigroupForPresentationsByProjectiveGradedModules $S$ and a point $p \in \mathbb{Z}^n$ encoded as list
 #! of integers. We then compute the affine semigroup $p + S$. Alternatively to $S$ we allow the use of either a list of
 #! generators (or a list of generators together with the embedding dimension).
 #! @Returns an AffineSemigroup
 #! @Arguments L, p
-DeclareOperation( "AffineSemigroupForGradedModulePresentationsForCAP",
-                  [ IsSemigroupForGradedModulePresentationsForCAP, IsList ] );
-DeclareOperation( "AffineSemigroupForGradedModulePresentationsForCAP",
+DeclareOperation( "AffineSemigroupForPresentationsByProjectiveGradedModules",
+                  [ IsSemigroupForPresentationsByProjectiveGradedModules, IsList ] );
+DeclareOperation( "AffineSemigroupForPresentationsByProjectiveGradedModules",
                   [ IsList, IsList ] );
-DeclareOperation( "AffineSemigroupForGradedModulePresentationsForCAP",
+DeclareOperation( "AffineSemigroupForPresentationsByProjectiveGradedModules",
                   [ IsList, IsInt, IsList ] );
 
 
@@ -67,52 +67,52 @@ DeclareOperation( "AffineSemigroupForGradedModulePresentationsForCAP",
 ############################################
 
 #! @Description
-#! The argument is a SemigroupForGradedModulePresentationsForCAP $L$. We then return the list of its generators.
+#! The argument is a SemigroupForPresentationsByProjectiveGradedModules $L$. We then return the list of its generators.
 #! @Returns a list
 #! @Arguments L
 DeclareAttribute( "GeneratorList",
-                  IsSemigroupForGradedModulePresentationsForCAP );
+                  IsSemigroupForPresentationsByProjectiveGradedModules );
 
 #! @Description
-#! The argument is a SemigroupForGradedModulePresentationsForCAP $L$. We then return the embedding dimension of this semigroup.
+#! The argument is a SemigroupForPresentationsByProjectiveGradedModules $L$. We then return the embedding dimension of this semigroup.
 #! @Returns a non-negative integer
 #! @Arguments L
 DeclareAttribute( "EmbeddingDimension",
-                  IsSemigroupForGradedModulePresentationsForCAP );
+                  IsSemigroupForPresentationsByProjectiveGradedModules );
 
 #! @Description
-#! The argument is a SemigroupForGradedModulePresentationsForCAP $L$. If the associated semigroup is a cone semigroup, 
+#! The argument is a SemigroupForPresentationsByProjectiveGradedModules $L$. If the associated semigroup is a cone semigroup, 
 #! then (during construction) an H-presentation of that cone was computed. We return the list of the corresponding
 #! H-constraints. This conversion uses Normaliz and can fail if the cone if not full-dimensional. In case that
 #! such a conversion error occured, the attribute is set to the value 'fail'.
 #! @Returns a list or fail
 #! @Arguments L
 DeclareAttribute( "ConeHPresentationList",
-                  IsSemigroupForGradedModulePresentationsForCAP );
+                  IsSemigroupForPresentationsByProjectiveGradedModules );
 
 #! @Description
-#! The argument is an AffineSemigroupForGradedModulePresentationsForCAP $S$. This one is given as $S = p + H$ for a 
+#! The argument is an AffineSemigroupForPresentationsByProjectiveGradedModules $S$. This one is given as $S = p + H$ for a 
 #! point $p \in \mathbb{Z}^n$ and a semigroup $H \subseteq \mathbb{Z}^n$. We then return the offset $p$.
 #! @Returns a list of integers
 #! @Arguments S
 DeclareAttribute( "Offset",
-                  IsAffineSemigroupForGradedModulePresentationsForCAP );
+                  IsAffineSemigroupForPresentationsByProjectiveGradedModules );
 
 #! @Description
-#! The argument is an IsAffineSemigroupForGradedModulePresentationsForCAP $S$. This one is given as $S = p + H$ for a 
+#! The argument is an IsAffineSemigroupForPresentationsByProjectiveGradedModules $S$. This one is given as $S = p + H$ for a 
 #! point $p \in \mathbb{Z}^n$ and a semigroup $H \subseteq \mathbb{Z}^n$. We then return the SemigroupGeneratorList of $H$.
 #! @Returns a SemigroupGeneratorList
 #! @Arguments S
 DeclareAttribute( "UnderlyingSemigroup",
-                  IsAffineSemigroupForGradedModulePresentationsForCAP );
+                  IsAffineSemigroupForPresentationsByProjectiveGradedModules );
 
 #! @Description
-#! The argument is an IsAffineSemigroupForGradedModulePresentationsForCAP $S$. We then return the embedding dimension
+#! The argument is an IsAffineSemigroupForPresentationsByProjectiveGradedModules $S$. We then return the embedding dimension
 #! of this affine semigroup.
 #! @Returns a non-negative integer
 #! @Arguments S
 DeclareAttribute( "EmbeddingDimension",
-                  IsAffineSemigroupForGradedModulePresentationsForCAP );
+                  IsAffineSemigroupForPresentationsByProjectiveGradedModules );
 
 
 
@@ -123,35 +123,35 @@ DeclareAttribute( "EmbeddingDimension",
 ############################################
 
 #! @Description
-#! The argument is a SemigroupForGradedModulePresentationsForCAP $L$. This property returns 'true' if this semigroup
+#! The argument is a SemigroupForPresentationsByProjectiveGradedModules $L$. This property returns 'true' if this semigroup
 #! is trivial and 'false' otherwise.
 #! @Returns true or false
 #! @Arguments L
 DeclareProperty( "IsTrivial",
-                 IsSemigroupForGradedModulePresentationsForCAP );
+                 IsSemigroupForPresentationsByProjectiveGradedModules );
 
 #! @Description
-#! The argument is a SemigroupForGradedModulePresentationsForCAP $L$. We return if this is the semigroup of a cone.
+#! The argument is a SemigroupForPresentationsByProjectiveGradedModules $L$. We return if this is the semigroup of a cone.
 #! @Returns true, false
 #! @Arguments L
 DeclareProperty( "IsSemigroupOfCone",
-                  IsSemigroupForGradedModulePresentationsForCAP );
+                  IsSemigroupForPresentationsByProjectiveGradedModules );
 
 #! @Description
-#! The argument is an AffineSemigroupForGradedModulePresentationsForCAP. This property returns 'true' if the underlying
+#! The argument is an AffineSemigroupForPresentationsByProjectiveGradedModules. This property returns 'true' if the underlying
 #! semigroup is trivial and otherwise 'false'.
 #! @Returns true or false
 #! @Arguments L
 DeclareProperty( "IsTrivial",
-                 IsAffineSemigroupForGradedModulePresentationsForCAP );
+                 IsAffineSemigroupForPresentationsByProjectiveGradedModules );
 
 #! @Description
-#! The argument is an IsAffineSemigroupForGradedModulePresentationsForCAP $H$. We return if this is an AffineConeSemigroup. If Normaliz cannot decide this 'fail'
+#! The argument is an IsAffineSemigroupForPresentationsByProjectiveGradedModules $H$. We return if this is an AffineConeSemigroup. If Normaliz cannot decide this 'fail'
 #! is returned.
 #! @Returns true, false or fail
 #! @Arguments H
 DeclareProperty( "IsAffineSemigroupOfCone",
-                  IsAffineSemigroupForGradedModulePresentationsForCAP );
+                  IsAffineSemigroupForPresentationsByProjectiveGradedModules );
 
 
 
@@ -179,17 +179,17 @@ DeclareOperation( "DecideIfIsConeSemigroupGeneratorList",
 ###############################################################################
 
 #! @Description
-#! The argument is a SemigroupForGradedModulePresentationsForCAP $S$ of $\mathbb{Z}^n$, and an integral point $p$ in this
+#! The argument is a SemigroupForPresentationsByProjectiveGradedModules $S$ of $\mathbb{Z}^n$, and an integral point $p$ in this
 #! lattice. This operation then verifies if the point $p$ is contained in $S$ or not.
 #! @Returns true or false
 #! @Arguments S, p
 DeclareOperation( "PointContainedInSemigroup",
-                  [ IsSemigroupForGradedModulePresentationsForCAP, IsList ] );
+                  [ IsSemigroupForPresentationsByProjectiveGradedModules, IsList ] );
 
 #! @Description
-#! The argument is an IsAffineSemigroupForGradedModulePresentationsForCAP $H$ and a point $p$. The second argument 
+#! The argument is an IsAffineSemigroupForPresentationsByProjectiveGradedModules $H$ and a point $p$. The second argument 
 #! This method then checks if $p$ lies in $H$.
 #! @Returns true or false
 #! @Arguments H, p
 DeclareOperation( "PointContainedInAffineSemigroup",
-                  [ IsAffineSemigroupForGradedModulePresentationsForCAP, IsList ] );
+                  [ IsAffineSemigroupForPresentationsByProjectiveGradedModules, IsList ] );

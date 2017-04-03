@@ -4,7 +4,7 @@
 ##################################################
 ##################################################
 
-LoadPackage( "TruncationsOfGradedModulePresentationsForCAP" );;
+LoadPackage( "TruncationsOfPresentationsByProjectiveGradedModules" );;
 
 
 
@@ -16,15 +16,15 @@ LoadPackage( "TruncationsOfGradedModulePresentationsForCAP" );;
 #! as well as hyperplane constraints that define cones in $\mathbb{Z}^n$. Here are some examples:
 
 #! @Example
-semigroup1 := SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 1,1 ]] );
+semigroup1 := SemigroupForPresentationsByProjectiveGradedModules( [[ 1,0 ], [ 1,1 ]] );
 #! <A cone-semigroup in Z^2 formed as the span of 2 generators>
-IsSemigroupForGradedModulePresentationsForCAP( semigroup1 );
+IsSemigroupForPresentationsByProjectiveGradedModules( semigroup1 );
 #! true
 GeneratorList( semigroup1 );
 #! [ [ 1, 0 ], [ 1, 1 ] ]
-semigroup2 := SemigroupForGradedModulePresentationsForCAP( [[ 2,0 ], [ 1,1 ]] );
+semigroup2 := SemigroupForPresentationsByProjectiveGradedModules( [[ 2,0 ], [ 1,1 ]] );
 #! <A non-cone semigroup in Z^2 formed as the span of 2 generators>
-IsSemigroupForGradedModulePresentationsForCAP( semigroup2 );
+IsSemigroupForPresentationsByProjectiveGradedModules( semigroup2 );
 #! true
 GeneratorList( semigroup2 );
 #! [ [ 2, 0 ], [ 1, 1 ] ]
@@ -62,9 +62,9 @@ PointContainedInSemigroup( semigroup2, [ 2,0 ] );
 #! the term affine cone_semigroup. The constructors are as follows:
 
 #! @Example
-affine_semigroup1 := AffineSemigroupForGradedModulePresentationsForCAP( semigroup1, [ -1, -1 ] );
+affine_semigroup1 := AffineSemigroupForPresentationsByProjectiveGradedModules( semigroup1, [ -1, -1 ] );
 #! <A non-trivial affine cone-semigroup in Z^2>
-affine_semigroup2 := AffineSemigroupForGradedModulePresentationsForCAP( semigroup2, [ 2, 2 ] );
+affine_semigroup2 := AffineSemigroupForPresentationsByProjectiveGradedModules( semigroup2, [ 2, 2 ] );
 #! <A non-trivial affine non-cone semigroup in Z^2>
 #! @EndExample
 
@@ -130,28 +130,28 @@ NewObjectL := CAPCategoryOfProjectiveGradedLeftModulesObject(
               [ [[1,0],1], [[-1,-1],2] ], S );
 #! <A projective graded left module of rank 3>
 tL := TruncationOfProjectiveGradedModule( NewObjectL, 
-      SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
+      SemigroupForPresentationsByProjectiveGradedModules( [[1,0],[0,1]] ) );
 #! <A projective graded left module of rank 1>
 Display( tL );
 #! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! of rank 1 and degrees: [ [ ( 1, 0 ), 1 ] ]
 tL2 := TruncationOfProjectiveGradedModule( NewObjectL, 
-       SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,2 ]] ) );
+       SemigroupForPresentationsByProjectiveGradedModules( [[ 1,0 ], [ 0,2 ]] ) );
 #! <A projective graded left module of rank 1>
 Display( tL2 );
 #! A projective graded left module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! of rank 1 and degrees: [ [ ( 1, 0 ), 1 ] ]
 embL := EmbeddingOfTruncationOfProjectiveGradedModule( NewObjectL, 
-        SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
+        SemigroupForPresentationsByProjectiveGradedModules( [[1,0],[0,1]] ) );
 #! <A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( embL ) );
 #! 1, 0, 0
 #! (over a graded ring)
 embL2 := EmbeddingOfTruncationOfProjectiveGradedModule( NewObjectL, 
-        SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,2]] ) );
+        SemigroupForPresentationsByProjectiveGradedModules( [[1,0],[0,2]] ) );
 #! <A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( embL2 ) );
@@ -165,7 +165,7 @@ Display( UnderlyingHomalgMatrix( embL3 ) );
 #! 1, 0, 0
 #! (over a graded ring)
 projL := ProjectionOntoTruncationOfProjectiveGradedModule( NewObjectL, 
-         SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,1 ]] ) );
+         SemigroupForPresentationsByProjectiveGradedModules( [[ 1,0 ], [ 0,1 ]] ) );
 #! <A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( projL ) );
@@ -174,7 +174,7 @@ Display( UnderlyingHomalgMatrix( projL ) );
 #! 0
 #! (over a graded ring)
 projL2 := ProjectionOntoTruncationOfProjectiveGradedModule( NewObjectL, 
-         SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,2 ]] ) );
+         SemigroupForPresentationsByProjectiveGradedModules( [[ 1,0 ], [ 0,2 ]] ) );
 #! <A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( projL2 ) );
@@ -192,13 +192,13 @@ Display( UnderlyingHomalgMatrix( projL3 ) );
 #! 0 
 #! (over a graded ring)
 truncatorL := TruncationFunctorForProjectiveGradedLeftModules(
-                        S, SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,2 ]] ) );
+                        S, SemigroupForPresentationsByProjectiveGradedModules( [[ 1,0 ], [ 0,2 ]] ) );
 #! Truncation functor for CAP category of projective graded 
 #! left modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! to the semigroup generated by [ [ 1, 0 ], [ 0, 2 ] ]
 truncatorL2 := TruncationFunctorForProjectiveGradedLeftModules(
-                        S, SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,1 ]] ) );
+                        S, SemigroupForPresentationsByProjectiveGradedModules( [[ 1,0 ], [ 0,1 ]] ) );
 #! Truncation functor for CAP category of projective graded 
 #! left modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])
@@ -233,7 +233,7 @@ Display( UnderlyingHomalgMatrix( tr2_test_morphismL ) );
 #! 0
 #! (over a graded ring)
 nat_trans_l := NaturalTransformationFromTruncationToIdentityForProjectiveGradedLeftModules( 
-                        S, SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,1 ]] ) );
+                        S, SemigroupForPresentationsByProjectiveGradedModules( [[ 1,0 ], [ 0,1 ]] ) );
 #! Natural transformation from Truncation functor for CAP category 
 #! of projective graded left modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
@@ -258,21 +258,21 @@ NewObjectR := CAPCategoryOfProjectiveGradedRightModulesObject(
               [ [[1,0],1], [[-1,-1],2] ], S );
 #! <A projective graded right module of rank 3>
 tR := TruncationOfProjectiveGradedModule( NewObjectR, 
-      SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
+      SemigroupForPresentationsByProjectiveGradedModules( [[1,0],[0,1]] ) );
 #! <A projective graded right module of rank 1>
 Display( tR );
 #! A projective graded right module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! of rank 1 and degrees: [ [ ( 1, 0 ), 1 ] ]
 tR2 := TruncationOfProjectiveGradedModule( NewObjectR, 
-       SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,2 ]] ) );
+       SemigroupForPresentationsByProjectiveGradedModules( [[ 1,0 ], [ 0,2 ]] ) );
 #! <A projective graded right module of rank 1>
 Display( tR2 );
 #! A projective graded right module over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! of rank 1 and degrees: [ [ ( 1, 0 ), 1 ] ]
 embR := EmbeddingOfTruncationOfProjectiveGradedModule( NewObjectR, 
-        SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
+        SemigroupForPresentationsByProjectiveGradedModules( [[1,0],[0,1]] ) );
 #! <A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( embR ) );
@@ -281,7 +281,7 @@ Display( UnderlyingHomalgMatrix( embR ) );
 #! 0
 #! (over a graded ring)
 embR2 := EmbeddingOfTruncationOfProjectiveGradedModule( NewObjectL, 
-        SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,2]] ) );
+        SemigroupForPresentationsByProjectiveGradedModules( [[1,0],[0,2]] ) );
 #! <A morphism in the category of projective graded left modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( embR2 ) );
@@ -299,14 +299,14 @@ Display( UnderlyingHomalgMatrix( embR3 ) );
 #! 0
 #! (over a graded ring)
 projR := ProjectionOntoTruncationOfProjectiveGradedModule( NewObjectR,
-         SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,1 ]] ) );
+         SemigroupForPresentationsByProjectiveGradedModules( [[ 1,0 ], [ 0,1 ]] ) );
 #! <A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( projR ) );
 #! 1, 0, 0
 #! (over a graded ring)
 projR2 := ProjectionOntoTruncationOfProjectiveGradedModule( NewObjectR, 
-         SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,2 ]] ) );
+         SemigroupForPresentationsByProjectiveGradedModules( [[ 1,0 ], [ 0,2 ]] ) );
 #! <A morphism in the category of projective graded right modules over 
 #! Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [0, 1 ] ])>
 Display( UnderlyingHomalgMatrix( projR2 ) );
@@ -320,13 +320,13 @@ Display( UnderlyingHomalgMatrix( projR3 ) );
 #! 1, 0, 0
 #! (over a graded ring)
 truncatorR := TruncationFunctorForProjectiveGradedRightModules( S, 
-                             SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,2 ]] ) );
+                             SemigroupForPresentationsByProjectiveGradedModules( [[ 1,0 ], [ 0,2 ]] ) );
 #! Truncation functor for CAP category of projective graded 
 #! right modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! to the semigroup generated by [ [ 1, 0 ], [ 0, 2 ] ]
 truncatorR2 := TruncationFunctorForProjectiveGradedRightModules(
-                        S, SemigroupForGradedModulePresentationsForCAP( [[ 1,0 ], [ 0,1 ]] ) );
+                        S, SemigroupForPresentationsByProjectiveGradedModules( [[ 1,0 ], [ 0,1 ]] ) );
 #! Truncation functor for CAP category of projective graded 
 #! right modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
@@ -360,7 +360,7 @@ Display( UnderlyingHomalgMatrix( tr2_test_morphismR ) );
 #! 1, 0
 #! (over a graded ring)
 nat_trans_r := NaturalTransformationFromTruncationToIdentityForProjectiveGradedRightModules
-                               ( S, SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
+                               ( S, SemigroupForPresentationsByProjectiveGradedModules( [[1,0],[0,1]] ) );
 #! Natural transformation from Truncation functor for CAP category 
 #! of projective graded right modules over Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
@@ -414,7 +414,7 @@ left_presentation3 := CAPPresentationCategoryObject( m3l );
 #! <A graded left module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 truncation_functor_left := TruncationFunctorLeft( 
-                           S, SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
+                           S, SemigroupForPresentationsByProjectiveGradedModules( [[1,0],[0,1]] ) );
 #! Truncation functor for Category of graded left module presentations 
 #! over Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! to the semigroup generated by [ [ 1, 0 ], [ 0, 1 ] ]
@@ -556,7 +556,7 @@ right_presentation3 := CAPPresentationCategoryObject( m3r );
 #! <A graded right module presentation over the ring Q[x_1,x_2,x_3,x_4] 
 #! (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ])>
 truncation_functor_right := TruncationFunctorRight( 
-                            S, SemigroupForGradedModulePresentationsForCAP( [[1,0],[0,1]] ) );
+                            S, SemigroupForPresentationsByProjectiveGradedModules( [[1,0],[0,1]] ) );
 #! Truncation functor for Category of graded right module presentations 
 #! over Q[x_1,x_2,x_3,x_4] (with weights [ [ 1, 0 ], [ 1, 0 ], [ 0, 1 ], [ 0, 1 ] ]) 
 #! to the semigroup generated by [ [ 1, 0 ], [ 0, 1 ] ]

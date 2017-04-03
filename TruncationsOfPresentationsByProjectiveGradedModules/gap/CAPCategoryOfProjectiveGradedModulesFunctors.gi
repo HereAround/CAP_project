@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## TruncationsOfGradedModulePresentationsForCAP package
+## TruncationsOfPresentationsByProjectiveGradedModules package
 ##
 ## Copyright 2016, Martin Bies,       ITP Heidelberg
 ##
@@ -17,7 +17,7 @@
 
 # Truncation of projective graded modules
 InstallMethod( TruncationOfProjectiveGradedModule,
-               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupForPresentationsByProjectiveGradedModules ],
   function( projective_module, semigroup_for_CAP )
     local rank, degree_list, new_degree_list, i;
 
@@ -69,7 +69,7 @@ end );
 
 # Embedding of truncation of projective graded module into the original module
 InstallMethod( EmbeddingOfTruncationOfProjectiveGradedModule,
-               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupForPresentationsByProjectiveGradedModules ],
   function( projective_module, semigroup_for_CAP )
     local rank, degree_list, new_degree_list, embedding_matrix, counter, i, j, row, graded_ring, truncated_module;
 
@@ -156,7 +156,7 @@ end );
 
 # Projection onto truncation of projective graded module
 InstallMethod( ProjectionOntoTruncationOfProjectiveGradedModule,
-               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsCAPCategoryOfProjectiveGradedLeftOrRightModulesObject, IsSemigroupForPresentationsByProjectiveGradedModules ],
   function( projective_module, semigroup_for_CAP )
     local rank, degree_list, new_degree_list, projection_matrix, counter, i, j, row, graded_ring, truncated_module;
 
@@ -509,7 +509,7 @@ end );
 
 # functor to compute the truncation of left-modules
 InstallMethod( TruncationFunctorForProjectiveGradedLeftModules,
-               [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsHomalgGradedRing, IsSemigroupForPresentationsByProjectiveGradedModules ],
       function( graded_ring, semigroup_generator_list )
 
         return TruncationFunctorForProjectiveGradedModulesToSemigroups( graded_ring, 
@@ -521,7 +521,7 @@ end );
 
 # functor to compute the truncation of right-modules
 InstallMethod( TruncationFunctorForProjectiveGradedRightModules,
-               [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsHomalgGradedRing, IsSemigroupForPresentationsByProjectiveGradedModules ],
       function( graded_ring, semigroup_generator_list )
 
         return TruncationFunctorForProjectiveGradedModulesToSemigroups( graded_ring, 

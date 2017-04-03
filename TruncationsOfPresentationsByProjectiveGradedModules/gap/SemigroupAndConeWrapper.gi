@@ -1,6 +1,6 @@
 ####################################################################################
 ##
-## TruncationsOfGradedModulePresentationsForCAP package
+## TruncationsOfPresentationsByProjectiveGradedModules package
 ##
 ##  Copyright 2016, Martin Bies,       ITP Heidelberg
 ##
@@ -17,29 +17,29 @@
 ############################################
 
 ##
-DeclareRepresentation( "IsSemigroupForGradedModulePresentationsForCAPRep",
-                       IsSemigroupForGradedModulePresentationsForCAP and IsAttributeStoringRep,
+DeclareRepresentation( "IsSemigroupForPresentationsByProjectiveGradedModulesRep",
+                       IsSemigroupForPresentationsByProjectiveGradedModules and IsAttributeStoringRep,
                        [ ] );
 
-BindGlobal( "TheFamilyOfSemigroupsForGradedModulePresentationsForCAP",
-        NewFamily( "TheFamilyOfSemigroupsForGradedModulePresentationsForCAP" ) );
+BindGlobal( "TheFamilyOfSemigroupsForPresentationsByProjectiveGradedModules",
+        NewFamily( "TheFamilyOfSemigroupsForPresentationsByProjectiveGradedModules" ) );
 
-BindGlobal( "TheTypeOfSemigroupForGradedModulePresentationsForCAP",
-        NewType( TheFamilyOfSemigroupsForGradedModulePresentationsForCAP,
-                IsSemigroupForGradedModulePresentationsForCAPRep ) );
+BindGlobal( "TheTypeOfSemigroupForPresentationsByProjectiveGradedModules",
+        NewType( TheFamilyOfSemigroupsForPresentationsByProjectiveGradedModules,
+                IsSemigroupForPresentationsByProjectiveGradedModulesRep ) );
 
 
 ##
-DeclareRepresentation( "IsAffineSemigroupForGradedModulePresentationsForCAPRep",
-                       IsAffineSemigroupForGradedModulePresentationsForCAP and IsAttributeStoringRep,
+DeclareRepresentation( "IsAffineSemigroupForPresentationsByProjectiveGradedModulesRep",
+                       IsAffineSemigroupForPresentationsByProjectiveGradedModules and IsAttributeStoringRep,
                        [ ] );
 
-BindGlobal( "TheFamilyOfAffineSemigroupsForGradedModulePresentationsForCAP",
-        NewFamily( "TheFamilyOfAffineSemigroupsForGradedModulePresentationsForCAP" ) );
+BindGlobal( "TheFamilyOfAffineSemigroupsForPresentationsByProjectiveGradedModules",
+        NewFamily( "TheFamilyOfAffineSemigroupsForPresentationsByProjectiveGradedModules" ) );
 
-BindGlobal( "TheTypeOfAffineSemigroupsForGradedModulePresentationsForCAP",
-        NewType( TheFamilyOfAffineSemigroupsForGradedModulePresentationsForCAP,
-                IsAffineSemigroupForGradedModulePresentationsForCAPRep ) );
+BindGlobal( "TheTypeOfAffineSemigroupsForPresentationsByProjectiveGradedModules",
+        NewType( TheFamilyOfAffineSemigroupsForPresentationsByProjectiveGradedModules,
+                IsAffineSemigroupForPresentationsByProjectiveGradedModulesRep ) );
 
 
 
@@ -49,7 +49,7 @@ BindGlobal( "TheTypeOfAffineSemigroupsForGradedModulePresentationsForCAP",
 ##
 ############################################
 
-InstallMethod( SemigroupForGradedModulePresentationsForCAP,
+InstallMethod( SemigroupForPresentationsByProjectiveGradedModules,
                [ IsList, IsInt ],
   function( list_of_generators, embedding_dimension )
     local helper_list, i, j, cone, hpres, sg;
@@ -104,7 +104,7 @@ InstallMethod( SemigroupForGradedModulePresentationsForCAP,
 
       # now objectify with these presentations
       sg := rec();
-      ObjectifyWithAttributes( sg, TheTypeOfSemigroupForGradedModulePresentationsForCAP,
+      ObjectifyWithAttributes( sg, TheTypeOfSemigroupForPresentationsByProjectiveGradedModules,
                                GeneratorList, DuplicateFreeList( list_of_generators ),
                                EmbeddingDimension, embedding_dimension,
                                ConeHPresentationList, hpres
@@ -117,7 +117,7 @@ InstallMethod( SemigroupForGradedModulePresentationsForCAP,
 
       # now objectify with these presentations
       sg := rec();
-      ObjectifyWithAttributes( sg, TheTypeOfSemigroupForGradedModulePresentationsForCAP,
+      ObjectifyWithAttributes( sg, TheTypeOfSemigroupForPresentationsByProjectiveGradedModules,
                                GeneratorList, DuplicateFreeList( list_of_generators ),
                                EmbeddingDimension, embedding_dimension
                             );
@@ -140,7 +140,7 @@ InstallMethod( SemigroupForGradedModulePresentationsForCAP,
 end );
 
 # convenience method which deduces the embedding dimension (if possible) from a given list of generators
-InstallMethod( SemigroupForGradedModulePresentationsForCAP,
+InstallMethod( SemigroupForPresentationsByProjectiveGradedModules,
                [ IsList ],
   function( list_of_generators )
 
@@ -148,14 +148,14 @@ InstallMethod( SemigroupForGradedModulePresentationsForCAP,
       Error( "the embedding dimension cannot be deduced uniquely from the given list of semigroup generators" );
       return;
     else
-      return SemigroupForGradedModulePresentationsForCAP( list_of_generators, Length( list_of_generators[ 1 ] ) );
+      return SemigroupForPresentationsByProjectiveGradedModules( list_of_generators, Length( list_of_generators[ 1 ] ) );
     fi;
 
 end );
 
 # constructor for affine semigroup
-InstallMethod( AffineSemigroupForGradedModulePresentationsForCAP,
-               [ IsSemigroupForGradedModulePresentationsForCAP, IsList ],
+InstallMethod( AffineSemigroupForPresentationsByProjectiveGradedModules,
+               [ IsSemigroupForPresentationsByProjectiveGradedModules, IsList ],
   function( semigroup_for_CAP, offset_point )
     local conversion, i, affine_semigroup;
 
@@ -173,7 +173,7 @@ InstallMethod( AffineSemigroupForGradedModulePresentationsForCAP,
 
     # we have found that the input is valid, so collect the information that we need about the cone
     affine_semigroup := rec();
-    ObjectifyWithAttributes( affine_semigroup, TheTypeOfAffineSemigroupsForGradedModulePresentationsForCAP,
+    ObjectifyWithAttributes( affine_semigroup, TheTypeOfAffineSemigroupsForPresentationsByProjectiveGradedModules,
                              UnderlyingSemigroup, semigroup_for_CAP,
                              Offset, offset_point,
                              EmbeddingDimension, Length( offset_point )
@@ -199,23 +199,23 @@ InstallMethod( AffineSemigroupForGradedModulePresentationsForCAP,
 end );
 
 # convenience-constructor I
-InstallMethod( AffineSemigroupForGradedModulePresentationsForCAP,
+InstallMethod( AffineSemigroupForPresentationsByProjectiveGradedModules,
                [ IsList, IsList ],
   function( semigroup_generators, offset_point )
 
-    return AffineSemigroupForGradedModulePresentationsForCAP( 
-                   SemigroupForGradedModulePresentationsForCAP( semigroup_generators ),
+    return AffineSemigroupForPresentationsByProjectiveGradedModules( 
+                   SemigroupForPresentationsByProjectiveGradedModules( semigroup_generators ),
                    offset_point );
 
 end );
 
 # convenience-constructor II
-InstallMethod( AffineSemigroupForGradedModulePresentationsForCAP,
+InstallMethod( AffineSemigroupForPresentationsByProjectiveGradedModules,
                [ IsList, IsInt, IsList ],
   function( semigroup_generators, embedding_dimension, offset_point )
 
-    return AffineSemigroupForGradedModulePresentationsForCAP( 
-                   SemigroupForGradedModulePresentationsForCAP( semigroup_generators, embedding_dimension ),
+    return AffineSemigroupForPresentationsByProjectiveGradedModules( 
+                   SemigroupForPresentationsByProjectiveGradedModules( semigroup_generators, embedding_dimension ),
                    offset_point );
 
 end );
@@ -229,7 +229,7 @@ end );
 ####################################
 
 InstallMethod( String,
-              [ IsSemigroupForGradedModulePresentationsForCAP ],
+              [ IsSemigroupForPresentationsByProjectiveGradedModules ],
   function( semigroup_for_CAP )
 
     # if empty
@@ -290,7 +290,7 @@ InstallMethod( String,
 end );
 
 InstallMethod( String,
-              [ IsAffineSemigroupForGradedModulePresentationsForCAP ],
+              [ IsAffineSemigroupForPresentationsByProjectiveGradedModules ],
   function( affine_semigroup_for_CAP )
 
     if IsTrivial( affine_semigroup_for_CAP ) then
@@ -320,7 +320,7 @@ end );
 ####################################
 
 InstallMethod( Display,
-               [ IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsSemigroupForPresentationsByProjectiveGradedModules ],
   function( semigroup_for_CAP )
 
     if IsTrivial( semigroup_for_CAP ) then
@@ -340,7 +340,7 @@ InstallMethod( Display,
 end );
 
 InstallMethod( Display,
-              [ IsAffineSemigroupForGradedModulePresentationsForCAP ],
+              [ IsAffineSemigroupForPresentationsByProjectiveGradedModules ],
   function( affine_semigroup_for_CAP )
 
     if IsTrivial( affine_semigroup_for_CAP ) then
@@ -373,7 +373,7 @@ end );
 ####################################
 
 InstallMethod( ViewObj,
-               [ IsSemigroupForGradedModulePresentationsForCAP ],
+               [ IsSemigroupForPresentationsByProjectiveGradedModules ],
   function( semigroup_for_CAP )
 
     Print( Concatenation( "<", String( semigroup_for_CAP ), ">" ) );
@@ -381,7 +381,7 @@ InstallMethod( ViewObj,
 end );
 
 InstallMethod( ViewObj,
-              [ IsAffineSemigroupForGradedModulePresentationsForCAP ],
+              [ IsAffineSemigroupForPresentationsByProjectiveGradedModules ],
   function( affine_semigroup_for_CAP )
 
     Print( Concatenation( "<", String( affine_semigroup_for_CAP ), ">" ) );
@@ -450,7 +450,7 @@ end );
 # check if a point lies in a subsemigroup
 InstallMethod( PointContainedInSemigroup,
                " for a subsemigroup for CAP and a list of integers ",
-               [ IsSemigroupForGradedModulePresentationsForCAP, IsList ],
+               [ IsSemigroupForPresentationsByProjectiveGradedModules, IsList ],
   function( semigroup_for_CAP, point )
     local res, cone_h_presentation_list, i, constraint;
 
@@ -515,7 +515,7 @@ end );
 # check if a point satisfies hyperplane constraints for a cone, thereby determining if the point lies in the cone
 InstallMethod( PointContainedInAffineSemigroup,
                " for an affine semigroup and a list specifying a point ",
-               [ IsAffineSemigroupForGradedModulePresentationsForCAP, IsList ],
+               [ IsAffineSemigroupForPresentationsByProjectiveGradedModules, IsList ],
   function( affine_semigroup_for_CAP, point )
 
    return PointContainedInSemigroup( UnderlyingSemigroup( affine_semigroup_for_CAP ), 

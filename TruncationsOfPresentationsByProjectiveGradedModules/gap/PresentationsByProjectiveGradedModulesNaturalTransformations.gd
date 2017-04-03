@@ -1,6 +1,6 @@
 #############################################################################
 ##
-## TruncationsOfGradedModulePresentationsForCAP package
+## TruncationsOfPresentationsByProjectiveGradedModules package
 ##
 ## Copyright 2016, Martin Bies,       ITP Heidelberg
 ##
@@ -26,7 +26,7 @@ DeclareGlobalFunction( "NaturalTransformationFromTruncationToIdentityForProjecti
 #! @Returns a natural transformation $\left. \cdot \right|_H \Rightarrow \mathrm{id}$
 #! @Arguments S
 DeclareOperation( "NaturalTransformationFromTruncationToIdentityForProjectiveGradedLeftModules",
-                  [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ] );
+                  [ IsHomalgGradedRing, IsSemigroupForPresentationsByProjectiveGradedModules ] );
 
 #! @Description
 #! The argument is a homalg graded ring $S$ and a semigroup $H$ in the degree group of $S$. 
@@ -35,4 +35,4 @@ DeclareOperation( "NaturalTransformationFromTruncationToIdentityForProjectiveGra
 #! @Returns a natural transformation $\left. \cdot \right|_H \Rightarrow \mathrm{id}$
 #! @Arguments S
 DeclareOperation( "NaturalTransformationFromTruncationToIdentityForProjectiveGradedRightModules",
-                  [ IsHomalgGradedRing, IsSemigroupForGradedModulePresentationsForCAP ] );
+                  [ IsHomalgGradedRing, IsSemigroupForPresentationsByProjectiveGradedModules ] );

@@ -1,15 +1,15 @@
 #
-# TruncationsOfGradedModulePresentationsForCAP: Truncating a graded module presentation (for CAP) to an affine (cone) semigroup
+# TruncationsOfPresentationsByProjectiveGradedModules: Truncating a graded module presentation (for CAP) to an affine (cone) semigroup
 #
 
 LoadPackage( "AutoDoc" );
 
-AutoDoc( "TruncationsOfGradedModulePresentationsForCAP" : scaffold := true, autodoc :=
+AutoDoc( "TruncationsOfPresentationsByProjectiveGradedModules" : scaffold := true, autodoc :=
          rec( files := [ "doc/Intros.autodoc",
                          "gap/SemigroupAndConeWrapper.gd",
                          "gap/CAPCategoryOfProjectiveGradedModulesFunctors.gd",
-                         "gap/CAPCategoryOfProjectiveGradedModulesNaturalTransformations.gd",
-                         "gap/GradedModulePresentationsForCAPFunctors.gd",
+                         "gap/PresentationsByProjectiveGradedModulesNaturalTransformations.gd",
+                         "gap/PresentationsByProjectiveGradedModulesFunctors.gd",
                          "examples/Example.g"
                          ],
              scan_dirs := []
@@ -17,7 +17,7 @@ AutoDoc( "TruncationsOfGradedModulePresentationsForCAP" : scaffold := true, auto
          maketest := rec( folder := ".",
                           commands :=
                             [ "LoadPackage( \"IO_ForHomalg\" );",
-                              "LoadPackage( \"TruncationsOfGradedModulePresentationsForCAP\" );",
+                              "LoadPackage( \"TruncationsOfPresentationsByProjectiveGradedModules\" );",
                               "HOMALG_IO.show_banners := false;",
                               "HOMALG_IO.suppress_PID := true;",
                               "HOMALG_IO.use_common_stream := true;",
